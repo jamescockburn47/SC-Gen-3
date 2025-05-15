@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+wheels/
+*.egg
+
+# Environments - IMPORTANT: If your venv is inside your project, ignore it!
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project-specific folders to ignore
+scratch/
+summaries/
+memory/
+logs/
+exports/
+
+# Other temporary files
+*.log
+tmp/
+temp/
+*.tmp
+temp*/
