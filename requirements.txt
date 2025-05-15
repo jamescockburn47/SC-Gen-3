@@ -6,13 +6,12 @@ beautifulsoup4
 # Data handling
 pandas
 PyPDF2
-pdfminer.six
-python-docx
+python-docx # For importing docx
 openpyxl
-xmltodict==0.13.0        # ← this is the ONLY xmltodict line
+xmltodict==0.13.0
 
 # AI / cloud
 openai
 google-generativeai
-boto3
+boto3 # Includes botocore
 python-dotenv
