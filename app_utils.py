@@ -461,6 +461,16 @@ def verify_citations(
         except Exception as e:
             logger.warning(f"Failed to read citation cache {cache_file}: {e}")
 
+    # Re-check any cached entries that include URLs but were not yet verified
+    cache_updated = False
+    for cit, entry in list(verified_cache.items()):
+        if isinstance(entry, dict) and entry.get("url") and not entry.get("verified"):
+            text, _err = fetch_url_content(entry["url"])
+            if text and cit.lower() in text.lower():
+                entry["verified"] = True
+                verified_cache[cit] = entry
+                cache_updated = True
+
     uploaded_texts: List[str] = []
     for f in uploaded_files:
         try:
@@ -499,6 +509,7 @@ def verify_citations(
 
         results[cit] = found
         if found:
+            cache_updated = True
             if isinstance(cache_entry, dict):
                 cache_entry["verified"] = True
                 verified_cache[cit] = cache_entry
@@ -507,7 +518,8 @@ def verify_citations(
 
     if cache_file:
         try:
-            cache_file.write_text(json.dumps(verified_cache, indent=2))
+            if cache_updated:
+                cache_file.write_text(json.dumps(verified_cache, indent=2))
         except Exception as e:
             logger.warning(f"Failed to update citation cache {cache_file}: {e}")
 
