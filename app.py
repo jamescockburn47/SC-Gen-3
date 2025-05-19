@@ -427,7 +427,7 @@ with st.sidebar:
         urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
         urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
 
-        st.session_state.summarise_uploads = st.checkbox(
+        st.checkbox(
             "Summarise uploads",
             value=st.session_state.get("summarise_uploads", True),
             key="summarise_uploads",
