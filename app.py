@@ -705,6 +705,33 @@ with tab_consult:
                             "\n".join(f"- {c}" for c in unverified) +
                             "\nPlease upload the source or provide a direct link."
                         )
+                        with st.form(key=f"citation_links_{len(st.session_state.session_history)}"):
+                            link_inputs = {}
+                            for cit in unverified:
+                                input_key = f"link_{_hashlib.md5(cit.encode()).hexdigest()}"
+                                link_inputs[cit] = st.text_input(f"Source for {cit}", key=input_key)
+                            if st.form_submit_button("Submit Links"):
+                                links_path = APP_BASE_PATH / "verified_sources.json"
+                                try:
+                                    existing = json.loads(links_path.read_text()) if links_path.exists() else {}
+                                except Exception:
+                                    existing = {}
+                                for cit, link in link_inputs.items():
+                                    if not link:
+                                        continue
+                                    entry = existing.get(cit)
+                                    if isinstance(entry, dict):
+                                        entry["url"] = link
+                                    elif isinstance(entry, bool):
+                                        entry = {"verified": entry, "url": link}
+                                    else:
+                                        entry = {"verified": False, "url": link}
+                                    existing[cit] = entry
+                                try:
+                                    links_path.write_text(json.dumps(existing, indent=2))
+                                    st.success("Citation links saved.")
+                                except Exception as e_save:
+                                    st.error(f"Failed to save links: {e_save}")
                     with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
 
                     if st.session_state.get("auto_protocol_compliance", True):

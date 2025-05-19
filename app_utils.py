@@ -453,7 +453,7 @@ def verify_citations(
 ) -> Dict[str, bool]:
     """Check citations against uploaded files or public sources."""
 
-    verified_cache: Dict[str, bool] = {}
+    verified_cache: Dict[str, Any] = {}
     if cache_file and cache_file.exists():
         try:
             verified_cache = json.loads(cache_file.read_text())
@@ -471,7 +471,14 @@ def verify_citations(
 
     results: Dict[str, bool] = {}
     for cit in citations:
-        if cit in verified_cache:
+        cache_entry = verified_cache.get(cit)
+        cached_verified = False
+        if isinstance(cache_entry, bool):
+            cached_verified = cache_entry
+        elif isinstance(cache_entry, dict):
+            cached_verified = bool(cache_entry.get("verified"))
+
+        if cached_verified:
             results[cit] = True
             continue
 
@@ -491,7 +498,11 @@ def verify_citations(
 
         results[cit] = found
         if found:
-            verified_cache[cit] = True
+            if isinstance(cache_entry, dict):
+                cache_entry["verified"] = True
+                verified_cache[cit] = cache_entry
+            else:
+                verified_cache[cit] = True
 
     if cache_file:
         try:
