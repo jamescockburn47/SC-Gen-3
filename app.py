@@ -549,14 +549,13 @@ with st.sidebar:
                     st.success("Compliance check complete. See report below.")
 
         if st.session_state.get("last_protocol_compliance_report"):
-            with st.expander("Latest Compliance Report", expanded=False):
-                st.text_area(
-                    "Protocol Compliance Report",
-                    st.session_state.last_protocol_compliance_report,
-                    height=250,
-                )
-                p_tok, c_tok = st.session_state.last_protocol_compliance_tokens
-                st.caption(f"Prompt tokens: {p_tok}, Completion tokens: {c_tok}")
+            st.text_area(
+                "Protocol Compliance Report",
+                st.session_state.last_protocol_compliance_report,
+                height=250,
+            )
+            p_tok, c_tok = st.session_state.last_protocol_compliance_tokens
+            st.caption(f"Prompt tokens: {p_tok}, Completion tokens: {c_tok}")
 
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
