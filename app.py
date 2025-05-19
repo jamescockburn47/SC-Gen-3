@@ -440,7 +440,11 @@ with st.sidebar:
             format="%d",
             key="summary_detail_level",
         )
-        st.session_state.summary_detail_level = summary_level_option
+        # Avoid setting session state after widget creation to prevent
+        # StreamlitAPIException. The slider already updates the session
+        # state value when interacted with.
+        if "summary_detail_level" not in st.session_state:
+            st.session_state.summary_detail_level = summary_level_option
 
         if st.session_state.citation_links_updated and st.session_state.last_citations_found:
             with st.spinner("Rechecking citations..."):
