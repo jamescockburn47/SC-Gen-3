@@ -74,6 +74,7 @@ if not logging.getLogger().hasHandlers():
 
 # Define APP_BASE_PATH - this should ideally be defined once, consistently
 APP_BASE_PATH = APP_ROOT_DIR
+LOGO_PATH = APP_BASE_PATH / "static" / "logo" / "logo1.png"
 
 # --- Logger Setup ---
 # Basic logger configuration (customize as needed)
@@ -102,7 +103,7 @@ if not logger.handlers: # Avoid adding multiple file handlers on Streamlit rerun
 import streamlit as st
 st.set_page_config(
     page_title="Strategic Counsel",
-    page_icon="static/logo/logo1.png",
+    page_icon=str(LOGO_PATH),
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -274,7 +275,7 @@ def init_session_state():
 init_session_state()
 
 with st.sidebar:
-    st.image("static/logo/logo1.png", use_container_width=False)
+    st.image(str(LOGO_PATH), use_container_width=False)
     st.markdown("## Configuration")
     current_topic_input = st.text_input("Matter / Topic ID", st.session_state.current_topic, key="topic_input_sidebar")
     if current_topic_input != st.session_state.current_topic:
