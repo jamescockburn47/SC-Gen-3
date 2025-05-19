@@ -169,11 +169,11 @@ for rel_p in REQUIRED_DIRS_REL:
 
 MODEL_PRICES_PER_1K_TOKENS_GBP: Dict[str, float] = {
     "gpt-4.1": 0.0080,
-    "gemini-3.5": 0.0028,
+    config.GEMINI_MODEL_DEFAULT: 0.0028,
 }
 MODEL_ENERGY_WH_PER_1K_TOKENS: Dict[str, float] = {
     "gpt-4.1": 0.4,
-    "gemini-3.5": 0.2,
+    config.GEMINI_MODEL_DEFAULT: 0.2,
 }
 KETTLE_WH: int = 360
 
