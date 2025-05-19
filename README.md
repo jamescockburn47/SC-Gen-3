@@ -19,6 +19,7 @@ The application loads configuration from a `.env` file or the host environment. 
 - `CH_API_KEY` – Companies House API key for retrieving filings.
 - `OPENAI_API_KEY` – API key for GPT models (used for summarisation and drafting).
 - `GEMINI_API_KEY` – API key for Google Gemini models.
+- `GEMINI_MODEL_FOR_SUMMARIES` – override the Gemini model used for summaries (default `gemini-3.5`).
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
