@@ -22,12 +22,15 @@ The application loads configuration from a `.env` file or the host environment. 
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
+- `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
 
 Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
 
 ## Enabling OCR with AWS Textract
 
 Within the **Group Structure** tab of the application there is a checkbox labelled **"Use AWS Textract for PDF OCR"**. When checked, the system attempts to initialise AWS Textract using the credentials above. Scanned or image-based PDFs from Companies House will then be sent to Textract for optical character recognition before analysis.
+
+Textract calls can now run in parallel to speed up large batches. The default maximum number of concurrent OCR workers is controlled by the `MAX_TEXTRACT_WORKERS` environment variable (default `4`). Reduce this value if you hit AWS rate limits.
 
 Without OCR, many Companies House PDF filings cannot be parsed, meaning group-structure analysis may miss critical information contained in scanned documents. If OCR fails to initialise or the checkbox is left unchecked, only PDFs containing embedded text are analysed.
 
