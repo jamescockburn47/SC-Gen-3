@@ -16,3 +16,7 @@ openai
 google-generativeai
 boto3 # Includes botocore
 python-dotenv
+
+numpy
+faiss-cpu
+
