@@ -233,6 +233,9 @@ def init_session_state():
         "original_additional_ai_instructions_ch": "", 
         "additional_ai_instructions_ch_is_improved": False,
 
+        # Flag to safely trigger a rerun after containers have closed
+        "rerun_needed": False,
+
         # New session state for CH document selection flow
         "ch_available_documents": [], 
         "ch_document_selection": {}, 
@@ -457,7 +460,8 @@ with st.sidebar:
                 existing_to_keep = [s for s in st.session_state.processed_summaries if s[0] in current_source_identifiers and s[0] not in sources_needing_processing]
                 st.session_state.processed_summaries = existing_to_keep + newly_processed_summaries_for_this_run_sidebar
                 progress_bar_docs.empty()
-            st.session_state.document_processing_complete = True; st.rerun() # Rerun to update UI with new summaries
+            st.session_state.document_processing_complete = True
+            st.session_state.rerun_needed = True  # Trigger rerun after expander closes
     
         # Selection for Uploaded/URL Summaries
         st.session_state.selected_summary_texts = [] # Reset before populating based on checkbox state
@@ -484,6 +488,10 @@ with st.sidebar:
                     selected_ch_summary_texts_for_injection_temp.append(f"COMPANIES HOUSE ANALYSIS SUMMARY FOR {company_id} ({title_for_list}):\n{summary_text}")
         # This state is now dynamically built when creating context for AI rather than storing selection list in session_state permanently
 
+    # Trigger rerun safely after Context Injection expander
+    if st.session_state.rerun_needed:
+        st.session_state.rerun_needed = False
+        st.experimental_rerun()
 
     st.markdown("---")
     if st.button("End Session & Update Digest", key="end_session_button_sidebar"):
@@ -600,9 +608,9 @@ with tab_consult:
                 with st.spinner("Improving prompt..."):
                     improved_prompt = get_improved_prompt(current_text_in_area, "Strategic Counsel general query")
                     if "Error:" not in improved_prompt and improved_prompt.strip():
-                        st.session_state.user_instruction_main_text_area_value = improved_prompt 
+                        st.session_state.user_instruction_main_text_area_value = improved_prompt
                         st.session_state.user_instruction_main_is_improved = True
-                        st.rerun() 
+                        st.session_state.rerun_needed = True
                     elif "Error:" in improved_prompt:
                         st.warning(f"Could not improve prompt: {improved_prompt}")
                     # If prompt is empty or only whitespace after improvement, no change is made to the text area.
@@ -614,7 +622,7 @@ with tab_consult:
             if st.button("↩️ Revert to Original", key="cancel_improve_prompt_main_button", use_container_width=True):
                 st.session_state.user_instruction_main_text_area_value = st.session_state.original_user_instruction_main
                 st.session_state.user_instruction_main_is_improved = False
-                st.rerun()
+                st.session_state.rerun_needed = True
 
     consult_model_name = st.session_state.get("consult_digest_model")
 
@@ -794,6 +802,11 @@ with tab_consult:
         history_display_container = st.container(height=400) # Ensure fixed height for scroll
         for i, entry_text in enumerate(reversed(st.session_state.session_history)):
             history_display_container.markdown(f"**Interaction {len(st.session_state.session_history)-i}:**\n---\n{entry_text}\n\n")
+
+    # Trigger rerun safely after Consult tab interactions
+    if st.session_state.rerun_needed:
+        st.session_state.rerun_needed = False
+        st.experimental_rerun()
 
 with tab_ch_analysis:
     st.markdown("### Companies House Document Analysis")
