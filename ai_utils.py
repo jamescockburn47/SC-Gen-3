@@ -318,13 +318,14 @@ def gemini_summarise_ch_docs(
         return "Error: Google Generative AI SDK not installed.", 0, 0
 
     current_model_name = model_name or GEMINI_MODEL_DEFAULT
-    gemini_model_client = get_gemini_model(current_model_name)
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
     total_prompt_tokens = 0
     total_completion_tokens = 0
 
     if not gemini_model_client:
-        logger.error(f"Could not initialize Gemini model '{current_model_name}' for CH summarization.")
-        return f"Error: Could not initialize Gemini model '{current_model_name}'.", 0, 0
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}'."
+        logger.error(err_msg)
+        return f"Error: {err_msg}", 0, 0
     
     stripped_text = text_to_summarize.strip()
     if not stripped_text:
@@ -435,11 +436,12 @@ def get_improved_prompt(
         return "Error: Google Generative AI SDK not installed. Cannot improve prompt."
 
     # Use the general purpose Gemini model for this, or a specific one if desired.
-    current_model_name = model_name or GEMINI_MODEL_DEFAULT 
-    gemini_model_client = get_gemini_model(current_model_name)
+    current_model_name = model_name or GEMINI_MODEL_DEFAULT
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
 
     if not gemini_model_client:
-        return f"Error: Could not initialize Gemini model '{current_model_name}' for prompt improvement."
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}' for prompt improvement."
+        return f"Error: {err_msg}"
     if not original_prompt or not original_prompt.strip():
         return original_prompt 
 
@@ -506,10 +508,11 @@ def check_protocol_compliance(
         return "Error: Google Generative AI SDK not installed. Cannot check protocol compliance.", 0, 0
 
     current_model_name = model_name or GEMINI_MODEL_FOR_PROTOCOL_CHECK
-    gemini_model_client = get_gemini_model(current_model_name)
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
 
     if not gemini_model_client:
-        return f"Error: Could not initialize Gemini model '{current_model_name}' for protocol compliance check.", 0, 0
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}' for protocol compliance check."
+        return f"Error: {err_msg}", 0, 0
 
     if not ai_text_output or not ai_text_output.strip():
         return "Error: No AI text provided for compliance check.", 0, 0

@@ -506,7 +506,8 @@ with st.sidebar:
                         resp = client.chat.completions.create(model=current_ai_model_for_digest, temperature=0.1, max_tokens=3000, messages=[{"role": "system", "content": PROTO_TEXT}, {"role": "user", "content": update_digest_prompt}])
                         updated_digest_text = resp.choices[0].message.content.strip()
                     elif current_ai_model_for_digest.startswith("gemini-"):
-                        client = config.get_gemini_model(current_ai_model_for_digest); assert client and config.genai # Check config.genai
+                        client, init_error = config.get_gemini_model(current_ai_model_for_digest)
+                        assert client and config.genai, init_error
                         full_prompt_gemini = f"{PROTO_TEXT}\n\n{update_digest_prompt}" # Combine for Gemini
                         resp = client.generate_content(full_prompt_gemini, generation_config=config.genai.types.GenerationConfig(temperature=0.1, max_output_tokens=3000)) # Use config.genai
                         updated_digest_text = resp.text.strip() # Check for block reason
@@ -659,7 +660,8 @@ with tab_consult:
                             prompt_tokens = ai_api_response.usage.prompt_tokens
                             completion_tokens = ai_api_response.usage.completion_tokens
                     elif consult_model_name.startswith("gemini-"):
-                        gemini_model_client = config.get_gemini_model(consult_model_name); assert gemini_model_client and config.genai
+                        gemini_model_client, init_error = config.get_gemini_model(consult_model_name)
+                        assert gemini_model_client and config.genai, init_error
                         try: 
                             full_prompt_str_gemini = "\n\n".join([f"{m['role']}: {m['content']}" for m in messages_for_ai])
                             count_resp_prompt = gemini_model_client.count_tokens(full_prompt_str_gemini)
