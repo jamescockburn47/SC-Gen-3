@@ -55,9 +55,16 @@ AWS_REGION_DEFAULT = os.getenv("AWS_DEFAULT_REGION", "eu-west-2")
 S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 
 # --- Model Configuration ---
-OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-pro-latest") # More specific name
-GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest") # Model for protocol check
+# Defaults to the most capable currently available models. Users can
+# override via environment variables if desired.
+OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o")
+GEMINI_MODEL_DEFAULT = os.getenv(
+    "GEMINI_MODEL_FOR_SUMMARIES",
+    "gemini-1.5-pro-latest",
+)  # More specific name
+GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv(
+    "GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest"
+)  # Model for protocol check
 
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200

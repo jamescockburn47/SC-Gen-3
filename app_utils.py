@@ -94,13 +94,13 @@ def _word_cap(word_count: int) -> int:
 
 def summarise_with_title(
     text: str,
-    model_name_selected: str, # This parameter seems unused as the function hardcodes "gpt-4o-mini"
-    topic: str, 
+    model_name_selected: str,
+    topic: str,
 ) -> Tuple[str, str]:
     """
     Generates a short title and summary for UI display of uploaded documents.
-    Uses a cost-effective OpenAI model for this task.
-    Uses LOADED_PROTO_TEXT from config.
+    Uses the provided OpenAI model (or the configured default) for this task.
+    Utilises LOADED_PROTO_TEXT from config.
     """
     if not text or not text.strip():
         return "Empty Content", "No text was provided for summarization."
@@ -109,7 +109,7 @@ def summarise_with_title(
     summary_word_cap = _word_cap(word_count)
     text_to_summarise = text[:15000] 
     max_tokens_for_response = int(summary_word_cap * 2.0) 
-    openai_model_for_this_task = "gpt-4o-mini" 
+    openai_model_for_this_task = model_name_selected or config.OPENAI_MODEL_DEFAULT
     openai_client = get_openai_client()
 
     if not openai_client:
