@@ -453,16 +453,20 @@ with st.sidebar:
 
 
     st.markdown("---")
-    if st.button("End Session & Update Digest", key="end_session_button_sidebar"):
-        if not st.session_state.session_history: st.warning("No new interactions to add to digest.")
-        elif not st.session_state.consult_digest_model: st.error("No AI model selected for Digest Update.")
-        else:
-            with st.spinner("Updating Digest..."):
-                new_interactions_block = "\n\n---\n\n".join(st.session_state.session_history)
-                existing_digest_text = st.session_state.latest_digest_content
-                update_digest_prompt = (f"Consolidate the following notes. Integrate the NEW interactions into the EXISTING digest, "
-                                    f"maintaining a coherent and concise summary. Aim for a maximum of around 2000 words for the entire updated digest. "
-                                    f"Preserve key facts and decisions.\n\n"
+    with st.expander("Finalize & Export"):
+        st.markdown(
+            "Review the conversation, update the digest, then export the final memo."
+        )
+        if st.button("End Session & Update Digest", key="end_session_button_sidebar"):
+            if not st.session_state.session_history: st.warning("No new interactions to add to digest.")
+            elif not st.session_state.consult_digest_model: st.error("No AI model selected for Digest Update.")
+            else:
+                with st.spinner("Updating Digest..."):
+                    new_interactions_block = "\n\n---\n\n".join(st.session_state.session_history)
+                    existing_digest_text = st.session_state.latest_digest_content
+                    update_digest_prompt = (f"Consolidate the following notes. Integrate the NEW interactions into the EXISTING digest, "
+                                                f"maintaining a coherent and concise summary. Aim for a maximum of around 2000 words for the entire updated digest. "
+                                                f"Preserve key facts and decisions.\n\n"
                                     f"EXISTING DIGEST (for topic: {st.session_state.current_topic}):\n{existing_digest_text}\n\n"
                                     f"NEW INTERACTIONS (to integrate for topic: {st.session_state.current_topic}):\n{new_interactions_block}")
                 try:
@@ -485,6 +489,32 @@ with st.sidebar:
                     st.success(f"Digest for '{st.session_state.current_topic}' updated."); st.session_state.session_history = []; st.session_state.latest_digest_content = updated_digest_text; st.rerun()
                 except Exception as e_digest_update:
                     st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
+
+        if st.button("Export Memo", key="export_memo_button"):
+            if not st.session_state.latest_digest_content:
+                st.warning("No digest available to export. Please update the digest first.")
+            else:
+                memo_ts = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+                memo_filename = f"{st.session_state.current_topic}_{memo_ts}_memo.docx"
+                memo_path = APP_BASE_PATH / "exports" / memo_filename
+                try:
+                    doc = Document()
+                    doc.add_heading(
+                        f"Strategic Counsel Memo - {st.session_state.current_topic}",
+                        0,
+                    )
+                    for p in st.session_state.latest_digest_content.split("\n"):
+                        doc.add_paragraph(p)
+                    doc.save(memo_path)
+                    with open(memo_path, "rb") as fp_memo:
+                        st.download_button(
+                            "Download Memo (.docx)",
+                            fp_memo,
+                            memo_filename,
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        )
+                except Exception as e_export:
+                    st.error(f"Memo export failed: {e_export}")
 
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
