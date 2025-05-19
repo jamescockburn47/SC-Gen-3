@@ -156,20 +156,18 @@ def _parse_document_content(
             content_to_parse, content_type_to_parse = doc_content_data[doc_type], doc_type; break
     
     if content_to_parse is None and 'pdf' in doc_content_data and doc_content_data['pdf'] is not None:
-        if ocr_handler and is_priority_for_ocr: 
-            content_to_parse, content_type_to_parse = doc_content_data['pdf'], 'pdf'
-            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' is priority, attempting OCR.")
-        elif ocr_handler: 
-            parsed_result["extraction_error"] = "PDF not prioritized for OCR in this step."
-            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' available but not OCR priority for this stage.")
-        else: 
-            parsed_result["extraction_error"] = "PDF content found, but no OCR handler provided."
-            logger.warning(f"GS Parse: PDF '{doc_metadata.get('description')}' needs OCR, but no handler.")
+        content_to_parse, content_type_to_parse = doc_content_data['pdf'], 'pdf'
+        if is_priority_for_ocr and ocr_handler:
+            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' prioritized for OCR if needed.")
+        elif ocr_handler:
+            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed; OCR not priority for this stage.")
+        else:
+            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed without OCR handler.")
 
     if content_to_parse is not None and content_type_to_parse is not None:
         parsed_result["source_format_parsed"] = content_type_to_parse.upper()
         try:
-            actual_ocr_handler_for_call = ocr_handler if content_type_to_parse == 'pdf' else None
+            actual_ocr_handler_for_call = ocr_handler if (content_type_to_parse == 'pdf' and is_priority_for_ocr) else None
             extracted_text, pages_processed, extraction_error = extract_text_from_document(
                 content_to_parse, content_type_to_parse, company_no, actual_ocr_handler_for_call
             )

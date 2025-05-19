@@ -6,10 +6,11 @@ import json
 from io import BytesIO
 from typing import Tuple, Optional, Callable, Dict, Union
 
-# Remove PyPDF2 and pdfminer imports as they are no longer directly used for CH PDF processing
-# from PyPDF2 import PdfReader, errors as PyPDF2Errors
-# from pdfminer.high_level import extract_text as pdfminer_extract
-# from pdfminer.pdftypes import PDFException as PDFMinerException
+# Lightweight PDF parsing via pdfminer.six
+from pdfminer.high_level import extract_text as pdfminer_extract
+from pdfminer.pdfparser import PDFSyntaxError
+
+# PyPDF2 remains unused in this module
 from bs4 import BeautifulSoup
 
 from config import MIN_MEANINGFUL_TEXT_LEN, logger
@@ -197,32 +198,50 @@ def extract_text_from_document(
             error_msg = f"Expected bytes for PDF content, got {type(doc_content_input)}. Cannot process."
             logger.error(f"{company_no_for_logging}: {error_msg}")
             extracted_text = f"Error: {error_msg}"
-            return extracted_text, 0, error_msg # Early exit
+            return extracted_text, 0, error_msg  # Early exit
 
-        # Standard PDF library extraction is removed. Only use OCR handler for PDFs.
-        if ocr_handler:
-            logger.info(f"{company_no_for_logging}: Attempting OCR for PDF using provided handler (standard PDF lib parsing removed).")
-            ocr_text, pages_ocrd_by_handler, ocr_err = ocr_handler(doc_content_input, company_no_for_logging)
-            pages_ocrd = pages_ocrd_by_handler
+        pdf_text = ""
+        parse_error = None
+        try:
+            with BytesIO(doc_content_input) as pdf_buf:
+                pdf_text = pdfminer_extract(pdf_buf) or ""
+            pdf_text = re.sub(r"\s+", " ", pdf_text).strip()
+            if pdf_text:
+                logger.info(f"{company_no_for_logging}: Parsed PDF text with pdfminer ({len(pdf_text)} chars).")
+        except Exception as e_pdf:
+            parse_error = str(e_pdf)
+            logger.warning(f"{company_no_for_logging}: pdfminer failed to parse PDF: {e_pdf}")
+            pdf_text = ""
 
-            if ocr_err:
-                error_msg = f"OCR failed: {ocr_err}"
-                logger.error(f"{company_no_for_logging}: {error_msg}")
-                # Keep any text OCR might have returned despite error, or set to error string
-                extracted_text = ocr_text if ocr_text else f"Error: {error_msg}"
-            elif not ocr_text or len(ocr_text.strip()) < MIN_MEANINGFUL_TEXT_LEN:
-                short_text_msg = f"OCR yielded short or no text ({len(ocr_text.strip()) if ocr_text else 0} chars)."
-                logger.warning(f"{company_no_for_logging}: {short_text_msg} Preview: '{ocr_text[:100] if ocr_text else ''}...'")
-                extracted_text = ocr_text # Return short/empty text, downstream will handle it
-                # Optionally, set error_msg here if short text is considered an error for this path
-                # error_msg = short_text_msg 
-            else:
-                extracted_text = ocr_text
-                logger.info(f"{company_no_for_logging}: Text extracted from PDF via OCR ({len(extracted_text)} chars, {pages_ocrd} pages).")
+        if pdf_text and len(pdf_text) >= MIN_MEANINGFUL_TEXT_LEN:
+            extracted_text = pdf_text
         else:
-            error_msg = "PDF content found, but no OCR handler provided. Standard PDF parsing is disabled for CH pipeline."
-            logger.warning(f"{company_no_for_logging}: {error_msg}")
-            extracted_text = f"Error: {error_msg}" # No text can be extracted without OCR handler
+            if pdf_text:
+                logger.info(f"{company_no_for_logging}: Parsed PDF text length {len(pdf_text)} below threshold {MIN_MEANINGFUL_TEXT_LEN}.")
+            if ocr_handler:
+                logger.info(f"{company_no_for_logging}: Falling back to OCR for PDF.")
+                ocr_text, pages_ocrd_by_handler, ocr_err = ocr_handler(doc_content_input, company_no_for_logging)
+                pages_ocrd = pages_ocrd_by_handler
+                if ocr_err:
+                    error_msg = f"OCR failed: {ocr_err}"
+                    logger.error(f"{company_no_for_logging}: {error_msg}")
+                    extracted_text = ocr_text if ocr_text else (pdf_text if pdf_text else f"Error: {error_msg}")
+                elif not ocr_text or len(ocr_text.strip()) < MIN_MEANINGFUL_TEXT_LEN:
+                    short_text_msg = f"OCR yielded short or no text ({len(ocr_text.strip()) if ocr_text else 0} chars)."
+                    logger.warning(f"{company_no_for_logging}: {short_text_msg} Preview: '{ocr_text[:100] if ocr_text else ''}...'")
+                    extracted_text = ocr_text if ocr_text else pdf_text
+                else:
+                    extracted_text = ocr_text
+                    logger.info(f"{company_no_for_logging}: Text extracted from PDF via OCR ({len(extracted_text)} chars, {pages_ocrd} pages).")
+            else:
+                extracted_text = pdf_text
+                if parse_error:
+                    error_msg = f"PDF parse error: {parse_error}"
+                elif not pdf_text:
+                    error_msg = "PDF parsing yielded no text and OCR not available."
+                else:
+                    error_msg = f"PDF parsing produced short text ({len(pdf_text)} chars) and no OCR handler provided."
+                logger.warning(f"{company_no_for_logging}: {error_msg}")
 
     else:
         error_msg = f"Unknown content_type '{content_type_input}' for text extraction."

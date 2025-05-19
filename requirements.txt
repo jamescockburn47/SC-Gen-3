@@ -6,6 +6,7 @@ beautifulsoup4
 # Data handling
 pandas
 PyPDF2
+pdfminer.six
 python-docx # For importing docx
 openpyxl
 xmltodict==0.13.0
