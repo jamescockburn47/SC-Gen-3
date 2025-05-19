@@ -218,6 +218,9 @@ def init_session_state():
         "ch_last_narrative": None, "ch_last_batch_metrics": {},
         "consult_digest_model": config.OPENAI_MODEL_DEFAULT if 'config' in globals() and hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o", # Fallback if config not loaded
         "ch_analysis_summaries_for_injection": [], # List of (company_id, title_for_list, summary_text)
+
+        # Storage for consolidated counsel memo export
+        "consult_memo_docx_path": None,
         
         # For "Improve Prompt" in Consult Counsel
         "user_instruction_main_text_area_value": "", 
@@ -460,11 +463,13 @@ with st.sidebar:
             with st.spinner("Updating Digest..."):
                 new_interactions_block = "\n\n---\n\n".join(st.session_state.session_history)
                 existing_digest_text = st.session_state.latest_digest_content
-                update_digest_prompt = (f"Consolidate the following notes. Integrate the NEW interactions into the EXISTING digest, "
-                                    f"maintaining a coherent and concise summary. Aim for a maximum of around 2000 words for the entire updated digest. "
-                                    f"Preserve key facts and decisions.\n\n"
-                                    f"EXISTING DIGEST (for topic: {st.session_state.current_topic}):\n{existing_digest_text}\n\n"
-                                    f"NEW INTERACTIONS (to integrate for topic: {st.session_state.current_topic}):\n{new_interactions_block}")
+                update_digest_prompt = (
+                    f"Prepare an updated counsel memo integrating the NEW interactions into the EXISTING memo. "
+                    f"Focus on conclusions and recommended next steps rather than a dialogue transcript. "
+                    f"Limit the entire memo to around 2000 words.\n\n"
+                    f"EXISTING MEMO (for topic: {st.session_state.current_topic}):\n{existing_digest_text}\n\n"
+                    f"NEW INTERACTIONS (to consolidate for topic: {st.session_state.current_topic}):\n{new_interactions_block}"
+                )
                 try:
                     current_ai_model_for_digest = st.session_state.consult_digest_model
                     updated_digest_text = "Error updating digest."
@@ -481,10 +486,41 @@ with st.sidebar:
                     digest_file_path.write_text(updated_digest_text, encoding="utf-8")
                     historical_digest_path = APP_BASE_PATH / "memory" / "digests" / f"history_{st.session_state.current_topic}.md"
                     with historical_digest_path.open("a", encoding="utf-8") as fp_hist:
-                        fp_hist.write(f"\n\n### Update: {_dt.datetime.now():%Y-%m-%d %H:%M} (Model: {current_ai_model_for_digest})\n{updated_digest_text}\n---\n")
-                    st.success(f"Digest for '{st.session_state.current_topic}' updated."); st.session_state.session_history = []; st.session_state.latest_digest_content = updated_digest_text; st.rerun()
+                        fp_hist.write(
+                            f"\n\n### Update: {_dt.datetime.now():%Y-%m-%d %H:%M} (Model: {current_ai_model_for_digest})\n{updated_digest_text}\n---\n"
+                        )
+
+                    # Create downloadable counsel memo from updated digest
+                    ts_now_str = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+                    memo_docx_path = APP_BASE_PATH / "exports" / f"{st.session_state.current_topic}_{ts_now_str}_memo.docx"
+                    try:
+                        doc = Document()
+                        doc.add_heading(f"Counsel Memo: {st.session_state.current_topic}", 0)
+                        doc.add_paragraph(updated_digest_text)
+                        doc.save(memo_docx_path)
+                        st.session_state.consult_memo_docx_path = str(memo_docx_path)
+                    except Exception as e_docx:
+                        logger.error(f"Memo DOCX generation failed: {e_docx}", exc_info=True)
+
+                    st.success(f"Digest for '{st.session_state.current_topic}' updated.")
+                    st.session_state.session_history = []
+                    st.session_state.latest_digest_content = updated_digest_text
+                    st.rerun()
                 except Exception as e_digest_update:
                     st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
+
+    memo_path_str = st.session_state.get("consult_memo_docx_path")
+    if memo_path_str:
+        memo_path = _pl.Path(memo_path_str)
+        if memo_path.exists():
+            with open(memo_path, "rb") as fp_memo:
+                st.download_button(
+                    "📥 Download Counsel Memo",
+                    fp_memo,
+                    memo_path.name,
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    key="download_consult_memo_btn",
+                )
 
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
