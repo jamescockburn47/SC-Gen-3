@@ -477,7 +477,7 @@ def run_batch_company_analysis(
                         summarizer_func_to_call = gemini_summarise_ch_docs
                         logger.debug(f"Batch Run {run_id} ({company_no}): Using Gemini ('{ai_model_to_use_for_summary}') for CH summary.")
                     elif openai_key_ok:
-                        ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o"  # type: ignore
+                        ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT  # type: ignore
                         summarizer_func_to_call = gpt_summarise_ch_docs
                         logger.debug(f"Batch Run {run_id} ({company_no}): Using OpenAI ('{ai_model_to_use_for_summary}') for CH summary (Gemini unavailable).")
                     
