@@ -15,33 +15,36 @@ from typing import Dict, List, Optional, Tuple, Union, TypeAlias, Any # Make sur
 
 # Attempt to import config first as it defines logger and other constants
 try:
-    import config # Import the config module
-    from config import (
-        APPLICATION_SCRATCH_DIR,
-        CH_API_MAX_RETRY, # Not directly used in this file after refactor, but ch_api_utils uses it
-        CH_API_RETRY_BACKOFF_FACTOR, # Not directly used
-        CH_API_RETRY_STATUS_FORCELIST,
-        CH_API_TIMEOUT, # Not directly used
-        logger, 
-        USER_AGENT, 
-        MIN_MEANINGFUL_TEXT_LEN
-    )
-except ImportError:
-    logging.basicConfig(level=logging.INFO) # Fallback logger
-    logger = logging.getLogger(__name__)
-    logger.critical("CRITICAL: config.py could not be imported in ch_pipeline.py. Many features will fail or use incorrect defaults.")
-    # Define fallback constants if config is missing, to allow parsing
-    APPLICATION_SCRATCH_DIR = Path("./scratch_fallback_ch_pipeline")
-    CH_API_RETRY_STATUS_FORCELIST = [429, 500, 502, 503, 504]
-    USER_AGENT = "StrategicComplianceGen3/1.0 (Fallback)"
-    MIN_MEANINGFUL_TEXT_LEN = 200
-    # Define a dummy config object or attributes if other parts of the code expect config.X
-    class DummyConfig:
-        GEMINI_MODEL_DEFAULT = "gemini-1.5-pro-latest" # Example
-        OPENAI_MODEL_DEFAULT = "gpt-4o-mini" # Example
-        GEMINI_API_KEY = None
-        OPENAI_API_KEY = None
-    config = DummyConfig() # type: ignore
+    import config
+except ImportError as import_err:
+    # Try loading config relative to this file
+    import importlib.util
+    import sys
+    config_path = Path(__file__).resolve().parent / "config.py"
+    try:
+        spec = importlib.util.spec_from_file_location("config", config_path)
+        if spec and spec.loader:
+            config = importlib.util.module_from_spec(spec)
+            sys.modules["config"] = config
+            spec.loader.exec_module(config)
+        else:
+            raise import_err
+    except Exception as e_load:
+        logging.basicConfig(level=logging.INFO)
+        logger = logging.getLogger(__name__)
+        logger.error(f"Failed to load config.py from {config_path}: {e_load}")
+        raise
+
+from config import (
+    APPLICATION_SCRATCH_DIR,
+    CH_API_MAX_RETRY,  # Not directly used in this file after refactor, but ch_api_utils uses it
+    CH_API_RETRY_BACKOFF_FACTOR,  # Not directly used
+    CH_API_RETRY_STATUS_FORCELIST,
+    CH_API_TIMEOUT,  # Not directly used
+    logger,
+    CH_API_USER_AGENT,
+    MIN_MEANINGFUL_TEXT_LEN,
+)
 
 
 try:
@@ -119,8 +122,8 @@ except ImportError:
 # Global Configurations and Constants (now mostly from config.py)
 # ---------------------------------------------------------------------------- #
 CH_API_BASE_URL = "https://api.company-information.service.gov.uk"
-# USER_AGENT is imported from config
-DEFAULT_HEADERS = {"User-Agent": USER_AGENT if USER_AGENT else "StrategicComplianceGen3/1.0 (Default)"} 
+# CH_API_USER_AGENT is imported from config
+DEFAULT_HEADERS = {"User-Agent": CH_API_USER_AGENT if CH_API_USER_AGENT else "StrategicComplianceGen3/1.0 (Default)"}
 SCRATCH_DIR = Path(APPLICATION_SCRATCH_DIR).expanduser() 
 SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
 # CH_API_RETRY_STATUS_FORCELIST is imported from config
