@@ -132,7 +132,22 @@ except ImportError:
 # --- Constants ---
 RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE = ["accounts", "confirmation-statement", "annual-return"]
 METADATA_YEARS_TO_SCAN = 10 
-ACCOUNTS_PRIORITY_ORDER = ["group", "consolidated", "full accounts", "full", "small full", "small", "medium", "interim", "initial", "dormant", "micro-entity", "abridged", "filleted"]
+ACCOUNTS_PRIORITY_ORDER = [
+    "group",
+    "consolidated",
+    "legacy",
+    "full accounts",
+    "full",
+    "small full",
+    "small",
+    "medium",
+    "interim",
+    "initial",
+    "dormant",
+    "micro-entity",
+    "abridged",
+    "filleted",
+]
 CRN_REGEX = r'\b([A-Z0-9]{2}\d{6}|\d{6,8})\b'
 # Maximum number of subsidiaries to visualise in diagrams. Set to ``None`` for no limit.
 SUBSIDIARY_VIZ_LIMIT: Optional[int] = 20
@@ -308,8 +323,11 @@ def _fetch_and_parse_selected_documents(
         doc_desc, doc_date_str, doc_category = doc_item.get('description','N/A'), doc_item.get('date','N/A'), doc_item.get("category","N/A")
         priority_for_ocr = False
         if doc_category == "accounts":
-            if is_topco_analyzing_subs and ("group" in doc_desc.lower() or "consolidated" in doc_desc.lower()): priority_for_ocr = True
-            elif not is_topco_analyzing_subs and "full" in doc_desc.lower(): priority_for_ocr = True
+            desc_lower = doc_desc.lower()
+            if is_topco_analyzing_subs and any(keyword in desc_lower for keyword in ACCOUNTS_PRIORITY_ORDER):
+                priority_for_ocr = True
+            elif not is_topco_analyzing_subs and "full" in desc_lower:
+                priority_for_ocr = True
         if not doc_item.get("links", {}).get("document_metadata"):
             processed_content_list.append({"metadata":doc_item, "parsed_data":{"errors":["No download link"], "document_description":doc_desc, "document_date":doc_date_str}}); continue
         raw_content_dict, fetched_types_list, fetch_err_msg = _fetch_document_content_from_ch(company_number, doc_item)
@@ -398,7 +416,7 @@ def analyze_company_group_structure(
         if docs_to_process_metadata:
             for idx, itm in enumerate(docs_to_process_metadata):
                 desc = str(itm.get("description", "")).lower()
-                if "group" in desc or "consolidated" in desc:
+                if any(keyword in desc for keyword in ACCOUNTS_PRIORITY_ORDER):
                     results["recommended_doc_idx"] = idx
                     break
         if metadata_only:
@@ -601,10 +619,14 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
             st.warning("No filings found to select.")  # type: ignore
         else:
             st.subheader("Select Filings to Analyze")  # type: ignore
-            options_labels = [f"{d.get('date','N/A')} - {d.get('description','N/A')}" for d in docs_meta]
+            options_labels = [
+                f"{d.get('date','N/A')} | {d.get('category','N/A')} | {d.get('type','N/A')} | {d.get('description','N/A')}"
+                for d in docs_meta
+            ]
             default_sel: List[str] = []
             rec_idx = results.get("recommended_doc_idx")
             if rec_idx is not None and 0 <= rec_idx < len(options_labels):
+                options_labels[rec_idx] += " [RECOMMENDED]"
                 default_sel.append(options_labels[rec_idx])
                 st.caption("Latest group/consolidated accounts pre-selected")  # type: ignore
             selected_display = st.multiselect(

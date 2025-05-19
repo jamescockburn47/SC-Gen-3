@@ -37,6 +37,8 @@ Without OCR, many Companies House PDF filings cannot be parsed, meaning group-st
 
 When subsidiaries are listed after analysis the application now aggregates entries from all retrieved years into a single deduplicated list. Previously only the most recent year's subsidiaries were shown.
 
+Companies House may label some group accounts filings as "legacy". The system now automatically highlights these documents when presenting the list of available filings.
+
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
 
 ## Citation Verification
