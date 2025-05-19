@@ -39,7 +39,6 @@ if str(APP_ROOT_DIR) not in sys.path:
 import config
 import ch_pipeline
 import app_utils
-import ai_utils
 from about_page import render_about_page # Changed from show_about_page
 try:
     import group_structure_utils
@@ -143,7 +142,7 @@ try:
     )
     from about_page import render_about_page
     from ch_pipeline import run_batch_company_analysis
-    from ai_utils import get_improved_prompt # Added import
+    from ai_utils import get_improved_prompt, check_protocol_compliance
     # from ai_utils import _gemini_generate_content_with_retry_and_tokens # Not directly used in app.py typically
 except ImportError as e_app_utils_more:
     st.error(f"Fatal Error: Could not import app utilities or CH pipeline: {e_app_utils_more}")
@@ -240,6 +239,9 @@ def init_session_state():
         "group_structure_viz_data": None, # Matches UI
         "suggested_parent_cn_for_rerun": None, # Matches UI
         "group_structure_parent_timeline": [] # Matches UI
+        ,"last_ai_response_text": ""
+        ,"last_protocol_compliance_report": ""
+        ,"last_protocol_compliance_tokens": (0,0)
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -486,6 +488,32 @@ with st.sidebar:
                 except Exception as e_digest_update:
                     st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
 
+    st.markdown("---")
+    st.markdown("### Protocol Compliance")
+    if st.button("Run Protocol Compliance Report", key="protocol_compliance_button"):
+        latest_output = st.session_state.get("last_ai_response_text", "")
+        if not latest_output:
+            st.warning("No AI output available for compliance check.")
+        else:
+            with st.spinner("Checking compliance..."):
+                report_text, rpt_p, rpt_c = check_protocol_compliance(latest_output, PROTO_TEXT)
+            st.session_state.last_protocol_compliance_report = report_text
+            st.session_state.last_protocol_compliance_tokens = (rpt_p, rpt_c)
+            if "Error:" in report_text:
+                st.error(report_text)
+            else:
+                st.success("Compliance check complete. See report below.")
+
+    if st.session_state.get("last_protocol_compliance_report"):
+        with st.expander("Latest Compliance Report", expanded=False):
+            st.text_area(
+                "Protocol Compliance Report",
+                st.session_state.last_protocol_compliance_report,
+                height=250,
+            )
+            p_tok, c_tok = st.session_state.last_protocol_compliance_tokens
+            st.caption(f"Prompt tokens: {p_tok}, Completion tokens: {c_tok}")
+
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
@@ -622,6 +650,7 @@ with tab_consult:
                         raise ValueError(f"Unsupported model type for consultation: {consult_model_name}")
 
                     st.session_state.session_history.append(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name}):\n{ai_response_text}") # Log the used instruction
+                    st.session_state.last_ai_response_text = ai_response_text
                     with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
 
                     with st.expander("📊 Run Details & Export"):
