@@ -139,7 +139,7 @@ from docx import Document
 try:
     from app_utils import (
         summarise_with_title, fetch_url_content, find_company_number,
-        extract_text_from_uploaded_file
+        extract_text_from_uploaded_file, build_consult_docx
     )
     from about_page import render_about_page
     from ch_pipeline import run_batch_company_analysis
@@ -485,6 +485,21 @@ with st.sidebar:
                     st.success(f"Digest for '{st.session_state.current_topic}' updated."); st.session_state.session_history = []; st.session_state.latest_digest_content = updated_digest_text; st.rerun()
                 except Exception as e_digest_update:
                     st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
+
+    if st.button("Export Memo", key="export_memo_button_sidebar"):
+        memo_text = st.session_state.latest_digest_content or "\n\n---\n\n".join(st.session_state.session_history)
+        if not memo_text:
+            st.warning("No digest or history available for export.")
+        else:
+            try:
+                ts_now_str = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+                memo_filename = f"{st.session_state.current_topic}_{ts_now_str}_memo.docx"
+                memo_path = APP_BASE_PATH / "exports" / memo_filename
+                build_consult_docx(memo_text, st.session_state.current_topic, memo_path)
+                with open(memo_path, "rb") as fp_memo:
+                    st.download_button("Download Memo", fp_memo, memo_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+            except Exception as e_memo:
+                st.error(f"Memo export failed: {e_memo}")
 
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")

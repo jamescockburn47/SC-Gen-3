@@ -2,9 +2,10 @@
 
 import json
 import re
-import logging 
-from typing import Tuple, Optional, List, Dict, Union, Callable, Any 
+import logging
+from typing import Tuple, Optional, List, Dict, Union, Callable, Any
 import io
+import pathlib as _pl
 
 # --- Core Dependencies ---
 # Pylance will report these as unresolved if not in the environment.
@@ -391,3 +392,26 @@ def extract_text_from_uploaded_file(
         text_content = None 
         
     return text_content, error_message
+
+
+def build_consult_docx(content: str, topic: str, output_path: _pl.Path) -> _pl.Path:
+    """Create a DOCX memo from the provided text.
+
+    Parameters
+    ----------
+    content:
+        The full text to include in the document.
+    topic:
+        Current consultation topic for the heading.
+    output_path:
+        Path where the generated file will be saved.
+    """
+    if Document is None:
+        raise ImportError("python-docx library not available")
+
+    doc = Document()
+    doc.add_heading(f"Consultation Memo - {topic}", level=0)
+    for para in content.split("\n"):
+        doc.add_paragraph(para)
+    doc.save(output_path)
+    return output_path
