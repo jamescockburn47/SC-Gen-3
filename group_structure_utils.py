@@ -174,22 +174,39 @@ def _parse_document_content(
     
     if content_to_parse is None and 'pdf' in doc_content_data and doc_content_data['pdf'] is not None:
         content_to_parse, content_type_to_parse = doc_content_data['pdf'], 'pdf'
-        if is_priority_for_ocr and ocr_handler:
-            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' prioritized for OCR if needed.")
-        elif ocr_handler:
-            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed; OCR not priority for this stage.")
+        if ocr_handler:
+            if is_priority_for_ocr:
+                logger.info(
+                    f"GS Parse: PDF '{doc_metadata.get('description')}' prioritized for OCR if needed."
+                )
+            else:
+                logger.info(
+                    f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed; OCR available if needed."
+                )
         else:
-            logger.info(f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed without OCR handler.")
+            logger.info(
+                f"GS Parse: PDF '{doc_metadata.get('description')}' will be parsed without OCR handler."
+            )
 
     if content_to_parse is not None and content_type_to_parse is not None:
         parsed_result["source_format_parsed"] = content_type_to_parse.upper()
         try:
-            actual_ocr_handler_for_call = ocr_handler if (content_type_to_parse == 'pdf' and is_priority_for_ocr) else None
+            actual_ocr_handler_for_call = (
+                ocr_handler if (content_type_to_parse == 'pdf' and ocr_handler) else None
+            )
             extracted_text, pages_processed, extraction_error = extract_text_from_document(
                 content_to_parse, content_type_to_parse, company_no, actual_ocr_handler_for_call
             )
             if content_type_to_parse == 'pdf' and actual_ocr_handler_for_call and pages_processed > 0:
                 parsed_result["pages_ocrd"] = pages_processed
+                if is_priority_for_ocr:
+                    logger.info(
+                        f"OCR executed for prioritized PDF '{doc_metadata.get('description')}'."
+                    )
+                else:
+                    logger.info(
+                        f"OCR triggered for '{doc_metadata.get('description')}' due to low or no text."
+                    )
             if extraction_error: parsed_result["extraction_error"] = str(extraction_error)
             elif not extracted_text: parsed_result["text_content"] = ""
             else:
