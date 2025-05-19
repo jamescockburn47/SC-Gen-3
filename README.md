@@ -1,0 +1,34 @@
+# Strategic Counsel Gen 3
+
+## Setup Overview
+
+1. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. **Create a `.env` file** in the project root containing the required environment variables.
+3. **Run the application**
+   ```bash
+   streamlit run app.py
+   ```
+
+## Required Environment Variables
+
+The application loads configuration from a `.env` file or the host environment. At a minimum, set the following keys:
+
+- `CH_API_KEY` – Companies House API key for retrieving filings.
+- `OPENAI_API_KEY` – API key for GPT models (used for summarisation and drafting).
+- `GEMINI_API_KEY` – API key for Google Gemini models.
+- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
+- `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
+- `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
+
+Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
+
+## Enabling OCR with AWS Textract
+
+Within the **Group Structure** tab of the application there is a checkbox labelled **"Use AWS Textract for PDF OCR"**. When checked, the system attempts to initialise AWS Textract using the credentials above. Scanned or image-based PDFs from Companies House will then be sent to Textract for optical character recognition before analysis.
+
+Without OCR, many Companies House PDF filings cannot be parsed, meaning group-structure analysis may miss critical information contained in scanned documents. If OCR fails to initialise or the checkbox is left unchecked, only PDFs containing embedded text are analysed.
+
+Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.

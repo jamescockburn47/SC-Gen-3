@@ -162,6 +162,7 @@ def render_about_page():
     st.markdown(f"**AWS Textract OCR Utilities Available (backend check):** `{textract_available_str}`")
     st.markdown(f"**Protocol File Referenced:** `'{proto_path_name_str}'` {proto_text_status_str}")
 
+    st.info("See [README.md](README.md) for environment variables and optional OCR setup details.")
 
     st.markdown("---")
     st.caption("Strategic Counsel | AI-Augmented Professional Workspace")
