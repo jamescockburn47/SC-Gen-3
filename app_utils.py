@@ -52,12 +52,13 @@ except ImportError:
 
 # --- Imports from project ---
 from config import (
-    get_openai_client, 
-    get_ch_session, 
-    PROTO_TEXT_FALLBACK, 
-    LOADED_PROTO_TEXT, 
+    get_openai_client,
+    get_ch_session,
+    PROTO_TEXT_FALLBACK,
+    LOADED_PROTO_TEXT,
     # logger is already imported/handled above
-    MIN_MEANINGFUL_TEXT_LEN 
+    MIN_MEANINGFUL_TEXT_LEN,
+    OPENAI_MODEL_DEFAULT,
 )
 
 # --- Optional AWS SDK imports ---
@@ -96,7 +97,7 @@ def _word_cap(word_count: int) -> int:
 
 def summarise_with_title(
     text: str,
-    model_name_selected: str, # This parameter seems unused as the function hardcodes "gpt-4o-mini"
+    model_name_selected: str,  # Currently ignored; OPENAI_MODEL_DEFAULT is used
     topic: str, 
 ) -> Tuple[str, str]:
     """
@@ -110,8 +111,8 @@ def summarise_with_title(
     word_count = len(text.split())
     summary_word_cap = _word_cap(word_count)
     text_to_summarise = text[:15000] 
-    max_tokens_for_response = int(summary_word_cap * 2.0) 
-    openai_model_for_this_task = "gpt-4o-mini" 
+    max_tokens_for_response = int(summary_word_cap * 2.0)
+    openai_model_for_this_task = OPENAI_MODEL_DEFAULT
     openai_client = get_openai_client()
 
     if not openai_client:

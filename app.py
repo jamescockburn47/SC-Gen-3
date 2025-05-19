@@ -168,14 +168,12 @@ for rel_p in REQUIRED_DIRS_REL:
     except OSError as e_mkdir: st.error(f"Fatal Error creating directory {abs_p.name}: {e_mkdir}"); st.stop()
 
 MODEL_PRICES_PER_1K_TOKENS_GBP: Dict[str, float] = {
-    "gpt-4o": 0.0040, "gpt-4-turbo": 0.0080, "gpt-3.5-turbo": 0.0004, "gpt-4o-mini": 0.00012,
-    config.GEMINI_MODEL_DEFAULT: 0.0028,
-    "gemini-1.5-pro-latest": 0.0028, # Ensure this matches config.GEMINI_MODEL_DEFAULT if it's the one
-    "gemini-1.5-flash-latest": 0.00028
+    "gpt-4.1": 0.0080,
+    "gemini-3.5": 0.0028,
 }
 MODEL_ENERGY_WH_PER_1K_TOKENS: Dict[str, float] = {
-    "gpt-4o": 0.15, "gpt-4-turbo": 0.4, "gpt-3.5-turbo": 0.04, "gpt-4o-mini": 0.02,
-    config.GEMINI_MODEL_DEFAULT: 0.2, "gemini-1.5-pro-latest": 0.2, "gemini-1.5-flash-latest": 0.05
+    "gpt-4.1": 0.4,
+    "gemini-3.5": 0.2,
 }
 KETTLE_WH: int = 360
 
@@ -222,7 +220,7 @@ def init_session_state():
         "latest_digest_content": "",
         "document_processing_complete": True, "ch_last_digest_path": None, "ch_last_df": None,
         "ch_last_narrative": None, "ch_last_batch_metrics": {},
-        "consult_digest_model": config.OPENAI_MODEL_DEFAULT if 'config' in globals() and hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o", # Fallback if config not loaded
+        "consult_digest_model": config.OPENAI_MODEL_DEFAULT if 'config' in globals() and hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1", # Fallback if config not loaded
         "ch_analysis_summaries_for_injection": [], # List of (company_id, title_for_list, summary_text)
         
         # For "Improve Prompt" in Consult Counsel
@@ -446,7 +444,7 @@ with st.sidebar:
                         elif not raw_content or not raw_content.strip(): title, summary = f"Empty: {src_id[:40]}...", "No text content found or extracted."
                         else: # Successfully got raw content
                             # Use a cost-effective model for these quick summaries
-                            title, summary = summarise_with_title(raw_content, "gpt-4o-mini", st.session_state.current_topic, PROTO_TEXT)
+                            title, summary = summarise_with_title(raw_content, config.OPENAI_MODEL_DEFAULT, st.session_state.current_topic, PROTO_TEXT)
     
                         if "Error" not in title and "Empty" not in title: # Cache if successfully processed
                             try: summary_cache_file.write_text(json.dumps({"t":title,"s":summary,"src":src_id}),encoding="utf-8")
