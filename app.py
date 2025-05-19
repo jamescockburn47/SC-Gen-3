@@ -40,6 +40,7 @@ if str(APP_ROOT_DIR) not in sys.path:
 import config
 import ch_pipeline
 import app_utils
+import pleading_drafter
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
 try:
@@ -253,6 +254,10 @@ def init_session_state():
         ,"auto_protocol_compliance": True
         ,"citation_links_updated": False
         ,"last_citations_found": []
+        ,"pleading_template": ""
+        ,"pleading_facts": ""
+        ,"pleading_draft": ""
+        ,"pleading_tokens": {}
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -580,18 +585,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_pleading, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
-        "🕸️ Company Group Structure",  # Include group structure tab
+        "📄 Pleadings Drafter",
+        "🕸️ Company Group Structure",
         "ℹ️ About",
         "📖 Instructions"
     ])
 else:
     # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_pleading, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
+        "📄 Pleadings Drafter",
         "ℹ️ About",
         "📖 Instructions"
     ])
@@ -1214,6 +1221,38 @@ with tab_ch_analysis:
         if "total_cost_gbp" in metrics_data:
              cost_display = f"£{metrics_data.get('total_cost_gbp', 0.0)::.4f}"
         m_col3.metric("Est. Cost", cost_display)
+
+# --- Pleadings Drafter Tab ---
+with tab_pleading:
+    st.markdown("### Pleadings Drafter")
+    template_dir = APP_BASE_PATH / "pleading_templates"
+    templates = [p.name for p in template_dir.glob("*.md")] + [p.name for p in template_dir.glob("*.docx")]
+    templates.sort()
+    if templates:
+        current_template = st.selectbox("Select Template", templates, key="pleading_template_select", index=templates.index(st.session_state.pleading_template) if st.session_state.pleading_template in templates else 0)
+        st.session_state.pleading_template = current_template
+    else:
+        st.info("No templates available.")
+        current_template = ""
+
+    st.session_state.pleading_facts = st.text_area("Key Facts", value=st.session_state.pleading_facts, height=150, key="pleading_facts_area")
+
+    if st.button("📝 Generate Draft", key="generate_pleading_button") and current_template:
+        with st.spinner("Generating pleading..."):
+            final_text, token_map = pleading_drafter.draft_from_template(template_dir / current_template, st.session_state.pleading_facts)
+            st.session_state.pleading_draft = final_text
+            st.session_state.pleading_tokens = token_map
+
+    st.session_state.pleading_draft = st.text_area("Draft Pleading", value=st.session_state.pleading_draft, height=300, key="pleading_draft_area")
+
+    if st.session_state.pleading_draft:
+        docx_bytes = None
+        try:
+            docx_bytes = pleading_drafter.export_to_docx(st.session_state.pleading_draft)
+        except Exception as e_docx:
+            st.warning(f"DOCX export failed: {e_docx}")
+        if docx_bytes:
+            st.download_button("📥 Download DOCX", data=docx_bytes, file_name="pleading_draft.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 # --- START: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
 with tab_group_structure:

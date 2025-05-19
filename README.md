@@ -32,6 +32,10 @@ Gemini is the preferred model for generating summaries. If an OpenAI API key is 
 
 Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
 
+## Pleadings Drafter
+
+The **Pleadings Drafter** tab lets you merge reusable pleading templates with the facts of your case. Select one of the Markdown or DOCX templates in `pleading_templates/`, provide key facts, and the app will generate missing sections using the configured Gemini model. The final text can be edited in place and exported to DOCX.
+
 ## Enabling OCR with AWS Textract
 
 Within the **Group Structure** tab of the application there is a checkbox labelled **"Use AWS Textract for PDF OCR"**. When checked, the system attempts to initialise AWS Textract using the credentials above. Scanned or image-based PDFs from Companies House will then be sent to Textract for optical character recognition before analysis.
