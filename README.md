@@ -48,6 +48,14 @@ Companies House may label some group accounts filings as "legacy". The system no
 
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
 
+## Case Timeline
+
+The **📅 Case Timeline** tab lets you upload court docket files in CSV, JSON or PDF format. Dates and descriptions are extracted and displayed chronologically. Long descriptions are summarised using the same AI routines as the Companies House analysis. If the optional `streamlit_timeline` component is installed the events are shown on an interactive timeline, otherwise a simple table is displayed.
+
+## Evidence Index
+
+The **🔍 Evidence Index** tab allows you to upload supporting documents and store them with embeddings for semantic search. Provide a document type and relevance tags on upload, then search the index to retrieve summaries and download links.
+
 ## Citation Verification
 
 After each consultation the app scans the AI response for case names and statute titles. It then checks any uploaded documents for matching text and falls back to searching trusted public sources such as Bailii or Casemine. Citations that cannot be located are tagged with `[UNVERIFIED]` and a warning is shown asking you to provide the original document or a direct link. A form appears letting you enter a URL or reference for each citation and these links are stored in `verified_sources.json` for later checking. Verified citations are cached in the same file to speed up later runs.

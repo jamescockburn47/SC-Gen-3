@@ -16,3 +16,8 @@ openai
 google-generativeai
 boto3 # Includes botocore
 python-dotenv
+streamlit-timeline
+
+numpy
+faiss-cpu
+
