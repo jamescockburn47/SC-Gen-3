@@ -59,6 +59,9 @@ from config import (
     # logger is already imported/handled above
     MIN_MEANINGFUL_TEXT_LEN,
     OPENAI_MODEL_DEFAULT,
+    get_gemini_model,
+    GEMINI_MODEL_DEFAULT,
+    GEMINI_API_KEY,
 )
 
 # --- Optional AWS SDK imports ---
@@ -98,7 +101,7 @@ def _word_cap(word_count: int) -> int:
 def summarise_with_title(
     text: str,
     model_name_selected: str,  # Currently ignored; OPENAI_MODEL_DEFAULT is used
-    topic: str, 
+    topic: str,
 ) -> Tuple[str, str]:
     """
     Generates a short title and summary for UI display of uploaded documents.
@@ -110,24 +113,67 @@ def summarise_with_title(
 
     word_count = len(text.split())
     summary_word_cap = _word_cap(word_count)
-    text_to_summarise = text[:15000] 
+    text_to_summarise = text[:15000]
     max_tokens_for_response = int(summary_word_cap * 2.0)
     openai_model_for_this_task = OPENAI_MODEL_DEFAULT
     openai_client = get_openai_client()
 
-    if not openai_client:
-        logger.error(f"OpenAI client not available for summarise_with_title (topic: {topic}).")
-        return "Summarization Error", "OpenAI client not configured."
-
-    current_protocol_text = LOADED_PROTO_TEXT 
+    current_protocol_text = LOADED_PROTO_TEXT
     prompt = (
         f"Return ONLY valid JSON in the format {{\"title\": \"<A concise title of less than 12 words>\", "
         f"\"summary\": \"<A summary of approximately {summary_word_cap} words, capturing the essence of the text>\"}}.\n\n"
         f"Analyze the following text:\n---\n{text_to_summarise}\n---"
     )
-    raw_response_content: Optional[str] = None 
+    raw_response_content: Optional[str] = None
     title = "Error in Summarization"
     summary = "Could not generate summary due to an issue."
+
+    # ─── Prefer Gemini if API key available ──────────────────────────────
+    if GEMINI_API_KEY:
+        gemini_model_client, init_error = get_gemini_model(GEMINI_MODEL_DEFAULT)
+        if gemini_model_client:
+            try:
+                gemini_prompt = f"{current_protocol_text}\n\n{prompt}"
+                gemini_response = gemini_model_client.generate_content(gemini_prompt)
+                if hasattr(gemini_response, 'text') and gemini_response.text:
+                    raw_response_content = gemini_response.text
+                elif hasattr(gemini_response, 'parts') and gemini_response.parts:
+                    raw_response_content = ''.join(part.text for part in gemini_response.parts if hasattr(part, 'text'))
+                if raw_response_content:
+                    raw_response_content = raw_response_content.strip()
+                    data = json.loads(raw_response_content)
+                    title = str(data.get("title", "Title Missing"))
+                    summary = str(data.get("summary", "Summary Missing"))
+                    logger.info(
+                        f"Successfully generated title/summary for topic '{topic}' using Gemini model {GEMINI_MODEL_DEFAULT}."
+                    )
+                    return title, summary
+                else:
+                    logger.error(
+                        f"Empty content in Gemini response for summarise_with_title (topic: {topic}). Falling back to OpenAI."
+                    )
+            except json.JSONDecodeError as e_json:
+                raw_preview = str(raw_response_content)[:200] if raw_response_content is not None else "N/A"
+                logger.error(
+                    f"JSONDecodeError in summarise_with_title using Gemini model {GEMINI_MODEL_DEFAULT}: {e_json}. Raw response: {raw_preview}..."
+                )
+            except Exception as e:
+                raw_preview = str(raw_response_content)[:200] if raw_response_content is not None else "N/A"
+                logger.error(
+                    f"Exception in summarise_with_title using Gemini model {GEMINI_MODEL_DEFAULT} for topic {topic}: {e}. Raw response: {raw_preview}...",
+                    exc_info=True,
+                )
+        else:
+            logger.error(
+                f"Failed to initialize Gemini model for summarise_with_title (topic: {topic}): {init_error}. Falling back to OpenAI."
+            )
+
+    # ─── OpenAI Fallback ─────────────────────────────────────────────────
+    if not openai_client:
+        logger.error(
+            f"OpenAI client not available for summarise_with_title (topic: {topic})."
+        )
+        return "Summarization Error", "OpenAI client not configured."
 
     try:
         response = openai_client.chat.completions.create(
