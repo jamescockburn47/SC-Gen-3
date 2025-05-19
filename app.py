@@ -142,6 +142,8 @@ try:
         find_company_number,
         extract_text_from_uploaded_file,
         build_consult_docx,
+        extract_legal_citations,
+        verify_citations,
     )
     from about_page import render_about_page
     from instructions_page import render_instructions_page
@@ -656,7 +658,22 @@ with tab_consult:
                         raise ValueError(f"Unsupported model type for consultation: {consult_model_name}")
 
                     st.session_state.session_history.append(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name}):\n{ai_response_text}") # Log the used instruction
+                    citations_found = extract_legal_citations(ai_response_text)
+                    verification = verify_citations(
+                        citations_found,
+                        uploaded_docs_list,
+                        APP_BASE_PATH / "verified_sources.json",
+                    )
+                    unverified = [c for c, ok in verification.items() if not ok]
+                    for c in unverified:
+                        ai_response_text = ai_response_text.replace(c, f"{c} [UNVERIFIED]")
                     st.session_state.last_ai_response_text = ai_response_text
+                    if unverified:
+                        st.warning(
+                            "The following citations could not be verified:\n" +
+                            "\n".join(f"- {c}" for c in unverified) +
+                            "\nPlease upload the source or provide a direct link."
+                        )
                     with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
 
                     with st.expander("📊 Run Details & Export"):
