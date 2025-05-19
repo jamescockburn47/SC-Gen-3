@@ -475,7 +475,7 @@ with st.sidebar:
             with st.spinner(f"Processing {len(sources_needing_processing)} new document(s)/URL(s)..."):
                 progress_bar_docs = st.progress(0.0)
                 for idx, src_id in enumerate(list(sources_needing_processing)): # Convert set to list for indexing
-                    title, summary, truncated_flag = "Error", "Processing Failed"
+                    title, summary, truncated_flag = "Error", "Processing Failed", False
                     # Simple cache key based on source identifier hash
                     cache_file_name = f"summary_{_hashlib.sha256(src_id.encode()).hexdigest()[:16]}.json"
                     summary_cache_file = summaries_cache_dir_for_topic / cache_file_name
