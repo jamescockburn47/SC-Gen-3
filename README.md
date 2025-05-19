@@ -31,4 +31,6 @@ Within the **Group Structure** tab of the application there is a checkbox labell
 
 Without OCR, many Companies House PDF filings cannot be parsed, meaning group-structure analysis may miss critical information contained in scanned documents. If OCR fails to initialise or the checkbox is left unchecked, only PDFs containing embedded text are analysed.
 
+When subsidiaries are listed after analysis the application now aggregates entries from all retrieved years into a single deduplicated list. Previously only the most recent year's subsidiaries were shown.
+
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
