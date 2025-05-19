@@ -42,6 +42,7 @@ import ch_pipeline
 import app_utils
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
+import damages_utils
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -253,6 +254,12 @@ def init_session_state():
         ,"auto_protocol_compliance": True
         ,"citation_links_updated": False
         ,"last_citations_found": []
+        ,"settlement_df": damages_utils.build_template_dataframe()
+        ,"settlement_commentary": ""
+        ,"settlement_export_path": None
+        ,"settlement_export_filename": None
+        ,"settlement_df": damages_utils.build_template_dataframe()
+        ,"settlement_commentary": ""
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -580,18 +587,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_group_structure, tab_settlement, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
-        "🕸️ Company Group Structure",  # Include group structure tab
+        "🕸️ Company Group Structure",
+        "💰 Settlement Estimator",
         "ℹ️ About",
         "📖 Instructions"
     ])
 else:
     # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_settlement, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
+        "💰 Settlement Estimator",
         "ℹ️ About",
         "📖 Instructions"
     ])
@@ -1267,6 +1276,73 @@ with tab_group_structure:
     else:
         st.error("Group Structure functionality is not available. The 'group_structure_utils' module might have failed to load.")
 # --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
+
+# --- START: SETTLEMENT ESTIMATOR TAB ---
+with tab_settlement:
+    st.header("\ud83d\udcb0 Settlement Estimator")
+
+    edited_df = st.data_editor(
+        st.session_state.settlement_df,
+        num_rows="dynamic",
+        key="settlement_editor",
+    )
+    st.session_state.settlement_df = damages_utils.calculate_ranges(edited_df)
+
+    st.dataframe(st.session_state.settlement_df)
+
+    total_low = st.session_state.settlement_df["lower_range"].sum()
+    total_high = st.session_state.settlement_df["upper_range"].sum()
+    st.metric(
+        "Estimated Range",
+        f"\u00a3{total_low:,.2f} - \u00a3{total_high:,.2f}",
+    )
+
+    if st.checkbox("Generate AI Risk Commentary", key="settlement_commentary_chk"):
+        st.session_state.settlement_commentary = damages_utils.generate_ai_commentary(
+            st.session_state.settlement_df
+        )
+
+    if st.session_state.settlement_commentary:
+        st.text_area(
+            "AI Commentary",
+            st.session_state.settlement_commentary,
+            height=200,
+        )
+
+    export_fmt = st.selectbox(
+        "Export format",
+        ["CSV", "PDF"],
+        key="settlement_export_format",
+    )
+
+    if st.button("Prepare Export", key="settlement_prepare_export"):
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"settlement_results_{ts}.{export_fmt.lower()}"
+        export_path = APP_BASE_PATH / "exports" / filename
+        try:
+            damages_utils.export_dataframe(
+                st.session_state.settlement_df, export_path, export_fmt.lower()
+            )
+            st.session_state.settlement_export_path = str(export_path)
+            st.session_state.settlement_export_filename = filename
+        except Exception as e:
+            st.session_state.settlement_export_path = None
+            st.error(f"Export failed: {e}")
+
+    if st.session_state.get("settlement_export_path"):
+        with open(st.session_state.settlement_export_path, "rb") as fp:
+            mime = (
+                "text/csv"
+                if st.session_state.settlement_export_filename.endswith(".csv")
+                else "application/pdf"
+            )
+            st.download_button(
+                "Download Results",
+                fp,
+                st.session_state.settlement_export_filename,
+                mime,
+            )
+# --- END: SETTLEMENT ESTIMATOR TAB ---
 
 with tab_about_rendered:
     render_about_page()
