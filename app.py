@@ -13,6 +13,7 @@ Key Changes:
 - CH Summaries can now be selected for injection into Counsel chat.
 - Added Protocol status display in sidebar.
 - Attempt to highlight "Red Flags" section from CH summaries.
+- Sidebar sections collapsed with expanders for easier navigation.
 """
 
 from __future__ import annotations
@@ -292,173 +293,198 @@ with st.sidebar:
                  </div>''', unsafe_allow_html=True)
 
     # --- Protocol Status Display ---
-    st.markdown("---"); st.markdown("### System Status")
-    protocol_status_message = ""
-    protocol_status_type = "info" # Can be "success", "warning", "error"
+    with st.expander("System Status", expanded=False):
+        protocol_status_message = ""
+        protocol_status_type = "info"  # Can be "success", "warning", "error"
 
-    if PROTO_LOAD_SUCCESS :
-        protocol_status_message = f"Protocol '{PROTO_PATH.name}' loaded (Hash: {PROTO_HASH})."
-        protocol_status_type = "success"
-    elif not PROTO_PATH.exists(): # Fallback because file not found
-        protocol_status_message = f"Protocol file '{PROTO_PATH.name}' not found. Using default protocol."
-        protocol_status_type = "warning"
-    else: # Fallback because file exists but error loading
-        protocol_status_message = f"Error loading protocol '{PROTO_PATH.name}'. Using default protocol."
-        protocol_status_type = "error"
-    
-    if protocol_status_type == "success":
-        st.success(protocol_status_message)
-    elif protocol_status_type == "warning":
-        st.warning(protocol_status_message)
-    else: # error
-        st.error(protocol_status_message)
+        if PROTO_LOAD_SUCCESS:
+            protocol_status_message = f"Protocol '{PROTO_PATH.name}' loaded (Hash: {PROTO_HASH})."
+            protocol_status_type = "success"
+        elif not PROTO_PATH.exists():
+            protocol_status_message = f"Protocol file '{PROTO_PATH.name}' not found. Using default protocol."
+            protocol_status_type = "warning"
+        else:
+            protocol_status_message = f"Error loading protocol '{PROTO_PATH.name}'. Using default protocol."
+            protocol_status_type = "error"
+
+        if protocol_status_type == "success":
+            st.success(protocol_status_message)
+        elif protocol_status_type == "warning":
+            st.warning(protocol_status_message)
+        else:
+            st.error(protocol_status_message)
     # --- End Protocol Status Display ---
 
 
-    st.markdown("---"); st.markdown("### AI Model Selection")
-    if not OPENAI_API_KEY_PRESENT: st.error("‼️ OpenAI API Key missing. OpenAI models will fail.")
-    if not GEMINI_API_KEY_PRESENT: st.warning("⚠️ Gemini API Key missing. Gemini models unavailable for consultation.")
+    with st.expander("AI Model Selection", expanded=False):
+        if not OPENAI_API_KEY_PRESENT:
+            st.error("‼️ OpenAI API Key missing. OpenAI models will fail.")
+        if not GEMINI_API_KEY_PRESENT:
+            st.warning("⚠️ Gemini API Key missing. Gemini models unavailable for consultation.")
 
-    all_available_models = list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys())
-    gpt_models = [m for m in all_available_models if m.startswith("gpt-") and OPENAI_API_KEY_PRESENT]
-    gemini_models_consult = [m for m in all_available_models if m.startswith("gemini-") and GEMINI_API_KEY_PRESENT]
+        all_available_models = list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys())
+        gpt_models = [m for m in all_available_models if m.startswith("gpt-") and OPENAI_API_KEY_PRESENT]
+        gemini_models_consult = [m for m in all_available_models if m.startswith("gemini-") and GEMINI_API_KEY_PRESENT]
 
-    selectable_models_consult = gpt_models + gemini_models_consult
-    if not selectable_models_consult: st.error("No AI models available for Consultation/Digests!");
+        selectable_models_consult = gpt_models + gemini_models_consult
+        if not selectable_models_consult:
+            st.error("No AI models available for Consultation/Digests!")
 
-    default_consult_model_index = 0
-    if "consult_digest_model" in st.session_state and \
-       st.session_state.consult_digest_model in selectable_models_consult:
-        try: default_consult_model_index = selectable_models_consult.index(st.session_state.consult_digest_model)
-        except ValueError: default_consult_model_index = 0 # Fallback if selected model is no longer available
-    elif selectable_models_consult: # If list is not empty, set to first item
-        st.session_state.consult_digest_model = selectable_models_consult[0]
-    else: # No models available
-        st.session_state.consult_digest_model = None
+        default_consult_model_index = 0
+        if "consult_digest_model" in st.session_state and st.session_state.consult_digest_model in selectable_models_consult:
+            try:
+                default_consult_model_index = selectable_models_consult.index(st.session_state.consult_digest_model)
+            except ValueError:
+                default_consult_model_index = 0
+        elif selectable_models_consult:
+            st.session_state.consult_digest_model = selectable_models_consult[0]
+        else:
+            st.session_state.consult_digest_model = None
 
+        st.session_state.consult_digest_model = st.selectbox(
+            "Model for Consultation & Digests:",
+            selectable_models_consult,
+            index=default_consult_model_index,
+            key="consult_digest_model_selector_main",
+            disabled=not selectable_models_consult,
+        )
+        if st.session_state.consult_digest_model:
+            price_consult = MODEL_PRICES_PER_1K_TOKENS_GBP.get(st.session_state.consult_digest_model, 0.0)
+            st.caption(f"Est. Cost/1k Tokens: £{price_consult:.5f}")
+        else:
+            st.caption("Est. Cost/1k Tokens: N/A")
 
-    st.session_state.consult_digest_model = st.selectbox(
-        "Model for Consultation & Digests:", selectable_models_consult,
-        index=default_consult_model_index,
-        key="consult_digest_model_selector_main",
-        disabled=not selectable_models_consult
-    )
-    if st.session_state.consult_digest_model:
-        price_consult = MODEL_PRICES_PER_1K_TOKENS_GBP.get(st.session_state.consult_digest_model, 0.0)
-        st.caption(f"Est. Cost/1k Tokens: £{price_consult:.5f}")
-    else:
-        st.caption("Est. Cost/1k Tokens: N/A")
+        st.caption("CH Summaries will use Gemini by default for speed (if configured), or fallback to OpenAI.")
 
-    st.markdown("---")
-    st.markdown("CH Summaries will use Gemini by default for speed (if configured), or fallback to OpenAI.")
-    st.markdown("---")
+        ai_temp = st.slider(
+            "AI Creativity (Temperature)",
+            0.0,
+            1.0,
+            0.2,
+            0.05,
+            key="ai_temp_slider_sidebar",
+        )
 
-    ai_temp = st.slider("AI Creativity (Temperature)", 0.0, 1.0, 0.2, 0.05, key="ai_temp_slider_sidebar")
+    with st.expander("Context Injection", expanded=False):
+        memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
+        loaded_memories_from_file: List[str] = []
+        if memory_file_path.exists():
+            try:
+                mem_data = json.loads(memory_file_path.read_text(encoding="utf-8"))
+                if isinstance(mem_data, list):
+                    loaded_memories_from_file = [str(item) for item in mem_data if isinstance(item, str)]
+            except Exception as e_mem_load:
+                st.warning(f"Could not load memory file {memory_file_path.name}: {e_mem_load}")
+        selected_mem_snippets = st.multiselect(
+            "Inject Memories",
+            loaded_memories_from_file,
+            default=[mem for mem in st.session_state.loaded_memories if mem in loaded_memories_from_file],
+            key="mem_multiselect_sidebar",
+        )
+        st.session_state.loaded_memories = selected_mem_snippets
 
-    st.markdown("---"); st.markdown("### Context Injection")
-    memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
-    loaded_memories_from_file: List[str] = []
-    if memory_file_path.exists():
-        try:
-            mem_data = json.loads(memory_file_path.read_text(encoding="utf-8"))
-            if isinstance(mem_data, list):
-                loaded_memories_from_file = [str(item) for item in mem_data if isinstance(item, str)]
-        except Exception as e_mem_load: st.warning(f"Could not load memory file {memory_file_path.name}: {e_mem_load}")
-    selected_mem_snippets = st.multiselect("Inject Memories", loaded_memories_from_file,
-        default=[mem for mem in st.session_state.loaded_memories if mem in loaded_memories_from_file], # Persist selection
-        key="mem_multiselect_sidebar")
-    st.session_state.loaded_memories = selected_mem_snippets
+        digest_file_path = APP_BASE_PATH / "memory" / "digests" / f"{st.session_state.current_topic}.md"
+        if digest_file_path.exists():
+            try:
+                st.session_state.latest_digest_content = digest_file_path.read_text(encoding="utf-8")
+            except Exception as e_digest_load:
+                st.warning(f"Could not load digest {digest_file_path.name}: {e_digest_load}")
+                st.session_state.latest_digest_content = ""
+        else:
+            st.session_state.latest_digest_content = ""
+        inject_digest_checkbox = st.checkbox(
+            "Inject Digest",
+            value=bool(st.session_state.latest_digest_content),
+            key="inject_digest_checkbox_sidebar",
+            disabled=not bool(st.session_state.latest_digest_content),
+        )
 
-    digest_file_path = APP_BASE_PATH / "memory" / "digests" / f"{st.session_state.current_topic}.md"
-    if digest_file_path.exists():
-        try: st.session_state.latest_digest_content = digest_file_path.read_text(encoding="utf-8")
-        except Exception as e_digest_load: st.warning(f"Could not load digest {digest_file_path.name}: {e_digest_load}"); st.session_state.latest_digest_content = ""
-    else: st.session_state.latest_digest_content = "" # Ensure it's empty if file doesn't exist
-    inject_digest_checkbox = st.checkbox("Inject Digest", value=bool(st.session_state.latest_digest_content), # Default based on content
-        key="inject_digest_checkbox_sidebar", disabled=not bool(st.session_state.latest_digest_content))
+        st.markdown("---"); st.markdown("### Document Intake (for Context)")
+        uploaded_docs_list = st.file_uploader(
+            "Upload Docs (PDF, DOCX, TXT)",
+            ["pdf", "docx", "txt"],
+            accept_multiple_files=True,
+            key="doc_uploader_sidebar",
+        )
+        urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
+        urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
 
-    st.markdown("---"); st.markdown("### Document Intake (for Context)")
-    uploaded_docs_list = st.file_uploader("Upload Docs (PDF, DOCX, TXT)", ["pdf", "docx", "txt"],
-        accept_multiple_files=True, key="doc_uploader_sidebar")
-    urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
-    urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
-
-    current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process)
-    processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
-    sources_needing_processing = current_source_identifiers - processed_summary_ids_in_session
-
-    newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str]] = [] # Define here for wider scope
-    if sources_needing_processing and st.session_state.document_processing_complete:
-        st.session_state.document_processing_complete = False # Prevent re-processing during rerun
-        summaries_cache_dir_for_topic = APP_BASE_PATH / "summaries" / st.session_state.current_topic
-        summaries_cache_dir_for_topic.mkdir(parents=True, exist_ok=True)
-
-        with st.spinner(f"Processing {len(sources_needing_processing)} new document(s)/URL(s)..."):
-            progress_bar_docs = st.progress(0.0)
-            for idx, src_id in enumerate(list(sources_needing_processing)): # Convert set to list for indexing
-                title, summary = "Error", "Processing Failed"
-                # Simple cache key based on source identifier hash
-                cache_file_name = f"summary_{_hashlib.sha256(src_id.encode()).hexdigest()[:16]}.json"
-                summary_cache_file = summaries_cache_dir_for_topic / cache_file_name
-
-                if summary_cache_file.exists():
-                    try:
-                        cached_data = json.loads(summary_cache_file.read_text(encoding="utf-8"))
-                        title, summary = cached_data.get("t", "Cache Title Error"), cached_data.get("s", "Cache Summary Error")
-                    except Exception: title, summary = "Error", "Processing Failed (Cache Read)" # More specific cache error
-
-                if title == "Error" or "Cache" in title : # If cache load failed or it was an error state
-                    raw_content, error_msg = None, None
-                    # Check if it's an uploaded file or a URL
-                    if src_id in {f.name for f in uploaded_docs_list}: # Is it an uploaded file?
-                        file_obj = next((f for f in uploaded_docs_list if f.name == src_id), None)
-                        if file_obj: raw_content, error_msg = extract_text_from_uploaded_file(io.BytesIO(file_obj.getvalue()), src_id)
-                    elif src_id in urls_to_process: # Is it a URL?
-                        raw_content, error_msg = fetch_url_content(src_id)
-
-                    if error_msg: title, summary = f"Error: {src_id[:40]}...", error_msg
-                    elif not raw_content or not raw_content.strip(): title, summary = f"Empty: {src_id[:40]}...", "No text content found or extracted."
-                    else: # Successfully got raw content
-                        # Use a cost-effective model for these quick summaries
-                        title, summary = summarise_with_title(raw_content, "gpt-4o-mini", st.session_state.current_topic, PROTO_TEXT)
-
-                    if "Error" not in title and "Empty" not in title: # Cache if successfully processed
-                        try: summary_cache_file.write_text(json.dumps({"t":title,"s":summary,"src":src_id}),encoding="utf-8")
-                        except Exception as e_c: logger.warning(f"Cache write failed for {src_id}: {e_c}")
-
-                newly_processed_summaries_for_this_run_sidebar.append((src_id, title, summary))
-                progress_bar_docs.progress((idx + 1) / len(sources_needing_processing))
-
-            # Update session state: keep existing ones that are still valid, add new ones
-            existing_to_keep = [s for s in st.session_state.processed_summaries if s[0] in current_source_identifiers and s[0] not in sources_needing_processing]
-            st.session_state.processed_summaries = existing_to_keep + newly_processed_summaries_for_this_run_sidebar
-            progress_bar_docs.empty()
-        st.session_state.document_processing_complete = True; st.rerun() # Rerun to update UI with new summaries
-
-    # Selection for Uploaded/URL Summaries
-    st.session_state.selected_summary_texts = [] # Reset before populating based on checkbox state
-    if st.session_state.processed_summaries:
-        st.markdown("---"); st.markdown("### Available Doc/URL Summaries (Select to Inject)")
-        for idx, (s_id, title, summary_text) in enumerate(st.session_state.processed_summaries):
-            checkbox_key = f"sum_sel_{_hashlib.md5(s_id.encode()).hexdigest()}"
-            is_newly_processed = any(s_id == item[0] for item in newly_processed_summaries_for_this_run_sidebar)
-            # Default to checked if newly processed, or if previously checked (and still exists)
-            default_checked = is_newly_processed or st.session_state.get(checkbox_key, False)
-            is_injected = st.checkbox(f"{idx+1}. {title[:40]}...", value=default_checked, key=checkbox_key, help=f"Source: {s_id}\nSummary: {summary_text[:200]}...")
-            if is_injected: st.session_state.selected_summary_texts.append(f"UPLOADED DOCUMENT/URL SUMMARY ('{title}'):\n{summary_text}")
-
-
-    # Selection for CH Analysis Summaries
-    selected_ch_summary_texts_for_injection_temp = [] # Temp list for this run
-    if st.session_state.ch_analysis_summaries_for_injection:
-        st.markdown("---"); st.markdown("### CH Analysis Summaries (Select to Inject)")
-        for idx, (company_id, title_for_list, summary_text) in enumerate(st.session_state.ch_analysis_summaries_for_injection):
-            ch_checkbox_key = f"ch_sum_sel_{_hashlib.md5(company_id.encode() + title_for_list.encode()).hexdigest()}"
-            # Default to False unless explicitly checked by the user.
-            is_ch_summary_injected = st.checkbox(f"{idx+1}. CH: {title_for_list[:40]}...", value=st.session_state.get(ch_checkbox_key, False), key=ch_checkbox_key, help=f"Company: {company_id}\nSummary: {summary_text[:200]}...")
-            if is_ch_summary_injected:
-                selected_ch_summary_texts_for_injection_temp.append(f"COMPANIES HOUSE ANALYSIS SUMMARY FOR {company_id} ({title_for_list}):\n{summary_text}")
-    # This state is now dynamically built when creating context for AI rather than storing selection list in session_state permanently
+        current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process)
+        processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
+        sources_needing_processing = current_source_identifiers - processed_summary_ids_in_session
+    
+        newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str]] = [] # Define here for wider scope
+        if sources_needing_processing and st.session_state.document_processing_complete:
+            st.session_state.document_processing_complete = False # Prevent re-processing during rerun
+            summaries_cache_dir_for_topic = APP_BASE_PATH / "summaries" / st.session_state.current_topic
+            summaries_cache_dir_for_topic.mkdir(parents=True, exist_ok=True)
+    
+            with st.spinner(f"Processing {len(sources_needing_processing)} new document(s)/URL(s)..."):
+                progress_bar_docs = st.progress(0.0)
+                for idx, src_id in enumerate(list(sources_needing_processing)): # Convert set to list for indexing
+                    title, summary = "Error", "Processing Failed"
+                    # Simple cache key based on source identifier hash
+                    cache_file_name = f"summary_{_hashlib.sha256(src_id.encode()).hexdigest()[:16]}.json"
+                    summary_cache_file = summaries_cache_dir_for_topic / cache_file_name
+    
+                    if summary_cache_file.exists():
+                        try:
+                            cached_data = json.loads(summary_cache_file.read_text(encoding="utf-8"))
+                            title, summary = cached_data.get("t", "Cache Title Error"), cached_data.get("s", "Cache Summary Error")
+                        except Exception: title, summary = "Error", "Processing Failed (Cache Read)" # More specific cache error
+    
+                    if title == "Error" or "Cache" in title : # If cache load failed or it was an error state
+                        raw_content, error_msg = None, None
+                        # Check if it's an uploaded file or a URL
+                        if src_id in {f.name for f in uploaded_docs_list}: # Is it an uploaded file?
+                            file_obj = next((f for f in uploaded_docs_list if f.name == src_id), None)
+                            if file_obj: raw_content, error_msg = extract_text_from_uploaded_file(io.BytesIO(file_obj.getvalue()), src_id)
+                        elif src_id in urls_to_process: # Is it a URL?
+                            raw_content, error_msg = fetch_url_content(src_id)
+    
+                        if error_msg: title, summary = f"Error: {src_id[:40]}...", error_msg
+                        elif not raw_content or not raw_content.strip(): title, summary = f"Empty: {src_id[:40]}...", "No text content found or extracted."
+                        else: # Successfully got raw content
+                            # Use a cost-effective model for these quick summaries
+                            title, summary = summarise_with_title(raw_content, "gpt-4o-mini", st.session_state.current_topic, PROTO_TEXT)
+    
+                        if "Error" not in title and "Empty" not in title: # Cache if successfully processed
+                            try: summary_cache_file.write_text(json.dumps({"t":title,"s":summary,"src":src_id}),encoding="utf-8")
+                            except Exception as e_c: logger.warning(f"Cache write failed for {src_id}: {e_c}")
+    
+                    newly_processed_summaries_for_this_run_sidebar.append((src_id, title, summary))
+                    progress_bar_docs.progress((idx + 1) / len(sources_needing_processing))
+    
+                # Update session state: keep existing ones that are still valid, add new ones
+                existing_to_keep = [s for s in st.session_state.processed_summaries if s[0] in current_source_identifiers and s[0] not in sources_needing_processing]
+                st.session_state.processed_summaries = existing_to_keep + newly_processed_summaries_for_this_run_sidebar
+                progress_bar_docs.empty()
+            st.session_state.document_processing_complete = True; st.rerun() # Rerun to update UI with new summaries
+    
+        # Selection for Uploaded/URL Summaries
+        st.session_state.selected_summary_texts = [] # Reset before populating based on checkbox state
+        if st.session_state.processed_summaries:
+            st.markdown("---"); st.markdown("### Available Doc/URL Summaries (Select to Inject)")
+            for idx, (s_id, title, summary_text) in enumerate(st.session_state.processed_summaries):
+                checkbox_key = f"sum_sel_{_hashlib.md5(s_id.encode()).hexdigest()}"
+                is_newly_processed = any(s_id == item[0] for item in newly_processed_summaries_for_this_run_sidebar)
+                # Default to checked if newly processed, or if previously checked (and still exists)
+                default_checked = is_newly_processed or st.session_state.get(checkbox_key, False)
+                is_injected = st.checkbox(f"{idx+1}. {title[:40]}...", value=default_checked, key=checkbox_key, help=f"Source: {s_id}\nSummary: {summary_text[:200]}...")
+                if is_injected: st.session_state.selected_summary_texts.append(f"UPLOADED DOCUMENT/URL SUMMARY ('{title}'):\n{summary_text}")
+    
+    
+        # Selection for CH Analysis Summaries
+        selected_ch_summary_texts_for_injection_temp = [] # Temp list for this run
+        if st.session_state.ch_analysis_summaries_for_injection:
+            st.markdown("---"); st.markdown("### CH Analysis Summaries (Select to Inject)")
+            for idx, (company_id, title_for_list, summary_text) in enumerate(st.session_state.ch_analysis_summaries_for_injection):
+                ch_checkbox_key = f"ch_sum_sel_{_hashlib.md5(company_id.encode() + title_for_list.encode()).hexdigest()}"
+                # Default to False unless explicitly checked by the user.
+                is_ch_summary_injected = st.checkbox(f"{idx+1}. CH: {title_for_list[:40]}...", value=st.session_state.get(ch_checkbox_key, False), key=ch_checkbox_key, help=f"Company: {company_id}\nSummary: {summary_text[:200]}...")
+                if is_ch_summary_injected:
+                    selected_ch_summary_texts_for_injection_temp.append(f"COMPANIES HOUSE ANALYSIS SUMMARY FOR {company_id} ({title_for_list}):\n{summary_text}")
+        # This state is now dynamically built when creating context for AI rather than storing selection list in session_state permanently
 
 
     st.markdown("---")
@@ -495,36 +521,35 @@ with st.sidebar:
                 except Exception as e_digest_update:
                     st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
 
-    st.markdown("---")
-    st.markdown("### Protocol Compliance")
-    st.session_state.auto_protocol_compliance = st.checkbox(
-        "Auto-check after each response",
-        value=st.session_state.get("auto_protocol_compliance", True),
-        key="auto_protocol_compliance_checkbox",
-    )
-    if st.button("Run Protocol Compliance Report", key="protocol_compliance_button"):
-        latest_output = st.session_state.get("last_ai_response_text", "")
-        if not latest_output:
-            st.warning("No AI output available for compliance check.")
-        else:
-            with st.spinner("Checking compliance..."):
-                report_text, rpt_p, rpt_c = check_protocol_compliance(latest_output, PROTO_TEXT)
-            st.session_state.last_protocol_compliance_report = report_text
-            st.session_state.last_protocol_compliance_tokens = (rpt_p, rpt_c)
-            if "Error:" in report_text:
-                st.error(report_text)
+    with st.expander("Protocol Compliance", expanded=False):
+        st.session_state.auto_protocol_compliance = st.checkbox(
+            "Auto-check after each response",
+            value=st.session_state.get("auto_protocol_compliance", True),
+            key="auto_protocol_compliance_checkbox",
+        )
+        if st.button("Run Protocol Compliance Report", key="protocol_compliance_button"):
+            latest_output = st.session_state.get("last_ai_response_text", "")
+            if not latest_output:
+                st.warning("No AI output available for compliance check.")
             else:
-                st.success("Compliance check complete. See report below.")
+                with st.spinner("Checking compliance..."):
+                    report_text, rpt_p, rpt_c = check_protocol_compliance(latest_output, PROTO_TEXT)
+                st.session_state.last_protocol_compliance_report = report_text
+                st.session_state.last_protocol_compliance_tokens = (rpt_p, rpt_c)
+                if "Error:" in report_text:
+                    st.error(report_text)
+                else:
+                    st.success("Compliance check complete. See report below.")
 
-    if st.session_state.get("last_protocol_compliance_report"):
-        with st.expander("Latest Compliance Report", expanded=False):
-            st.text_area(
-                "Protocol Compliance Report",
-                st.session_state.last_protocol_compliance_report,
-                height=250,
-            )
-            p_tok, c_tok = st.session_state.last_protocol_compliance_tokens
-            st.caption(f"Prompt tokens: {p_tok}, Completion tokens: {c_tok}")
+        if st.session_state.get("last_protocol_compliance_report"):
+            with st.expander("Latest Compliance Report", expanded=False):
+                st.text_area(
+                    "Protocol Compliance Report",
+                    st.session_state.last_protocol_compliance_report,
+                    height=250,
+                )
+                p_tok, c_tok = st.session_state.last_protocol_compliance_tokens
+                st.caption(f"Prompt tokens: {p_tok}, Completion tokens: {c_tok}")
 
 # ── Main Application Area UI (Using Tabs) ─────────────────────────
 st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
