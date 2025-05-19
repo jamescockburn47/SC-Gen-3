@@ -318,13 +318,27 @@ def _fetch_and_parse_selected_documents(
     return processed_content_list
 
 # --- Main Orchestrator Function ---
-def analyze_company_group_structure( 
-    company_number: str, api_key: str, base_scratch_dir: _pl.Path, 
-    logger: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None,
-    analysis_mode: AnalysisMode = "profile_check", 
-    target_subsidiary_crns: Optional[List[str]] = None, 
-    session_data: Optional[Dict[str, Any]] = None 
-) -> Dict[str, Any]: 
+def analyze_company_group_structure(
+    company_number: str,
+    api_key: str,
+    base_scratch_dir: _pl.Path,
+    logger: logging.Logger,
+    ocr_handler: Optional[OCRHandlerType] = None,
+    analysis_mode: AnalysisMode = "profile_check",
+    target_subsidiary_crns: Optional[List[str]] = None,
+    session_data: Optional[Dict[str, Any]] = None,
+    *,
+    docs_metadata_to_process: Optional[List[Dict[str, Any]]] = None,
+    years_to_scan: int = METADATA_YEARS_TO_SCAN,
+    metadata_only: bool = False,
+) -> Dict[str, Any]:
+    """High level orchestrator for group structure workflows.
+
+    If ``metadata_only`` is ``True`` the function returns filing metadata so the
+    caller can select which documents to process.  When ``docs_metadata_to_process``
+    is provided, only those filings will be fetched and parsed. ``years_to_scan``
+    controls the lookback window when fetching metadata.
+    """
     results: Dict[str, Any] = {
         "company_number_analyzed": company_number, "analysis_mode_executed": analysis_mode,
         "report_messages": [f"Group Structure Analysis for {company_number} - Mode: {analysis_mode}"],
@@ -353,19 +367,42 @@ def analyze_company_group_structure(
             report_messages.append(f"Proceeding with TopCo status as: {results['is_inferred_topco']} (profile unavailable).")
 
     docs_to_process_metadata: List[Dict[str, Any]] = []
-    if analysis_mode in ["find_parent", "list_subsidiaries"]:
-        end_year, start_year = datetime.now().year, datetime.now().year - METADATA_YEARS_TO_SCAN + 1
+    if analysis_mode in ["find_parent", "list_subsidiaries"] and docs_metadata_to_process is None:
+        end_year = datetime.now().year
+        start_year = end_year - max(1, years_to_scan) + 1
         categories = RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE
-        report_messages.append(f"Mode '{analysis_mode}': Fetching filings for {company_number}.")
-        doc_items, _, meta_err = get_ch_documents_metadata(
-            company_no=company_number, api_key=api_key, categories=categories, items_per_page=100, 
-            max_docs_to_fetch_meta=150, 
-            target_docs_per_category_in_date_range=(3 if analysis_mode == "find_parent" else 10), 
-            year_range=(start_year, end_year)
+        report_messages.append(
+            f"Mode '{analysis_mode}': Fetching filings for {company_number} over {years_to_scan} year(s)."
         )
-        if meta_err: report_messages.append(f"Metadata fetch warning: {meta_err}")
-        if doc_items: report_messages.append(f"Found {len(doc_items)} potentially relevant filings for {analysis_mode} mode."); docs_to_process_metadata = doc_items
-        else: report_messages.append(f"No relevant filings found for {analysis_mode} mode.")
+        doc_items, _, meta_err = get_ch_documents_metadata(
+            company_no=company_number,
+            api_key=api_key,
+            categories=categories,
+            items_per_page=100,
+            max_docs_to_fetch_meta=150,
+            target_docs_per_category_in_date_range=(3 if analysis_mode == "find_parent" else 10),
+            year_range=(start_year, end_year),
+        )
+        if meta_err:
+            report_messages.append(f"Metadata fetch warning: {meta_err}")
+        if doc_items:
+            report_messages.append(
+                f"Found {len(doc_items)} potentially relevant filings for {analysis_mode} mode."
+            )
+            docs_to_process_metadata = doc_items
+        else:
+            report_messages.append(f"No relevant filings found for {analysis_mode} mode.")
+        results["retrieved_doc_metadata"] = docs_to_process_metadata
+        if docs_to_process_metadata:
+            for idx, itm in enumerate(docs_to_process_metadata):
+                desc = str(itm.get("description", "")).lower()
+                if "group" in desc or "consolidated" in desc:
+                    results["recommended_doc_idx"] = idx
+                    break
+        if metadata_only:
+            return results
+    elif docs_metadata_to_process is not None:
+        docs_to_process_metadata = docs_metadata_to_process
 
     parsed_docs_data: List[Dict[str, Any]] = []
     if docs_to_process_metadata:
@@ -442,8 +479,13 @@ def analyze_company_group_structure(
 def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None):
     st.header("🏢 Company Group Structure Analysis") # type: ignore
     default_session_state = {
-        'gs_current_company_crn': "", 'gs_user_stated_topco': False, 'gs_analysis_results': {},
-        'gs_current_stage': "initial_input", 'gs_selected_subs_for_details': []
+        'gs_current_company_crn': "",
+        'gs_user_stated_topco': False,
+        'gs_analysis_results': {},
+        'gs_current_stage': "initial_input",
+        'gs_selected_subs_for_details': [],
+        'gs_years_choice': 5,
+        'gs_next_analysis_mode': None,
     }
     for key, default_val in default_session_state.items():
         if key not in st.session_state: st.session_state[key] = default_val # type: ignore
@@ -453,7 +495,18 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
         st.session_state.gs_current_company_crn = input_crn.strip().upper() # type: ignore
         st.session_state.gs_analysis_results, st.session_state.gs_current_stage, st.session_state.gs_user_stated_topco = {}, "initial_input", False # type: ignore
     
-    st.session_state.gs_user_stated_topco = st.checkbox("This company is the UK Top Parent", st.session_state.get('gs_user_stated_topco', False), key="gs_topco_checkbox_main") # type: ignore
+    st.session_state.gs_user_stated_topco = st.checkbox(
+        "This company is the UK Top Parent",
+        st.session_state.get('gs_user_stated_topco', False),
+        key="gs_topco_checkbox_main",
+    )  # type: ignore
+
+    st.session_state.gs_years_choice = st.selectbox(
+        "How many years of filings to retrieve?",
+        options=[2, 5, 10],
+        index=[2, 5, 10].index(st.session_state.get('gs_years_choice', 5)),
+        key="gs_years_choice_select",
+    )
 
     if st.button("1. Fetch Profile & Determine Path", key="gs_fetch_profile_btn"): # type: ignore
         if not st.session_state.get('gs_current_company_crn'): st.warning("Please enter a company number.") # type: ignore
@@ -481,17 +534,90 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
         col1, col2 = st.columns(2) # type: ignore
         with col1:
             if is_topco:
-                if st.button("2a. Analyze Group Accounts for Subsidiaries", key="gs_analyze_subs_btn"): # type: ignore
-                    with st.spinner(f"Fetching group accounts for {results.get('company_number_analyzed')}..."): # type: ignore
-                        updated_results = analyze_company_group_structure(results.get('company_number_analyzed',''), api_key, base_scratch_dir, logger, ocr_handler, "list_subsidiaries", session_data=results)
-                        st.session_state.gs_analysis_results, st.session_state.gs_current_stage = updated_results, "subs_listed" # type: ignore
-                        st.rerun() # type: ignore
+                if st.button("2a. Select Group Accounts to Analyze", key="gs_analyze_subs_btn"):  # type: ignore
+                    with st.spinner(
+                        f"Fetching group accounts for {results.get('company_number_analyzed')}..."
+                    ):  # type: ignore
+                        updated_results = analyze_company_group_structure(
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            "list_subsidiaries",
+                            session_data=results,
+                            metadata_only=True,
+                            years_to_scan=st.session_state.get('gs_years_choice', 5),
+                        )
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = "docs_listed"  # type: ignore
+                        st.session_state.gs_next_analysis_mode = "list_subsidiaries"  # type: ignore
+                        st.rerun()  # type: ignore
             else:
-                if st.button("2b. Find Parent Company", key="gs_find_parent_btn"): # type: ignore
-                    with st.spinner(f"Analyzing docs for {results.get('company_number_analyzed')} to find parent..."): # type: ignore
-                        updated_results = analyze_company_group_structure(results.get('company_number_analyzed',''), api_key, base_scratch_dir, logger, ocr_handler, "find_parent", session_data=results)
-                        st.session_state.gs_analysis_results, st.session_state.gs_current_stage = updated_results, "parent_analyzed" # type: ignore
-                        st.rerun() # type: ignore
+                if st.button("2b. Find Parent Company", key="gs_find_parent_btn"):  # type: ignore
+                    with st.spinner(
+                        f"Fetching filings for {results.get('company_number_analyzed')}..."
+                    ):  # type: ignore
+                        updated_results = analyze_company_group_structure(
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            "find_parent",
+                            session_data=results,
+                            metadata_only=True,
+                            years_to_scan=st.session_state.get('gs_years_choice', 5),
+                        )
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = "docs_listed"  # type: ignore
+
+                        st.session_state.gs_next_analysis_mode = "find_parent"  # type: ignore
+                        st.rerun()  # type: ignore
+
+    if st.session_state.get('gs_current_stage') == "docs_listed":
+        docs_meta = results.get("retrieved_doc_metadata", [])
+        if not docs_meta:
+            st.warning("No filings found to select.")  # type: ignore
+        else:
+            st.subheader("Select Filings to Analyze")  # type: ignore
+            options_labels = [f"{d.get('date','N/A')} - {d.get('description','N/A')}" for d in docs_meta]
+            default_sel: List[str] = []
+            rec_idx = results.get("recommended_doc_idx")
+            if rec_idx is not None and 0 <= rec_idx < len(options_labels):
+                default_sel.append(options_labels[rec_idx])
+                st.caption("Latest group/consolidated accounts pre-selected")  # type: ignore
+            selected_display = st.multiselect(
+                "Choose filings:",
+                options=options_labels,
+                default=default_sel,
+                key="gs_doc_multiselect",
+            )  # type: ignore
+            if st.button("Analyze Selected Filings", key="gs_process_docs_btn"):
+                indices = [options_labels.index(lbl) for lbl in selected_display]
+                chosen = [docs_meta[i] for i in indices]
+                if not chosen:
+                    st.warning("Please select at least one filing.")  # type: ignore
+                else:
+                    with st.spinner("Processing selected filings..."):
+                        updated_results = analyze_company_group_structure(
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            st.session_state.get('gs_next_analysis_mode', 'find_parent'),
+                            session_data=results,
+                            docs_metadata_to_process=chosen,
+                        )
+                        next_stage = (
+                            "subs_listed"
+                            if st.session_state.get('gs_next_analysis_mode') == "list_subsidiaries"
+                            else "parent_analyzed"
+                        )
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = next_stage  # type: ignore
+                        st.rerun()  # type: ignore
     
     if st.session_state.get('gs_current_stage') == "parent_analyzed":
         st.subheader("Parent Company Analysis Results"); # type: ignore
