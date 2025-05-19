@@ -6,6 +6,7 @@ import logging
 from typing import Tuple, Optional, List, Dict, Union, Callable, Any
 import io
 import pathlib as _pl
+from urllib.parse import quote_plus
 
 # --- Core Dependencies ---
 # Pylance will report these as unresolved if not in the environment.
@@ -426,3 +427,76 @@ def build_consult_docx(conversation: List[str], output_path: _pl.Path) -> None:
             _add_lines(resp)
 
     doc.save(output_path)
+
+
+def extract_legal_citations(text: str) -> List[str]:
+    """Return a list of case and statute citations found in ``text``."""
+    if not text:
+        return []
+
+    case_pat = re.compile(r"\b([A-Z][A-Za-z0-9&.,'\-\s]+ v\.? [A-Z][A-Za-z0-9&.,'\-\s]+ \[[0-9]{4}\])")
+    statute_pat = re.compile(r"\b([A-Z][A-Za-z0-9()\-\s]+ (?:Act|Regulations) [12][0-9]{3})\b")
+
+    citations: List[str] = []
+    for pat in (case_pat, statute_pat):
+        for m in pat.finditer(text):
+            cit = m.group(1).strip()
+            if cit not in citations:
+                citations.append(cit)
+    return citations
+
+
+def verify_citations(
+    citations: List[str],
+    uploaded_files: List[Any],
+    cache_file: Optional[_pl.Path] = None,
+) -> Dict[str, bool]:
+    """Check citations against uploaded files or public sources."""
+
+    verified_cache: Dict[str, bool] = {}
+    if cache_file and cache_file.exists():
+        try:
+            verified_cache = json.loads(cache_file.read_text())
+        except Exception as e:
+            logger.warning(f"Failed to read citation cache {cache_file}: {e}")
+
+    uploaded_texts: List[str] = []
+    for f in uploaded_files:
+        try:
+            txt, _ = extract_text_from_uploaded_file(io.BytesIO(f.getvalue()), f.name)
+            if txt:
+                uploaded_texts.append(txt.lower())
+        except Exception as e:
+            logger.error(f"Error extracting text from {getattr(f, 'name', '?')}: {e}")
+
+    results: Dict[str, bool] = {}
+    for cit in citations:
+        if cit in verified_cache:
+            results[cit] = True
+            continue
+
+        found = any(cit.lower() in t for t in uploaded_texts)
+
+        if not found:
+            search_bases = [
+                "https://www.bailii.org/search?q=",
+                "https://www.casemine.com/search?q=",
+            ]
+            for base in search_bases:
+                url = base + quote_plus(cit)
+                text, err = fetch_url_content(url)
+                if text and cit.lower() in text.lower():
+                    found = True
+                    break
+
+        results[cit] = found
+        if found:
+            verified_cache[cit] = True
+
+    if cache_file:
+        try:
+            cache_file.write_text(json.dumps(verified_cache, indent=2))
+        except Exception as e:
+            logger.warning(f"Failed to update citation cache {cache_file}: {e}")
+
+    return results

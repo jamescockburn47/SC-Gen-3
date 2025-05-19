@@ -34,3 +34,7 @@ Without OCR, many Companies House PDF filings cannot be parsed, meaning group-st
 When subsidiaries are listed after analysis the application now aggregates entries from all retrieved years into a single deduplicated list. Previously only the most recent year's subsidiaries were shown.
 
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
+
+## Citation Verification
+
+After each consultation the app scans the AI response for case names and statute titles. It then checks any uploaded documents for matching text and falls back to searching trusted public sources such as Bailii or Casemine. Citations that cannot be located are tagged with `[UNVERIFIED]` and a warning is shown asking you to provide the original document or a direct link. Verified citations are cached in `verified_sources.json` to speed up later runs.
