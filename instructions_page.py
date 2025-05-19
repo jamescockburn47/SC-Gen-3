@@ -15,6 +15,7 @@ def render_instructions_page():
            - Optionally click **Suggest Improved Prompt** to refine it.
            - Use the sidebar to inject previous digests, memories, uploads or web links.
            - Submit to receive AI-generated output and optionally export to DOCX or update your digest.
+           - The system runs a protocol compliance check after each response. Disable this via **Auto-check** in the sidebar if needed.
         3. **Companies House Analysis** – Summarise UK filings:
            - Enter company numbers and select year range and document categories.
            - Run the analysis; review and download summaries or CSV results.

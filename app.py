@@ -248,6 +248,7 @@ def init_session_state():
         ,"last_ai_response_text": ""
         ,"last_protocol_compliance_report": ""
         ,"last_protocol_compliance_tokens": (0,0)
+        ,"auto_protocol_compliance": True
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -496,6 +497,11 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### Protocol Compliance")
+    st.session_state.auto_protocol_compliance = st.checkbox(
+        "Auto-check after each response",
+        value=st.session_state.get("auto_protocol_compliance", True),
+        key="auto_protocol_compliance_checkbox",
+    )
     if st.button("Run Protocol Compliance Report", key="protocol_compliance_button"):
         latest_output = st.session_state.get("last_ai_response_text", "")
         if not latest_output:
@@ -675,6 +681,21 @@ with tab_consult:
                             "\nPlease upload the source or provide a direct link."
                         )
                     with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
+
+                    if st.session_state.get("auto_protocol_compliance", True):
+                        with st.spinner("Checking protocol compliance..."):
+                            rpt_text, rpt_p, rpt_c = check_protocol_compliance(ai_response_text, PROTO_TEXT)
+                        st.session_state.last_protocol_compliance_report = rpt_text
+                        st.session_state.last_protocol_compliance_tokens = (rpt_p, rpt_c)
+                        if "error:" in rpt_text.lower():
+                            st.warning(rpt_text)
+                        elif "non-compliant" in rpt_text.lower():
+                            st.error("Protocol issues detected. See details below.")
+                        else:
+                            st.success("Protocol compliance OK.")
+                        with st.expander("Protocol Compliance Report", expanded=False):
+                            st.text_area("Protocol Compliance Report", rpt_text, height=250)
+                            st.caption(f"Prompt tokens: {rpt_p}, Completion tokens: {rpt_c}")
 
                     with st.expander("📊 Run Details & Export"):
                         total_tokens = prompt_tokens + completion_tokens
