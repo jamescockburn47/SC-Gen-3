@@ -19,11 +19,16 @@ The application loads configuration from a `.env` file or the host environment. 
 - `CH_API_KEY` – Companies House API key for retrieving filings.
 - `OPENAI_API_KEY` – API key for GPT models (used for summarisation and drafting).
 - `GEMINI_API_KEY` – API key for Google Gemini models.
-- `GEMINI_MODEL_FOR_SUMMARIES` – override the Gemini model used for summaries (default `gemini-3.5`).
+- `GEMINI_MODEL_FOR_SUMMARIES` – override the Gemini model used for summaries (default `gemini-1.5-flash-latest`).
+- `OPENAI_MODEL` – default OpenAI model for analysis tasks and fallback summaries.
+- `GEMINI_MODEL_FOR_PROTOCOL_CHECK` – Gemini model used when checking responses against the strategic protocols.
+- `PROTOCOL_CHECK_MODEL_PROVIDER` – choose `gemini` (default) or `openai` for protocol compliance checks.
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
 - `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
+
+Gemini is the preferred model for generating summaries. If an OpenAI API key is provided, GPT models are used for analysis tasks and can power protocol checks when `PROTOCOL_CHECK_MODEL_PROVIDER` is set to `openai`.
 
 Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
 
