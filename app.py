@@ -493,7 +493,13 @@ with st.sidebar:
         else:
             try:
                 ts_now_str = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
-                memo_filename = f"{st.session_state.current_topic}_{ts_now_str}_memo.docx"
+import re
+# ...
+topic_for_filename = re.sub(r'[^\w\s-]', '', st.session_state.current_topic).strip()
+topic_for_filename = re.sub(r'[-\s]+', '-', topic_for_filename)
+if not topic_for_filename:
+    topic_for_filename = "untitled_topic"
+memo_filename = f"{topic_for_filename}_{ts_now_str}_memo.docx"
                 memo_path = APP_BASE_PATH / "exports" / memo_filename
                 build_consult_docx(memo_text, st.session_state.current_topic, memo_path)
                 with open(memo_path, "rb") as fp_memo:
