@@ -10,6 +10,7 @@ import shutil
 import subprocess # Not used in the current version, consider removing if not needed
 import tempfile # Not used in the current version, consider removing if not needed
 from collections import Counter, defaultdict # Counter not used
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union, TypeAlias, Any # Make sure TypeAlias is used or remove
 
@@ -191,6 +192,111 @@ def _cleanup_scratch_directory(scratch_dir: Path, keep_days: int):
     except Exception as e_cleanup:
         logger.error(f"Error during scratch directory cleanup ({scratch_dir}): {e_cleanup}")
 
+
+def _process_single_document(doc_info: Dict[str, Any], use_textract: bool) -> Dict[str, Any]:
+    """Process a single downloaded document and perform text extraction.
+
+    Parameters
+    ----------
+    doc_info : Dict[str, Any]
+        Dictionary describing the document. Expected keys are ``local_path``,
+        ``saved_content_type``, ``original_metadata`` and ``company_number``.
+    use_textract : bool
+        If ``True`` and a PDF is supplied, AWS Textract will be used when
+        available.
+
+    Returns
+    -------
+    Dict[str, Any]
+        The input ``doc_info`` dict extended with ``extracted_text``,
+        ``num_pages_ocrd`` and ``extraction_error`` fields describing the
+        extraction result.
+    """
+
+    company_no = doc_info.get("company_number", "N/A")
+    local_path = doc_info.get("local_path")
+    saved_content_type = doc_info.get("saved_content_type")
+    original_meta = doc_info.get("original_metadata", {})
+    tx_id_log = original_meta.get(
+        "transaction_id", Path(local_path).name if local_path else "N/A_proc"
+    )
+
+    result = {
+        **doc_info,
+        "extracted_text": None,
+        "num_pages_ocrd": 0,
+        "extraction_error": None,
+    }
+
+    if not local_path or not Path(local_path).exists() or not saved_content_type:
+        logger.warning(
+            f"Skipping processing for {tx_id_log}: path invalid/missing or type missing."
+        )
+        result["extraction_error"] = "Missing path/type or file does not exist"
+        return result
+
+    try:
+        if saved_content_type == "pdf":
+            doc_content_for_extraction = Path(local_path).read_bytes()
+        elif saved_content_type == "json":
+            doc_content_for_extraction = json.loads(
+                Path(local_path).read_text(encoding="utf-8")
+            )
+        else:
+            doc_content_for_extraction = Path(local_path).read_text(
+                encoding="utf-8", errors="ignore"
+            )
+
+        ocr_handler_to_use: Optional[OCRHandlerType] = None
+        if (
+            saved_content_type == "pdf"
+            and use_textract
+            and TEXTRACT_AVAILABLE
+            and perform_textract_ocr
+        ):
+            ocr_handler_to_use = perform_textract_ocr
+        elif saved_content_type == "pdf" and use_textract:
+            logger.warning(
+                f"PDF {tx_id_log}: Textract OCR not used/available for this run."
+            )
+            result["extraction_error"] = "PDF found, Textract OCR not configured for use."
+            return result
+
+        text, num_pages, extractor_error_msg = extract_text_from_document(
+            doc_content_input=doc_content_for_extraction,
+            content_type_input=saved_content_type,
+            company_no_for_logging=company_no,
+            ocr_handler=ocr_handler_to_use,
+        )
+
+        result.update(
+            {
+                "extracted_text": text,
+                "num_pages_ocrd": num_pages if ocr_handler_to_use else 0,
+                "extraction_error": extractor_error_msg,
+            }
+        )
+
+        if extractor_error_msg:
+            logger.error(
+                f"Extraction error for {tx_id_log} ({saved_content_type}): {extractor_error_msg}"
+            )
+        elif not text or len(text.strip()) < MIN_MEANINGFUL_TEXT_LEN:
+            logger.warning(
+                f"Short text from {tx_id_log} ({saved_content_type}): {len(text.strip()) if text else 0} chars."
+            )
+        else:
+            logger.info(
+                f"Extracted text from {tx_id_log} ({saved_content_type}, {len(text)} chars). OCR pages: {result['num_pages_ocrd']}"
+            )
+    except Exception as e_proc:
+        logger.exception(
+            f"Failed to process {tx_id_log} ({saved_content_type}): {e_proc}"
+        )
+        result["extraction_error"] = str(e_proc)
+
+    return result
+
 def get_relevant_filings_metadata(
     company_number: str,
     api_key: str,
@@ -258,7 +364,23 @@ class CompanyHouseDocumentPipeline:
         self.company_scratch_dir.mkdir(parents=True, exist_ok=True)
         logger.info(f"Initialised CompanyHouseDocumentPipeline for {self.company_number} | API Key: {'Yes' if ch_api_key else 'No'} | TextExt: {self.text_extractor_available} | TextractMod: {self.textract_available} | UseTextract: {self.use_textract_for_ocr_if_available}")
 
-    def run(self, years_back: int = 5, categories_to_fetch: List[str] = ["accounts", "confirmation-statement"]) -> Dict[str, Any]:
+    def run(
+        self,
+        years_back: int = 5,
+        categories_to_fetch: List[str] = ["accounts", "confirmation-statement"],
+        ocr_workers: int = 1,
+    ) -> Dict[str, Any]:
+        """Run the pipeline for this company.
+
+        Parameters
+        ----------
+        years_back : int, optional
+            How many years of filings metadata to fetch.
+        categories_to_fetch : List[str], optional
+            Companies House categories to include.
+        ocr_workers : int, optional
+            Number of parallel workers for OCR in ``_process_documents``.
+        """
         _cleanup_scratch_directory(self.company_scratch_dir, self.keep_days_in_scratch)
         if not self.ch_api_key:
             logger.error(f"Pipeline run for {self.company_number} aborted: CH API Key missing.")
@@ -270,7 +392,7 @@ class CompanyHouseDocumentPipeline:
             if meta_error: raise Exception(f"Metadata fetching failed: {meta_error}")
             logger.info(f"Fetched {len(filings_metadata)} filings metadata for {self.company_number} (last {years_back} yrs, cats: {categories_to_fetch})")
             downloaded_docs_info = self._download_filings(filings_metadata)
-            processed_docs_details = self._process_documents(downloaded_docs_info)
+            processed_docs_details = self._process_documents(downloaded_docs_info, ocr_workers=ocr_workers)
             summary_by_year = self._summarise_documents(processed_docs_details)
             return {"company_number": self.company_number, "company_profile": company_profile, "filings_metadata_count": len(filings_metadata),
                     "filings_downloaded_count": len(downloaded_docs_info), "filings_processed_count": len(processed_docs_details),
@@ -297,49 +419,46 @@ class CompanyHouseDocumentPipeline:
                 transaction_id = filing_item_meta.get("transaction_id", f"UnknownID_{filing_date_str.replace('-','') if filing_date_str else 'NODATE'}")
                 local_path = _save_raw_document_content(content_to_save, content_type_to_save_str, self.company_number, transaction_id, filing_year, self.company_scratch_dir)
                 if local_path:
-                    downloaded_docs_output.append({"local_path": local_path, "original_metadata": filing_item_meta, "saved_content_type": content_type_to_save_str, "all_fetched_types": fetched_types_list})
-                    logger.info(f"Saved {content_type_to_save_str.upper()} for doc TX_ID {transaction_id} ({self.company_number}) to {local_path.name}")
+                    downloaded_docs_output.append({
+                        "local_path": local_path,
+                        "original_metadata": filing_item_meta,
+                        "saved_content_type": content_type_to_save_str,
+                        "all_fetched_types": fetched_types_list,
+                        "company_number": self.company_number,
+                    })
+                    logger.info(
+                        f"Saved {content_type_to_save_str.upper()} for doc TX_ID {transaction_id} ({self.company_number}) to {local_path.name}"
+                    )
             except Exception as e_dl_loop: logger.exception(f"Error downloading/saving doc TX_ID {filing_item_meta.get('transaction_id', 'N/A_dl_loop')}: {e_dl_loop}")
         return downloaded_docs_output
 
-    def _process_documents(self, downloaded_docs_info_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        processed_docs_results = []
-        for doc_info in downloaded_docs_info_list:
-            local_path = doc_info.get("local_path")
-            saved_content_type = doc_info.get("saved_content_type")
-            original_meta = doc_info.get("original_metadata", {})
-            tx_id_log = original_meta.get('transaction_id', local_path.name if local_path else 'N/A_proc')
-            current_doc_result = {**doc_info, "extracted_text": None, "num_pages_ocrd": 0, "extraction_error": None}
-            if not local_path or not Path(local_path).exists() or not saved_content_type: # Check Path object for exists()
-                logger.warning(f"Skipping processing for {tx_id_log}: path invalid/missing or type missing.")
-                current_doc_result["extraction_error"] = "Missing path/type or file does not exist"
-                processed_docs_results.append(current_doc_result); continue
-            try:
-                doc_content_for_extraction: Union[bytes, str, Dict[str, Any]]
-                if saved_content_type == "pdf": doc_content_for_extraction = Path(local_path).read_bytes()
-                elif saved_content_type == "json": doc_content_for_extraction = json.loads(Path(local_path).read_text(encoding="utf-8"))
-                else: doc_content_for_extraction = Path(local_path).read_text(encoding="utf-8", errors="ignore")
+    def _process_documents(
+        self,
+        downloaded_docs_info_list: List[Dict[str, Any]],
+        ocr_workers: int = 1,
+    ) -> List[Dict[str, Any]]:
+        """Extract text from downloaded documents with optional parallel OCR."""
 
-                ocr_handler_to_use: Optional[OCRHandlerType] = None # Explicitly Optional
-                if saved_content_type == "pdf" and self.use_textract_for_ocr_if_available and TEXTRACT_AVAILABLE and perform_textract_ocr:
-                    ocr_handler_to_use = perform_textract_ocr
-                elif saved_content_type == "pdf":
-                    logger.warning(f"PDF {tx_id_log}: Textract OCR not used/available for this pipeline instance.")
-                    current_doc_result["extraction_error"] = "PDF found, Textract OCR not configured for use."
-                    processed_docs_results.append(current_doc_result); continue
-                
-                text, num_pages, extractor_error_msg = extract_text_from_document(
-                    doc_content_input=doc_content_for_extraction, content_type_input=saved_content_type,
-                    company_no_for_logging=self.company_number, ocr_handler=ocr_handler_to_use
-                )
-                current_doc_result.update({"extracted_text": text, "num_pages_ocrd": num_pages if ocr_handler_to_use else 0, "extraction_error": extractor_error_msg})
-                if extractor_error_msg: logger.error(f"Extraction error for {tx_id_log} ({saved_content_type}): {extractor_error_msg}")
-                elif not text or len(text.strip()) < MIN_MEANINGFUL_TEXT_LEN: logger.warning(f"Short text from {tx_id_log} ({saved_content_type}): {len(text.strip()) if text else 0} chars.")
-                else: logger.info(f"Extracted text from {tx_id_log} ({saved_content_type}, {len(text)} chars). OCR pages: {current_doc_result['num_pages_ocrd']}")
-            except Exception as e_proc:
-                logger.exception(f"Failed to process {tx_id_log} ({saved_content_type}): {e_proc}")
-                current_doc_result["extraction_error"] = str(e_proc)
-            processed_docs_results.append(current_doc_result)
+        for doc in downloaded_docs_info_list:
+            doc.setdefault("company_number", self.company_number)
+
+        if ocr_workers > 1:
+            with ThreadPoolExecutor(max_workers=ocr_workers) as executor:
+                futures = [
+                    executor.submit(
+                        _process_single_document,
+                        d,
+                        self.use_textract_for_ocr_if_available,
+                    )
+                    for d in downloaded_docs_info_list
+                ]
+                processed_docs_results = [f.result() for f in futures]
+        else:
+            processed_docs_results = [
+                _process_single_document(d, self.use_textract_for_ocr_if_available)
+                for d in downloaded_docs_info_list
+            ]
+
         return processed_docs_results
 
     def _summarise_documents(self, processed_docs_details: List[Dict[str, Any]]) -> Dict[int, str]:
@@ -393,16 +512,44 @@ class CompanyHouseDocumentPipeline:
 
 def run_batch_company_analysis(
     company_numbers_list: List[str],
-    selected_filings_metadata_by_company: Dict[str, List[Dict[str, Any]]], 
-    company_profiles_map: Dict[str, Dict[str, Any]], 
+    selected_filings_metadata_by_company: Dict[str, List[Dict[str, Any]]],
+    company_profiles_map: Dict[str, Dict[str, Any]],
     ch_api_key_batch: str,
-    model_prices_gbp: Dict[str, float], 
+    model_prices_gbp: Dict[str, float],
     specific_ai_instructions: str = "",
-    filter_keywords_str: Optional[List[str]] = None, 
-    base_scratch_dir: Path = SCRATCH_DIR, 
+    filter_keywords_str: Optional[List[str]] = None,
+    base_scratch_dir: Path = SCRATCH_DIR,
     keep_days: int = 7,
-    use_textract_ocr: bool = False 
+    use_textract_ocr: bool = False,
+    ocr_workers: int = 1
 ) -> Tuple[Optional[Path], Dict[str, Any]]:
+    """Run analysis for multiple companies and filings.
+
+    Parameters
+    ----------
+    company_numbers_list : List[str]
+        Companies to include in the batch run.
+    selected_filings_metadata_by_company : Dict[str, List[Dict[str, Any]]]
+        Mapping of company number to filings metadata to process.
+    company_profiles_map : Dict[str, Dict[str, Any]]
+        Pre-fetched company profiles.
+    ch_api_key_batch : str
+        API key for Companies House.
+    model_prices_gbp : Dict[str, float]
+        Token pricing information.
+    specific_ai_instructions : str, optional
+        Additional instructions for AI summarisation.
+    filter_keywords_str : Optional[List[str]], optional
+        Keywords used to filter extracted text.
+    base_scratch_dir : Path, optional
+        Base directory for temporary files.
+    keep_days : int, optional
+        How long to keep scratch files.
+    use_textract_ocr : bool, optional
+        Whether to attempt AWS Textract OCR.
+    ocr_workers : int, optional
+        Number of parallel workers for OCR when processing documents.
+    """
     run_timestamp = datetime.datetime.now()
     run_id = run_timestamp.strftime("%Y%m%d_%H%M%S")
     batch_output_dir = base_scratch_dir / f"batch_run_{run_id}"
