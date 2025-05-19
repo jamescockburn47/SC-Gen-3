@@ -146,3 +146,27 @@ h1, h2, h3 {
     color: #333;
 }
 
+/* Main content theming to mirror sidebar palette */
+.main h1,
+.main h2,
+.main h3,
+.main h4,
+.main h5 {
+    color: #001f3f;
+}
+
+.main .stButton>button {
+    border: 2px solid #d4a017;
+    background-color: #001f3f;
+    color: #d4a017;
+}
+
+.main .stButton>button:hover {
+    background-color: #d4a017;
+    color: #001f3f;
+}
+
+.main .block-container {
+    background-color: #ffffff;
+}
+
