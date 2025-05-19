@@ -274,7 +274,7 @@ def init_session_state():
 init_session_state()
 
 with st.sidebar:
-    st.image("static/logo/logo1.png", use_column_width=False)
+    st.image("static/logo/logo1.png", use_container_width=False)
     st.markdown("## Configuration")
     current_topic_input = st.text_input("Matter / Topic ID", st.session_state.current_topic, key="topic_input_sidebar")
     if current_topic_input != st.session_state.current_topic:
