@@ -491,7 +491,7 @@ with st.sidebar:
     # Trigger rerun safely after Context Injection expander
     if st.session_state.rerun_needed:
         st.session_state.rerun_needed = False
-        st.experimental_rerun()
+        st.rerun()
 
     st.markdown("---")
     if st.button("End Session & Update Digest", key="end_session_button_sidebar"):
@@ -806,7 +806,7 @@ with tab_consult:
     # Trigger rerun safely after Consult tab interactions
     if st.session_state.rerun_needed:
         st.session_state.rerun_needed = False
-        st.experimental_rerun()
+        st.rerun()
 
 with tab_ch_analysis:
     st.markdown("### Companies House Document Analysis")
