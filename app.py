@@ -133,12 +133,14 @@ import csv
 from typing import List, Tuple, Dict, Optional, Any
 
 import pandas as pd
-from docx import Document
 
 try:
     from app_utils import (
-        summarise_with_title, fetch_url_content, find_company_number,
-        extract_text_from_uploaded_file
+        summarise_with_title,
+        fetch_url_content,
+        find_company_number,
+        extract_text_from_uploaded_file,
+        build_consult_docx,
     )
     from about_page import render_about_page
     from ch_pipeline import run_batch_company_analysis
@@ -668,11 +670,20 @@ with tab_consult:
                         docx_filename = f"{st.session_state.current_topic}_{ts_now_str}_response.docx"
                         docx_export_path = APP_BASE_PATH / "exports" / docx_filename
                         try:
-                            doc = Document(); doc.add_heading(f"AI Consultation: {st.session_state.current_topic}",0)
-                            doc.add_paragraph(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name} @ {ts_now_str}):\n{ai_response_text}") # Use current_instruction_to_use
-                            doc.save(docx_export_path)
-                            with open(docx_export_path, "rb") as fp_docx: st.download_button("Download .docx", fp_docx, docx_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                        except Exception as e_docx: st.error(f"DOCX export error: {e_docx}")
+                            convo_entry = (
+                                f"Instruction:\n{current_instruction_to_use}\n\n"
+                                f"Response ({consult_model_name} @ {ts_now_str}):\n{ai_response_text}"
+                            )
+                            build_consult_docx([convo_entry], docx_export_path)
+                            with open(docx_export_path, "rb") as fp_docx:
+                                st.download_button(
+                                    "Download .docx",
+                                    fp_docx,
+                                    docx_filename,
+                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                )
+                        except Exception as e_docx:
+                            st.error(f"DOCX export error: {e_docx}")
 
                         log_filename = f"{st.session_state.current_topic}_{ts_now_str}_log.json"
                         log_export_path = APP_BASE_PATH / "logs" / log_filename
