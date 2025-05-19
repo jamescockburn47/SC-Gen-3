@@ -2,9 +2,10 @@
 
 import json
 import re
-import logging 
-from typing import Tuple, Optional, List, Dict, Union, Callable, Any 
+import logging
+from typing import Tuple, Optional, List, Dict, Union, Callable, Any
 import io
+import pathlib as _pl
 
 # --- Core Dependencies ---
 # Pylance will report these as unresolved if not in the environment.
@@ -295,7 +296,7 @@ def find_company_number(query: str, ch_api_key: Optional[str]) -> Tuple[Optional
         return None, "First match found but no company number available in the result.", first_match
 
 def extract_text_from_uploaded_file(
-    file_obj: io.BytesIO, 
+    file_obj: io.BytesIO,
     file_name: str
 ) -> Tuple[Optional[str], Optional[str]]:
     """
@@ -391,3 +392,37 @@ def extract_text_from_uploaded_file(
         text_content = None 
         
     return text_content, error_message
+
+
+def build_consult_docx(conversation: List[str], output_path: _pl.Path) -> None:
+    """Create a DOCX export of an AI consultation conversation."""
+    if not Document:
+        raise ImportError("python-docx library is required for DOCX export")
+
+    doc = Document()
+    doc.add_heading("AI Consultation Export", level=0)
+
+    def _add_lines(text: str, style: str | None = None) -> None:
+        for line in text.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                doc.add_paragraph("")
+            elif stripped.startswith(('- ', '* ')):
+                doc.add_paragraph(stripped[2:].strip(), style or "List Bullet")
+            else:
+                doc.add_paragraph(stripped, style=style)
+
+    for idx, entry in enumerate(conversation, 1):
+        instr = entry
+        resp = ""
+        m = re.search(r"Instruction:\s*(.*?)\n\n?Response[^:]*?:\s*(.*)", entry, re.S)
+        if m:
+            instr, resp = m.group(1).strip(), m.group(2).strip()
+
+        doc.add_heading(f"Instruction {idx}", level=1)
+        _add_lines(instr)
+        if resp:
+            doc.add_heading("Response", level=2)
+            _add_lines(resp)
+
+    doc.save(output_path)
