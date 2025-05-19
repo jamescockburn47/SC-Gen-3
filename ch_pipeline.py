@@ -427,7 +427,7 @@ class CompanyHouseDocumentPipeline:
                     summary_text, _, _ = gemini_summarise_ch_docs(
                         text_to_summarize=combined_text_for_year, company_no=f"{self.company_number}_Year_{year}",
                         specific_instructions=f"Summarize key events, financial trends, governance changes for {self.company_number} in {year}.",
-                        model_name=config.GEMINI_MODEL_DEFAULT if hasattr(config, 'GEMINI_MODEL_DEFAULT') else "gemini-3.5" # type: ignore
+                        model_name=config.GEMINI_MODEL_DEFAULT
                     )
                 elif openai and openai_key_present: 
                     logger.info(f"Summarizing {len(texts_for_year)} docs for {self.company_number} (Year {year}) using OpenAI.")
@@ -591,7 +591,7 @@ def run_batch_company_analysis(
                 openai_key_ok = openai and hasattr(config, 'OPENAI_API_KEY') and config.OPENAI_API_KEY  # type: ignore
 
                 if gemini_key_ok:
-                    ai_model_to_use_for_summary = config.GEMINI_MODEL_DEFAULT if hasattr(config, 'GEMINI_MODEL_DEFAULT') else "gemini-3.5"  # type: ignore
+                    ai_model_to_use_for_summary = config.GEMINI_MODEL_DEFAULT
                     summarizer_func_to_call = gemini_summarise_ch_docs
                     logger.debug(
                         f"Batch Run {run_id} ({company_no}): Using Gemini ('{ai_model_to_use_for_summary}') for CH summary."
