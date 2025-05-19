@@ -478,7 +478,7 @@ with st.sidebar:
                         elif not raw_content or not raw_content.strip(): title, summary = f"Empty: {src_id[:40]}...", "No text content found or extracted."
                         else: # Successfully got raw content
                             # Use a cost-effective model for these quick summaries
-                            title, summary = summarise_with_title(raw_content, config.OPENAI_MODEL_DEFAULT, st.session_state.current_topic, PROTO_TEXT)
+                            title, summary = summarise_with_title(raw_content, st.session_state.current_topic)
     
                         if "Error" not in title and "Empty" not in title: # Cache if successfully processed
                             try: summary_cache_file.write_text(json.dumps({"t":title,"s":summary,"src":src_id}),encoding="utf-8")

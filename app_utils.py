@@ -100,13 +100,11 @@ def _word_cap(word_count: int) -> int:
 
 def summarise_with_title(
     text: str,
-    model_name_selected: str,  # Currently ignored; OPENAI_MODEL_DEFAULT is used
     topic: str,
 ) -> Tuple[str, str]:
-    """
-    Generates a short title and summary for UI display of uploaded documents.
-    Uses a cost-effective OpenAI model for this task.
-    Uses LOADED_PROTO_TEXT from config.
+    """Generate a short title and summary for UI display of uploaded documents.
+
+    Uses a cost-effective OpenAI model and ``LOADED_PROTO_TEXT`` from ``config``.
     """
     if not text or not text.strip():
         return "Empty Content", "No text was provided for summarization."
