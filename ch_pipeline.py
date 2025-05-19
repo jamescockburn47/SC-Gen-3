@@ -379,7 +379,7 @@ class CompanyHouseDocumentPipeline:
                     summary_text, _, _ = gpt_summarise_ch_docs(
                         text_to_summarize=combined_text_for_year, company_no=f"{self.company_number}_Year_{year}",
                         specific_instructions=f"Summarize key events, financial trends, governance changes for {self.company_number} in {year}.",
-                        model_to_use=config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o"  # type: ignore
+                        model_to_use=config.OPENAI_MODEL_DEFAULT  # type: ignore
                     )
                 else:
                     logger.warning(f"No AI summarization client (Gemini/OpenAI) available/configured for {self.company_number} (Year {year}).")
