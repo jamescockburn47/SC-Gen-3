@@ -37,7 +37,7 @@ Refer back to this README whenever configuring a new environment or troubleshoot
 
 ## Citation Verification
 
-After each consultation the app scans the AI response for case names and statute titles. It then checks any uploaded documents for matching text and falls back to searching trusted public sources such as Bailii or Casemine. Citations that cannot be located are tagged with `[UNVERIFIED]` and a warning is shown asking you to provide the original document or a direct link. Verified citations are cached in `verified_sources.json` to speed up later runs.
+After each consultation the app scans the AI response for case names and statute titles. It then checks any uploaded documents for matching text and falls back to searching trusted public sources such as Bailii or Casemine. Citations that cannot be located are tagged with `[UNVERIFIED]` and a warning is shown asking you to provide the original document or a direct link. A form appears letting you enter a URL or reference for each citation and these links are stored in `verified_sources.json` for later checking. Verified citations are cached in the same file to speed up later runs.
 
 ## Protocol Compliance Check
 
