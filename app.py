@@ -42,6 +42,7 @@ import ch_pipeline
 import app_utils
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
+import cross_exam_utils
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -580,18 +581,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_cross_exam, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
-        "🕸️ Company Group Structure",  # Include group structure tab
+        "❓ Cross‑Exam Planner",
+        "🕸️ Company Group Structure",
         "ℹ️ About",
         "📖 Instructions"
     ])
 else:
-    # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+    # Fall back to tabs without group structure
+    tab_consult, tab_ch_analysis, tab_cross_exam, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
+        "❓ Cross‑Exam Planner",
         "ℹ️ About",
         "📖 Instructions"
     ])
@@ -1214,6 +1217,48 @@ with tab_ch_analysis:
         if "total_cost_gbp" in metrics_data:
              cost_display = f"£{metrics_data.get('total_cost_gbp', 0.0)::.4f}"
         m_col3.metric("Est. Cost", cost_display)
+
+# --- START: CROSS-EXAM PLANNER TAB ---
+with tab_cross_exam:
+    st.markdown("### Cross‑Exam Planner")
+    uploaded_transcripts = st.file_uploader(
+        "Upload Witness Transcripts (PDF, DOCX, TXT)",
+        ["pdf", "docx", "txt"],
+        accept_multiple_files=True,
+        key="cross_exam_uploader",
+    )
+    if uploaded_transcripts:
+        selected_name = st.selectbox(
+            "Select Witness Document",
+            [f.name for f in uploaded_transcripts],
+            key="cross_exam_select",
+        )
+        chosen_file = next((f for f in uploaded_transcripts if f.name == selected_name), None)
+        if chosen_file and st.button("Generate Question Outline", key="cross_exam_run"):
+            with st.spinner("Analysing transcript..."):
+                result = cross_exam_utils.analyse_uploaded_transcript(chosen_file)
+            if result.get("error"):
+                st.error(f"Extraction error: {result['error']}")
+            else:
+                st.subheader("Witness Summary")
+                st.markdown(result.get("summary", ""))
+                st.subheader("Proposed Question Outline")
+                st.markdown(result.get("questions", ""))
+
+                ts_now_str = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
+                docx_filename = f"{_pl.Path(selected_name).stem}_{ts_now_str}_questions.docx"
+                docx_export_path = APP_BASE_PATH / "exports" / docx_filename
+                try:
+                    build_consult_docx([result.get("questions", "")], docx_export_path)
+                    with open(docx_export_path, "rb") as fp_docx:
+                        st.download_button(
+                            "Download Questions (.docx)",
+                            fp_docx,
+                            docx_filename,
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        )
+                except Exception as e_docx:
+                    st.error(f"DOCX export error: {e_docx}")
 
 # --- START: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
 with tab_group_structure:
