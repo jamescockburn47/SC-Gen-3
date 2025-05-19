@@ -42,6 +42,7 @@ import ch_pipeline
 import app_utils
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
+from evidence_index_utils import EvidenceIndex
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -253,6 +254,8 @@ def init_session_state():
         ,"auto_protocol_compliance": True
         ,"citation_links_updated": False
         ,"last_citations_found": []
+        ,"evidence_index": None
+        ,"evidence_last_results": []
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -580,18 +583,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_evidence_index, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
-        "🕸️ Company Group Structure",  # Include group structure tab
+        "🔍 Evidence Index",
+        "🕸️ Company Group Structure",
         "ℹ️ About",
         "📖 Instructions"
     ])
 else:
-    # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+    # Fall back to four tabs if group structure not available
+    tab_consult, tab_ch_analysis, tab_evidence_index, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
+        "🔍 Evidence Index",
         "ℹ️ About",
         "📖 Instructions"
     ])
@@ -1214,6 +1219,52 @@ with tab_ch_analysis:
         if "total_cost_gbp" in metrics_data:
              cost_display = f"£{metrics_data.get('total_cost_gbp', 0.0)::.4f}"
         m_col3.metric("Est. Cost", cost_display)
+
+with tab_evidence_index:
+    st.markdown("### Evidence Index")
+    if st.session_state.evidence_index is None:
+        st.session_state.evidence_index = EvidenceIndex(APP_BASE_PATH / "evidence_index")
+    ei = st.session_state.evidence_index
+
+    st.markdown("#### Add Documents")
+    uploaded = st.file_uploader(
+        "Upload evidence files", ["pdf", "docx", "txt"], accept_multiple_files=True, key="evidence_upload_widget"
+    )
+    doc_type = st.text_input("Document Type", key="evidence_doc_type_input")
+    tags_input = st.text_input("Relevance Tags (comma-separated)", key="evidence_tags_input")
+    if st.button("Ingest to Index"):
+        if uploaded:
+            for f in uploaded:
+                tags = [t.strip() for t in tags_input.split(",") if t.strip()]
+                ei.ingest_uploaded_file(f, doc_type, tags)
+            st.success(f"Ingested {len(uploaded)} document(s) into index.")
+        else:
+            st.info("Upload files to ingest.")
+
+    st.markdown("---")
+    st.markdown("#### Search")
+    query = st.text_input("Search query", key="evidence_search_query")
+    type_options = sorted({m.get('doc_type') for m in ei.metadata})
+    tag_options = sorted({tag for m in ei.metadata for tag in m.get('tags', [])})
+    selected_type = st.selectbox("Filter by type", [""] + type_options, key="evidence_type_filter")
+    selected_tags = st.multiselect("Filter by tags", tag_options, key="evidence_tags_filter")
+    if st.button("Search Evidence"):
+        st.session_state.evidence_last_results = ei.search(
+            query,
+            top_k=10,
+            doc_type=selected_type or None,
+            tags=selected_tags or None,
+        )
+    results = st.session_state.get("evidence_last_results", [])
+    for score, meta in results:
+        st.subheader(meta.get("title"))
+        st.caption(f"Type: {meta.get('doc_type')} | Tags: {', '.join(meta.get('tags', []))}")
+        st.write(meta.get("summary"))
+        try:
+            with open(meta.get("path"), "rb") as fp:
+                st.download_button("View Document", fp, meta.get("file_name"))
+        except Exception:
+            st.warning("Document file missing")
 
 # --- START: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
 with tab_group_structure:
