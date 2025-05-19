@@ -226,7 +226,7 @@ CH_CATEGORIES: Dict[str, str] = {
 def init_session_state():
     defaults = {
         "current_topic": "general_default_topic", "session_history": [], "loaded_memories": [],
-        "processed_summaries": [], # (src_id, title, summary_text) for uploaded docs/URLs
+        "processed_summaries": [], # (src_id, title, display_text, injection_text)
         "selected_summary_texts": [], # Texts of selected uploaded doc/URL summaries for PRIMARY context
         "latest_digest_content": "",
         "document_processing_complete": True, "ch_last_digest_path": None, "ch_last_df": None,
@@ -265,6 +265,8 @@ def init_session_state():
         ,"citation_links_updated": False
         ,"last_citations_found": []
         ,"case_timeline_events": []
+        ,"summarise_uploads": True
+        ,"summary_detail_level": 2
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -425,6 +427,21 @@ with st.sidebar:
         urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
         urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
 
+        st.session_state.summarise_uploads = st.checkbox(
+            "Summarise uploads",
+            value=st.session_state.get("summarise_uploads", True),
+            key="summarise_uploads",
+        )
+        summary_level_option = st.slider(
+            "Summary detail level",
+            1,
+            3,
+            value=st.session_state.get("summary_detail_level", 2),
+            format="%d",
+            key="summary_detail_level",
+        )
+        st.session_state.summary_detail_level = summary_level_option
+
         if st.session_state.citation_links_updated and st.session_state.last_citations_found:
             with st.spinner("Rechecking citations..."):
                 verification = verify_citations(
@@ -445,7 +462,7 @@ with st.sidebar:
         processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
         sources_needing_processing = current_source_identifiers - processed_summary_ids_in_session
     
-        newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str]] = [] # Define here for wider scope
+        newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str, str]] = [] # (src_id, title, display_text, injection_text)
         if sources_needing_processing and st.session_state.document_processing_complete:
             st.session_state.document_processing_complete = False # Prevent re-processing during rerun
             summaries_cache_dir_for_topic = APP_BASE_PATH / "summaries" / st.session_state.current_topic
@@ -454,7 +471,7 @@ with st.sidebar:
             with st.spinner(f"Processing {len(sources_needing_processing)} new document(s)/URL(s)..."):
                 progress_bar_docs = st.progress(0.0)
                 for idx, src_id in enumerate(list(sources_needing_processing)): # Convert set to list for indexing
-                    title, summary = "Error", "Processing Failed"
+                    title, summary, truncated_flag = "Error", "Processing Failed"
                     # Simple cache key based on source identifier hash
                     cache_file_name = f"summary_{_hashlib.sha256(src_id.encode()).hexdigest()[:16]}.json"
                     summary_cache_file = summaries_cache_dir_for_topic / cache_file_name
@@ -462,8 +479,11 @@ with st.sidebar:
                     if summary_cache_file.exists():
                         try:
                             cached_data = json.loads(summary_cache_file.read_text(encoding="utf-8"))
-                            title, summary = cached_data.get("t", "Cache Title Error"), cached_data.get("s", "Cache Summary Error")
-                        except Exception: title, summary = "Error", "Processing Failed (Cache Read)" # More specific cache error
+                            title = cached_data.get("t", "Cache Title Error")
+                            summary = cached_data.get("s", "Cache Summary Error")
+                            truncated_flag = cached_data.get("tr", False)
+                        except Exception:
+                            title, summary, truncated_flag = "Error", "Processing Failed (Cache Read)", False
     
                     if title == "Error" or "Cache" in title : # If cache load failed or it was an error state
                         raw_content, error_msg = None, None
@@ -473,18 +493,35 @@ with st.sidebar:
                             if file_obj: raw_content, error_msg = extract_text_from_uploaded_file(io.BytesIO(file_obj.getvalue()), src_id)
                         elif src_id in urls_to_process: # Is it a URL?
                             raw_content, error_msg = fetch_url_content(src_id)
-    
-                        if error_msg: title, summary = f"Error: {src_id[:40]}...", error_msg
-                        elif not raw_content or not raw_content.strip(): title, summary = f"Empty: {src_id[:40]}...", "No text content found or extracted."
+
+                        if error_msg: title, summary, truncated_flag = f"Error: {src_id[:40]}...", error_msg, False
+                        elif not raw_content or not raw_content.strip():
+                            title, summary, truncated_flag = f"Empty: {src_id[:40]}...", "No text content found or extracted.", False
                         else: # Successfully got raw content
-                            # Use a cost-effective model for these quick summaries
-                            title, summary = summarise_with_title(raw_content, st.session_state.current_topic)
-    
+                            if st.session_state.summarise_uploads:
+                                title, summary = summarise_with_title(
+                                    raw_content,
+                                    st.session_state.current_topic,
+                                    st.session_state.summary_detail_level,
+                                )
+                                truncated_flag = False
+                            else:
+                                title = " ".join(raw_content.split()[:8]) + ("..." if len(raw_content.split()) > 8 else "")
+                                truncated_flag = len(raw_content) > 15000
+                                summary = raw_content[:15000]
+
                         if "Error" not in title and "Empty" not in title: # Cache if successfully processed
-                            try: summary_cache_file.write_text(json.dumps({"t":title,"s":summary,"src":src_id}),encoding="utf-8")
+                            try:
+                                summary_cache_file.write_text(
+                                    json.dumps({"t": title, "s": summary, "src": src_id, "tr": truncated_flag}),
+                                    encoding="utf-8",
+                                )
                             except Exception as e_c: logger.warning(f"Cache write failed for {src_id}: {e_c}")
-    
-                    newly_processed_summaries_for_this_run_sidebar.append((src_id, title, summary))
+
+                    display_text = summary
+                    if not st.session_state.summarise_uploads and truncated_flag:
+                        display_text += "\n\n*Truncated to first 15000 characters for context injection.*"
+                    newly_processed_summaries_for_this_run_sidebar.append((src_id, title, display_text, summary))
                     progress_bar_docs.progress((idx + 1) / len(sources_needing_processing))
     
                 # Update session state: keep existing ones that are still valid, add new ones
@@ -498,13 +535,17 @@ with st.sidebar:
         st.session_state.selected_summary_texts = [] # Reset before populating based on checkbox state
         if st.session_state.processed_summaries:
             st.markdown("---"); st.markdown("### Available Doc/URL Summaries (Select to Inject)")
-            for idx, (s_id, title, summary_text) in enumerate(st.session_state.processed_summaries):
+            for idx, (s_id, title, display_text, injection_text) in enumerate(st.session_state.processed_summaries):
                 checkbox_key = f"sum_sel_{_hashlib.md5(s_id.encode()).hexdigest()}"
                 is_newly_processed = any(s_id == item[0] for item in newly_processed_summaries_for_this_run_sidebar)
-                # Default to checked if newly processed, or if previously checked (and still exists)
                 default_checked = is_newly_processed or st.session_state.get(checkbox_key, False)
-                is_injected = st.checkbox(f"{idx+1}. {title[:40]}...", value=default_checked, key=checkbox_key, help=f"Source: {s_id}\nSummary: {summary_text[:200]}...")
-                if is_injected: st.session_state.selected_summary_texts.append(f"UPLOADED DOCUMENT/URL SUMMARY ('{title}'):\n{summary_text}")
+                with st.expander(f"{idx+1}. {title[:60]}"):
+                    st.markdown(display_text)
+                    is_injected = st.checkbox("Inject", value=default_checked, key=checkbox_key)
+                if is_injected:
+                    st.session_state.selected_summary_texts.append(
+                        f"UPLOADED DOCUMENT/URL SUMMARY ('{title}'):\n{injection_text}"
+                    )
     
     
         # Selection for CH Analysis Summaries
