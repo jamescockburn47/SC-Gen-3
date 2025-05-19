@@ -411,7 +411,20 @@ def build_consult_docx(content: str, topic: str, output_path: _pl.Path) -> _pl.P
 
     doc = Document()
     doc.add_heading(f"Consultation Memo - {topic}", level=0)
-    for para in content.split("\n"):
-        doc.add_paragraph(para)
+    # Split content into logical paragraphs based on sequences of one or more blank lines.
+    # This helps preserve paragraph structure from the input text.
+    logical_paragraphs = re.split(r'\n\s*\n+', content.strip())
+
+    for block_text in logical_paragraphs:
+        if not block_text.strip():  # Skip if the block is empty after stripping (e.g. from multiple blank lines)
+            continue
+        
+        p = doc.add_paragraph()
+        lines_in_block = block_text.split('\n')
+        for i, line_text in enumerate(lines_in_block):
+            p.add_run(line_text)
+            # Add a soft line break (Shift+Enter in Word) if it's not the last line within this paragraph block
+            if i < len(lines_in_block) - 1:
+                p.add_run().add_break()
     doc.save(output_path)
     return output_path
