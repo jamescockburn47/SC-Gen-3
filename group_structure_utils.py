@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import json 
 import re 
 import html 
-from typing import Optional, Dict, List, Any, Callable, Tuple, TypeAlias, Literal 
+from typing import Optional, Dict, List, Any, Callable, Tuple, TypeAlias, Literal, Set
 from collections import defaultdict
 
 # --- Logger Setup ---
@@ -133,7 +133,9 @@ except ImportError:
 RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE = ["accounts", "confirmation-statement", "annual-return"]
 METADATA_YEARS_TO_SCAN = 10 
 ACCOUNTS_PRIORITY_ORDER = ["group", "consolidated", "full accounts", "full", "small full", "small", "medium", "interim", "initial", "dormant", "micro-entity", "abridged", "filleted"]
-CRN_REGEX = r'\b([A-Z0-9]{2}\d{6}|\d{6,8})\b' 
+CRN_REGEX = r'\b([A-Z0-9]{2}\d{6}|\d{6,8})\b'
+# Maximum number of subsidiaries to visualise in diagrams. Set to ``None`` for no limit.
+SUBSIDIARY_VIZ_LIMIT: Optional[int] = 20
 
 # --- Function Definitions (Order Matters for Pylance) ---
 
@@ -455,9 +457,13 @@ def analyze_company_group_structure(
         dot_lines.append(f'"{company_number}" [label="{topco_name_viz}\\n({company_number})\\nTopCo", color=lightgreen];')
         latest_year_subs = max(results["subsidiary_evolution"].keys()) if results["subsidiary_evolution"] else None
         if latest_year_subs:
-            for sub in results["subsidiary_evolution"][latest_year_subs][:20]: 
+            subs_for_viz = results["subsidiary_evolution"][latest_year_subs]
+            # Limit number of subsidiaries displayed in the graph if SUBSIDIARY_VIZ_LIMIT is set
+            if SUBSIDIARY_VIZ_LIMIT is not None:
+                subs_for_viz = subs_for_viz[:SUBSIDIARY_VIZ_LIMIT]
+            for sub in subs_for_viz:
                 sub_name, sub_crn = sub.get("name","N/A"), sub.get("number","N/A")
-                node_id = sub_crn if sub_crn else f"{sub_name}_name_only" 
+                node_id = sub_crn if sub_crn else f"{sub_name}_name_only"
                 dot_lines.append(f'"{node_id}" [label="{sub_name}\\n({sub_crn if sub_crn else "CRN N/A"})"];')
                 dot_lines.append(f'"{company_number}" -> "{node_id}";')
         dot_lines.append("}")
@@ -475,6 +481,20 @@ def analyze_company_group_structure(
                 results["subsidiary_details_list"].append(sub_detail)
         else: report_messages.append("No target subsidiaries provided for detail fetching.")
     return results
+
+def get_all_subsidiaries(subsidiary_evolution: Dict[int, List[Dict[str, Any]]]) -> List[Dict[str, Any]]:
+    """Combine subsidiary lists from all years, deduplicating entries."""
+    all_subs: List[Dict[str, Any]] = []
+    seen: Set[frozenset] = set()
+    for year in sorted(subsidiary_evolution.keys()):
+        for sub in subsidiary_evolution.get(year, []):
+            if not isinstance(sub, dict):
+                continue
+            repr_set = frozenset(sub.items())
+            if repr_set not in seen:
+                seen.add(repr_set)
+                all_subs.append(sub)
+    return all_subs
 
 def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None):
     st.header("🏢 Company Group Structure Analysis") # type: ignore
@@ -634,10 +654,11 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
         st.subheader(f"Subsidiary Analysis for TopCo: {results.get('company_number_analyzed')}") # type: ignore
         if results.get("visualization_data"): st.graphviz_chart(results["visualization_data"]) # type: ignore
         subs_evo = results.get("subsidiary_evolution", {})
-        latest_year = max(subs_evo.keys()) if subs_evo else None
-        if latest_year and subs_evo.get(latest_year): # Check if subs_evo[latest_year] is not empty
+        all_subs = get_all_subsidiaries(subs_evo)
+        if all_subs:
+            # Display a deduplicated list aggregated across all years
             st.markdown("---"); st.subheader("Stage 3: Deeper Dive into Selected Subsidiaries") # type: ignore
-            subs_options = [f"{s.get('name', 'N/A')} ({s.get('number', 'N/A')})" for s in subs_evo[latest_year] if s.get('number')]
+            subs_options = [f"{s.get('name', 'N/A')} ({s.get('number', 'N/A')})" for s in all_subs if s.get('number')]
             selected_subs_display = st.multiselect("Select subsidiaries for status check:", options=subs_options, key="gs_subs_multiselect") # type: ignore
             crns_to_fetch = [re.search(CRN_REGEX, disp).group(1) for disp in selected_subs_display if re.search(CRN_REGEX, disp)] if selected_subs_display else []
             st.session_state.gs_selected_subs_for_details = crns_to_fetch # type: ignore
