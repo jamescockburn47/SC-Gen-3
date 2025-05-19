@@ -46,7 +46,12 @@ When subsidiaries are listed after analysis the application now aggregates entri
 
 Companies House may label some group accounts filings as "legacy". The system now automatically highlights these documents when presenting the list of available filings.
 
+
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
+
+## Case Timeline
+
+The **📅 Case Timeline** tab lets you upload court docket files in CSV, JSON or PDF format. Dates and descriptions are extracted and displayed chronologically. Long descriptions are summarised using the same AI routines as the Companies House analysis. If the optional `streamlit_timeline` component is installed the events are shown on an interactive timeline, otherwise a simple table is displayed.
 
 ## Citation Verification
 
