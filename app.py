@@ -543,9 +543,9 @@ with st.sidebar:
                 checkbox_key = f"sum_sel_{_hashlib.md5(s_id.encode()).hexdigest()}"
                 is_newly_processed = any(s_id == item[0] for item in newly_processed_summaries_for_this_run_sidebar)
                 default_checked = is_newly_processed or st.session_state.get(checkbox_key, False)
-                with st.expander(f"{idx+1}. {title[:60]}"):
-                    st.markdown(display_text)
-                    is_injected = st.checkbox("Inject", value=default_checked, key=checkbox_key)
+                st.markdown(f"**{idx+1}. {title[:60]}**")
+                st.markdown(display_text)
+                is_injected = st.checkbox("Inject", value=default_checked, key=checkbox_key)
                 if is_injected:
                     st.session_state.selected_summary_texts.append(
                         f"UPLOADED DOCUMENT/URL SUMMARY ('{title}'):\n{injection_text}"
