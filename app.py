@@ -42,6 +42,12 @@ import ch_pipeline
 import app_utils
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
+import timeline_utils
+try:
+    from streamlit_timeline import timeline as st_timeline
+    STREAMLIT_TIMELINE_AVAILABLE = True
+except Exception:
+    STREAMLIT_TIMELINE_AVAILABLE = False
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -253,6 +259,7 @@ def init_session_state():
         ,"auto_protocol_compliance": True
         ,"citation_links_updated": False
         ,"last_citations_found": []
+        ,"case_timeline_events": []
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -580,18 +587,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_group_structure, tab_timeline, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
-        "🕸️ Company Group Structure",  # Include group structure tab
+        "🕸️ Company Group Structure",
+        "📅 Case Timeline",
         "ℹ️ About",
         "📖 Instructions"
     ])
 else:
     # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+    tab_consult, tab_ch_analysis, tab_timeline, tab_about_rendered, tab_instructions = st.tabs([
         "💬 Consult Counsel",
         "🇬🇧 Companies House Analysis",
+        "📅 Case Timeline",
         "ℹ️ About",
         "📖 Instructions"
     ])
@@ -1266,7 +1275,50 @@ with tab_group_structure:
                 logger.error(f"Error in Group Structure tab (app.py level): {e_render_gs}", exc_info=True)
     else:
         st.error("Group Structure functionality is not available. The 'group_structure_utils' module might have failed to load.")
+
 # --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
+
+with tab_timeline:
+    st.markdown("### Case Timeline")
+    uploaded = st.file_uploader(
+        "Upload docket file (CSV, JSON or PDF)",
+        type=["csv", "json", "pdf"],
+        key="case_timeline_uploader",
+    )
+    if uploaded is not None:
+        tmp_path = APP_BASE_PATH / "_tmp_timeline_upload"
+        tmp_path.write_bytes(uploaded.getvalue())
+        try:
+            events = timeline_utils.parse_docket_file(tmp_path)
+            events_sorted = sorted(events, key=lambda e: e.get("date", ""))
+            st.session_state.case_timeline_events = events_sorted
+        except Exception as e_parse:
+            st.error(f"Failed to parse docket file: {e_parse}")
+            st.session_state.case_timeline_events = []
+        tmp_path.unlink(missing_ok=True)
+
+    events = st.session_state.get("case_timeline_events", [])
+    if events:
+        if STREAMLIT_TIMELINE_AVAILABLE:
+            tl_events = []
+            for ev in events:
+                date_parts = ev.get("date", "").split("-")
+                start_date = {}
+                if len(date_parts) == 3:
+                    start_date = {
+                        "year": int(date_parts[0]),
+                        "month": int(date_parts[1]),
+                        "day": int(date_parts[2]),
+                    }
+                tl_events.append({
+                    "start_date": start_date,
+                    "text": {"text": ev.get("description", "")},
+                })
+            st_timeline({"events": tl_events}, height=500)
+        else:
+            st.table(events)
+    else:
+        st.info("Upload a docket file to display events.")
 
 with tab_about_rendered:
     render_about_page()
