@@ -41,6 +41,7 @@ import ch_pipeline
 import app_utils
 import ai_utils
 from about_page import render_about_page # Changed from show_about_page
+from instructions_page import render_instructions_page
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -142,6 +143,7 @@ try:
         extract_text_from_uploaded_file
     )
     from about_page import render_about_page
+    from instructions_page import render_instructions_page
     from ch_pipeline import run_batch_company_analysis
     from ai_utils import get_improved_prompt # Added import
     # from ai_utils import _gemini_generate_content_with_retry_and_tokens # Not directly used in app.py typically
@@ -491,18 +493,20 @@ st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
 
 # Define tabs based on what functionality is available
 if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered = st.tabs([
-        "💬 Consult Counsel", 
-        "🇬🇧 Companies House Analysis", 
+    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered, tab_instructions = st.tabs([
+        "💬 Consult Counsel",
+        "🇬🇧 Companies House Analysis",
         "🕸️ Company Group Structure",  # Include group structure tab
-        "ℹ️ About"
+        "ℹ️ About",
+        "📖 Instructions"
     ])
 else:
     # Fall back to three tabs if group structure not available
-    tab_consult, tab_ch_analysis, tab_about_rendered = st.tabs([
-        "💬 Consult Counsel", 
-        "🇬🇧 Companies House Analysis", 
-        "ℹ️ About"
+    tab_consult, tab_ch_analysis, tab_about_rendered, tab_instructions = st.tabs([
+        "💬 Consult Counsel",
+        "🇬🇧 Companies House Analysis",
+        "ℹ️ About",
+        "📖 Instructions"
     ])
     # Create a placeholder for tab_group_structure to avoid errors later in the code
     class PlaceholderTab:
@@ -1103,5 +1107,8 @@ with tab_group_structure:
 
 with tab_about_rendered:
     render_about_page()
+
+with tab_instructions:
+    render_instructions_page()
 
 # --- End of Main App Area UI (Using Tabs) ---
