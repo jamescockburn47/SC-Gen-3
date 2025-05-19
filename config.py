@@ -4,7 +4,7 @@ import os
 import logging
 import warnings
 from pathlib import Path
-from typing import Optional, Any
+from typing import Optional, Any, Tuple
 
 from dotenv import load_dotenv
 import openai
@@ -15,6 +15,12 @@ try:
     import google.generativeai as genai
 except ImportError:
     genai = None # Set to None if not installed
+
+# Attempt to import Google API core exceptions for specific error handling
+try:
+    from google.api_core import exceptions as GoogleAPICoreExceptions
+except Exception:
+    GoogleAPICoreExceptions = None
 
 # Local directory used by ch_pipeline to cache downloaded documents
 from pathlib import Path
@@ -189,35 +195,51 @@ def get_ch_session(api_key_override: Optional[str] = None) -> requests.Session:
 
 _gemini_sdk_configured = False
 
-def get_gemini_model(model_name: str) -> Optional[Any]: # Using Any for genai.GenerativeModel type hint
-    """
-    Initializes and returns a Gemini GenerativeModel.
-    Ensures genai SDK is configured with API key once.
+def get_gemini_model(model_name: str) -> Tuple[Optional[Any], Optional[str]]:
+    """Initialize and return a Gemini GenerativeModel.
+
+    Returns a tuple ``(model, error_message)``. ``model`` will be ``None`` if
+    initialization failed, in which case ``error_message`` contains details
+    about the failure.
     """
     global _gemini_sdk_configured
+
     if not genai:
-        logger.warning("google-generativeai library not installed. Gemini models will not be available.")
-        return None
+        msg = "google-generativeai library not installed. Gemini models will not be available."
+        logger.warning(msg)
+        return None, msg
+
     if not GEMINI_API_KEY:
-        logger.warning("GEMINI_API_KEY not found. Gemini models will fail.")
-        return None
-    
+        msg = "GEMINI_API_KEY not found. Gemini models will fail."
+        logger.warning(msg)
+        return None, msg
+
     if not _gemini_sdk_configured:
         try:
             genai.configure(api_key=GEMINI_API_KEY)
             logger.info("Google Generative AI SDK configured with API key.")
             _gemini_sdk_configured = True
         except Exception as e_gemini_config:
-            logger.error(f"Error configuring Google Generative AI SDK: {e_gemini_config}")
-            return None
+            msg = f"Error configuring Google Generative AI SDK: {e_gemini_config}"
+            logger.error(msg)
+            return None, msg
 
     try:
         model = genai.GenerativeModel(model_name)
         logger.info(f"Gemini model '{model_name}' initialized.")
-        return model
+        return model, None
     except Exception as e:
-        logger.error(f"Failed to initialize Gemini model '{model_name}': {e}", exc_info=True)
-        return None
+        if GoogleAPICoreExceptions and isinstance(e, GoogleAPICoreExceptions.NotFound):
+            msg = (
+                f"Model '{model_name}' not found; check GEMINI_MODEL_FOR_SUMMARIES "
+                "or run genai.list_models()"
+            )
+            logger.error(msg)
+            return None, msg
+
+        msg = f"Failed to initialize Gemini model '{model_name}': {e}"
+        logger.error(msg, exc_info=True)
+        return None, msg
 
 # Base path for the application (useful for file operations in app.py and other modules)
 APP_BASE_PATH = Path(__file__).resolve().parent
