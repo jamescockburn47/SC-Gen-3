@@ -251,6 +251,8 @@ def init_session_state():
         ,"last_protocol_compliance_report": ""
         ,"last_protocol_compliance_tokens": (0,0)
         ,"auto_protocol_compliance": True
+        ,"citation_links_updated": False
+        ,"last_citations_found": []
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -409,6 +411,22 @@ with st.sidebar:
         )
         urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
         urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
+
+        if st.session_state.citation_links_updated and st.session_state.last_citations_found:
+            with st.spinner("Rechecking citations..."):
+                verification = verify_citations(
+                    st.session_state.last_citations_found,
+                    uploaded_docs_list,
+                    APP_BASE_PATH / "verified_sources.json",
+                )
+            last_text = st.session_state.last_ai_response_text
+            for cit, ok in verification.items():
+                pattern = re.escape(cit) + r"(\s*\[UNVERIFIED\])?"
+                replacement = cit if ok else f"{cit} [UNVERIFIED]"
+                last_text = re.sub(pattern, replacement, last_text)
+            st.session_state.last_ai_response_text = last_text
+            st.session_state.citation_links_updated = False
+            st.success("Answer rechecked using provided links.")
 
         current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process)
         processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
@@ -697,6 +715,7 @@ with tab_consult:
 
                     st.session_state.session_history.append(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name}):\n{ai_response_text}") # Log the used instruction
                     citations_found = extract_legal_citations(ai_response_text)
+                    st.session_state.last_citations_found = citations_found
                     verification = verify_citations(
                         citations_found,
                         uploaded_docs_list,
@@ -737,6 +756,7 @@ with tab_consult:
                                 try:
                                     links_path.write_text(json.dumps(existing, indent=2))
                                     st.success("Citation links saved.")
+                                    st.session_state.citation_links_updated = True
                                 except Exception as e_save:
                                     st.error(f"Failed to save links: {e_save}")
                     with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
