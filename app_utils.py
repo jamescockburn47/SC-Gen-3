@@ -89,18 +89,23 @@ except ImportError:
     AWS_TEXTRACT_MODULE_AVAILABLE = False
 
 
-def _word_cap(word_count: int) -> int:
-    """Determines a reasonable word cap for summaries based on input word count."""
+def _word_cap(word_count: int, level: int = 2) -> int:
+    """Determine an approximate word cap based on text length and detail level."""
     if word_count <= 2000:
-        return max(150, int(word_count * 0.15))
+        base = max(150, int(word_count * 0.15))
     elif word_count <= 10000:
-        return 300
+        base = 300
     else:
-        return min(500, int(word_count * 0.05))
+        base = min(500, int(word_count * 0.05))
+
+    scale = {1: 0.5, 2: 1.0, 3: 1.5}.get(level, 1.0)
+    cap = int(base * scale)
+    return max(50, min(1000, cap))
 
 def summarise_with_title(
     text: str,
     topic: str,
+    detail_level: int = 2,
 ) -> Tuple[str, str]:
     """Generate a short title and summary for UI display of uploaded documents.
 
@@ -110,7 +115,7 @@ def summarise_with_title(
         return "Empty Content", "No text was provided for summarization."
 
     word_count = len(text.split())
-    summary_word_cap = _word_cap(word_count)
+    summary_word_cap = _word_cap(word_count, detail_level)
     text_to_summarise = text[:15000]
     max_tokens_for_response = int(summary_word_cap * 2.0)
     openai_model_for_this_task = OPENAI_MODEL_DEFAULT
