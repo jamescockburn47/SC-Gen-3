@@ -68,6 +68,7 @@ PROTOCOL_CHECK_MODEL_PROVIDER = os.getenv("PROTOCOL_CHECK_MODEL_PROVIDER", "gemi
 
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200
+# Limit the number of filings processed for each company during a pipeline run
 MAX_DOCS_TO_PROCESS_PER_COMPANY = int(os.getenv("MAX_DOCS_PER_COMPANY_PIPELINE", "20"))
 MAX_TEXTRACT_WORKERS = int(os.getenv("MAX_TEXTRACT_WORKERS", "4"))
 CH_API_BASE_URL = "https://api.company-information.service.gov.uk"

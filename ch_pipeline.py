@@ -273,6 +273,14 @@ class CompanyHouseDocumentPipeline:
             )
             if meta_error: raise Exception(f"Metadata fetching failed: {meta_error}")
             logger.info(f"Fetched {len(filings_metadata)} filings metadata for {self.company_number} (last {years_back} yrs, cats: {categories_to_fetch})")
+
+            max_docs = getattr(config, "MAX_DOCS_TO_PROCESS_PER_COMPANY", None)
+            if isinstance(max_docs, int) and max_docs > 0 and len(filings_metadata) > max_docs:
+                logger.info(
+                    f"Limiting processing to first {max_docs} document(s) for {self.company_number}"
+                )
+                filings_metadata = filings_metadata[:max_docs]
+
             downloaded_docs_info = self._download_filings(filings_metadata)
             processed_docs_details = self._process_documents(downloaded_docs_info)
             summary_by_year = self._summarise_documents(processed_docs_details)
@@ -490,6 +498,13 @@ def run_batch_company_analysis(
         company_scratch_dir = batch_output_dir / company_no
         company_scratch_dir.mkdir(exist_ok=True)
         company_filings_to_process = selected_filings_metadata_by_company.get(company_no, [])
+
+        max_docs = getattr(config, "MAX_DOCS_TO_PROCESS_PER_COMPANY", None)
+        if isinstance(max_docs, int) and max_docs > 0 and len(company_filings_to_process) > max_docs:
+            logger.info(
+                f"Batch Run {run_id}: Limiting {company_no} to first {max_docs} selected document(s)"
+            )
+            company_filings_to_process = company_filings_to_process[:max_docs]
         company_profile_data = company_profiles_map.get(company_no)
         if not company_filings_to_process:
             logger.warning(f"Batch Run {run_id}: No filings for {company_no}. Skipping.")
