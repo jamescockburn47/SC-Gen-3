@@ -10,6 +10,7 @@ import shutil
 import subprocess # Not used in the current version, consider removing if not needed
 import tempfile # Not used in the current version, consider removing if not needed
 from collections import Counter, defaultdict # Counter not used
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union, TypeAlias, Any # Make sure TypeAlias is used or remove
 
@@ -305,45 +306,96 @@ class CompanyHouseDocumentPipeline:
             except Exception as e_dl_loop: logger.exception(f"Error downloading/saving doc TX_ID {filing_item_meta.get('transaction_id', 'N/A_dl_loop')}: {e_dl_loop}")
         return downloaded_docs_output
 
-    def _process_documents(self, downloaded_docs_info_list: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        processed_docs_results = []
-        for doc_info in downloaded_docs_info_list:
-            local_path = doc_info.get("local_path")
-            saved_content_type = doc_info.get("saved_content_type")
-            original_meta = doc_info.get("original_metadata", {})
-            tx_id_log = original_meta.get('transaction_id', local_path.name if local_path else 'N/A_proc')
-            current_doc_result = {**doc_info, "extracted_text": None, "num_pages_ocrd": 0, "extraction_error": None}
-            if not local_path or not Path(local_path).exists() or not saved_content_type: # Check Path object for exists()
-                logger.warning(f"Skipping processing for {tx_id_log}: path invalid/missing or type missing.")
-                current_doc_result["extraction_error"] = "Missing path/type or file does not exist"
-                processed_docs_results.append(current_doc_result); continue
-            try:
-                doc_content_for_extraction: Union[bytes, str, Dict[str, Any]]
-                if saved_content_type == "pdf": doc_content_for_extraction = Path(local_path).read_bytes()
-                elif saved_content_type == "json": doc_content_for_extraction = json.loads(Path(local_path).read_text(encoding="utf-8"))
-                else: doc_content_for_extraction = Path(local_path).read_text(encoding="utf-8", errors="ignore")
+    def _process_single_document(self, doc_info: Dict[str, Any]) -> Dict[str, Any]:
+        """Process a single document and return its result."""
+        local_path = doc_info.get("local_path")
+        saved_content_type = doc_info.get("saved_content_type")
+        original_meta = doc_info.get("original_metadata", {})
+        tx_id_log = original_meta.get("transaction_id", local_path.name if local_path else "N/A_proc")
+        current_doc_result = {**doc_info, "extracted_text": None, "num_pages_ocrd": 0, "extraction_error": None}
 
-                ocr_handler_to_use: Optional[OCRHandlerType] = None # Explicitly Optional
-                if saved_content_type == "pdf" and self.use_textract_for_ocr_if_available and TEXTRACT_AVAILABLE and perform_textract_ocr:
-                    ocr_handler_to_use = perform_textract_ocr
-                elif saved_content_type == "pdf":
-                    logger.warning(f"PDF {tx_id_log}: Textract OCR not used/available for this pipeline instance.")
-                    current_doc_result["extraction_error"] = "PDF found, Textract OCR not configured for use."
-                    processed_docs_results.append(current_doc_result); continue
-                
-                text, num_pages, extractor_error_msg = extract_text_from_document(
-                    doc_content_input=doc_content_for_extraction, content_type_input=saved_content_type,
-                    company_no_for_logging=self.company_number, ocr_handler=ocr_handler_to_use
+        if not local_path or not Path(local_path).exists() or not saved_content_type:
+            logger.warning(f"Skipping processing for {tx_id_log}: path invalid/missing or type missing.")
+            current_doc_result["extraction_error"] = "Missing path/type or file does not exist"
+            return current_doc_result
+
+        try:
+            doc_content_for_extraction: Union[bytes, str, Dict[str, Any]]
+            if saved_content_type == "pdf":
+                doc_content_for_extraction = Path(local_path).read_bytes()
+            elif saved_content_type == "json":
+                doc_content_for_extraction = json.loads(Path(local_path).read_text(encoding="utf-8"))
+            else:
+                doc_content_for_extraction = Path(local_path).read_text(encoding="utf-8", errors="ignore")
+
+            ocr_handler_to_use: Optional[OCRHandlerType] = None
+            if (
+                saved_content_type == "pdf"
+                and self.use_textract_for_ocr_if_available
+                and TEXTRACT_AVAILABLE
+                and perform_textract_ocr
+            ):
+                ocr_handler_to_use = perform_textract_ocr
+            elif saved_content_type == "pdf":
+                logger.warning(
+                    f"PDF {tx_id_log}: Textract OCR not used/available for this pipeline instance."
                 )
-                current_doc_result.update({"extracted_text": text, "num_pages_ocrd": num_pages if ocr_handler_to_use else 0, "extraction_error": extractor_error_msg})
-                if extractor_error_msg: logger.error(f"Extraction error for {tx_id_log} ({saved_content_type}): {extractor_error_msg}")
-                elif not text or len(text.strip()) < MIN_MEANINGFUL_TEXT_LEN: logger.warning(f"Short text from {tx_id_log} ({saved_content_type}): {len(text.strip()) if text else 0} chars.")
-                else: logger.info(f"Extracted text from {tx_id_log} ({saved_content_type}, {len(text)} chars). OCR pages: {current_doc_result['num_pages_ocrd']}")
-            except Exception as e_proc:
-                logger.exception(f"Failed to process {tx_id_log} ({saved_content_type}): {e_proc}")
-                current_doc_result["extraction_error"] = str(e_proc)
-            processed_docs_results.append(current_doc_result)
-        return processed_docs_results
+                current_doc_result["extraction_error"] = "PDF found, Textract OCR not configured for use."
+                return current_doc_result
+
+            text, num_pages, extractor_error_msg = extract_text_from_document(
+                doc_content_input=doc_content_for_extraction,
+                content_type_input=saved_content_type,
+                company_no_for_logging=self.company_number,
+                ocr_handler=ocr_handler_to_use,
+            )
+            current_doc_result.update(
+                {
+                    "extracted_text": text,
+                    "num_pages_ocrd": num_pages if ocr_handler_to_use else 0,
+                    "extraction_error": extractor_error_msg,
+                }
+            )
+            if extractor_error_msg:
+                logger.error(f"Extraction error for {tx_id_log} ({saved_content_type}): {extractor_error_msg}")
+            elif not text or len(text.strip()) < MIN_MEANINGFUL_TEXT_LEN:
+                logger.warning(f"Short text from {tx_id_log} ({saved_content_type}): {len(text.strip()) if text else 0} chars.")
+            else:
+                logger.info(
+                    f"Extracted text from {tx_id_log} ({saved_content_type}, {len(text)} chars). OCR pages: {current_doc_result['num_pages_ocrd']}"
+                )
+        except Exception as e_proc:
+            logger.exception(f"Failed to process {tx_id_log} ({saved_content_type}): {e_proc}")
+            current_doc_result["extraction_error"] = str(e_proc)
+
+        return current_doc_result
+
+    def _process_documents(
+        self,
+        downloaded_docs_info_list: List[Dict[str, Any]],
+        max_workers: int = config.MAX_TEXTRACT_WORKERS,
+    ) -> List[Dict[str, Any]]:
+        """Process documents using optional parallel OCR."""
+        use_parallel = (
+            self.use_textract_for_ocr_if_available
+            and TEXTRACT_AVAILABLE
+            and perform_textract_ocr is not None
+            and max_workers > 1
+        )
+
+        if use_parallel:
+            logger.info(
+                f"Processing {len(downloaded_docs_info_list)} documents with ThreadPoolExecutor (max_workers={max_workers})."
+            )
+            results: List[Dict[str, Any]] = []
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                futures = [executor.submit(self._process_single_document, d) for d in downloaded_docs_info_list]
+                for fut in futures:
+                    results.append(fut.result())
+            return results
+
+        # Sequential fallback
+        return [self._process_single_document(d) for d in downloaded_docs_info_list]
 
     def _summarise_documents(self, processed_docs_details: List[Dict[str, Any]]) -> Dict[int, str]:
         docs_by_year: Dict[int, List[str]] = defaultdict(list)
@@ -402,9 +454,10 @@ def run_batch_company_analysis(
     model_prices_gbp: Dict[str, float], 
     specific_ai_instructions: str = "",
     filter_keywords_str: Optional[List[str]] = None, 
-    base_scratch_dir: Path = SCRATCH_DIR, 
+    base_scratch_dir: Path = SCRATCH_DIR,
     keep_days: int = 7,
-    use_textract_ocr: bool = False 
+    use_textract_ocr: bool = False,
+    textract_workers: int = config.MAX_TEXTRACT_WORKERS,
 ) -> Tuple[Optional[Path], Dict[str, Any]]:
     run_timestamp = datetime.datetime.now()
     run_id = run_timestamp.strftime("%Y%m%d_%H%M%S")
@@ -419,8 +472,18 @@ def run_batch_company_analysis(
         if initialize_textract_aws_clients and initialize_textract_aws_clients():
             ocr_handler_for_extraction = perform_textract_ocr
             logger.info(f"Batch Run {run_id}: AWS Textract OCR will be used.")
-        else: logger.warning(f"Batch Run {run_id}: Textract OCR requested, but AWS clients init failed. OCR skipped.")
-    elif use_textract_ocr: logger.warning(f"Batch Run {run_id}: Textract OCR requested, but module/function not available. OCR skipped.")
+        else:
+            logger.warning(
+                f"Batch Run {run_id}: Textract OCR requested, but AWS clients init failed. OCR skipped."
+            )
+    elif use_textract_ocr:
+        logger.warning(
+            f"Batch Run {run_id}: Textract OCR requested, but module/function not available. OCR skipped."
+        )
+
+    executor: Optional[ThreadPoolExecutor] = None
+    if ocr_handler_for_extraction == perform_textract_ocr and textract_workers > 1:
+        executor = ThreadPoolExecutor(max_workers=textract_workers)
 
     for company_no in company_numbers_list:
         logger.info(f"Batch Run {run_id}: Processing company {company_no}")
@@ -428,7 +491,11 @@ def run_batch_company_analysis(
         company_scratch_dir.mkdir(exist_ok=True)
         company_filings_to_process = selected_filings_metadata_by_company.get(company_no, [])
         company_profile_data = company_profiles_map.get(company_no)
-        if not company_filings_to_process: logger.warning(f"Batch Run {run_id}: No filings for {company_no}. Skipping."); continue
+        if not company_filings_to_process:
+            logger.warning(f"Batch Run {run_id}: No filings for {company_no}. Skipping.")
+            continue
+
+        pending_rows: List[Dict[str, Any]] = []
 
         for filing_meta in company_filings_to_process:
             total_docs_analyzed_count += 1
@@ -457,60 +524,125 @@ def run_batch_company_analysis(
                 saved_path = _save_raw_document_content(primary_content_data, primary_content_type_str, company_no, doc_result_row['transaction_id'], current_year_for_save, company_scratch_dir)
                 doc_result_row["local_path_raw_doc"] = str(saved_path) if saved_path else None
 
-                logger.info(f"Batch Run {run_id} ({company_no}): Extracting text from {primary_content_type_str} for doc TX_ID: {doc_result_row['transaction_id']}")
-                extracted_text, pages_ocrd, extraction_err = extract_text_from_document(
-                    primary_content_data, primary_content_type_str, f"{company_no}_{doc_result_row['transaction_id']}", ocr_handler_for_extraction
+                logger.info(
+                    f"Batch Run {run_id} ({company_no}): Extracting text from {primary_content_type_str} for doc TX_ID: {doc_result_row['transaction_id']}"
                 )
-                doc_result_row["text_extraction_status"] = f"Error: {extraction_err}" if extraction_err else ("Success (Short Text)" if not extracted_text or len(extracted_text.strip()) < MIN_MEANINGFUL_TEXT_LEN else "Success")
-                if extraction_err: logger.warning(f"Batch Run {run_id} ({company_no}): Extraction error for TX_ID {doc_result_row['transaction_id']} ({primary_content_type_str}): {extraction_err}")
-                doc_result_row["extracted_text_length"] = len(extracted_text.strip()) if extracted_text else 0
-                if pages_ocrd > 0: doc_result_row["ocr_pages_processed"] = pages_ocrd; total_textract_pages_processed_count += pages_ocrd
 
-                if doc_result_row["text_extraction_status"] == "Success" and extracted_text:
-                    logger.info(f"Batch Run {run_id} ({company_no}): Summarizing doc TX_ID: {doc_result_row['transaction_id']}")
-                    summary_content, p_tokens, c_tokens = "AI Summarization Skipped (No suitable model/config)", 0, 0
-                    ai_model_to_use_for_summary = "" # Will be set based on availability
-                    summarizer_func_to_call = None
-                    
-                    gemini_key_ok = genai and hasattr(config, 'GEMINI_API_KEY') and config.GEMINI_API_KEY # type: ignore
-                    openai_key_ok = openai and hasattr(config, 'OPENAI_API_KEY') and config.OPENAI_API_KEY # type: ignore
+                if executor and primary_content_type_str == "pdf":
+                    doc_result_row["_future"] = executor.submit(
+                        extract_text_from_document,
+                        primary_content_data,
+                        primary_content_type_str,
+                        f"{company_no}_{doc_result_row['transaction_id']}",
+                        ocr_handler_for_extraction,
+                    )
+                else:
+                    doc_result_row["_result"] = extract_text_from_document(
+                        primary_content_data,
+                        primary_content_type_str,
+                        f"{company_no}_{doc_result_row['transaction_id']}",
+                        ocr_handler_for_extraction,
+                    )
 
-                    if gemini_key_ok:
-                        ai_model_to_use_for_summary = config.GEMINI_MODEL_DEFAULT if hasattr(config, 'GEMINI_MODEL_DEFAULT') else "gemini-3.5" # type: ignore
-                        summarizer_func_to_call = gemini_summarise_ch_docs
-                        logger.debug(f"Batch Run {run_id} ({company_no}): Using Gemini ('{ai_model_to_use_for_summary}') for CH summary.")
-                    elif openai_key_ok:
-                        ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1" # type: ignore
-                        summarizer_func_to_call = gpt_summarise_ch_docs
-                        logger.debug(f"Batch Run {run_id} ({company_no}): Using OpenAI ('{ai_model_to_use_for_summary}') for CH summary (Gemini unavailable).")
-                    
-                    doc_result_row["ai_model_used_for_summary"] = ai_model_to_use_for_summary if ai_model_to_use_for_summary else "N/A"
-
-                    if summarizer_func_to_call and ai_model_to_use_for_summary:
-                        # Correct parameter name for gpt_summarise_ch_docs
-                        if summarizer_func_to_call == gpt_summarise_ch_docs:
-                            summary_content, p_tokens, c_tokens = summarizer_func_to_call(
-                                text_to_summarize=extracted_text, company_no=company_no,
-                                specific_instructions=specific_ai_instructions, model_to_use=ai_model_to_use_for_summary # Changed here
-                            )
-                        else: # For gemini_summarise_ch_docs
-                             summary_content, p_tokens, c_tokens = summarizer_func_to_call(
-                                text_to_summarize=extracted_text, company_no=company_no,
-                                specific_instructions=specific_ai_instructions, model_name=ai_model_to_use_for_summary
-                            )
-                        doc_result_row["ai_summary_status"] = "Success" if "Error:" not in summary_content else f"Error: {summary_content}"
-                    else: doc_result_row["ai_summary_status"] = "Error: No AI summarization client configured."
-                    doc_result_row.update({"summary": summary_content, "prompt_tokens_summary": p_tokens, "completion_tokens_summary": c_tokens})
-                    total_prompt_tokens_all_docs += p_tokens; total_completion_tokens_all_docs += c_tokens
-                    cost_this_summary = ((p_tokens + c_tokens) / 1000) * model_prices_gbp.get(ai_model_to_use_for_summary, 0.0)
-                    doc_result_row["cost_gbp_summary"] = round(cost_this_summary, 5); total_ai_summarization_cost_gbp += cost_this_summary
-                elif doc_result_row["text_extraction_status"] != "Success": doc_result_row["ai_summary_status"] = "Skipped (Text Extraction Failed/Short)"
-                else: doc_result_row["ai_summary_status"] = "Skipped (Text Too Short for Summary)"
+                pending_rows.append(doc_result_row)
             except Exception as e_doc_proc:
-                logger.error(f"Batch Run {run_id} ({company_no}): Error processing doc TX_ID {doc_result_row['transaction_id']}: {e_doc_proc}", exc_info=True)
+                logger.error(
+                    f"Batch Run {run_id} ({company_no}): Error processing doc TX_ID {doc_result_row['transaction_id']}: {e_doc_proc}",
+                    exc_info=True,
+                )
                 doc_result_row["processing_error"] = str(e_doc_proc)
-                doc_result_row["text_extraction_status"] = doc_result_row["text_extraction_status"] if doc_result_row["text_extraction_status"] != "Pending" else "Failed"
-                doc_result_row["ai_summary_status"] = doc_result_row["ai_summary_status"] if doc_result_row["ai_summary_status"] != "Pending" else "Skipped (Processing Error)"
+                doc_result_row["text_extraction_status"] = (
+                    doc_result_row["text_extraction_status"] if doc_result_row["text_extraction_status"] != "Pending" else "Failed"
+                )
+                doc_result_row["ai_summary_status"] = (
+                    doc_result_row["ai_summary_status"] if doc_result_row["ai_summary_status"] != "Pending" else "Skipped (Processing Error)"
+                )
+                pending_rows.append(doc_result_row)
+
+        for doc_result_row in pending_rows:
+            if "_future" in doc_result_row:
+                extracted_text, pages_ocrd, extraction_err = doc_result_row.pop("_future").result()
+            else:
+                extracted_text, pages_ocrd, extraction_err = doc_result_row.pop("_result")
+
+            doc_result_row["text_extraction_status"] = (
+                f"Error: {extraction_err}" if extraction_err else (
+                    "Success (Short Text)" if not extracted_text or len(extracted_text.strip()) < MIN_MEANINGFUL_TEXT_LEN else "Success"
+                )
+            )
+            if extraction_err:
+                logger.warning(
+                    f"Batch Run {run_id} ({company_no}): Extraction error for TX_ID {doc_result_row['transaction_id']} ({primary_content_type_str}): {extraction_err}"
+                )
+            doc_result_row["extracted_text_length"] = len(extracted_text.strip()) if extracted_text else 0
+            if pages_ocrd > 0:
+                doc_result_row["ocr_pages_processed"] = pages_ocrd
+                total_textract_pages_processed_count += pages_ocrd
+
+            if doc_result_row["text_extraction_status"] == "Success" and extracted_text:
+                logger.info(
+                    f"Batch Run {run_id} ({company_no}): Summarizing doc TX_ID: {doc_result_row['transaction_id']}"
+                )
+                summary_content, p_tokens, c_tokens = "AI Summarization Skipped (No suitable model/config)", 0, 0
+                ai_model_to_use_for_summary = ""
+                summarizer_func_to_call = None
+
+                gemini_key_ok = genai and hasattr(config, 'GEMINI_API_KEY') and config.GEMINI_API_KEY  # type: ignore
+                openai_key_ok = openai and hasattr(config, 'OPENAI_API_KEY') and config.OPENAI_API_KEY  # type: ignore
+
+                if gemini_key_ok:
+                    ai_model_to_use_for_summary = config.GEMINI_MODEL_DEFAULT if hasattr(config, 'GEMINI_MODEL_DEFAULT') else "gemini-3.5"  # type: ignore
+                    summarizer_func_to_call = gemini_summarise_ch_docs
+                    logger.debug(
+                        f"Batch Run {run_id} ({company_no}): Using Gemini ('{ai_model_to_use_for_summary}') for CH summary."
+                    )
+                elif openai_key_ok:
+                    ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1"  # type: ignore
+                    summarizer_func_to_call = gpt_summarise_ch_docs
+                    logger.debug(
+                        f"Batch Run {run_id} ({company_no}): Using OpenAI ('{ai_model_to_use_for_summary}') for CH summary (Gemini unavailable)."
+                    )
+
+                doc_result_row["ai_model_used_for_summary"] = (
+                    ai_model_to_use_for_summary if ai_model_to_use_for_summary else "N/A"
+                )
+
+                if summarizer_func_to_call and ai_model_to_use_for_summary:
+                    if summarizer_func_to_call == gpt_summarise_ch_docs:
+                        summary_content, p_tokens, c_tokens = summarizer_func_to_call(
+                            text_to_summarize=extracted_text,
+                            company_no=company_no,
+                            specific_instructions=specific_ai_instructions,
+                            model_to_use=ai_model_to_use_for_summary,
+                        )
+                    else:
+                        summary_content, p_tokens, c_tokens = summarizer_func_to_call(
+                            text_to_summarize=extracted_text,
+                            company_no=company_no,
+                            specific_instructions=specific_ai_instructions,
+                            model_name=ai_model_to_use_for_summary,
+                        )
+                    doc_result_row["ai_summary_status"] = "Success" if "Error:" not in summary_content else f"Error: {summary_content}"
+                else:
+                    doc_result_row["ai_summary_status"] = "Error: No AI summarization client configured."
+
+                doc_result_row.update(
+                    {
+                        "summary": summary_content,
+                        "prompt_tokens_summary": p_tokens,
+                        "completion_tokens_summary": c_tokens,
+                    }
+                )
+                total_prompt_tokens_all_docs += p_tokens
+                total_completion_tokens_all_docs += c_tokens
+                cost_this_summary = ((p_tokens + c_tokens) / 1000) * model_prices_gbp.get(ai_model_to_use_for_summary, 0.0)
+                doc_result_row["cost_gbp_summary"] = round(cost_this_summary, 5)
+                total_ai_summarization_cost_gbp += cost_this_summary
+            elif doc_result_row["text_extraction_status"] != "Success":
+                doc_result_row["ai_summary_status"] = "Skipped (Text Extraction Failed/Short)"
+            else:
+                doc_result_row["ai_summary_status"] = "Skipped (Text Too Short for Summary)"
+
             all_processed_docs_data.append(doc_result_row)
 
     output_csv_path: Optional[Path] = None # Initialize
@@ -562,4 +694,6 @@ def run_batch_company_analysis(
              batch_metrics["aws_textract_costs"] = get_textract_cost_estimation(total_textract_pages_processed_count, num_pdfs_ocrd_approx_metrics)
 
     logger.info(f"Batch Run {run_id}: Analysis complete. Metrics: {batch_metrics}")
+    if executor:
+        executor.shutdown(wait=True)
     return output_csv_path, batch_metrics

@@ -62,6 +62,7 @@ GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200
 MAX_DOCS_TO_PROCESS_PER_COMPANY = int(os.getenv("MAX_DOCS_PER_COMPANY_PIPELINE", "20"))
+MAX_TEXTRACT_WORKERS = int(os.getenv("MAX_TEXTRACT_WORKERS", "4"))
 CH_API_BASE_URL = "https://api.company-information.service.gov.uk"
 CH_DOCUMENT_API_BASE_URL = "https://document-api.company-information.service.gov.uk"
 

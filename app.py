@@ -947,7 +947,8 @@ with tab_ch_analysis:
                             filter_keywords_str=ch_keywords_for_filter,
                             base_scratch_dir=APP_BASE_PATH / "temp_ch_runs",
                             keep_days=7,
-                            use_textract_ocr=(config.CH_PIPELINE_TEXTRACT_FLAG if hasattr(config, 'CH_PIPELINE_TEXTRACT_FLAG') else False)
+                            use_textract_ocr=(config.CH_PIPELINE_TEXTRACT_FLAG if hasattr(config, 'CH_PIPELINE_TEXTRACT_FLAG') else False),
+                            textract_workers=config.MAX_TEXTRACT_WORKERS,
                         )
 
                         # Path for the DOCX report download button
