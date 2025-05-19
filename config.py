@@ -64,6 +64,8 @@ S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4.1")
 GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-flash-latest") # More specific name
 GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest") # Model for protocol check
+# Determines which provider is used for protocol compliance checks ("GEMINI" or "OPENAI")
+PROTOCOL_CHECK_MODEL_PROVIDER = os.getenv("PROTOCOL_CHECK_MODEL_PROVIDER", "GEMINI").upper()
 
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200

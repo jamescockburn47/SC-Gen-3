@@ -24,6 +24,8 @@ The application loads configuration from a `.env` file or the host environment. 
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
 - `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
+- `PROTOCOL_CHECK_MODEL_PROVIDER` – set to `"OPENAI"` to run protocol compliance
+  checks using OpenAI models instead of Gemini (default `"GEMINI"`).
 
 Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
 
@@ -50,3 +52,4 @@ After each consultation the app scans the AI response for case names and statute
 ## Protocol Compliance Check
 
 Every AI response is automatically checked against the Strategic Protocols. Any non-compliance is flagged directly below the output with an expander showing the full report. You can disable this behaviour with the **Auto-check after each response** toggle in the sidebar and rerun the check manually at any time.
+The system uses Gemini for these checks by default. Set `PROTOCOL_CHECK_MODEL_PROVIDER=OPENAI` to use OpenAI instead.

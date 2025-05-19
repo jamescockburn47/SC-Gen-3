@@ -26,6 +26,7 @@ from config import (
     OPENAI_MODEL_DEFAULT,
     GEMINI_MODEL_DEFAULT,
     GEMINI_MODEL_FOR_PROTOCOL_CHECK, # New model for protocol checks
+    PROTOCOL_CHECK_MODEL_PROVIDER,
     logger, # Use central logger
     LOADED_PROTO_TEXT # Use loaded protocol text from config
 )
@@ -488,41 +489,19 @@ def get_improved_prompt(
     logger.info(f"Prompt improvement successful. Tokens P:{p_tokens}/C:{c_tokens}. Improved: '{improved_prompt_text[:100]}...'")
     return improved_prompt_text.strip()
 
+
 def check_protocol_compliance(
     ai_text_output: str,
     protocol_text: str,
-    model_name: Optional[str] = None
+    model_name: Optional[str] = None,
 ) -> Tuple[str, int, int]:
-    """
-    Uses a Gemini model to check AI text output against strategic protocols.
-
-    Args:
-        ai_text_output: The AI-generated text to check.
-        protocol_text: The strategic protocols.
-        model_name: The specific Gemini model to use.
-
-    Returns:
-        A tuple containing the compliance report string, prompt tokens, and completion tokens.
-    """
-    if not genai_sdk:
-        return "Error: Google Generative AI SDK not installed. Cannot check protocol compliance.", 0, 0
-
-    current_model_name = model_name or GEMINI_MODEL_FOR_PROTOCOL_CHECK
-    gemini_model_client, init_error = get_gemini_model(current_model_name)
-
-    if not gemini_model_client:
-        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}' for protocol compliance check."
-        return f"Error: {err_msg}", 0, 0
+    """Check AI output against strategic protocols using Gemini or OpenAI."""
 
     if not ai_text_output or not ai_text_output.strip():
         return "Error: No AI text provided for compliance check.", 0, 0
     if not protocol_text or not protocol_text.strip():
         return "Error: No protocol text provided for compliance check.", 0, 0
 
-    logger.info(f"Starting protocol compliance check using {current_model_name}.")
-
-    # Instruction for the AI performing the compliance check
-    # Based on M.E.4: "A sidebar button must run a “Protocol Compliance Report” listing section-by-section adherence or red flags."
     compliance_check_prompt = (
         "You are an AI Compliance Officer. Your task is to meticulously review an AI-generated text against a given set of 'Strategic Protocols'. "
         "Produce a 'Protocol Compliance Report' that assesses adherence to each protocol section (e.g., M.A, M.B, etc.) and its sub-points (e.g., M.A.1, M.A.2). "
@@ -541,25 +520,60 @@ def check_protocol_compliance(
         "PROTOCOL COMPLIANCE REPORT (Section-by-Section Analysis):"
     )
 
+    provider = PROTOCOL_CHECK_MODEL_PROVIDER
+
+    if provider == "OPENAI":
+        openai_client = get_openai_client()
+        if not openai_client:
+            return "Error: OpenAI client not configured for protocol compliance check.", 0, 0
+
+        current_model = model_name or OPENAI_MODEL_DEFAULT
+        logger.info(f"Starting protocol compliance check using OpenAI model {current_model}.")
+        try:
+            response = openai_client.chat.completions.create(
+                model=current_model,
+                temperature=0.1,
+                messages=[{"role": "user", "content": compliance_check_prompt}],
+                max_tokens=MAX_TOKENS_FOR_SUMMARY_RESPONSE,
+            )
+            report_text = response.choices[0].message.content.strip()
+            p_tokens = response.usage.prompt_tokens if response.usage else 0
+            c_tokens = response.usage.completion_tokens if response.usage else 0
+        except Exception as e:
+            logger.error(f"OpenAI protocol compliance check failed: {e}", exc_info=True)
+            return f"Error: GPT protocol compliance check failed: {e}", 0, 0
+        logger.info(f"Protocol compliance check successful using OpenAI. Tokens P:{p_tokens}/C:{c_tokens}.")
+        return report_text, p_tokens, c_tokens
+
+    # Default to Gemini
+    if not genai_sdk:
+        return "Error: Google Generative AI SDK not installed. Cannot check protocol compliance.", 0, 0
+
+    current_model_name = model_name or GEMINI_MODEL_FOR_PROTOCOL_CHECK
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
+    if not gemini_model_client:
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}' for protocol compliance check."
+        return f"Error: {err_msg}", 0, 0
+
+    logger.info(f"Starting protocol compliance check using Gemini model {current_model_name}.")
     generation_config = genai_sdk.types.GenerationConfig(
-        temperature=0.1,  # Low temperature for factual, objective assessment
-        max_output_tokens=MAX_TOKENS_FOR_GEMINI_SUMMARY_RESPONSE # Allow ample space for detailed report
-    ) if genai_sdk else None
-    
-    # Using the same retry and token counting wrapper
+        temperature=0.1,
+        max_output_tokens=MAX_TOKENS_FOR_GEMINI_SUMMARY_RESPONSE,
+    )
+
     report_text, p_tokens, c_tokens = _gemini_generate_content_with_retry_and_tokens(
         gemini_model_client,
-        [compliance_check_prompt], # Pass as a list
+        [compliance_check_prompt],
         generation_config,
-        DEFAULT_GEMINI_SAFETY_SETTINGS, # Use default safety settings
-        company_no="N/A_ProtocolCheck", # Contextual, not a real company_no here
-        context_label="ProtocolComplianceCheck"
+        DEFAULT_GEMINI_SAFETY_SETTINGS,
+        company_no="N/A_ProtocolCheck",
+        context_label="ProtocolComplianceCheck",
     )
 
     if "Error:" in report_text or "blocked" in report_text.lower():
         logger.error(f"Protocol compliance check failed. AI returned: {report_text}")
-        # Return the error message from the AI
     else:
-        logger.info(f"Protocol compliance check successful. Tokens P:{p_tokens}/C:{c_tokens}. Report length: {len(report_text)} chars.")
-    
+        logger.info(
+            f"Protocol compliance check successful. Tokens P:{p_tokens}/C:{c_tokens}. Report length: {len(report_text)} chars."
+        )
     return report_text, p_tokens, c_tokens
