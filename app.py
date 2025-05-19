@@ -101,9 +101,13 @@ if not logger.handlers: # Avoid adding multiple file handlers on Streamlit rerun
 
 import streamlit as st
 st.set_page_config(
-    page_title="Strategic Counsel", page_icon="⚖️", layout="wide",
+    page_title="Strategic Counsel",
+    page_icon="static/logo/logo1.png",
+    layout="wide",
     initial_sidebar_state="expanded",
-    menu_items={'About': "# Strategic Counsel v3.3\nModular AI Legal Assistant Workspace."}
+    menu_items={
+        'About': "# Strategic Counsel v3.3\nModular AI Legal Assistant Workspace."
+    }
 )
 
 # Load Harcus Parker inspired CSS
@@ -270,6 +274,7 @@ def init_session_state():
 init_session_state()
 
 with st.sidebar:
+    st.image("static/logo/logo1.png", use_column_width=False)
     st.markdown("## Configuration")
     current_topic_input = st.text_input("Matter / Topic ID", st.session_state.current_topic, key="topic_input_sidebar")
     if current_topic_input != st.session_state.current_topic:
