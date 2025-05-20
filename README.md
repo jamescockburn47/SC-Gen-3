@@ -37,8 +37,6 @@ Other optional variables (such as logging level or API retry options) can be def
 
 Recent updates add support for OpenAI's **gpt‑4o** model and Google's **gemini‑1.5-pro**. Specify these model names via the `OPENAI_MODEL` and `GEMINI_MODEL_FOR_SUMMARIES` environment variables if you have access.
 
-The **"Suggest Improved Prompt"** button above the instruction box now uses Gemini to rewrite your text for clarity. If Gemini isn't configured, it automatically falls back to the selected OpenAI model. Ensure you set either `GEMINI_API_KEY` or `OPENAI_API_KEY` to enable this helper.
-
 ## Enabling OCR with AWS Textract
 
 Within the **Group Structure** tab of the application there is a checkbox labelled **"Use AWS Textract for PDF OCR"**. When checked, the system attempts to initialise AWS Textract using the credentials above. Scanned or image-based PDFs from Companies House will then be sent to Textract for optical character recognition before analysis.

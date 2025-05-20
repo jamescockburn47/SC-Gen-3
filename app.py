@@ -945,7 +945,9 @@ with tab_ch_analysis:
                     all_docs, profiles_map, meta_error = ch_pipeline.get_relevant_filings_metadata_multi(
                         company_numbers_list=ch_company_numbers_list,
                         api_key=config.CH_API_KEY,
+
                         categories_to_fetch=ch_selected_categories_api or None,
+
                         start_year=st.session_state.ch_start_year_input_main,
                         end_year=st.session_state.ch_end_year_input_main,
                     )
