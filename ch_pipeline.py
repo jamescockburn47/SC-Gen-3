@@ -240,6 +240,67 @@ def get_relevant_filings_metadata(
     else:
         return all_filings_metadata, company_profile, None
 
+
+def get_relevant_filings_metadata_multi(
+    company_numbers_list: List[str],
+    api_key: str,
+    categories_to_fetch: List[str] | None = None,
+    start_year: int | None = None,
+    end_year: int | None = None,
+    items_per_page_api: int = 50,
+    max_docs_to_scan_api: int = 200,
+    target_docs_in_range_api: int = 20,
+) -> Tuple[List[Dict[str, Any]], Dict[str, Dict[str, Any]], Optional[str]]:
+    """Fetch filings metadata for multiple companies.
+
+    Returns a combined list of document metadata, a mapping of company numbers to
+    their profile data, and an aggregated error string if any company failed.
+    """
+
+    all_docs: List[Dict[str, Any]] = []
+    profiles_map: Dict[str, Dict[str, Any]] = {}
+    error_messages: List[str] = []
+
+    if categories_to_fetch is None:
+        categories_to_fetch = [
+            "accounts",
+            "confirmation-statement",
+            "capital",
+            "mortgage",
+            "officers",
+        ]
+
+    if start_year is None or end_year is None:
+        current_year = datetime.datetime.now().year
+        start_year = start_year or current_year - 5
+        end_year = end_year or current_year
+
+    year_range_tuple = (start_year, end_year)
+
+    for company_no in company_numbers_list:
+        docs, profile, err = get_ch_documents_metadata(
+            company_no=company_no,
+            api_key=api_key,
+            categories=categories_to_fetch,
+            items_per_page=items_per_page_api,
+            max_docs_to_fetch_meta=max_docs_to_scan_api,
+            target_docs_per_category_in_date_range=target_docs_in_range_api,
+            year_range=year_range_tuple,
+        )
+
+        if profile:
+            profiles_map[company_no] = profile
+
+        for d in docs:
+            d.setdefault("company_number", company_no)
+            all_docs.append(d)
+
+        if err:
+            error_messages.append(f"{company_no}: {err}")
+
+    combined_error = "\n".join(error_messages) if error_messages else None
+    return all_docs, profiles_map, combined_error
+
 class CompanyHouseDocumentPipeline:
     def __init__(
         self, company_number: str, ch_api_key: Optional[str] = None,
