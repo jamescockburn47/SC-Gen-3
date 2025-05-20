@@ -22,12 +22,13 @@ try:
 except Exception:
     GoogleAPICoreExceptions = None
 
-# Local directory used by ch_pipeline to cache downloaded documents
-from pathlib import Path
-APPLICATION_SCRATCH_DIR = Path(__file__).resolve().parent / "scratch"
-APPLICATION_SCRATCH_DIR.mkdir(exist_ok=True)   # ensure it exists
-
 load_dotenv()
+
+# Local directory used by ch_pipeline to cache downloaded documents
+APPLICATION_SCRATCH_DIR = Path(
+    os.getenv("APPLICATION_SCRATCH_DIR", Path(__file__).resolve().parent / "scratch")
+)
+APPLICATION_SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
 
 # --- Logging Configuration ---
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
@@ -77,11 +78,6 @@ CH_DOCUMENT_API_BASE_URL = "https://document-api.company-information.service.gov
 # ───────────────────────────────────────────────────────────────
 # Companies-House API tunables – used by ch_pipeline & ch_api_utils
 # ----------------------------------------------------------------
-import os
-from pathlib import Path
-
-# already added earlier
-# APPLICATION_SCRATCH_DIR = ...
 
 CH_API_KEY: str | None = os.getenv("CH_API_KEY")           # ← set in .env or CI
 CH_API_MAX_RETRY: int = int(os.getenv("CH_API_MAX_RETRY", 3))
@@ -98,27 +94,7 @@ CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504]
 CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST
 # ───────────────────────────────────────────────────────────────
 
-# ---------------------------------------------------------------------
-# Application scratch space
-# ---------------------------------------------------------------------
-from pathlib import Path
-import os
 
-# The directory where ch_pipeline and other modules can dump working files
-APPLICATION_SCRATCH_DIR: Path = Path(
-    os.getenv("APPLICATION_SCRATCH_DIR", Path(__file__).parent / "scratch")
-)
-APPLICATION_SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
-
-# ---------------------------------------------------------------------
-# Companies-House retry policy
-# ---------------------------------------------------------------------
-# HTTP status codes that trigger a retry when calling the CH REST API
-CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504]
-
-# Older code in the repo already uses the miss-spelling “…FORLIST”.
-# Keep this alias until every import is updated.
-CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST
 
 # --- Protocol Text Fallback ---
 # This will be the default. app.py will try to load strategic_protocols.txt
