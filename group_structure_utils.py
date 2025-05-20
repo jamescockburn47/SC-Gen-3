@@ -22,7 +22,7 @@ except ImportError:
     def get_openai_client() -> Optional[object]:
         logger.warning("group_structure_utils: get_openai_client fallback used. OpenAI features unavailable.")
         return None
-    OPENAI_MODEL_DEFAULT = "gpt-4.1"
+    OPENAI_MODEL_DEFAULT = "gpt-4o"
 
 # --- Type Aliases ---
 JSONObj: TypeAlias = Dict[str, Any]

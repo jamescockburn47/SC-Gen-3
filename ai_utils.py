@@ -270,11 +270,18 @@ def _gemini_generate_content_with_retry_and_tokens(
 
             if text_parts_from_response:
                 generated_text = "".join(text_parts_from_response).strip()
+                if not generated_text:
+                    logger.error(
+                        f"{company_no} ({context_label}): Gemini returned an empty string despite candidate parts."
+                    )
+                    return "Error: Gemini returned empty text output.", prompt_tokens, 0
                 try:
                     completion_tokens_response = gemini_model_client.count_tokens(generated_text)
                     completion_tokens = completion_tokens_response.total_tokens
                 except Exception as e_count_completion:
-                    logger.warning(f"{company_no} ({context_label}): Failed to count Gemini completion tokens: {e_count_completion}. Defaulting to 0.")
+                    logger.warning(
+                        f"{company_no} ({context_label}): Failed to count Gemini completion tokens: {e_count_completion}. Defaulting to 0."
+                    )
                     completion_tokens = 0
                 return generated_text, prompt_tokens, completion_tokens
             else:
@@ -471,17 +478,21 @@ def get_improved_prompt(
 
     improved_prompt_text, p_tokens, c_tokens = _gemini_generate_content_with_retry_and_tokens(
         gemini_model_client,
-        [full_prompt_for_improvement], 
+        [full_prompt_for_improvement],
         generation_config,
         DEFAULT_GEMINI_SAFETY_SETTINGS, # Use default safety settings
-        company_no="N/A_PromptImprovement", 
+        company_no="N/A_PromptImprovement",
         context_label="PromptImprovement"
     )
 
     if "Error:" in improved_prompt_text or "blocked" in improved_prompt_text.lower():
         logger.error(f"Failed to improve prompt. AI returned: {improved_prompt_text}")
         return f"Error: Could not improve prompt. AI service issue: {improved_prompt_text}"
-    
+
+    if not improved_prompt_text.strip():
+        logger.error("Prompt improvement returned an empty string.")
+        return "Error: Prompt improvement yielded no content."
+
     if improved_prompt_text.startswith("This prompt is already well-structured. Using as is:"):
         improved_prompt_text = improved_prompt_text.replace("This prompt is already well-structured. Using as is:", "").strip()
     

@@ -61,7 +61,7 @@ AWS_REGION_DEFAULT = os.getenv("AWS_DEFAULT_REGION", "eu-west-2")
 S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 
 # --- Model Configuration ---
-OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4.1")
+OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o")
 GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-flash-latest") # More specific name
 GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest") # Model for protocol check
 PROTOCOL_CHECK_MODEL_PROVIDER = os.getenv("PROTOCOL_CHECK_MODEL_PROVIDER", "gemini")  # "gemini" or "openai"
@@ -163,6 +163,19 @@ def get_openai_client() -> Optional[openai.OpenAI]:
             logger.warning("OPENAI_API_KEY not found. OpenAI calls will fail.")
             _openai_client = None
     return _openai_client
+
+def check_openai_model(model_name: str) -> bool:
+    """Return ``True`` if the specified OpenAI model can be retrieved."""
+    client = get_openai_client()
+    if not client:
+        return False
+    try:
+        client.models.retrieve(model_name)
+        logger.info(f"OpenAI model '{model_name}' is available.")
+        return True
+    except Exception as e_model:
+        logger.error(f"OpenAI model '{model_name}' could not be retrieved: {e_model}")
+        return False
 
 def get_ch_session(api_key_override: Optional[str] = None) -> requests.Session:
     """
