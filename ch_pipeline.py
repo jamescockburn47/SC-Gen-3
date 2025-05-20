@@ -7,12 +7,10 @@ import logging
 import os
 import re
 import shutil
-import subprocess # Not used in the current version, consider removing if not needed
-import tempfile # Not used in the current version, consider removing if not needed
-from collections import Counter, defaultdict # Counter not used
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, Union, TypeAlias, Any # Make sure TypeAlias is used or remove
+from typing import Callable, Dict, List, Optional, Tuple, Union, Any
 
 # Attempt to import config first as it defines logger and other constants
 try:
