@@ -22,7 +22,7 @@ except ImportError:
 
 # --- Type Aliases ---
 JSONObj: TypeAlias = Dict[str, Any]
-AnalysisMode = Literal["profile_check", "find_parent", "list_subsidiaries", "subsidiary_details"]
+AnalysisMode = Literal["profile_check", "list_subsidiaries", "subsidiary_details"]
 
 # --- OCR Handler Type Definition ---
 try:
@@ -220,114 +220,94 @@ def _parse_document_content(
                     p_crn = parent_match.group(2).strip().upper() if parent_match.group(2) else None
                     if company_no.lower() not in p_name.lower() and (not p_crn or company_no.lower() != p_crn.lower()):
                         parsed_result["parent_company_name"] = p_name
-                        if p_crn: parsed_result["parent_company_number"] = p_crn
-                subs_list: List[Dict[str,Optional[str]]] = []
+                subs_list: List[Dict[str, Optional[str]]] = []
                 subs_section_pattern = r"(?:subsidiary undertakings|principal subsidiary undertakings|investment in subsidiaries|details of related undertakings|group companies)([\s\S]+?)(?:\n\n[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]|\Z|notes to the financial statements|directors' report)"
                 subs_section_match = re.search(subs_section_pattern, text_lower, re.IGNORECASE)
                 if subs_section_match:
                     section_text = subs_section_match.group(1)
-                    for line in section_text.split('\n'):
-                        line_clean = line.strip()
-                        if not line_clean or len(line_clean) < 3 or line_clean.lower().startswith(("note","total", "carrying value", "country of incorporation", "proportion of voting rights", "%", "£", "$", "€")): continue
-                        crn_match = re.search(CRN_REGEX, line_clean)
-                        sub_crn = crn_match.group(1).upper() if crn_match else None 
-                        sub_name_candidate = line_clean
-                        if crn_match and crn_match.group(0): # Check if crn_match and group(0) are not None
-                             sub_name_candidate = sub_name_candidate.replace(crn_match.group(0), "").strip()
-                        common_trails = [r'\s*\(?incorporated in [^)]+\)?', r'\s*registered in [^)]+\)?', r'\s*-\s*(?:100% owned|subsidiary|ordinary shares|share capital|\d+% holding)', r'\s*,\s*(?:united kingdom|england|scotland|wales|northern ireland|ireland|usa|etc\.)']
-                        for trail in common_trails: sub_name_candidate = re.sub(trail, '', sub_name_candidate, flags=re.IGNORECASE).strip()
-                        sub_name_candidate = re.sub(r'\s*[,.]?$', '', sub_name_candidate).strip()
-                        if (re.search(r'\b(?:limited|ltd|plc|llp|lp|sarl|gmbh|bv|inc\.|incorporated|company|undertaking|group)\b', sub_name_candidate, re.IGNORECASE) or \
-                           (sub_crn and len(sub_name_candidate) > 3)) and \
-                           not (parsed_result.get("parent_company_name") and parsed_result.get("parent_company_name","").lower() in sub_name_candidate.lower() and len(sub_name_candidate) > 3) and \
-                           company_no.lower() not in sub_name_candidate.lower() :
-                            if not re.fullmatch(r'[\d\s.,%£$€()*]+', sub_name_candidate) and len(sub_name_candidate) > 2:
-                                subs_list.append({"name": html.unescape(sub_name_candidate.title()), "number": sub_crn})
-                if subs_list: parsed_result["subsidiaries"] = list({frozenset(item.items()):item for item in subs_list}.values()); 
+                    lines_to_scan = section_text.split('\n')
+                else:
+                    logger.info(
+                        f"{company_no}: Subsidiary section not located; scanning entire document for potential matches."
+                    )
+                    lines_to_scan = extracted_text.split('\n')
+
+                for line in lines_to_scan:
+                    line_clean = line.strip()
+                    if not line_clean or len(line_clean) < 3 or line_clean.lower().startswith(("note","total", "carrying value", "country of incorporation", "proportion of voting rights", "%", "£", "$", "€")):
+                        continue
+                    crn_match = re.search(CRN_REGEX, line_clean)
+                    sub_crn = crn_match.group(1).upper() if crn_match else None
+                    sub_name_candidate = line_clean
+                    if crn_match and crn_match.group(0):
+                        sub_name_candidate = sub_name_candidate.replace(crn_match.group(0), '').strip()
+                    common_trails = [r'\s*\(?incorporated in [^)]+\)?', r'\s*registered in [^)]+\)?', r'\s*-\s*(?:100% owned|subsidiary|ordinary shares|share capital|\d+% holding)', r'\s*,\s*(?:united kingdom|england|scotland|wales|northern ireland|ireland|usa|etc\.)']
+                    for trail in common_trails:
+                        sub_name_candidate = re.sub(trail, '', sub_name_candidate, flags=re.IGNORECASE).strip()
+                    sub_name_candidate = re.sub(r'\s*[,.]?$', '', sub_name_candidate).strip()
+                    if (
+                        re.search(r'\b(?:limited|ltd|plc|llp|lp|sarl|gmbh|bv|inc\.|incorporated|company|undertaking|group)\b', sub_name_candidate, re.IGNORECASE)
+                        or (sub_crn and len(sub_name_candidate) > 3)
+                    ) and not (
+                        parsed_result.get("parent_company_name") and parsed_result.get("parent_company_name", "").lower() in sub_name_candidate.lower() and len(sub_name_candidate) > 3
+                    ) and company_no.lower() not in sub_name_candidate.lower():
+                        if not re.fullmatch(r'[\d\s.,%£$€()*]+', sub_name_candidate) and len(sub_name_candidate) > 2:
+                            subs_list.append({"name": html.unescape(sub_name_candidate.title()), "number": sub_crn})
+                if subs_list:
+                    parsed_result["subsidiaries"] = list({frozenset(item.items()): item for item in subs_list}.values())
         except Exception as e: parsed_result["extraction_error"] = f"Extraction exception: {str(e)}"
     elif not parsed_result.get("extraction_error"): 
         parsed_result["extraction_error"] = "No suitable content type found or processed based on priority and availability."
     return parsed_result
 
-def extract_parent_timeline(
-    company_number: str, 
-    api_key: str, 
-    logger: logging.Logger, 
-    parsed_docs_data: Optional[List[Dict[str, Any]]] = None
-) -> Tuple[List[Dict[str, Any]], List[str]]:
-    messages = ["Parent Company Timeline Analysis:"]
-    logger.info(f"Extracting parent company timeline for {company_number} from parsed documents.")
-    parent_timeline: List[Dict[str, Any]] = []
-    if not parsed_docs_data:
-        messages.append("No parsed document data provided for parent timeline generation.")
-        logger.warning("extract_parent_timeline called without parsed_docs_data.")
-        return parent_timeline, messages
-    def get_doc_date(doc_bundle: Dict[str, Any]) -> datetime:
-        parsed_data = doc_bundle.get('parsed_data')
-        if parsed_data and parsed_data.get('document_date') and parsed_data['document_date'] != "N/A":
-            try: return datetime.strptime(parsed_data['document_date'], '%Y-%m-%d')
-            except (ValueError, TypeError): pass
-        metadata = doc_bundle.get('metadata')
-        if metadata and metadata.get('date') and metadata['date'] != "N/A":
-            try: return datetime.strptime(metadata['date'], '%Y-%m-%d')
-            except (ValueError, TypeError): pass
-        return datetime.min 
-    sorted_docs = sorted(parsed_docs_data, key=get_doc_date)
-    last_reported_parent_key: Optional[Tuple[Optional[str], Optional[str]]] = None
-    for doc_bundle in sorted_docs:
-        parsed = doc_bundle.get('parsed_data')
-        metadata = doc_bundle.get('metadata')
-        if not parsed or not metadata: continue
-        doc_date_str = parsed.get("document_date") or metadata.get("date", "N/A")
-        doc_desc = parsed.get("document_description") or metadata.get("description", "Unknown Document")
-        parent_name = parsed.get("parent_company_name")
-        parent_number = parsed.get("parent_company_number")
-        s409_found = parsed.get("s409_info_found", False)
-        if parent_name or parent_number:
-            current_parent_number = parent_number.strip() if parent_number and isinstance(parent_number, str) and parent_number.strip() else None
-            current_parent_name = parent_name.strip() if parent_name and isinstance(parent_name, str) and parent_name.strip() else None
-            current_parent_key = (current_parent_name, current_parent_number)
-            if current_parent_key != last_reported_parent_key or not parent_timeline:
-                entry: Dict[str, Any] = {'date': doc_date_str, 'parent_name': current_parent_name, 'parent_number': current_parent_number,
-                         'source_doc_desc': doc_desc, 's409_related': s409_found}
-                parent_timeline.append(entry)
-                message = f"- On {doc_date_str} ({doc_desc}): Reported parent as '{current_parent_name or 'N/A'}' (CRN: {current_parent_number or 'N/A'}). S409 related: {s409_found}."
-                messages.append(message)
-                last_reported_parent_key = current_parent_key
-        elif s409_found: 
-            current_parent_key = ("S409_INFO_ONLY", "S409_INFO_ONLY") 
-            if current_parent_key != last_reported_parent_key or not parent_timeline:
-                entry = {'date': doc_date_str, 'parent_name': None, 'parent_number': None,
-                         'source_doc_desc': doc_desc, 's409_related': True}
-                parent_timeline.append(entry)
-                message = f"- On {doc_date_str} ({doc_desc}): S409 information found, but no specific parent details extracted. Implies group context."
-                messages.append(message)
-                last_reported_parent_key = current_parent_key
-    if not parent_timeline: messages.append("No specific parent company mentions found in the analyzed documents to build a timeline.")
-    else: messages.insert(1, f"Found {len(parent_timeline)} distinct parent changes/mentions over time:")
-    return parent_timeline, messages
+def gpt_fetch_public_group_structure(
+    company_number: str,
+    company_name: str,
+    *,
+    additional_instructions: str = "",
+) -> Tuple[List[Dict[str, str]], Optional[str]]:
+    """Use GPT-4.1 to retrieve a list of subsidiaries from public sources.
 
-def _get_corporate_psc_parent_info(company_number: str, api_key: str, logger: logging.Logger) -> Optional[Dict[str, str]]:
-    logger.info(f"Attempting to fetch PSC data for {company_number} to identify corporate parents.")
-    if not ch_api_utils_available: 
-        logger.warning("PSC check skipped: 'ch_api_utils' module not available.")
-        return None
+    Returns a list of dictionaries with ``name`` and optional ``number`` keys
+    along with an optional error message.
+    """
+    openai_client = get_openai_client()
+    if not openai_client:
+        logger.warning("OpenAI client unavailable; skipping GPT group lookup.")
+        return [], "OpenAI client unavailable"
+
+    system_prompt = (
+        "You are a corporate research assistant. Compile a concise JSON array of "
+        "known subsidiaries for the provided company from publicly available "
+        "sources. Include company registration numbers if easily obtainable. "
+        "Respond ONLY with a JSON array like: [{\"name\": \"ABC Ltd\", "
+        "\"number\": \"12345678\"}] and no additional text."
+    )
+    user_content = f"Company Name: {company_name}\nCompany Number: {company_number}.\n{additional_instructions}"
     try:
-        pscs_data, psc_error = get_company_pscs(company_number, api_key)
-        if psc_error: logger.error(f"Error fetching PSC data for {company_number}: {psc_error}"); return None
-        if not pscs_data or not pscs_data.get("items"): logger.info(f"No PSC items found for {company_number}."); return None
-        corporate_pscs: List[Dict[str, Any]] = []
-        for psc in pscs_data.get("items", []):
-            if psc.get("kind") == "corporate-entity-person-with-significant-control":
-                psc_name, identification = psc.get("name"), psc.get("identification")
-                if identification and isinstance(identification, dict):
-                    psc_crn = identification.get("registration_number")
-                    if psc_crn and isinstance(psc_crn, str) and psc_crn.strip().upper() != company_number.strip().upper():
-                        corporate_pscs.append({"name": psc_name, "number": psc_crn, "data": psc})
-        if not corporate_pscs: logger.info(f"No external corporate PSCs identified for {company_number}."); return None
-        selected_psc = corporate_pscs[0] 
-        return {"name": str(selected_psc["name"]), "number": str(selected_psc["number"])}
-    except Exception as e: logger.error(f"Unexpected error processing PSC data for {company_number}: {e}", exc_info=True); return None
+        response = openai_client.chat.completions.create(
+            model=OPENAI_MODEL_DEFAULT,
+            temperature=0.2,
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_content}],
+        )
+        raw_text = response.choices[0].message.content.strip()
+        subs_data = json.loads(raw_text)
+        if isinstance(subs_data, dict) and "subsidiaries" in subs_data:
+            subs_data = subs_data.get("subsidiaries")
+        cleaned: List[Dict[str, str]] = []
+        if isinstance(subs_data, list):
+            for item in subs_data:
+                if isinstance(item, dict) and item.get("name"):
+                    clean_item = {"name": str(item.get("name")).strip()}
+                    num = item.get("number")
+                    if num:
+                        clean_item["number"] = str(num).strip().upper()
+                    cleaned.append(clean_item)
+        return cleaned, None
+    except Exception as e:
+        logger.error(f"{company_number}: GPT public structure lookup failed: {e}", exc_info=True)
+        return [], str(e)
+
 
 def _fetch_and_parse_selected_documents(
     company_number: str, docs_to_process: List[Dict[str, Any]], api_key: str, 
@@ -364,6 +344,8 @@ def analyze_company_group_structure(
     analysis_mode: AnalysisMode = "profile_check",
     target_subsidiary_crns: Optional[List[str]] = None,
     session_data: Optional[Dict[str, Any]] = None,
+    known_structure: Optional[Dict[str, List[Dict[str, str]]]] = None,
+    use_public_sources_gpt: bool = False,
     *,
     docs_metadata_to_process: Optional[List[Dict[str, Any]]] = None,
     years_to_scan: int = METADATA_YEARS_TO_SCAN,
@@ -374,19 +356,36 @@ def analyze_company_group_structure(
     If ``metadata_only`` is ``True`` the function returns filing metadata so the
     caller can select which documents to process.  When ``docs_metadata_to_process``
     is provided, only those filings will be fetched and parsed. ``years_to_scan``
-    controls the lookback window when fetching metadata.
+    controls the lookback window when fetching metadata. ``known_structure`` can
+    be supplied to merge a pre-existing list of subsidiaries into the results.
+    Set ``use_public_sources_gpt`` to fetch an initial subsidiary list from GPT-4.1.
     """
     results: Dict[str, Any] = {
         "company_number_analyzed": company_number, "analysis_mode_executed": analysis_mode,
         "report_messages": [f"Group Structure Analysis for {company_number} - Mode: {analysis_mode}"],
         "company_profile": session_data.get("company_profile") if session_data else None,
         "is_inferred_topco": session_data.get("is_inferred_topco", False) if session_data else False,
-        "parent_timeline": session_data.get("parent_timeline", []) if session_data else [],
         "subsidiary_evolution": session_data.get("subsidiary_evolution", defaultdict(list)) if session_data else defaultdict(list),
-        "identified_parent_crn": session_data.get("identified_parent_crn") if session_data else None,
         "visualization_data": None, "subsidiary_details_list": []
     }
-    report_messages = results["report_messages"] 
+    report_messages = results["report_messages"]
+    if known_structure:
+        preset_subs = known_structure.get(company_number, [])
+        if preset_subs:
+            existing = {frozenset(s.items()) for s in results["subsidiary_evolution"].get(0, [])}
+            for sub in preset_subs:
+                if isinstance(sub, dict) and frozenset(sub.items()) not in existing:
+                    results["subsidiary_evolution"].setdefault(0, []).append(sub)
+    elif use_public_sources_gpt:
+        comp_name = results.get("company_profile", {}).get("company_name", company_number)
+        gpt_subs, gpt_err = gpt_fetch_public_group_structure(company_number, comp_name)
+        if gpt_err:
+            report_messages.append(f"GPT structure lookup error: {gpt_err}")
+        if gpt_subs:
+            existing = {frozenset(s.items()) for s in results["subsidiary_evolution"].get(0, [])}
+            for sub in gpt_subs:
+                if frozenset(sub.items()) not in existing:
+                    results["subsidiary_evolution"].setdefault(0, []).append(sub)
     if not ch_api_utils_available:
         report_messages.append("CRITICAL ERROR: CH API utilities not available."); return results
 
@@ -404,7 +403,7 @@ def analyze_company_group_structure(
             report_messages.append(f"Proceeding with TopCo status as: {results['is_inferred_topco']} (profile unavailable).")
 
     docs_to_process_metadata: List[Dict[str, Any]] = []
-    if analysis_mode in ["find_parent", "list_subsidiaries"] and docs_metadata_to_process is None:
+    if analysis_mode == "list_subsidiaries" and docs_metadata_to_process is None:
         end_year = datetime.now().year
         start_year = end_year - max(1, years_to_scan) + 1
         categories = RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE
@@ -417,7 +416,7 @@ def analyze_company_group_structure(
             categories=categories,
             items_per_page=100,
             max_docs_to_fetch_meta=150,
-            target_docs_per_category_in_date_range=(3 if analysis_mode == "find_parent" else 10),
+            target_docs_per_category_in_date_range=10,
             year_range=(start_year, end_year),
         )
         if meta_err:
@@ -449,30 +448,7 @@ def analyze_company_group_structure(
         )
         results["downloaded_documents_content"] = parsed_docs_data
 
-    if analysis_mode == "find_parent":
-        pt, pt_msgs = extract_parent_timeline(company_number, api_key, logger, parsed_docs_data)
-        results["parent_timeline"] = pt 
-        report_messages.extend(pt_msgs)
-        latest_parent_entry = next((e for e in reversed(results["parent_timeline"]) if e.get('parent_number')), None)
-        if latest_parent_entry and isinstance(latest_parent_entry.get('parent_number'), str):
-            results["identified_parent_crn"] = latest_parent_entry['parent_number']
-        if not results["identified_parent_crn"]:
-            psc_parent = _get_corporate_psc_parent_info(company_number, api_key, logger)
-            if psc_parent and isinstance(psc_parent.get('number'), str): results["identified_parent_crn"] = psc_parent['number']
-        
-        dot_lines = ["digraph G { rankdir=TB; node[shape=box];"]
-        node_name = results.get("company_profile", {}).get('company_name', company_number) # Safe access
-        dot_lines.append(f'"{company_number}" [label="{node_name}\\n({company_number})\\nAnalyzed"];')
-        if results["identified_parent_crn"] and results["identified_parent_crn"] != company_number:
-            parent_crn_str = str(results["identified_parent_crn"]) # Ensure string
-            parent_profile_viz = get_company_profile(parent_crn_str, api_key)
-            parent_name_viz = parent_profile_viz.get('company_name', parent_crn_str) if parent_profile_viz else parent_crn_str
-            dot_lines.append(f'"{parent_crn_str}" [label="{parent_name_viz}\\n({parent_crn_str})\\nIdentified Parent", color=lightgreen];')
-            dot_lines.append(f'"{parent_crn_str}" -> "{company_number}";')
-        dot_lines.append("}")
-        results["visualization_data"] = "\n".join(dot_lines)
-
-    elif analysis_mode == "list_subsidiaries":
+    if analysis_mode == "list_subsidiaries":
         current_subs_evolution = results["subsidiary_evolution"] 
         for doc_bundle in parsed_docs_data:
             parsed, meta = doc_bundle.get("parsed_data",{}), doc_bundle.get("metadata",{})
@@ -569,14 +545,15 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
             with st.spinner(f"Fetching profile for {st.session_state.get('gs_current_company_crn')}..."): # type: ignore
                 current_session_data = {"company_profile": None, "is_inferred_topco": st.session_state.get('gs_user_stated_topco'), "user_stated_topco": st.session_state.get('gs_user_stated_topco')}
                 results = analyze_company_group_structure(
-                    company_number=st.session_state.get('gs_current_company_crn',''), api_key=api_key, base_scratch_dir=base_scratch_dir,  # Added default for get
-                    logger=logger, ocr_handler=ocr_handler, analysis_mode="profile_check", session_data=current_session_data
+                    company_number=st.session_state.get('gs_current_company_crn',''), api_key=api_key, base_scratch_dir=base_scratch_dir,
+                    logger=logger, ocr_handler=ocr_handler, analysis_mode="profile_check", session_data=current_session_data,
+                    use_public_sources_gpt=True
                 )
                 st.session_state.gs_analysis_results, st.session_state.gs_current_stage = results, "profile_reviewed" # type: ignore
                 st.rerun() # type: ignore
 
     results = st.session_state.get('gs_analysis_results', {})
-    if results and st.session_state.get('gs_current_stage') in ["profile_reviewed", "parent_analyzed", "subs_listed", "subs_detailed"]:
+    if results and st.session_state.get('gs_current_stage') in ["profile_reviewed", "subs_listed", "subs_detailed"]:
         st.markdown("---"); st.subheader(f"Analysis for: {results.get('company_number_analyzed', '')}") # type: ignore
         profile = results.get("company_profile")
         if profile and isinstance(profile, dict) : 
@@ -608,27 +585,7 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
                         st.session_state.gs_current_stage = "docs_listed"  # type: ignore
                         st.session_state.gs_next_analysis_mode = "list_subsidiaries"  # type: ignore
                         st.rerun()  # type: ignore
-            else:
-                if st.button("2b. Find Parent Company", key="gs_find_parent_btn"):  # type: ignore
-                    with st.spinner(
-                        f"Fetching filings for {results.get('company_number_analyzed')}..."
-                    ):  # type: ignore
-                        updated_results = analyze_company_group_structure(
-                            results.get('company_number_analyzed', ''),
-                            api_key,
-                            base_scratch_dir,
-                            logger,
-                            ocr_handler,
-                            "find_parent",
-                            session_data=results,
-                            metadata_only=True,
-                            years_to_scan=st.session_state.get('gs_years_choice', 5),
-                        )
-                        st.session_state.gs_analysis_results = updated_results  # type: ignore
-                        st.session_state.gs_current_stage = "docs_listed"  # type: ignore
 
-                        st.session_state.gs_next_analysis_mode = "find_parent"  # type: ignore
-                        st.rerun()  # type: ignore
 
     if st.session_state.get('gs_current_stage') == "docs_listed":
         docs_meta = results.get("retrieved_doc_metadata", [])
@@ -665,29 +622,14 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: 
                             base_scratch_dir,
                             logger,
                             ocr_handler,
-                            st.session_state.get('gs_next_analysis_mode', 'find_parent'),
+                            st.session_state.get('gs_next_analysis_mode', 'list_subsidiaries'),
                             session_data=results,
                             docs_metadata_to_process=chosen,
                         )
-                        next_stage = (
-                            "subs_listed"
-                            if st.session_state.get('gs_next_analysis_mode') == "list_subsidiaries"
-                            else "parent_analyzed"
-                        )
+                        next_stage = "subs_listed"
                         st.session_state.gs_analysis_results = updated_results  # type: ignore
                         st.session_state.gs_current_stage = next_stage  # type: ignore
                         st.rerun()  # type: ignore
-    
-    if st.session_state.get('gs_current_stage') == "parent_analyzed":
-        st.subheader("Parent Company Analysis Results"); # type: ignore
-        identified_parent_crn = results.get("identified_parent_crn")
-        if identified_parent_crn and identified_parent_crn != results.get("company_number_analyzed"):
-            st.success(f"Potential Parent Identified: CRN {identified_parent_crn}") # type: ignore
-            if st.button(f"Analyze Parent ({identified_parent_crn})", key=f"gs_analyze_parent_{identified_parent_crn}"): # type: ignore
-                st.session_state.gs_current_company_crn, st.session_state.gs_user_stated_topco = identified_parent_crn, True # type: ignore
-                st.session_state.gs_analysis_results, st.session_state.gs_current_stage = {}, "initial_input" # type: ignore
-                st.rerun() # type: ignore
-        if results.get("visualization_data"): st.graphviz_chart(results["visualization_data"]) # type: ignore
 
     if st.session_state.get('gs_current_stage') == "subs_listed":
         st.subheader(f"Subsidiary Analysis for TopCo: {results.get('company_number_analyzed')}") # type: ignore
