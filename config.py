@@ -164,6 +164,26 @@ def get_openai_client() -> Optional[openai.OpenAI]:
             _openai_client = None
     return _openai_client
 
+
+def check_openai_model(model_name: str) -> Tuple[bool, str]:
+    """Verify that the requested OpenAI model can be retrieved."""
+    client = get_openai_client()
+    if not client:
+        msg = "OpenAI client not available."
+        logger.error(msg)
+        return False, msg
+
+    try:
+        client.models.retrieve(model_name)
+        logger.info(f"OpenAI model '{model_name}' is available.")
+        return True, ""
+    except Exception as e:
+        msg = (
+            f"Model '{model_name}' not found; check OPENAI_MODEL or run client.models.list()"
+        )
+        logger.error(msg)
+        return False, msg
+
 def get_ch_session(api_key_override: Optional[str] = None) -> requests.Session:
     """
     Returns a Companies House API session.

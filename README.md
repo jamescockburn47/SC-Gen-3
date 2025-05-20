@@ -21,6 +21,9 @@ The application loads configuration from a `.env` file or the host environment. 
 - `GEMINI_API_KEY` – API key for Google Gemini models.
 - `GEMINI_MODEL_FOR_SUMMARIES` – override the Gemini model used for summaries (default `gemini-1.5-flash-latest`).
 - `OPENAI_MODEL` – default OpenAI model for analysis tasks and fallback summaries.
+-   If you encounter errors when using a newer model name like `gpt-4.1`, run
+    the helper `check_openai_model()` from `config.py` or `openai.models.list()`
+    to verify the model is available to your API key.
 - `GEMINI_MODEL_FOR_PROTOCOL_CHECK` – Gemini model used when checking responses against the strategic protocols.
 - `PROTOCOL_CHECK_MODEL_PROVIDER` – choose `gemini` (default) or `openai` for protocol compliance checks.
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
