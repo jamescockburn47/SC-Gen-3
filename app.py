@@ -686,6 +686,7 @@ with tab_consult:
                     improved_prompt = get_improved_prompt(current_text_in_area, "Strategic Counsel general query")
                     if "Error:" not in improved_prompt and improved_prompt.strip():
                         st.session_state.user_instruction_main_text_area_value = improved_prompt
+                        st.session_state.main_instruction_area_consult_tab = improved_prompt
                         st.session_state.user_instruction_main_is_improved = True
                         st.session_state.rerun_needed = True
                     elif "Error:" in improved_prompt:
@@ -698,6 +699,7 @@ with tab_consult:
         if st.session_state.user_instruction_main_is_improved:
             if st.button("↩️ Revert to Original", key="cancel_improve_prompt_main_button", use_container_width=True):
                 st.session_state.user_instruction_main_text_area_value = st.session_state.original_user_instruction_main
+                st.session_state.main_instruction_area_consult_tab = st.session_state.original_user_instruction_main
                 st.session_state.user_instruction_main_is_improved = False
                 st.session_state.rerun_needed = True
 
