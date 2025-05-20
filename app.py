@@ -180,11 +180,15 @@ for rel_p in REQUIRED_DIRS_REL:
 
 MODEL_PRICES_PER_1K_TOKENS_GBP: Dict[str, float] = {
     "gpt-4.1": 0.0080,
+    "gpt-4o": 0.0040,
     config.GEMINI_MODEL_DEFAULT: 0.0028,
+    "gemini-1.5-pro-latest": 0.0070,
 }
 MODEL_ENERGY_WH_PER_1K_TOKENS: Dict[str, float] = {
     "gpt-4.1": 0.4,
+    "gpt-4o": 0.25,
     config.GEMINI_MODEL_DEFAULT: 0.2,
+    "gemini-1.5-pro-latest": 0.35,
 }
 KETTLE_WH: int = 360
 
@@ -938,12 +942,12 @@ with tab_ch_analysis:
             with st.spinner("Searching for available documents... This may take a moment."):
                 try:
                     # Call the correct function signature
-                    all_docs, profiles_map, meta_error = ch_pipeline.get_relevant_filings_metadata(
+                    all_docs, profiles_map, meta_error = ch_pipeline.get_relevant_filings_metadata_multi(
                         company_numbers_list=ch_company_numbers_list,
                         api_key=config.CH_API_KEY,
-                        selected_categories_api=ch_selected_categories_api,
+                        categories_to_fetch=ch_selected_categories_api,
                         start_year=st.session_state.ch_start_year_input_main,
-                        end_year=st.session_state.ch_end_year_input_main
+                        end_year=st.session_state.ch_end_year_input_main,
                     )
                     # Assign a unique 'id' for UI selection (use transaction_id or fallback)
                     for doc in all_docs:
