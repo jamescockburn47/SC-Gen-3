@@ -13,6 +13,7 @@
   ```
    You can also run `./setup.sh` to automatically create a virtual environment
    and install the pinned dependencies.
+    - Windows users may need to install the Microsoft Visual Studio Build Tools if pandas is built from source. Installer: https://visualstudio.microsoft.com/visual-cpp-build-tools/
 2. **Create a `.env` file** in the project root containing the required environment variables.
 3. **Run the application**
    ```bash
