@@ -61,6 +61,18 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY") # For Textract
 AWS_REGION_DEFAULT = os.getenv("AWS_DEFAULT_REGION", "eu-west-2")
 S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 
+# --- Google Drive Integration ---
+GOOGLE_CLIENT_SECRET_FILE = os.getenv(
+    "GOOGLE_CLIENT_SECRET_FILE",
+    str(Path(__file__).resolve().parent / "client_secret.json"),
+)
+GOOGLE_TOKEN_FILE = os.getenv(
+    "GOOGLE_TOKEN_FILE",
+    str(Path(__file__).resolve().parent / "google_token.json"),
+)
+GOOGLE_API_SCOPES = ["https://www.googleapis.com/auth/drive"]
+ENABLE_GOOGLE_DRIVE_INTEGRATION = os.getenv("ENABLE_GOOGLE_DRIVE_INTEGRATION", "false").lower() == "true"
+
 # --- Model Configuration ---
 OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o")
 GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-flash-latest") # More specific name
@@ -159,6 +171,46 @@ def check_openai_model(model_name: str) -> Tuple[bool, str]:
         )
         logger.error(msg)
         return False, msg
+
+
+_google_drive_service: Optional[Any] = None
+
+def get_google_drive_service() -> Optional[Any]:
+    """Return an authorized Google Drive service instance or ``None`` if unavailable."""
+    global _google_drive_service
+    if _google_drive_service:
+        return _google_drive_service
+
+    if not ENABLE_GOOGLE_DRIVE_INTEGRATION:
+        logger.info("Google Drive integration disabled via configuration.")
+        return None
+
+    try:
+        from google.oauth2.credentials import Credentials
+        from google_auth_oauthlib.flow import InstalledAppFlow
+        from googleapiclient.discovery import build
+        from google.auth.transport.requests import Request
+
+        creds = None
+        token_path = Path(GOOGLE_TOKEN_FILE)
+        if token_path.exists():
+            creds = Credentials.from_authorized_user_file(str(token_path), GOOGLE_API_SCOPES)
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    GOOGLE_CLIENT_SECRET_FILE, GOOGLE_API_SCOPES
+                )
+                creds = flow.run_local_server(port=0)
+            token_path.write_text(creds.to_json())
+
+        _google_drive_service = build("drive", "v3", credentials=creds)
+        logger.info("Google Drive service initialised.")
+        return _google_drive_service
+    except Exception as e:
+        logger.error(f"Failed to initialise Google Drive service: {e}")
+        return None
 
 def get_ch_session(api_key_override: Optional[str] = None) -> requests.Session:
     """

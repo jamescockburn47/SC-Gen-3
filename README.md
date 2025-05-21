@@ -30,6 +30,9 @@ The application loads configuration from a `.env` file or the host environment. 
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
 - `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
+- `ENABLE_GOOGLE_DRIVE_INTEGRATION` – set to `true` to allow selecting files from Google Drive.
+- `GOOGLE_CLIENT_SECRET_FILE` – path to your OAuth client credentials JSON.
+- `GOOGLE_TOKEN_FILE` – file where OAuth tokens will be stored.
 
 Gemini is the preferred model for generating summaries. If an OpenAI API key is provided, GPT models are used for analysis tasks and can power protocol checks when `PROTOCOL_CHECK_MODEL_PROVIDER` is set to `openai`.
 
@@ -53,6 +56,10 @@ Companies House may label some group accounts filings as "legacy". The system no
 
 
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
+
+## Google Drive Integration
+
+Set `ENABLE_GOOGLE_DRIVE_INTEGRATION=true` and provide a `GOOGLE_CLIENT_SECRET_FILE` pointing to your OAuth credentials. When first connecting you will be prompted to authorize access and a token is stored in `GOOGLE_TOKEN_FILE`. Once connected you can browse your Drive from the sidebar, select files and choose "Google Drive" as the OCR method for scanned PDFs.
 
 ## Case Timeline
 
