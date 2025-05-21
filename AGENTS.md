@@ -5,8 +5,9 @@ Please follow these conventions when contributing:
 
 ## Development
 - Use **Python 3.10+**.
-- Install dependencies with `pip install -r requirements.txt` if network
-  access is available.
+- Install dependencies with `pip install -r requirements.txt` while network
+  access is available. The file pins exact versions, including `pytest`, so
+  this step must happen before any network restrictions.
 - Unit tests are located in files starting with `test_`. Run them using:
   ```bash
   python -m unittest discover -v
