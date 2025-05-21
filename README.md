@@ -2,7 +2,8 @@
 
 ## Setup Overview
 
-1. **Install dependencies**
+1. **Install dependencies** – the `requirements.txt` file now pins the exact
+   versions of each library.
    ```bash
    pip install -r requirements.txt
    ```
