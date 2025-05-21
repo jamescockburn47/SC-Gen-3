@@ -1,20 +1,20 @@
 # Core Streamlit and web
-streamlit
-requests
-beautifulsoup4
+streamlit==1.35.0
+requests==2.31.0
+beautifulsoup4==4.12.3
 
 # Data handling
-pandas
-PyPDF2
-pdfminer.six
-python-docx # For importing docx
-openpyxl
+pandas==2.2.1
+PyPDF2==3.0.1
+pdfminer.six==20221105
+python-docx==1.1.0 # For importing docx
+openpyxl==3.1.2
 xmltodict==0.13.0
 
 # AI / cloud
-openai
-google-generativeai
-boto3 # Includes botocore
-python-dotenv
-streamlit-timeline
+openai==1.23.0
+google-generativeai==0.5.2
+boto3==1.34.110 # Includes botocore
+python-dotenv==1.0.1
+streamlit-timeline==0.1.5
 
