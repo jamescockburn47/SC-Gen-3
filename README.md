@@ -30,6 +30,8 @@ The application loads configuration from a `.env` file or the host environment. 
 - `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
 - `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
 - `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
+- `ENABLE_DRIVE_IMPORT` – set to `true` to expose Google Drive integration.
+- `DRIVE_CLIENT_ID` and `DRIVE_CLIENT_SECRET` – OAuth credentials for Drive access.
 
 Gemini is the preferred model for generating summaries. If an OpenAI API key is provided, GPT models are used for analysis tasks and can power protocol checks when `PROTOCOL_CHECK_MODEL_PROVIDER` is set to `openai`.
 
@@ -49,10 +51,21 @@ Without OCR, many Companies House PDF filings cannot be parsed, meaning group-st
 
 When subsidiaries are listed after analysis the application now aggregates entries from all retrieved years into a single deduplicated list. Previously only the most recent year's subsidiaries were shown.
 
+
 Companies House may label some group accounts filings as "legacy". The system now automatically highlights these documents when presenting the list of available filings.
 
-
 Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
+
+## Importing Files from Google Drive
+
+When `ENABLE_DRIVE_IMPORT` is `true` the sidebar shows a **Drive Files** button. On first use it triggers an OAuth consent flow using `DRIVE_CLIENT_ID` and `DRIVE_CLIENT_SECRET`.
+
+1. Follow the link that appears and grant the app access to your Drive.
+2. Copy the verification code back into the text box and continue.
+3. A file picker lists your recent PDFs, DOCX or TXT files. Tick any you wish to load.
+4. Selected files are downloaded to `APPLICATION_SCRATCH_DIR` and processed exactly like standard uploads.
+
+Set `ENABLE_DRIVE_IMPORT` to `false` (default) to hide this option and prevent Drive OAuth prompts.
 
 ## Case Timeline
 

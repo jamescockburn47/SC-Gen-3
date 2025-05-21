@@ -77,6 +77,7 @@ def render_about_page():
         SC supports a versatile intake system to build the contextual basis for AI interaction:
         - **File Uploads:** Accepts PDF, DOCX, and TXT files. Documents are processed locally to extract textual content.
         - **URL Ingestion:** Users can paste URLs, and the application attempts to fetch and parse the primary textual content from web pages.
+        - **Drive Files (optional):** Authorise the app with Google OAuth to browse and select documents directly from your Drive.
         - **AI-Powered Summarization:** Extracted text is summarized using an AI model. These summaries can be:
             - Displayed for quick review.
             - Cached locally per topic to avoid re-processing.

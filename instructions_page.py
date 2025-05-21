@@ -23,7 +23,10 @@ def render_instructions_page():
            - Tick summaries you want to inject back into **Consult Counsel**.
         4. **Company Group Structure** (if enabled):
            - Provide a company number and follow the step buttons to fetch profiles, parent data and subsidiary details.
-        5. **About** – Overview of the system and environment details.
+        5. **Drive Files** (if enabled):
+           - Click **Drive Files** in the sidebar to authorise access to your Google Drive.
+           - Select PDF, DOCX or TXT files to import. They will be processed like standard uploads.
+        6. **About** – Overview of the system and environment details.
         
         For best results keep instructions concise and load only the most relevant context.
         """
