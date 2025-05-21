@@ -64,6 +64,11 @@ from config import (
     GEMINI_API_KEY,
 )
 
+try:
+    import google_drive_utils
+except ImportError:  # pragma: no cover - optional
+    google_drive_utils = None  # type: ignore
+
 # --- Optional AWS SDK imports ---
 try:
     import boto3
@@ -348,7 +353,8 @@ def find_company_number(query: str, ch_api_key: Optional[str]) -> Tuple[Optional
 
 def extract_text_from_uploaded_file(
     file_obj: io.BytesIO,
-    file_name: str
+    file_name: str,
+    ocr_preference: str = "aws",
 ) -> Tuple[Optional[str], Optional[str]]:
     """
     Extracts text from an uploaded file object (PDF, DOCX, TXT).
@@ -378,30 +384,42 @@ def extract_text_from_uploaded_file(
             # Condition to try Textract:
             # 1. PyPDF2 didn't produce meaningful text (text_content is None or too short)
             # AND 2. Textract is available and the function to call it is defined.
-            if not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN: 
-                if AWS_TEXTRACT_MODULE_AVAILABLE and aws_perform_textract_ocr:
+            if not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN:
+                if ocr_preference == "google":
+                    g_service = config.get_google_drive_service()
+                    if g_service:
+                        file_obj.seek(0)
+                        pdf_bytes = file_obj.getvalue()
+                        gdoc_id = google_drive_utils.upload_pdf_for_ocr(g_service, pdf_bytes, file_name)
+                        if gdoc_id:
+                            ocr_text = google_drive_utils.extract_text_from_google_doc(g_service, gdoc_id)
+                            if ocr_text and len(ocr_text.strip()) >= MIN_MEANINGFUL_TEXT_LEN:
+                                text_content = ocr_text.strip()
+                                error_message = None
+                                logger.info(f"Extracted text from PDF '{file_name}' using Google Drive OCR.")
+                            else:
+                                logger.warning(f"Google OCR for '{file_name}' returned insufficient text.")
+
+                if (not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN) and AWS_TEXTRACT_MODULE_AVAILABLE and aws_perform_textract_ocr and (ocr_preference == "aws" or ocr_preference == "google"):
                     current_text_len = len(text_content) if text_content else 0
                     logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal/no text (length {current_text_len}, threshold {MIN_MEANINGFUL_TEXT_LEN}). Attempting AWS Textract OCR.")
-                    file_obj.seek(0) 
+                    file_obj.seek(0)
                     pdf_bytes = file_obj.getvalue()
-                    ocr_text, pages_ocrd, ocr_error = aws_perform_textract_ocr(pdf_bytes, file_name) 
+                    ocr_text, pages_ocrd, ocr_error = aws_perform_textract_ocr(pdf_bytes, file_name)
                     if ocr_error:
                         new_ocr_error_msg = f"Textract OCR failed for '{file_name}': {ocr_error}"
-                        # Append to existing error_message if PyPDF2 also had an error, or set it if PyPDF2 was just short
                         error_message = f"{error_message} | {new_ocr_error_msg}" if error_message else new_ocr_error_msg
                         logger.error(new_ocr_error_msg)
-                        # Do not overwrite text_content if PyPDF2 had some (short) text and OCR failed
-                    elif ocr_text: # OCR succeeded and returned text
-                        text_content = ocr_text.strip() # Prioritize OCR text
-                        error_message = None # Clear any prior error (e.g. from PyPDF2 being unavailable if OCR worked)
+                    elif ocr_text:
+                        text_content = ocr_text.strip()
+                        error_message = None
                         logger.info(f"Successfully extracted text from PDF '{file_name}' using AWS Textract ({pages_ocrd} pages).")
-                    else: # OCR succeeded but returned no text
+                    else:
                         logger.warning(f"Textract OCR for '{file_name}' returned no text but no error. Using previous extraction if any (text_content length: {len(text_content or '')}).")
-                        # text_content remains as it was (either short from PyPDF2, or None if PyPDF2 failed)
-                elif text_content: # PyPDF2 got short text, and Textract is not an option
-                    logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal text (length {len(text_content)}), Textract OCR not available/used.")
-                elif not error_message: # PyPDF2 failed (text_content is None), Textract not an option, and no prior error_message
-                    error_message = f"Failed to extract text from PDF '{file_name}'. Direct extraction failed and Textract OCR is not available/configured."
+                elif text_content:
+                    logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal text (length {len(text_content)}), OCR not further attempted.")
+                elif not error_message:
+                    error_message = f"Failed to extract text from PDF '{file_name}'. No OCR method succeeded." 
                     logger.warning(error_message)
         
         elif file_ext == "docx":
@@ -443,6 +461,25 @@ def extract_text_from_uploaded_file(
         text_content = None 
         
     return text_content, error_message
+
+
+def extract_text_from_google_drive_file(
+    service: Any,
+    file_id: str,
+    file_name: str,
+    mime_type: str,
+    ocr_preference: str = "google",
+) -> Tuple[Optional[str], Optional[str]]:
+    """Download a file from Google Drive and extract its text."""
+    if not service:
+        return None, "Google Drive service not available"
+    if mime_type == "application/vnd.google-apps.document":
+        text = google_drive_utils.extract_text_from_google_doc(service, file_id) if google_drive_utils else None
+        return text, None if text else (None, "Failed to export Google Doc")
+    file_bytes = google_drive_utils.download_file_bytes(service, file_id) if google_drive_utils else None
+    if file_bytes is None:
+        return None, f"Failed to download file {file_name}"
+    return extract_text_from_uploaded_file(io.BytesIO(file_bytes), file_name, ocr_preference)
 
 
 def build_consult_docx(conversation: List[str], output_path: _pl.Path) -> None:

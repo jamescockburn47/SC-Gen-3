@@ -17,4 +17,7 @@ google-generativeai
 boto3 # Includes botocore
 python-dotenv
 streamlit-timeline
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
 

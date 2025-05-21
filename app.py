@@ -40,6 +40,7 @@ if str(APP_ROOT_DIR) not in sys.path:
 import config
 import ch_pipeline
 import app_utils
+import google_drive_utils
 from about_page import render_about_page # Changed from show_about_page
 from instructions_page import render_instructions_page
 import timeline_utils
@@ -153,6 +154,7 @@ try:
         fetch_url_content,
         find_company_number,
         extract_text_from_uploaded_file,
+        extract_text_from_google_drive_file,
         build_consult_docx,
         extract_legal_citations,
         verify_citations,
@@ -271,6 +273,9 @@ def init_session_state():
         ,"case_timeline_events": []
         ,"summarise_uploads": True
         ,"summary_detail_level": 2
+        ,"gdrive_connected": False
+        ,"gdrive_selected_files": []
+        ,"ocr_method": "aws"
         # Note: "company_group_analysis_results" and "company_group_ultimate_parent_cn"
         # from the original init did not have direct equivalents in the UI's init block.
         # If they are needed elsewhere, ensure they are handled consistently or add them here
@@ -450,6 +455,30 @@ with st.sidebar:
         if "summary_detail_level" not in st.session_state:
             st.session_state.summary_detail_level = summary_level_option
 
+        st.radio(
+            "OCR method",
+            ["AWS Textract", "Google Drive", "None"],
+            index={"aws":0,"google":1,"none":2}[st.session_state.get("ocr_method","aws")],
+            key="ocr_method_radio",
+        )
+        st.session_state.ocr_method = {0:"aws",1:"google",2:"none"}[st.session_state.ocr_method_radio]
+
+        if st.button("Connect Google Drive", disabled=st.session_state.gdrive_connected):
+            service = config.get_google_drive_service()
+            if service:
+                st.session_state.gdrive_connected = True
+                st.success("Google Drive connected")
+            else:
+                st.error("Failed to connect to Google Drive")
+        drive_files_selected = []
+        if st.session_state.gdrive_connected:
+            service = config.get_google_drive_service()
+            files = google_drive_utils.list_files(service, "trashed=false and mimeType!='application/vnd.google-apps.folder'") if service else []
+            options = {f"{f['name']} ({f['id']})": f for f in files}
+            selected_labels = st.multiselect("Select Drive Files", list(options.keys()), key="gdrive_file_select_sidebar")
+            drive_files_selected = [options[l] for l in selected_labels]
+        st.session_state.gdrive_selected_files = drive_files_selected
+
         if st.session_state.citation_links_updated and st.session_state.last_citations_found:
             with st.spinner("Rechecking citations..."):
                 verification = verify_citations(
@@ -466,7 +495,8 @@ with st.sidebar:
             st.session_state.citation_links_updated = False
             st.success("Answer rechecked using provided links.")
 
-        current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process)
+        gdrive_ids = {f['id'] for f in st.session_state.gdrive_selected_files}
+        current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process) | gdrive_ids
         processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
         sources_needing_processing = current_source_identifiers - processed_summary_ids_in_session
     
@@ -495,12 +525,18 @@ with st.sidebar:
     
                     if title == "Error" or "Cache" in title : # If cache load failed or it was an error state
                         raw_content, error_msg = None, None
-                        # Check if it's an uploaded file or a URL
-                        if src_id in {f.name for f in uploaded_docs_list}: # Is it an uploaded file?
+                        # Check source type
+                        if src_id in {f.name for f in uploaded_docs_list}:
                             file_obj = next((f for f in uploaded_docs_list if f.name == src_id), None)
-                            if file_obj: raw_content, error_msg = extract_text_from_uploaded_file(io.BytesIO(file_obj.getvalue()), src_id)
-                        elif src_id in urls_to_process: # Is it a URL?
+                            if file_obj:
+                                raw_content, error_msg = extract_text_from_uploaded_file(io.BytesIO(file_obj.getvalue()), src_id, st.session_state.ocr_method)
+                        elif src_id in urls_to_process:
                             raw_content, error_msg = fetch_url_content(src_id)
+                        else:
+                            g_file = next((f for f in st.session_state.gdrive_selected_files if f['id']==src_id), None)
+                            if g_file:
+                                service = config.get_google_drive_service()
+                                raw_content, error_msg = extract_text_from_google_drive_file(service, src_id, g_file['name'], g_file.get('mimeType',''), st.session_state.ocr_method)
 
                         if error_msg: title, summary, truncated_flag = f"Error: {src_id[:40]}...", error_msg, False
                         elif not raw_content or not raw_content.strip():
