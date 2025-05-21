@@ -2,10 +2,17 @@
 
 ## Setup Overview
 
-1. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+1. **Install dependencies** *(while network is available)*
+ ```bash
+  pip install -r requirements.txt
+  ```
+  The requirements file pins exact versions for every package, including
+  `pytest`, so install them before network access is disabled.  Verify with:
+  ```bash
+  pytest --version
+  ```
+   You can also run `./setup.sh` to automatically create a virtual environment
+   and install the pinned dependencies.
 2. **Create a `.env` file** in the project root containing the required environment variables.
 3. **Run the application**
    ```bash
