@@ -288,6 +288,8 @@ def init_session_state():
         "ch_last_narrative": None, "ch_last_batch_metrics": {},
         "consult_digest_model": config.OPENAI_MODEL_DEFAULT if 'config' in globals() and hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o", 
         "ch_analysis_summaries_for_injection": [], 
+        "ocr_method": "aws",
+        "ocr_method_radio": 0,
         
         "user_instruction_main_text_area_value": "", 
         "original_user_instruction_main": "", 
@@ -419,6 +421,7 @@ with st.sidebar:
     )
 
     with st.expander("Context Injection", expanded=False):
+        # Memory file handling
         memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
         loaded_memories_from_file: List[str] = []
         if memory_file_path.exists():
@@ -428,35 +431,34 @@ with st.sidebar:
                     loaded_memories_from_file = [str(item) for item in mem_data if isinstance(item, str)]
             except Exception as e_mem_load:
                 st.warning(f"Could not load memory file {memory_file_path.name}: {e_mem_load}")
+        
+        # Memory selection widget with unique key
         selected_mem_snippets = st.multiselect(
             "Inject Memories",
             loaded_memories_from_file,
             default=[mem for mem in st.session_state.loaded_memories if mem in loaded_memories_from_file],
-            key="mem_multiselect_sidebar",
+            key="mem_multiselect_sidebar_context"
         )
         st.session_state.loaded_memories = selected_mem_snippets
 
-    st.markdown("---"); st.markdown("### Context Injection")
-    memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
-    loaded_memories_from_file: List[str] = []
-    if memory_file_path.exists():
-        try:
-            mem_data = json.loads(memory_file_path.read_text(encoding="utf-8"))
-            if isinstance(mem_data, list):
-                loaded_memories_from_file = [str(item) for item in mem_data if isinstance(item, str)]
-        except Exception as e_mem_load: st.warning(f"Could not load memory file {memory_file_path.name}: {e_mem_load}")
-    selected_mem_snippets = st.multiselect("Inject Memories", loaded_memories_from_file,
-        default=[mem for mem in st.session_state.loaded_memories if mem in loaded_memories_from_file], 
-        key="mem_multiselect_sidebar")
-    st.session_state.loaded_memories = selected_mem_snippets
-
-    digest_file_path = APP_BASE_PATH / "memory" / "digests" / f"{st.session_state.current_topic}.md"
-    if digest_file_path.exists():
-        try: st.session_state.latest_digest_content = digest_file_path.read_text(encoding="utf-8")
-        except Exception as e_digest_load: st.warning(f"Could not load digest {digest_file_path.name}: {e_digest_load}"); st.session_state.latest_digest_content = ""
-    else: st.session_state.latest_digest_content = "" 
-    inject_digest_checkbox = st.checkbox("Inject Digest", value=bool(st.session_state.latest_digest_content), 
-        key="inject_digest_checkbox_sidebar", disabled=not bool(st.session_state.latest_digest_content))
+        # Digest file handling
+        digest_file_path = APP_BASE_PATH / "memory" / "digests" / f"{st.session_state.current_topic}.md"
+        if digest_file_path.exists():
+            try: 
+                st.session_state.latest_digest_content = digest_file_path.read_text(encoding="utf-8")
+            except Exception as e_digest_load: 
+                st.warning(f"Could not load digest {digest_file_path.name}: {e_digest_load}")
+                st.session_state.latest_digest_content = ""
+        else: 
+            st.session_state.latest_digest_content = ""
+        
+        # Digest injection checkbox with unique key
+        inject_digest_checkbox = st.checkbox(
+            "Inject Digest", 
+            value=bool(st.session_state.latest_digest_content), 
+            key="inject_digest_checkbox_context", 
+            disabled=not bool(st.session_state.latest_digest_content)
+        )
 
     st.checkbox(
         "Summarise uploads",
@@ -477,13 +479,28 @@ with st.sidebar:
     if "summary_detail_level" not in st.session_state:
         st.session_state.summary_detail_level = summary_level_option
 
+    # Ensure OCR method radio index is valid
+    ocr_options = ["AWS Textract", "Google Drive", "None"]
+    ocr_method_map = {"aws": 0, "google": 1, "none": 2}
+    
+    # Get current OCR method from session state or default to "aws"
+    current_ocr_method = st.session_state.get("ocr_method", "aws")
+    # Ensure the current method is valid, default to "aws" if not
+    if current_ocr_method not in ocr_method_map:
+        current_ocr_method = "aws"
+    
+    # Get the index for the current method
+    ocr_index = ocr_method_map[current_ocr_method]
+
     st.radio(
         "OCR method",
-        ["AWS Textract", "Google Drive", "None"],
-        index={"aws":0,"google":1,"none":2}[st.session_state.get("ocr_method","aws")],
+        ocr_options,
+        index=ocr_index,
         key="ocr_method_radio",
+        on_change=lambda: st.session_state.update(
+            ocr_method={0:"aws",1:"google",2:"none"}[st.session_state.ocr_method_radio]
+        )
     )
-    st.session_state.ocr_method = {0:"aws",1:"google",2:"none"}[st.session_state.ocr_method_radio]
 
     newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str]] = [] 
     if sources_needing_processing and st.session_state.document_processing_complete:
@@ -839,10 +856,12 @@ with st.sidebar:
                         total_ai_cost_gbp = batch_metrics.get("total_ai_summarization_cost_gbp")
                         if isinstance(total_ai_cost_gbp, (float, int)): cost_str_display = f"£{total_ai_cost_gbp:.4f} (AI Summaries)"
                         
-                        total_textract_cost_gbp = batch_metrics.get("aws_textract_costs", {}).get("total_estimated_aws_cost_gbp_for_ocr")
-                        if isinstance(total_textract_cost_gbp, (float, int)):
-                            cost_str_display += f"{' + ' if cost_str_display else ''}£{total_textract_cost_gbp:.4f} (Textract OCR)"
-
+                        total_textract_cost_gbp = batch_metrics.get("aws_textract_costs", {})
+                        if isinstance(total_textract_cost_gbp, dict): 
+                            total_textract_cost_gbp_metric_final = total_textract_cost_gbp.get("total_estimated_aws_cost_gbp_for_ocr")
+                            if isinstance(total_textract_cost_gbp_metric_final, (float, int)):
+                                cost_str_display += f"{' + ' if cost_str_display else ''}£{total_textract_cost_gbp_metric_final:.4f} (Textract OCR)"
+                        
                         if cost_str_display: narrative_parts.append(f"Estimated processing cost: {cost_str_display}.")
                         
                         st.session_state.ch_last_narrative = " ".join(narrative_parts)
@@ -937,7 +956,7 @@ with tab_group_structure:
                 "🔬 Use AWS Textract for PDF OCR in Group Structure Analysis",
                 value=st.session_state.group_structure_use_textract_checkbox,
                 key="group_structure_use_textract_checkbox_widget",
-                on_change=lambda: st.session_state.update(group_structure_use_textract_checkbox=st.session_state.group_structure_use_textract_checkbox_widget),
+                on_change=lambda: st.session_state.update(group_structure_use_textract_checkbox=st.session_state.group_structure_use_textract_checkbox),
                 help="If checked, Textract will be used for OCR on PDF documents. This may incur AWS costs."
             )
 
