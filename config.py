@@ -58,6 +58,7 @@ S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-pro-latest") # More specific name
 GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest") # Model for protocol check
+GEMINI_2_5_PRO_MODEL = "gemini-2.5-pro-latest" # Added Gemini 2.5 Pro model identifier
 
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200
@@ -68,8 +69,8 @@ CH_DOCUMENT_API_BASE_URL = "https://document-api.company-information.service.gov
 # ───────────────────────────────────────────────────────────────
 # Companies-House API tunables – used by ch_pipeline & ch_api_utils
 # ----------------------------------------------------------------
-import os
-from pathlib import Path
+import os # already imported
+from pathlib import Path # already imported
 
 # already added earlier
 # APPLICATION_SCRATCH_DIR = ...
@@ -83,6 +84,7 @@ CH_API_USER_AGENT: str = os.getenv(
     "CH_API_USER_AGENT",
     "StrategicCounselGen3/0.1 (+https://example.com)",
 )
+USER_AGENT = CH_API_USER_AGENT # For ch_pipeline.py compatibility
 
 # Retry-forcelist defined earlier; keep alias for legacy import spellings
 CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504]
@@ -92,8 +94,8 @@ CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST
 # ---------------------------------------------------------------------
 # Application scratch space
 # ---------------------------------------------------------------------
-from pathlib import Path
-import os
+from pathlib import Path # already imported
+import os # already imported
 
 # The directory where ch_pipeline and other modules can dump working files
 APPLICATION_SCRATCH_DIR: Path = Path(
@@ -105,11 +107,11 @@ APPLICATION_SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
 # Companies-House retry policy
 # ---------------------------------------------------------------------
 # HTTP status codes that trigger a retry when calling the CH REST API
-CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504]
+CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504] # already defined
 
 # Older code in the repo already uses the miss-spelling “…FORLIST”.
 # Keep this alias until every import is updated.
-CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST
+CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST # already defined
 
 # --- Protocol Text Fallback ---
 # This will be the default. app.py will try to load strategic_protocols.txt
@@ -192,6 +194,7 @@ def get_gemini_model(model_name: str) -> Optional[Any]: # Using Any for genai.Ge
     """
     Initializes and returns a Gemini GenerativeModel.
     Ensures genai SDK is configured with API key once.
+    Handles different Gemini model identifiers including "gemini-2.5-pro-latest".
     """
     global _gemini_sdk_configured
     if not genai:
@@ -211,6 +214,8 @@ def get_gemini_model(model_name: str) -> Optional[Any]: # Using Any for genai.Ge
             return None
 
     try:
+        # The model_name string (e.g., "gemini-1.5-pro-latest", "gemini-2.5-pro-latest")
+        # is passed directly to the GenerativeModel constructor.
         model = genai.GenerativeModel(model_name)
         logger.info(f"Gemini model '{model_name}' initialized.")
         return model
