@@ -270,11 +270,18 @@ def _gemini_generate_content_with_retry_and_tokens(
 
             if text_parts_from_response:
                 generated_text = "".join(text_parts_from_response).strip()
+                if not generated_text:
+                    logger.error(
+                        f"{company_no} ({context_label}): Gemini returned an empty string despite candidate parts."
+                    )
+                    return "Error: Gemini returned empty text output.", prompt_tokens, 0
                 try:
                     completion_tokens_response = gemini_model_client.count_tokens(generated_text)
                     completion_tokens = completion_tokens_response.total_tokens
                 except Exception as e_count_completion:
-                    logger.warning(f"{company_no} ({context_label}): Failed to count Gemini completion tokens: {e_count_completion}. Defaulting to 0.")
+                    logger.warning(
+                        f"{company_no} ({context_label}): Failed to count Gemini completion tokens: {e_count_completion}. Defaulting to 0."
+                    )
                     completion_tokens = 0
                 return generated_text, prompt_tokens, completion_tokens
             else:
@@ -318,13 +325,14 @@ def gemini_summarise_ch_docs(
         return "Error: Google Generative AI SDK not installed.", 0, 0
 
     current_model_name = model_name or GEMINI_MODEL_DEFAULT
-    gemini_model_client = get_gemini_model(current_model_name)
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
     total_prompt_tokens = 0
     total_completion_tokens = 0
 
     if not gemini_model_client:
-        logger.error(f"Could not initialize Gemini model '{current_model_name}' for CH summarization.")
-        return f"Error: Could not initialize Gemini model '{current_model_name}'.", 0, 0
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}'."
+        logger.error(err_msg)
+        return f"Error: {err_msg}", 0, 0
     
     stripped_text = text_to_summarize.strip()
     if not stripped_text:
@@ -426,64 +434,101 @@ def gemini_summarise_ch_docs(
 def get_improved_prompt(
     original_prompt: str,
     prompt_context: str,
-    model_name: Optional[str] = None
+    model_name: Optional[str] = None,
 ) -> str:
-    """
-    Uses a Gemini model to refine and improve a user's input prompt.
-    """
-    if not genai_sdk:
-        return "Error: Google Generative AI SDK not installed. Cannot improve prompt."
-
-    # Use the general purpose Gemini model for this, or a specific one if desired.
-    current_model_name = model_name or GEMINI_MODEL_DEFAULT 
-    gemini_model_client = get_gemini_model(current_model_name)
-
-    if not gemini_model_client:
-        return f"Error: Could not initialize Gemini model '{current_model_name}' for prompt improvement."
+    """Improve a user's prompt using Gemini with OpenAI fallback."""
     if not original_prompt or not original_prompt.strip():
-        return original_prompt 
+        return original_prompt
 
-    logger.info(f"Attempting to improve prompt for context: '{prompt_context}' using {current_model_name}. Original: '{original_prompt[:100]}...'")
+    # Try Gemini first if available
+    if genai_sdk and GEMINI_API_KEY:
+        current_model_name = model_name or GEMINI_MODEL_DEFAULT
+        gemini_model_client, init_error = get_gemini_model(current_model_name)
+
+        if gemini_model_client:
+            logger.info(
+                f"Attempting to improve prompt for context: '{prompt_context}' using Gemini {current_model_name}."
+            )
+
+            system_instruction = (
+                "You are an expert AI assistant specializing in crafting effective prompts for other AI models. "
+                "The primary user is a UK Litigator, and all outputs should be tailored for this persona, focusing on UK-specific legal and business contexts unless the prompt explicitly states otherwise. "
+                "Your task is to refine the user's input (provided below) to make it a better, more structured, and more effective prompt for an AI that will perform tasks such as legal analysis, document summarization, or research. "
+                "Do NOT answer or execute the user's original prompt. Your sole output should be the improved prompt text itself. "
+                "The improved prompt should:"
+                "\n- Be clear, concise, and unambiguous."
+                "\n- Explicitly state or strongly imply that the context is UK law and UK-based entities if relevant to the original prompt's intent."
+                "\n- If the original prompt is vague, try to make it more specific by adding reasonable assumptions or by structuring it to elicit more detailed information, always from a UK litigator's perspective."
+                "\n- Maintain the core intent of the original prompt."
+                "\n- Be suitable for direct use as input to another advanced AI model."
+                "\n- If the original prompt is already excellent, you can return it with minimal or no changes, perhaps with a brief affirmation like 'This prompt is already well-structured. Using as is:' followed by the prompt."
+                "\n- Do not add conversational fluff or explanations about why you changed the prompt. Only output the refined prompt text."
+            )
+
+            full_prompt_for_improvement = (
+                f"{system_instruction}\n\nUser's Original Prompt (for context: {prompt_context}):\n---\n{original_prompt}\n---\nImproved Prompt:"
+            )
+
+            generation_config = (
+                genai_sdk.types.GenerationConfig(temperature=0.3, max_output_tokens=1024)
+                if genai_sdk
+                else None
+            )
+
+            improved_prompt_text, _, _ = _gemini_generate_content_with_retry_and_tokens(
+                gemini_model_client,
+                [full_prompt_for_improvement],
+                generation_config,
+                DEFAULT_GEMINI_SAFETY_SETTINGS,
+                company_no="N/A_PromptImprovement",
+                context_label="PromptImprovement",
+            )
+
+            if "Error:" not in improved_prompt_text and "blocked" not in improved_prompt_text.lower() and improved_prompt_text.strip():
+                if improved_prompt_text.startswith("This prompt is already well-structured. Using as is:"):
+                    improved_prompt_text = improved_prompt_text.replace(
+                        "This prompt is already well-structured. Using as is:", ""
+                    ).strip()
+                logger.info("Prompt improvement via Gemini successful.")
+                return improved_prompt_text.strip()
+            else:
+                logger.warning(
+                    "Gemini prompt improvement failed or returned empty output. Falling back to OpenAI."
+                )
+        else:
+            logger.warning(f"Gemini prompt improvement unavailable: {init_error}")
+
+    # OpenAI fallback
+    openai_client = get_openai_client()
+    if not openai_client:
+        return "Error: No AI model available for prompt improvement."
 
     system_instruction = (
-        "You are an expert AI assistant specializing in crafting effective prompts for other AI models. "
-        "The primary user is a UK Litigator, and all outputs should be tailored for this persona, focusing on UK-specific legal and business contexts unless the prompt explicitly states otherwise. "
-        "Your task is to refine the user's input (provided below) to make it a better, more structured, and more effective prompt for an AI that will perform tasks such as legal analysis, document summarization, or research. "
-        "Do NOT answer or execute the user's original prompt. Your sole output should be the improved prompt text itself. "
-        "The improved prompt should:"
-        "\n- Be clear, concise, and unambiguous."
-        "\n- Explicitly state or strongly imply that the context is UK law and UK-based entities if relevant to the original prompt's intent."
-        "\n- If the original prompt is vague, try to make it more specific by adding reasonable assumptions or by structuring it to elicit more detailed information, always from a UK litigator's perspective."
-        "\n- Maintain the core intent of the original prompt."
-        "\n- Be suitable for direct use as input to another advanced AI model."
-        "\n- If the original prompt is already excellent, you can return it with minimal or no changes, perhaps with a brief affirmation like 'This prompt is already well-structured. Using as is:' followed by the prompt."
-        "\n- Do not add conversational fluff or explanations about why you changed the prompt. Only output the refined prompt text."
-    )
-    
-    full_prompt_for_improvement = f"{system_instruction}\n\nUser's Original Prompt (for context: {prompt_context}):\n---\n{original_prompt}\n---\nImproved Prompt:"
-
-    generation_config = genai_sdk.types.GenerationConfig(
-        temperature=0.3, 
-        max_output_tokens=1024 
-    ) if genai_sdk else None
-
-    improved_prompt_text, p_tokens, c_tokens = _gemini_generate_content_with_retry_and_tokens(
-        gemini_model_client,
-        [full_prompt_for_improvement], 
-        generation_config,
-        DEFAULT_GEMINI_SAFETY_SETTINGS, # Use default safety settings
-        company_no="N/A_PromptImprovement", 
-        context_label="PromptImprovement"
+        "You are an expert AI assistant that rewrites user prompts to be clearer and more effective for advanced AI models. "
+        "Outputs must be suitable for a UK litigator and, where relevant, emphasise UK legal context. "
+        "Only return the improved prompt text itself without any prefatory remarks."
     )
 
-    if "Error:" in improved_prompt_text or "blocked" in improved_prompt_text.lower():
-        logger.error(f"Failed to improve prompt. AI returned: {improved_prompt_text}")
-        return f"Error: Could not improve prompt. AI service issue: {improved_prompt_text}"
-    
+    user_content = (
+        f"Original Prompt (context: {prompt_context}):\n{original_prompt}\n\nImproved Prompt:"
+    )
+
+    try:
+        response = openai_client.chat.completions.create(
+            model=model_name or OPENAI_MODEL_DEFAULT,
+            messages=[{"role": "system", "content": system_instruction}, {"role": "user", "content": user_content}],
+            temperature=0.3,
+            max_tokens=400,
+        )
+        improved_prompt_text = response.choices[0].message.content.strip()
+    except Exception as e:
+        logger.error(f"OpenAI prompt improvement failed: {e}", exc_info=True)
+        return f"Error: OpenAI prompt improvement failed: {e}"
+
     if improved_prompt_text.startswith("This prompt is already well-structured. Using as is:"):
-        improved_prompt_text = improved_prompt_text.replace("This prompt is already well-structured. Using as is:", "").strip()
-    
-    logger.info(f"Prompt improvement successful. Tokens P:{p_tokens}/C:{c_tokens}. Improved: '{improved_prompt_text[:100]}...'")
+        improved_prompt_text = improved_prompt_text.replace(
+            "This prompt is already well-structured. Using as is:", ""
+        ).strip()
     return improved_prompt_text.strip()
 
 def check_protocol_compliance(
@@ -506,10 +551,11 @@ def check_protocol_compliance(
         return "Error: Google Generative AI SDK not installed. Cannot check protocol compliance.", 0, 0
 
     current_model_name = model_name or GEMINI_MODEL_FOR_PROTOCOL_CHECK
-    gemini_model_client = get_gemini_model(current_model_name)
+    gemini_model_client, init_error = get_gemini_model(current_model_name)
 
     if not gemini_model_client:
-        return f"Error: Could not initialize Gemini model '{current_model_name}' for protocol compliance check.", 0, 0
+        err_msg = init_error or f"Could not initialize Gemini model '{current_model_name}' for protocol compliance check."
+        return f"Error: {err_msg}", 0, 0
 
     if not ai_text_output or not ai_text_output.strip():
         return "Error: No AI text provided for compliance check.", 0, 0

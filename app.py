@@ -3,6 +3,18 @@
 
 Key Changes:
 - Fixed TypeError by passing 'logger_param' instead of 'logger' to render_group_structure_ui.
+- CH Summaries now automatically use a Gemini model (via ch_pipeline.py logic).
+- Sidebar AI model selector is now only for 'Consult Counsel & Digest Updates'.
+- CH Pipeline returns AI summarization costs, displayed in UI.
+- Implemented more accurate token counting for Gemini in 'Consult Counsel'.
+- Corrected attribute access for Gemini SDK check.
+- CH Results display uses st.expander per company.
+- Added UI for keyword-based filtering in CH analysis (backend logic placeholder).
+- Added "Copy Summary" to CH expanders (via st.code).
+- CH Summaries can now be selected for injection into Counsel chat.
+- Added Protocol status display in sidebar.
+- Attempt to highlight "Red Flags" section from CH summaries.
+- Sidebar sections collapsed with expanders for easier navigation.
 """
 
 from __future__ import annotations
@@ -31,6 +43,7 @@ import ch_pipeline
 import app_utils 
 import ai_utils 
 from about_page import render_about_page 
+
 try:
     import group_structure_utils
     GROUP_STRUCTURE_AVAILABLE = True
@@ -70,6 +83,7 @@ if not logging.getLogger().hasHandlers():
     )
 
 APP_BASE_PATH = APP_ROOT_DIR
+LOGO_PATH = APP_BASE_PATH / "static" / "logo" / "logo1.png"
 
 LOG_DIR = APP_BASE_PATH / "logs"
 LOG_DIR.mkdir(exist_ok=True)
@@ -84,7 +98,9 @@ if not logger.handlers:
     logger.addHandler(f_handler)
 
 st.set_page_config(
-    page_title="Strategic Counsel", page_icon="⚖️", layout="wide",
+    page_title="Strategic Counsel",
+    page_icon=str(LOGO_PATH),
+    layout="wide",
     initial_sidebar_state="expanded",
     menu_items={'About': "# Strategic Counsel v3.6\nModular AI Legal Assistant Workspace."}
 )
@@ -200,7 +216,6 @@ except Exception as e_conf:
     st.error(f"Fatal Error during config.py import or setup: {e_conf}")
     st.stop()
 
-
 APP_BASE_PATH: _pl.Path = config.APP_BASE_PATH
 OPENAI_API_KEY_PRESENT = bool(config.OPENAI_API_KEY and config.OPENAI_API_KEY.startswith("sk-"))
 CH_API_KEY_PRESENT = bool(config.CH_API_KEY)
@@ -299,6 +314,7 @@ def init_session_state():
 init_session_state()
 
 with st.sidebar:
+    st.image(str(LOGO_PATH), use_column_width=False)
     st.markdown("## Configuration")
     current_topic_input = st.text_input("Matter / Topic ID", st.session_state.current_topic, key="topic_input_sidebar")
     if current_topic_input != st.session_state.current_topic:
@@ -348,9 +364,11 @@ with st.sidebar:
     elif protocol_status_type == "warning": st.warning(protocol_status_message)
     else: st.error(protocol_status_message)
 
-    st.markdown("---"); st.markdown("### AI Model Selection")
-    if not OPENAI_API_KEY_PRESENT: st.error("‼️ OpenAI API Key missing. OpenAI models will fail.")
-    if not GEMINI_API_KEY_PRESENT: st.warning("⚠️ Gemini API Key missing. Gemini models unavailable for consultation.")
+    with st.expander("AI Model Selection", expanded=False):
+        if not OPENAI_API_KEY_PRESENT:
+            st.error("‼️ OpenAI API Key missing. OpenAI models will fail.")
+        if not GEMINI_API_KEY_PRESENT:
+            st.warning("⚠️ Gemini API Key missing. Gemini models unavailable for consultation.")
 
     all_available_models_from_config = list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys())
     gpt_models_selectable = [m for m in all_available_models_from_config if m.startswith("gpt-") and OPENAI_API_KEY_PRESENT]
@@ -391,11 +409,32 @@ with st.sidebar:
     else:
         st.caption("Est. Cost/1k Tokens: N/A")
 
-    st.markdown("---")
-    st.markdown("CH Summaries will use Gemini by default for speed (if configured), or fallback to OpenAI.")
-    st.markdown("---")
+    ai_temp = st.slider(
+        "AI Creativity (Temperature)",
+        0.0,
+        1.0,
+        0.2,
+        0.05,
+        key="ai_temp_slider_sidebar",
+    )
 
-    ai_temp = st.slider("AI Creativity (Temperature)", 0.0, 1.0, 0.2, 0.05, key="ai_temp_slider_sidebar")
+    with st.expander("Context Injection", expanded=False):
+        memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
+        loaded_memories_from_file: List[str] = []
+        if memory_file_path.exists():
+            try:
+                mem_data = json.loads(memory_file_path.read_text(encoding="utf-8"))
+                if isinstance(mem_data, list):
+                    loaded_memories_from_file = [str(item) for item in mem_data if isinstance(item, str)]
+            except Exception as e_mem_load:
+                st.warning(f"Could not load memory file {memory_file_path.name}: {e_mem_load}")
+        selected_mem_snippets = st.multiselect(
+            "Inject Memories",
+            loaded_memories_from_file,
+            default=[mem for mem in st.session_state.loaded_memories if mem in loaded_memories_from_file],
+            key="mem_multiselect_sidebar",
+        )
+        st.session_state.loaded_memories = selected_mem_snippets
 
     st.markdown("---"); st.markdown("### Context Injection")
     memory_file_path = APP_BASE_PATH / "memory" / f"{st.session_state.current_topic}.json"
@@ -419,15 +458,32 @@ with st.sidebar:
     inject_digest_checkbox = st.checkbox("Inject Digest", value=bool(st.session_state.latest_digest_content), 
         key="inject_digest_checkbox_sidebar", disabled=not bool(st.session_state.latest_digest_content))
 
-    st.markdown("---"); st.markdown("### Document Intake (for Context)")
-    uploaded_docs_list = st.file_uploader("Upload Docs (PDF, DOCX, TXT)", ["pdf", "docx", "txt"],
-        accept_multiple_files=True, key="doc_uploader_sidebar")
-    urls_input_str = st.text_area("Paste URLs (one per line)", key="url_textarea_sidebar", height=80)
-    urls_to_process = [u.strip() for u in urls_input_str.splitlines() if u.strip().startswith("http")]
+    st.checkbox(
+        "Summarise uploads",
+        value=st.session_state.get("summarise_uploads", True),
+        key="summarise_uploads",
+    )
+    summary_level_option = st.slider(
+        "Summary detail level",
+        1,
+        3,
+        value=st.session_state.get("summary_detail_level", 2),
+        format="%d",
+        key="summary_detail_level",
+    )
+    # Avoid setting session state after widget creation to prevent
+    # StreamlitAPIException. The slider already updates the session
+    # state value when interacted with.
+    if "summary_detail_level" not in st.session_state:
+        st.session_state.summary_detail_level = summary_level_option
 
-    current_source_identifiers = {f.name for f in uploaded_docs_list} | set(urls_to_process)
-    processed_summary_ids_in_session = {s_tuple[0] for s_tuple in st.session_state.processed_summaries}
-    sources_needing_processing = current_source_identifiers - processed_summary_ids_in_session
+    st.radio(
+        "OCR method",
+        ["AWS Textract", "Google Drive", "None"],
+        index={"aws":0,"google":1,"none":2}[st.session_state.get("ocr_method","aws")],
+        key="ocr_method_radio",
+    )
+    st.session_state.ocr_method = {0:"aws",1:"google",2:"none"}[st.session_state.ocr_method_radio]
 
     newly_processed_summaries_for_this_run_sidebar: List[Tuple[str, str, str]] = [] 
     if sources_needing_processing and st.session_state.document_processing_complete:
@@ -506,276 +562,6 @@ with st.sidebar:
             is_ch_summary_injected = st.checkbox(f"{idx+1}. CH: {title_for_list[:40]}...", value=st.session_state.get(ch_checkbox_key, False), key=ch_checkbox_key, help=f"Company: {company_id}\nSummary: {summary_text[:200]}...")
             if is_ch_summary_injected:
                 selected_ch_summary_texts_for_injection_temp.append(f"COMPANIES HOUSE ANALYSIS SUMMARY FOR {company_id} ({title_for_list}):\n{summary_text}")
-
-    st.markdown("---")
-    if st.button("End Session & Update Digest", key="end_session_button_sidebar"):
-        if not st.session_state.session_history: st.warning("No new interactions to add to digest.")
-        elif not st.session_state.consult_digest_model: st.error("No AI model selected for Digest Update.")
-        else:
-            with st.spinner("Updating Digest..."):
-                new_interactions_block = "\n\n---\n\n".join(st.session_state.session_history)
-                existing_digest_text = st.session_state.latest_digest_content
-                update_digest_prompt = (f"Consolidate the following notes. Integrate the NEW interactions into the EXISTING digest, "
-                                    f"maintaining a coherent and concise summary. Aim for a maximum of around 2000 words for the entire updated digest. "
-                                    f"Preserve key facts and decisions.\n\n"
-                                    f"EXISTING DIGEST (for topic: {st.session_state.current_topic}):\n{existing_digest_text}\n\n"
-                                    f"NEW INTERACTIONS (to integrate for topic: {st.session_state.current_topic}):\n{new_interactions_block}")
-                try:
-                    current_ai_model_for_digest = st.session_state.consult_digest_model
-                    updated_digest_text = "Error updating digest."
-                    if current_ai_model_for_digest.startswith("gpt-"):
-                        client = config.get_openai_client(); assert client is not None
-                        resp = client.chat.completions.create(model=current_ai_model_for_digest, temperature=0.1, max_tokens=3000, messages=[{"role": "system", "content": PROTO_TEXT}, {"role": "user", "content": update_digest_prompt}])
-                        updated_digest_text = resp.choices[0].message.content.strip() if resp.choices[0].message.content else "No content from OpenAI."
-                    elif current_ai_model_for_digest.startswith("gemini-"):
-                        client = config.get_gemini_model(current_ai_model_for_digest); assert client is not None and config.genai is not None
-                        full_prompt_gemini = f"{PROTO_TEXT}\n\n{update_digest_prompt}" 
-                        resp = client.generate_content(full_prompt_gemini, generation_config=config.genai.types.GenerationConfig(temperature=0.1, max_output_tokens=3000)) 
-                        updated_digest_text = resp.text.strip() if hasattr(resp, 'text') and resp.text else "No content from Gemini."
-
-                    digest_file_path.write_text(updated_digest_text, encoding="utf-8")
-                    historical_digest_path = APP_BASE_PATH / "memory" / "digests" / f"history_{st.session_state.current_topic}.md"
-                    with historical_digest_path.open("a", encoding="utf-8") as fp_hist:
-                        fp_hist.write(f"\n\n### Update: {_dt.datetime.now():%Y-%m-%d %H:%M} (Model: {current_ai_model_for_digest})\n{updated_digest_text}\n---\n")
-                    st.success(f"Digest for '{st.session_state.current_topic}' updated."); st.session_state.session_history = []; st.session_state.latest_digest_content = updated_digest_text; st.rerun()
-                except Exception as e_digest_update:
-                    st.error(f"Digest update failed: {e_digest_update}"); logger.error(f"Digest update error: {e_digest_update}", exc_info=True)
-
-st.markdown(f"## 🏛️ Strategic Counsel: {st.session_state.current_topic}")
-
-if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-    tab_consult, tab_ch_analysis, tab_group_structure, tab_about_rendered = st.tabs([
-        "💬 Consult Counsel", 
-        "🇬🇧 Companies House Analysis", 
-        "🕸️ Company Group Structure",  
-        "ℹ️ About"
-    ])
-else:
-    tab_consult, tab_ch_analysis, tab_about_rendered = st.tabs([
-        "💬 Consult Counsel", 
-        "🇬🇧 Companies House Analysis", 
-        "ℹ️ About"
-    ])
-    class PlaceholderTab:
-        def __enter__(self): pass
-        def __exit__(self, *args): pass
-    tab_group_structure = PlaceholderTab()
-
-with tab_consult:
-    st.markdown("Provide instructions and context (using sidebar options) for drafting, analysis, or advice.")
-    
-    st.text_area(
-        "Your Instruction:", 
-        value=st.session_state.user_instruction_main_text_area_value, 
-        height=200, 
-        key="main_instruction_area_consult_tab", 
-        on_change=lambda: st.session_state.update(user_instruction_main_text_area_value=st.session_state.main_instruction_area_consult_tab) 
-    )
-
-    col_improve_main, col_cancel_main, col_spacer_main = st.columns([2,2,3]) 
-    with col_improve_main:
-        if st.button("💡 Suggest Improved Prompt", key="improve_prompt_main_button", help="Let AI refine your instruction for better results.", use_container_width=True):
-            current_text_in_area = st.session_state.user_instruction_main_text_area_value 
-            if current_text_in_area and current_text_in_area.strip():
-                if not st.session_state.user_instruction_main_is_improved: 
-                    st.session_state.original_user_instruction_main = current_text_in_area
-                
-                with st.spinner("Improving prompt..."):
-                    if callable(get_improved_prompt):
-                        improved_prompt = get_improved_prompt(current_text_in_area, "Strategic Counsel general query")
-                        if "Error:" not in improved_prompt and improved_prompt.strip():
-                            st.session_state.user_instruction_main_text_area_value = improved_prompt 
-                            st.session_state.user_instruction_main_is_improved = True
-                            st.rerun() 
-                        elif "Error:" in improved_prompt:
-                            st.warning(f"Could not improve prompt: {improved_prompt}")
-                    else:
-                        st.error("Prompt improvement utility not available.")
-                        logger.error("get_improved_prompt is not callable.")
-            else:
-                st.info("Please enter an instruction first to improve it.")
-
-    with col_cancel_main:
-        if st.session_state.user_instruction_main_is_improved:
-            if st.button("↩️ Revert to Original", key="cancel_improve_prompt_main_button", use_container_width=True):
-                st.session_state.user_instruction_main_text_area_value = st.session_state.original_user_instruction_main
-                st.session_state.user_instruction_main_is_improved = False
-                st.rerun()
-
-    consult_model_name = st.session_state.get("consult_digest_model")
-
-    if st.button("✨ Consult Counsel", type="primary", key="run_ai_button_consult_tab"):
-        current_instruction_to_use = st.session_state.user_instruction_main_text_area_value
-
-        if not current_instruction_to_use.strip(): st.warning("Please enter your instructions.")
-        elif not consult_model_name: st.error("No AI model selected for Consultation.")
-        else:
-            with st.spinner(f"Consulting {consult_model_name}..."):
-                messages_for_ai = [{"role": "system", "content": PROTO_TEXT + f"\n[Protocol Hash:{PROTO_HASH}]"}]
-                context_parts_for_ai = []
-                if inject_digest_checkbox and st.session_state.latest_digest_content: context_parts_for_ai.append(f"CURRENT DIGEST:\n{st.session_state.latest_digest_content}")
-                if st.session_state.loaded_memories: context_parts_for_ai.append("INJECTED MEMORIES:\n" + "\n---\n".join(st.session_state.loaded_memories))
-
-                combined_selected_summaries = []
-                if st.session_state.selected_summary_texts: 
-                    combined_selected_summaries.extend(st.session_state.selected_summary_texts)
-                
-                if selected_ch_summary_texts_for_injection_temp: 
-                     combined_selected_summaries.extend(selected_ch_summary_texts_for_injection_temp)
-                
-                if combined_selected_summaries:
-                    context_parts_for_ai.append("SELECTED DOCUMENT SUMMARIES & ANALYSIS:\n" + "\n===\n".join(combined_selected_summaries))
-
-                if context_parts_for_ai: messages_for_ai.append({"role": "system", "content": "ADDITIONAL CONTEXT:\n\n" + "\n\n".join(context_parts_for_ai)})
-                messages_for_ai.append({"role": "user", "content": current_instruction_to_use}) 
-
-                try:
-                    ai_response_text = "Error: AI response could not be generated."
-                    prompt_tokens, completion_tokens = 0, 0
-
-                    if consult_model_name.startswith("gpt-"):
-                        openai_client = config.get_openai_client(); assert openai_client is not None
-                        ai_api_response = openai_client.chat.completions.create(
-                            model=consult_model_name, temperature=ai_temp, messages=messages_for_ai, max_tokens=3500
-                        )
-                        ai_response_text = ai_api_response.choices[0].message.content.strip() if ai_api_response.choices[0].message.content else "No content in response."
-                        if ai_api_response.usage:
-                            prompt_tokens = ai_api_response.usage.prompt_tokens
-                            completion_tokens = ai_api_response.usage.completion_tokens
-                    elif consult_model_name.startswith("gemini-"):
-                        gemini_model_client = config.get_gemini_model(consult_model_name); assert gemini_model_client is not None and config.genai is not None
-                        try: 
-                            full_prompt_str_gemini = "\n\n".join([f"{m['role']}: {m['content']}" for m in messages_for_ai])
-                            count_resp_prompt = gemini_model_client.count_tokens(full_prompt_str_gemini)
-                            prompt_tokens = count_resp_prompt.total_tokens
-                        except Exception as e_gem_count_p: logger.warning(f"Gemini prompt token count failed: {e_gem_count_p}"); prompt_tokens = 0
-
-                        gemini_api_response = gemini_model_client.generate_content(
-                            contents=messages_for_ai, # type: ignore
-                            generation_config=config.genai.types.GenerationConfig(temperature=ai_temp, max_output_tokens=3500)
-                        )
-                        if hasattr(gemini_api_response, 'text') and gemini_api_response.text:
-                             ai_response_text = gemini_api_response.text.strip()
-                             try: 
-                                 count_resp_completion = gemini_model_client.count_tokens(ai_response_text)
-                                 completion_tokens = count_resp_completion.total_tokens
-                             except Exception as e_gem_count_c: logger.warning(f"Gemini completion token count failed: {e_gem_count_c}"); completion_tokens = 0
-                        elif hasattr(gemini_api_response, 'prompt_feedback') and gemini_api_response.prompt_feedback and gemini_api_response.prompt_feedback.block_reason:
-                            block_reason_str = config.genai.types.BlockedReason(gemini_api_response.prompt_feedback.block_reason).name
-                            ai_response_text = f"Error: Gemini content generation blocked. Reason: {block_reason_str}."
-                            logger.error(f"Gemini content blocked. Reason: {block_reason_str}. Feedback: {gemini_api_response.prompt_feedback}")
-                        else:
-                             ai_response_text = "Error: Gemini response was empty or malformed."
-                             logger.error(f"Gemini empty/malformed response: {gemini_api_response}")
-                    else:
-                        raise ValueError(f"Unsupported model type for consultation: {consult_model_name}")
-
-                    st.session_state.session_history.append(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name}):\n{ai_response_text}") 
-                    st.session_state.latest_ai_response_for_protocol_check = ai_response_text 
-
-                    with st.chat_message("assistant", avatar="⚖️"): st.markdown(ai_response_text)
-
-                    with st.expander("📊 Run Details & Export"):
-                        total_tokens = prompt_tokens + completion_tokens
-                        cost = (total_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP.get(consult_model_name,0.0) if total_tokens > 0 else 0.0
-                        energy_model_wh = MODEL_ENERGY_WH_PER_1K_TOKENS.get(consult_model_name, 0.0)
-                        energy_wh = (total_tokens / 1000) * energy_model_wh if total_tokens > 0 else 0.0
-
-                        st.metric("Total Tokens", f"{total_tokens:,}", f"{prompt_tokens:,} prompt + {completion_tokens:,} completion")
-                        st.metric("Est. Cost", f"£{cost:.5f}")
-                        if energy_model_wh > 0 and energy_wh > 0:
-                            st.metric("Est. Energy", f"{energy_wh:.3f}Wh", f"~{(energy_wh / KETTLE_WH * 100):.1f}% Kettle" if KETTLE_WH > 0 else "")
-
-                        ts_now_str = _dt.datetime.now().strftime("%Y%m%d_%H%M%S")
-                        docx_filename = f"{st.session_state.current_topic}_{ts_now_str}_response.docx"
-                        docx_export_path = APP_BASE_PATH / "exports" / docx_filename
-                        if Document is not None: 
-                            try:
-                                doc = Document(); doc.add_heading(f"AI Consultation: {st.session_state.current_topic}",0)
-                                doc.add_paragraph(f"Instruction:\n{current_instruction_to_use}\n\nResponse ({consult_model_name} @ {ts_now_str}):\n{ai_response_text}") 
-                                doc.save(docx_export_path)
-                                with open(docx_export_path, "rb") as fp_docx: st.download_button("Download .docx", fp_docx, docx_filename, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                            except Exception as e_docx: st.error(f"DOCX export error: {e_docx}")
-                        else:
-                            st.warning("DOCX export unavailable because python-docx library is missing.")
-
-
-                        log_filename = f"{st.session_state.current_topic}_{ts_now_str}_log.json"
-                        log_export_path = APP_BASE_PATH / "logs" / log_filename
-                        log_data = {"topic":st.session_state.current_topic, "timestamp":ts_now_str, "model":consult_model_name, "temp":ai_temp, "tokens":{"p":prompt_tokens,"c":completion_tokens,"t":total_tokens}, "cost_gbp":cost, "energy_wh":energy_wh, "user_instr":current_instruction_to_use[:200]+("..." if len(current_instruction_to_use) > 200 else ""), "resp_preview":ai_response_text[:200]+("..." if len(ai_response_text) > 200 else "")} 
-                        try: log_export_path.write_text(json.dumps(log_data, indent=2), encoding="utf-8")
-                        except Exception as e_log: st.error(f"Log save error: {e_log}")
-
-                except Exception as e_ai_consult:
-                    st.error(f"AI Consultation Error with {consult_model_name}: {e_ai_consult}", icon="🚨")
-                    logger.error(f"AI Consultation Error ({consult_model_name}): {e_ai_consult}", exc_info=True)
-                    st.session_state.latest_ai_response_for_protocol_check = None 
-
-    if st.session_state.get("latest_ai_response_for_protocol_check"):
-        st.markdown("---") 
-        if st.button("🕵️ Check Protocol Adherence", key="check_protocol_adherence_button_main"):
-            ai_output_to_check = st.session_state.latest_ai_response_for_protocol_check
-            if not isinstance(ai_output_to_check, str) or not ai_output_to_check.strip():
-                st.warning("No valid AI response available to check for protocol adherence.")
-            elif not callable(check_protocol_compliance):
-                st.error("Protocol compliance utility not available.")
-                logger.error("check_protocol_compliance is not callable.")
-            else:
-                with st.spinner("Checking AI response against protocols..."):
-                    model_for_compliance = config.GEMINI_MODEL_FOR_PROTOCOL_CHECK 
-                    
-                    compliance_report_text, report_p_tokens, report_c_tokens = check_protocol_compliance(
-                        ai_text_output=ai_output_to_check, 
-                        protocol_text=PROTO_TEXT, 
-                        model_name=model_for_compliance 
-                    )
-
-                    if "Error:" in compliance_report_text:
-                        st.error(f"Protocol Compliance Check Failed:\n{compliance_report_text}")
-                    else:
-                        with st.expander("📜 Protocol Compliance Report", expanded=True):
-                            st.markdown(compliance_report_text)
-                            report_total_tokens = report_p_tokens + report_c_tokens
-                            report_cost = (report_total_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP.get(model_for_compliance, 0.0)
-                            st.caption(f"Compliance check (using {model_for_compliance}): Tokens: {report_total_tokens} (P:{report_p_tokens}, C:{report_c_tokens}), Est. Cost: £{report_cost:.5f}")
-        st.markdown("---")
-
-
-    if st.session_state.session_history:
-        st.markdown("---"); st.subheader("📜 Current Session History (Newest First)")
-        history_display_container = st.container(height=400) 
-        for i, entry_text in enumerate(reversed(st.session_state.session_history)):
-            history_display_container.markdown(f"**Interaction {len(st.session_state.session_history)-i}:**\n---\n{entry_text}\n\n")
-
-with tab_ch_analysis:
-    st.markdown("### Companies House Document Analysis")
-    st.markdown(
-        "Enter company numbers, select document categories and date ranges, "
-        "then search for available documents. Review the list and select documents for detailed AI analysis."
-    )
-
-    ch_company_numbers_input = st.text_area(
-        "Company Number(s) (one per line or comma-separated)",
-        value=st.session_state.get("ch_company_numbers_input_main", ""),
-        key="ch_company_numbers_input_main",
-        height=80,
-        help="e.g., 12345678 or SC012345, 09876543"
-    )
-
-    col_dates_ch1, col_dates_ch2 = st.columns(2)
-    with col_dates_ch1:
-        st.session_state.ch_start_year_input_main = st.number_input("Start Year (YYYY)", min_value=1900, max_value=2099, value=st.session_state.ch_start_year_input_main, format="%d", key="ch_start_year_widget")
-    with col_dates_ch2:
-        st.session_state.ch_end_year_input_main = st.number_input("End Year (YYYY)", min_value=1900, max_value=2099, value=st.session_state.ch_end_year_input_main, format="%d", key="ch_end_year_widget")
-
-    ch_category_options_friendly = list(CH_CATEGORIES.keys())
-    ch_selected_categories_friendly = st.multiselect(
-        "Select Document Categories (leave blank for all major types if unsure)",
-        ch_category_options_friendly,
-        default=st.session_state.get("ch_categories_multiselect_main", []),
-        key="ch_categories_multiselect_main"
-    )
-    ch_selected_categories_api = [CH_CATEGORIES[f_name] for f_name in ch_selected_categories_friendly if f_name in CH_CATEGORIES]
 
     st.markdown("---")
     st.markdown("#### Step 1: Find Available Company Documents")
@@ -941,7 +727,8 @@ with tab_ch_analysis:
                             filter_keywords_str=ch_keywords_for_filter,
                             base_scratch_dir=APP_BASE_PATH / "temp_ch_runs",
                             keep_days=7,
-                            use_textract_ocr=(config.CH_PIPELINE_TEXTRACT_FLAG if hasattr(config, 'CH_PIPELINE_TEXTRACT_FLAG') else False)
+                            use_textract_ocr=(config.CH_PIPELINE_TEXTRACT_FLAG if hasattr(config, 'CH_PIPELINE_TEXTRACT_FLAG') else False),
+                            textract_workers=config.MAX_TEXTRACT_WORKERS,
                         )
                         
                         st.session_state.ch_last_digest_path = batch_metrics.get("output_docx_path")
@@ -1188,5 +975,54 @@ with tab_group_structure:
     else:
         st.error("Group Structure functionality is not available ('group_structure_utils' module failed to load).")
 
+# --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
+
+with tab_timeline:
+    st.markdown("### Case Timeline")
+    uploaded = st.file_uploader(
+        "Upload docket file (CSV, JSON or PDF)",
+        type=["csv", "json", "pdf"],
+        key="case_timeline_uploader",
+    )
+    if uploaded is not None:
+        tmp_path = APP_BASE_PATH / "_tmp_timeline_upload"
+        tmp_path.write_bytes(uploaded.getvalue())
+        try:
+            events = timeline_utils.parse_docket_file(tmp_path)
+            events_sorted = sorted(events, key=lambda e: e.get("date", ""))
+            st.session_state.case_timeline_events = events_sorted
+        except Exception as e_parse:
+            st.error(f"Failed to parse docket file: {e_parse}")
+            st.session_state.case_timeline_events = []
+        tmp_path.unlink(missing_ok=True)
+
+    events = st.session_state.get("case_timeline_events", [])
+    if events:
+        if STREAMLIT_TIMELINE_AVAILABLE:
+            tl_events = []
+            for ev in events:
+                date_parts = ev.get("date", "").split("-")
+                start_date = {}
+                if len(date_parts) == 3:
+                    start_date = {
+                        "year": int(date_parts[0]),
+                        "month": int(date_parts[1]),
+                        "day": int(date_parts[2]),
+                    }
+                tl_events.append({
+                    "start_date": start_date,
+                    "text": {"text": ev.get("description", "")},
+                })
+            st_timeline({"events": tl_events}, height=500)
+        else:
+            st.table(events)
+    else:
+        st.info("Upload a docket file to display events.")
+
 with tab_about_rendered:
     render_about_page()
+
+with tab_instructions:
+    render_instructions_page()
+
+# --- End of Main App Area UI (Using Tabs) ---

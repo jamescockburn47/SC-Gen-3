@@ -2,9 +2,11 @@
 
 import json
 import re
-import logging 
-from typing import Tuple, Optional, List, Dict, Union, Callable, Any 
+import logging
+from typing import Tuple, Optional, List, Dict, Union, Callable, Any
 import io
+import pathlib as _pl
+from urllib.parse import quote_plus
 
 # --- Core Dependencies ---
 # Pylance will report these as unresolved if not in the environment.
@@ -50,13 +52,22 @@ except ImportError:
 
 # --- Imports from project ---
 from config import (
-    get_openai_client, 
-    get_ch_session, 
-    PROTO_TEXT_FALLBACK, 
-    LOADED_PROTO_TEXT, 
+    get_openai_client,
+    get_ch_session,
+    PROTO_TEXT_FALLBACK,
+    LOADED_PROTO_TEXT,
     # logger is already imported/handled above
-    MIN_MEANINGFUL_TEXT_LEN 
+    MIN_MEANINGFUL_TEXT_LEN,
+    OPENAI_MODEL_DEFAULT,
+    get_gemini_model,
+    GEMINI_MODEL_DEFAULT,
+    GEMINI_API_KEY,
 )
+
+try:
+    import google_drive_utils
+except ImportError:  # pragma: no cover - optional
+    google_drive_utils = None  # type: ignore
 
 # --- Optional AWS SDK imports ---
 try:
@@ -83,48 +94,94 @@ except ImportError:
     AWS_TEXTRACT_MODULE_AVAILABLE = False
 
 
-def _word_cap(word_count: int) -> int:
-    """Determines a reasonable word cap for summaries based on input word count."""
+def _word_cap(word_count: int, level: int = 2) -> int:
+    """Determine an approximate word cap based on text length and detail level."""
     if word_count <= 2000:
-        return max(150, int(word_count * 0.15))
+        base = max(150, int(word_count * 0.15))
     elif word_count <= 10000:
-        return 300
+        base = 300
     else:
-        return min(500, int(word_count * 0.05))
+        base = min(500, int(word_count * 0.05))
+
+    scale = {1: 0.5, 2: 1.0, 3: 1.5}.get(level, 1.0)
+    cap = int(base * scale)
+    return max(50, min(1000, cap))
 
 def summarise_with_title(
     text: str,
-    model_name_selected: str, # This parameter seems unused as the function hardcodes "gpt-4o-mini"
-    topic: str, 
+    topic: str,
+    detail_level: int = 2,
 ) -> Tuple[str, str]:
-    """
-    Generates a short title and summary for UI display of uploaded documents.
-    Uses a cost-effective OpenAI model for this task.
-    Uses LOADED_PROTO_TEXT from config.
+    """Generate a short title and summary for UI display of uploaded documents.
+
+    Uses a cost-effective OpenAI model and ``LOADED_PROTO_TEXT`` from ``config``.
     """
     if not text or not text.strip():
         return "Empty Content", "No text was provided for summarization."
 
     word_count = len(text.split())
-    summary_word_cap = _word_cap(word_count)
-    text_to_summarise = text[:15000] 
-    max_tokens_for_response = int(summary_word_cap * 2.0) 
-    openai_model_for_this_task = "gpt-4o-mini" 
+    summary_word_cap = _word_cap(word_count, detail_level)
+    text_to_summarise = text[:15000]
+    max_tokens_for_response = int(summary_word_cap * 2.0)
+    openai_model_for_this_task = OPENAI_MODEL_DEFAULT
     openai_client = get_openai_client()
 
-    if not openai_client:
-        logger.error(f"OpenAI client not available for summarise_with_title (topic: {topic}).")
-        return "Summarization Error", "OpenAI client not configured."
-
-    current_protocol_text = LOADED_PROTO_TEXT 
+    current_protocol_text = LOADED_PROTO_TEXT
     prompt = (
         f"Return ONLY valid JSON in the format {{\"title\": \"<A concise title of less than 12 words>\", "
         f"\"summary\": \"<A summary of approximately {summary_word_cap} words, capturing the essence of the text>\"}}.\n\n"
         f"Analyze the following text:\n---\n{text_to_summarise}\n---"
     )
-    raw_response_content: Optional[str] = None 
+    raw_response_content: Optional[str] = None
     title = "Error in Summarization"
     summary = "Could not generate summary due to an issue."
+
+    # ─── Prefer Gemini if API key available ──────────────────────────────
+    if GEMINI_API_KEY:
+        gemini_model_client, init_error = get_gemini_model(GEMINI_MODEL_DEFAULT)
+        if gemini_model_client:
+            try:
+                gemini_prompt = f"{current_protocol_text}\n\n{prompt}"
+                gemini_response = gemini_model_client.generate_content(gemini_prompt)
+                if hasattr(gemini_response, 'text') and gemini_response.text:
+                    raw_response_content = gemini_response.text
+                elif hasattr(gemini_response, 'parts') and gemini_response.parts:
+                    raw_response_content = ''.join(part.text for part in gemini_response.parts if hasattr(part, 'text'))
+                if raw_response_content:
+                    raw_response_content = raw_response_content.strip()
+                    data = json.loads(raw_response_content)
+                    title = str(data.get("title", "Title Missing"))
+                    summary = str(data.get("summary", "Summary Missing"))
+                    logger.info(
+                        f"Successfully generated title/summary for topic '{topic}' using Gemini model {GEMINI_MODEL_DEFAULT}."
+                    )
+                    return title, summary
+                else:
+                    logger.error(
+                        f"Empty content in Gemini response for summarise_with_title (topic: {topic}). Falling back to OpenAI."
+                    )
+            except json.JSONDecodeError as e_json:
+                raw_preview = str(raw_response_content)[:200] if raw_response_content is not None else "N/A"
+                logger.error(
+                    f"JSONDecodeError in summarise_with_title using Gemini model {GEMINI_MODEL_DEFAULT}: {e_json}. Raw response: {raw_preview}..."
+                )
+            except Exception as e:
+                raw_preview = str(raw_response_content)[:200] if raw_response_content is not None else "N/A"
+                logger.error(
+                    f"Exception in summarise_with_title using Gemini model {GEMINI_MODEL_DEFAULT} for topic {topic}: {e}. Raw response: {raw_preview}...",
+                    exc_info=True,
+                )
+        else:
+            logger.error(
+                f"Failed to initialize Gemini model for summarise_with_title (topic: {topic}): {init_error}. Falling back to OpenAI."
+            )
+
+    # ─── OpenAI Fallback ─────────────────────────────────────────────────
+    if not openai_client:
+        logger.error(
+            f"OpenAI client not available for summarise_with_title (topic: {topic})."
+        )
+        return "Summarization Error", "OpenAI client not configured."
 
     try:
         response = openai_client.chat.completions.create(
@@ -295,8 +352,9 @@ def find_company_number(query: str, ch_api_key: Optional[str]) -> Tuple[Optional
         return None, "First match found but no company number available in the result.", first_match
 
 def extract_text_from_uploaded_file(
-    file_obj: io.BytesIO, 
-    file_name: str
+    file_obj: io.BytesIO,
+    file_name: str,
+    ocr_preference: str = "aws",
 ) -> Tuple[Optional[str], Optional[str]]:
     """
     Extracts text from an uploaded file object (PDF, DOCX, TXT).
@@ -326,30 +384,42 @@ def extract_text_from_uploaded_file(
             # Condition to try Textract:
             # 1. PyPDF2 didn't produce meaningful text (text_content is None or too short)
             # AND 2. Textract is available and the function to call it is defined.
-            if not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN: 
-                if AWS_TEXTRACT_MODULE_AVAILABLE and aws_perform_textract_ocr:
+            if not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN:
+                if ocr_preference == "google":
+                    g_service = config.get_google_drive_service()
+                    if g_service:
+                        file_obj.seek(0)
+                        pdf_bytes = file_obj.getvalue()
+                        gdoc_id = google_drive_utils.upload_pdf_for_ocr(g_service, pdf_bytes, file_name)
+                        if gdoc_id:
+                            ocr_text = google_drive_utils.extract_text_from_google_doc(g_service, gdoc_id)
+                            if ocr_text and len(ocr_text.strip()) >= MIN_MEANINGFUL_TEXT_LEN:
+                                text_content = ocr_text.strip()
+                                error_message = None
+                                logger.info(f"Extracted text from PDF '{file_name}' using Google Drive OCR.")
+                            else:
+                                logger.warning(f"Google OCR for '{file_name}' returned insufficient text.")
+
+                if (not text_content or len(text_content) < MIN_MEANINGFUL_TEXT_LEN) and AWS_TEXTRACT_MODULE_AVAILABLE and aws_perform_textract_ocr and (ocr_preference == "aws" or ocr_preference == "google"):
                     current_text_len = len(text_content) if text_content else 0
                     logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal/no text (length {current_text_len}, threshold {MIN_MEANINGFUL_TEXT_LEN}). Attempting AWS Textract OCR.")
-                    file_obj.seek(0) 
+                    file_obj.seek(0)
                     pdf_bytes = file_obj.getvalue()
-                    ocr_text, pages_ocrd, ocr_error = aws_perform_textract_ocr(pdf_bytes, file_name) 
+                    ocr_text, pages_ocrd, ocr_error = aws_perform_textract_ocr(pdf_bytes, file_name)
                     if ocr_error:
                         new_ocr_error_msg = f"Textract OCR failed for '{file_name}': {ocr_error}"
-                        # Append to existing error_message if PyPDF2 also had an error, or set it if PyPDF2 was just short
                         error_message = f"{error_message} | {new_ocr_error_msg}" if error_message else new_ocr_error_msg
                         logger.error(new_ocr_error_msg)
-                        # Do not overwrite text_content if PyPDF2 had some (short) text and OCR failed
-                    elif ocr_text: # OCR succeeded and returned text
-                        text_content = ocr_text.strip() # Prioritize OCR text
-                        error_message = None # Clear any prior error (e.g. from PyPDF2 being unavailable if OCR worked)
+                    elif ocr_text:
+                        text_content = ocr_text.strip()
+                        error_message = None
                         logger.info(f"Successfully extracted text from PDF '{file_name}' using AWS Textract ({pages_ocrd} pages).")
-                    else: # OCR succeeded but returned no text
+                    else:
                         logger.warning(f"Textract OCR for '{file_name}' returned no text but no error. Using previous extraction if any (text_content length: {len(text_content or '')}).")
-                        # text_content remains as it was (either short from PyPDF2, or None if PyPDF2 failed)
-                elif text_content: # PyPDF2 got short text, and Textract is not an option
-                    logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal text (length {len(text_content)}), Textract OCR not available/used.")
-                elif not error_message: # PyPDF2 failed (text_content is None), Textract not an option, and no prior error_message
-                    error_message = f"Failed to extract text from PDF '{file_name}'. Direct extraction failed and Textract OCR is not available/configured."
+                elif text_content:
+                    logger.info(f"Direct PDF extraction for '{file_name}' yielded minimal text (length {len(text_content)}), OCR not further attempted.")
+                elif not error_message:
+                    error_message = f"Failed to extract text from PDF '{file_name}'. No OCR method succeeded." 
                     logger.warning(error_message)
         
         elif file_ext == "docx":
@@ -391,3 +461,152 @@ def extract_text_from_uploaded_file(
         text_content = None 
         
     return text_content, error_message
+
+
+def extract_text_from_google_drive_file(
+    service: Any,
+    file_id: str,
+    file_name: str,
+    mime_type: str,
+    ocr_preference: str = "google",
+) -> Tuple[Optional[str], Optional[str]]:
+    """Download a file from Google Drive and extract its text."""
+    if not service:
+        return None, "Google Drive service not available"
+    if mime_type == "application/vnd.google-apps.document":
+        text = google_drive_utils.extract_text_from_google_doc(service, file_id) if google_drive_utils else None
+        return text, None if text else (None, "Failed to export Google Doc")
+    file_bytes = google_drive_utils.download_file_bytes(service, file_id) if google_drive_utils else None
+    if file_bytes is None:
+        return None, f"Failed to download file {file_name}"
+    return extract_text_from_uploaded_file(io.BytesIO(file_bytes), file_name, ocr_preference)
+
+
+def build_consult_docx(conversation: List[str], output_path: _pl.Path) -> None:
+    """Create a DOCX export of an AI consultation conversation."""
+    if not Document:
+        raise ImportError("python-docx library is required for DOCX export")
+
+    doc = Document()
+    doc.add_heading("AI Consultation Export", level=0)
+
+    def _add_lines(text: str, style: str | None = None) -> None:
+        for line in text.splitlines():
+            stripped = line.strip()
+            if not stripped:
+                doc.add_paragraph("")
+            elif stripped.startswith(('- ', '* ')):
+                doc.add_paragraph(stripped[2:].strip(), style or "List Bullet")
+            else:
+                doc.add_paragraph(stripped, style=style)
+
+    for idx, entry in enumerate(conversation, 1):
+        instr = entry
+        resp = ""
+        m = re.search(r"Instruction:\s*(.*?)\n\n?Response[^:]*?:\s*(.*)", entry, re.S)
+        if m:
+            instr, resp = m.group(1).strip(), m.group(2).strip()
+
+        doc.add_heading(f"Instruction {idx}", level=1)
+        _add_lines(instr)
+        if resp:
+            doc.add_heading("Response", level=2)
+            _add_lines(resp)
+
+    doc.save(output_path)
+
+
+def extract_legal_citations(text: str) -> List[str]:
+    """Return a list of case and statute citations found in ``text``."""
+    if not text:
+        return []
+
+    case_pat = re.compile(r"\b([A-Z][A-Za-z0-9&.,'\-\s]+ v\.? [A-Z][A-Za-z0-9&.,'\-\s]+ \[[0-9]{4}\])")
+    statute_pat = re.compile(r"\b([A-Z][A-Za-z0-9()\-\s]+ (?:Act|Regulations) [12][0-9]{3})\b")
+
+    citations: List[str] = []
+    for pat in (case_pat, statute_pat):
+        for m in pat.finditer(text):
+            cit = m.group(1).strip()
+            if cit not in citations:
+                citations.append(cit)
+    return citations
+
+
+def verify_citations(
+    citations: List[str],
+    uploaded_files: List[Any],
+    cache_file: Optional[_pl.Path] = None,
+) -> Dict[str, bool]:
+    """Check citations against uploaded files or public sources."""
+
+    verified_cache: Dict[str, Any] = {}
+    if cache_file and cache_file.exists():
+        try:
+            verified_cache = json.loads(cache_file.read_text())
+        except Exception as e:
+            logger.warning(f"Failed to read citation cache {cache_file}: {e}")
+
+    # Re-check any cached entries that include URLs but were not yet verified
+    cache_updated = False
+    for cit, entry in list(verified_cache.items()):
+        if isinstance(entry, dict) and entry.get("url") and not entry.get("verified"):
+            text, _err = fetch_url_content(entry["url"])
+            if text and cit.lower() in text.lower():
+                entry["verified"] = True
+                verified_cache[cit] = entry
+                cache_updated = True
+
+    uploaded_texts: List[str] = []
+    for f in uploaded_files:
+        try:
+            txt, _ = extract_text_from_uploaded_file(io.BytesIO(f.getvalue()), f.name)
+            if txt:
+                uploaded_texts.append(txt.lower())
+        except Exception as e:
+            logger.error(f"Error extracting text from {getattr(f, 'name', '?')}: {e}")
+
+    results: Dict[str, bool] = {}
+    for cit in citations:
+        cache_entry = verified_cache.get(cit)
+        cached_verified = False
+        if isinstance(cache_entry, bool):
+            cached_verified = cache_entry
+        elif isinstance(cache_entry, dict):
+            cached_verified = bool(cache_entry.get("verified"))
+
+        if cached_verified:
+            results[cit] = True
+            continue
+
+        found = any(cit.lower() in t for t in uploaded_texts)
+
+        if not found:
+            search_bases = [
+                "https://www.bailii.org/search?q=",
+                "https://www.casemine.com/search?q=",
+            ]
+            for base in search_bases:
+                url = base + quote_plus(cit)
+                text, err = fetch_url_content(url)
+                if text and cit.lower() in text.lower():
+                    found = True
+                    break
+
+        results[cit] = found
+        if found:
+            cache_updated = True
+            if isinstance(cache_entry, dict):
+                cache_entry["verified"] = True
+                verified_cache[cit] = cache_entry
+            else:
+                verified_cache[cit] = True
+
+    if cache_file:
+        try:
+            if cache_updated:
+                cache_file.write_text(json.dumps(verified_cache, indent=2))
+        except Exception as e:
+            logger.warning(f"Failed to update citation cache {cache_file}: {e}")
+
+    return results

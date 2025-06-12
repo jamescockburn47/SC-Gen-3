@@ -30,6 +30,8 @@ def render_about_page():
     The application is designed with a focus on modularity, efficiency, and empowering users to derive
     actionable intelligence from complex information landscapes.
 
+    For a practical guide to each feature, see the **Instructions** tab.
+
     *Disclaimer: This application is currently a demonstration and development prototype. It should not be
     used for making real-world legal or financial decisions without independent verification by qualified
     professionals. All data processing and AI outputs are subject to the inherent limitations of the
@@ -162,6 +164,7 @@ def render_about_page():
     st.markdown(f"**AWS Textract OCR Utilities Available (backend check):** `{textract_available_str}`")
     st.markdown(f"**Protocol File Referenced:** `'{proto_path_name_str}'` {proto_text_status_str}")
 
+    st.info("See [README.md](README.md) for environment variables and optional OCR setup details.")
 
     st.markdown("---")
     st.caption("Strategic Counsel | AI-Augmented Professional Workspace")

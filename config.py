@@ -4,7 +4,7 @@ import os
 import logging
 import warnings
 from pathlib import Path
-from typing import Optional, Any
+from typing import Optional, Any, Tuple
 
 from dotenv import load_dotenv
 import openai
@@ -16,12 +16,19 @@ try:
 except ImportError:
     genai = None # Set to None if not installed
 
-# Local directory used by ch_pipeline to cache downloaded documents
-from pathlib import Path
-APPLICATION_SCRATCH_DIR = Path(__file__).resolve().parent / "scratch"
-APPLICATION_SCRATCH_DIR.mkdir(exist_ok=True)   # ensure it exists
+# Attempt to import Google API core exceptions for specific error handling
+try:
+    from google.api_core import exceptions as GoogleAPICoreExceptions
+except Exception:
+    GoogleAPICoreExceptions = None
 
 load_dotenv()
+
+# Local directory used by ch_pipeline to cache downloaded documents
+APPLICATION_SCRATCH_DIR = Path(
+    os.getenv("APPLICATION_SCRATCH_DIR", Path(__file__).resolve().parent / "scratch")
+)
+APPLICATION_SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
 
 # --- Logging Configuration ---
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
@@ -54,15 +61,30 @@ AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY") # For Textract
 AWS_REGION_DEFAULT = os.getenv("AWS_DEFAULT_REGION", "eu-west-2")
 S3_TEXTRACT_BUCKET = os.getenv("S3_TEXTRACT_BUCKET") # For Textract
 
+# --- Google Drive Integration ---
+GOOGLE_CLIENT_SECRET_FILE = os.getenv(
+    "GOOGLE_CLIENT_SECRET_FILE",
+    str(Path(__file__).resolve().parent / "client_secret.json"),
+)
+GOOGLE_TOKEN_FILE = os.getenv(
+    "GOOGLE_TOKEN_FILE",
+    str(Path(__file__).resolve().parent / "google_token.json"),
+)
+GOOGLE_API_SCOPES = ["https://www.googleapis.com/auth/drive"]
+ENABLE_GOOGLE_DRIVE_INTEGRATION = os.getenv("ENABLE_GOOGLE_DRIVE_INTEGRATION", "false").lower() == "true"
+
 # --- Model Configuration ---
-OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-pro-latest") # More specific name
+OPENAI_MODEL_DEFAULT = os.getenv("OPENAI_MODEL", "gpt-4o")
+GEMINI_MODEL_DEFAULT = os.getenv("GEMINI_MODEL_FOR_SUMMARIES", "gemini-1.5-flash-latest") # More specific name
 GEMINI_MODEL_FOR_PROTOCOL_CHECK = os.getenv("GEMINI_MODEL_FOR_PROTOCOL_CHECK", "gemini-1.5-flash-latest") # Model for protocol check
 GEMINI_2_5_PRO_MODEL = "gemini-2.5-pro-latest" # Added Gemini 2.5 Pro model identifier
+PROTOCOL_CHECK_MODEL_PROVIDER = os.getenv("PROTOCOL_CHECK_MODEL_PROVIDER", "gemini")  # "gemini" or "openai"
 
 # --- Application Constants ---
 MIN_MEANINGFUL_TEXT_LEN = 200
+# Limit the number of filings processed for each company during a pipeline run
 MAX_DOCS_TO_PROCESS_PER_COMPANY = int(os.getenv("MAX_DOCS_PER_COMPANY_PIPELINE", "20"))
+MAX_TEXTRACT_WORKERS = int(os.getenv("MAX_TEXTRACT_WORKERS", "4"))
 CH_API_BASE_URL = "https://api.company-information.service.gov.uk"
 CH_DOCUMENT_API_BASE_URL = "https://document-api.company-information.service.gov.uk"
 
@@ -109,9 +131,10 @@ APPLICATION_SCRATCH_DIR.mkdir(parents=True, exist_ok=True)
 # HTTP status codes that trigger a retry when calling the CH REST API
 CH_API_RETRY_STATUS_FORCELIST: list[int] = [429, 500, 502, 503, 504] # already defined
 
-# Older code in the repo already uses the miss-spelling “…FORLIST”.
+# Older code in the repo already uses the miss-spelling "…FORLIST".
 # Keep this alias until every import is updated.
 CH_API_RETRY_STATUS_FORLIST = CH_API_RETRY_STATUS_FORCELIST # already defined
+
 
 # --- Protocol Text Fallback ---
 # This will be the default. app.py will try to load strategic_protocols.txt
@@ -157,6 +180,66 @@ def get_openai_client() -> Optional[openai.OpenAI]:
             _openai_client = None
     return _openai_client
 
+
+def check_openai_model(model_name: str) -> Tuple[bool, str]:
+    """Verify that the requested OpenAI model can be retrieved."""
+    client = get_openai_client()
+    if not client:
+        msg = "OpenAI client not available."
+        logger.error(msg)
+        return False, msg
+
+    try:
+        client.models.retrieve(model_name)
+        logger.info(f"OpenAI model '{model_name}' is available.")
+        return True, ""
+    except Exception as e:
+        msg = (
+            f"Model '{model_name}' not found; check OPENAI_MODEL or run client.models.list()"
+        )
+        logger.error(msg)
+        return False, msg
+
+
+_google_drive_service: Optional[Any] = None
+
+def get_google_drive_service() -> Optional[Any]:
+    """Return an authorized Google Drive service instance or ``None`` if unavailable."""
+    global _google_drive_service
+    if _google_drive_service:
+        return _google_drive_service
+
+    if not ENABLE_GOOGLE_DRIVE_INTEGRATION:
+        logger.info("Google Drive integration disabled via configuration.")
+        return None
+
+    try:
+        from google.oauth2.credentials import Credentials
+        from google_auth_oauthlib.flow import InstalledAppFlow
+        from googleapiclient.discovery import build
+        from google.auth.transport.requests import Request
+
+        creds = None
+        token_path = Path(GOOGLE_TOKEN_FILE)
+        if token_path.exists():
+            creds = Credentials.from_authorized_user_file(str(token_path), GOOGLE_API_SCOPES)
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    GOOGLE_CLIENT_SECRET_FILE, GOOGLE_API_SCOPES
+                )
+                creds = flow.run_local_server(port=0)
+            token_path.write_text(creds.to_json())
+
+        _google_drive_service = build("drive", "v3", credentials=creds)
+        logger.info("Google Drive service initialised.")
+        return _google_drive_service
+    except Exception as e:
+        logger.error(f"Failed to initialise Google Drive service: {e}")
+        return None
+
 def get_ch_session(api_key_override: Optional[str] = None) -> requests.Session:
     """
     Returns a Companies House API session.
@@ -197,31 +280,45 @@ def get_gemini_model(model_name: str) -> Optional[Any]: # Using Any for genai.Ge
     Handles different Gemini model identifiers including "gemini-2.5-pro-latest".
     """
     global _gemini_sdk_configured
+
     if not genai:
-        logger.warning("google-generativeai library not installed. Gemini models will not be available.")
-        return None
+        msg = "google-generativeai library not installed. Gemini models will not be available."
+        logger.warning(msg)
+        return None, msg
+
     if not GEMINI_API_KEY:
-        logger.warning("GEMINI_API_KEY not found. Gemini models will fail.")
-        return None
-    
+        msg = "GEMINI_API_KEY not found. Gemini models will fail."
+        logger.warning(msg)
+        return None, msg
+
     if not _gemini_sdk_configured:
         try:
             genai.configure(api_key=GEMINI_API_KEY)
             logger.info("Google Generative AI SDK configured with API key.")
             _gemini_sdk_configured = True
         except Exception as e_gemini_config:
-            logger.error(f"Error configuring Google Generative AI SDK: {e_gemini_config}")
-            return None
+            msg = f"Error configuring Google Generative AI SDK: {e_gemini_config}"
+            logger.error(msg)
+            return None, msg
 
     try:
         # The model_name string (e.g., "gemini-1.5-pro-latest", "gemini-2.5-pro-latest")
         # is passed directly to the GenerativeModel constructor.
         model = genai.GenerativeModel(model_name)
         logger.info(f"Gemini model '{model_name}' initialized.")
-        return model
+        return model, None
     except Exception as e:
-        logger.error(f"Failed to initialize Gemini model '{model_name}': {e}", exc_info=True)
-        return None
+        if GoogleAPICoreExceptions and isinstance(e, GoogleAPICoreExceptions.NotFound):
+            msg = (
+                f"Model '{model_name}' not found; check GEMINI_MODEL_FOR_SUMMARIES "
+                "or run genai.list_models()"
+            )
+            logger.error(msg)
+            return None, msg
+
+        msg = f"Failed to initialize Gemini model '{model_name}': {e}"
+        logger.error(msg, exc_info=True)
+        return None, msg
 
 # Base path for the application (useful for file operations in app.py and other modules)
 APP_BASE_PATH = Path(__file__).resolve().parent

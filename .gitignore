@@ -40,3 +40,5 @@ tmp/
 temp/
 *.tmp
 temp*/
+# Ignore generated folder
+SC-Gen-3/

@@ -10,17 +10,21 @@ import json
 import re 
 import html 
 import hashlib # Added import for hashlib
-from typing import Optional, Dict, List, Any, Callable, Tuple, TypeAlias, Literal 
+from typing import Optional, Dict, List, Any, Callable, Tuple, TypeAlias, Literal, Set
 from collections import defaultdict
 
 # --- Logger Setup ---
 try:
-    from config import logger, MIN_MEANINGFUL_TEXT_LEN 
+    from config import logger, MIN_MEANINGFUL_TEXT_LEN, get_openai_client, OPENAI_MODEL_DEFAULT
 except ImportError:
-    logging.basicConfig(level=logging.INFO) 
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("group_structure_utils: Using fallback logger configuration.")
-    MIN_MEANINGFUL_TEXT_LEN = 200 
+    MIN_MEANINGFUL_TEXT_LEN = 200
+    def get_openai_client() -> Optional[object]:
+        logger.warning("group_structure_utils: get_openai_client fallback used. OpenAI features unavailable.")
+        return None
+    OPENAI_MODEL_DEFAULT = "gpt-4o"
 
 # --- Type Aliases ---
 JSONObj: TypeAlias = Dict[str, Any]
@@ -47,11 +51,9 @@ except ImportError as e_ch_api:
     logger.error(f"group_structure_utils: Failed to import from ch_api_utils: {e_ch_api}. Defining stubs.")
     def get_ch_documents_metadata(*args: Any, **kwargs: Any) -> Tuple[List[Any], Optional[Dict[str, Any]], Optional[str]]: 
         return [], None, "CH API utils (get_ch_documents_metadata) not available."
-    def get_company_profile(*args: Any, **kwargs: Any) -> Optional[Dict[str, Any]]: 
+    def get_company_profile(*args: Any, **kwargs: Any) -> Optional[Dict[str, Any]]:
         return None
-    def get_company_pscs(*args: Any, **kwargs: Any) -> Tuple[Optional[Dict[str, Any]], Optional[str]]: 
-        return None, "CH API utils (get_company_pscs) not available."
-    def _fetch_document_content_from_ch(*args: Any, **kwargs: Any) -> Tuple[Dict[str, Any], List[str], Optional[str]]: 
+    def _fetch_document_content_from_ch(*args: Any, **kwargs: Any) -> Tuple[Dict[str, Any], List[str], Optional[str]]:
         return {}, [], "CH API utils (_fetch_document_content_from_ch) not available."
 
 # --- AWS Textract Utilities Import ---
@@ -145,9 +147,25 @@ except ImportError:
 # --- Constants ---
 RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE = ["accounts", "confirmation-statement", "annual-return"]
 METADATA_YEARS_TO_SCAN = 10 
-ACCOUNTS_PRIORITY_ORDER = ["group", "consolidated", "full accounts", "full", "small full", "small", "medium", "interim", "initial", "dormant", "micro-entity", "abridged", "filleted"]
-CRN_REGEX = r'\b([A-Z0-9]{2}\d{6}|\d{6,8})\b' 
+ACCOUNTS_PRIORITY_ORDER = [
+    "group",
+    "consolidated",
+    "legacy",
+    "full accounts",
+    "full",
+    "small full",
+    "small",
+    "medium",
+    "interim",
+    "initial",
+    "dormant",
+    "micro-entity",
+    "abridged",
+    "filleted",
+]
+CRN_REGEX = r'\b([A-Z0-9]{2}\d{6}|\d{6,8})\b'
 COMPANY_SUFFIX_REGEX = r'\b(?:Limited|Ltd|Plc|Llp|Lp|Sarl|Gmbh|Bv|Inc|Incorporated|Company|Undertaking|Group|Partnership|Ventures|Holdings|Industries|Solutions|Services|Technologies|Enterprises|Associates|Consulting|Capital|Investments|Trading|Logistics|Properties|Estates|Developments|Management|Resources|Systems|International|Global)\b'
+SUBSIDIARY_VIZ_LIMIT: Optional[int] = 20
 
 # --- Function Definitions ---
 
@@ -189,20 +207,25 @@ def _parse_document_content(
     if content_to_parse is not None and content_type_to_parse is not None:
         parsed_result["source_format_parsed"] = content_type_to_parse.upper()
         try:
-            actual_ocr_handler_for_call = ocr_handler if content_type_to_parse == 'pdf' else None
-            
+            actual_ocr_handler_for_call = (
+                ocr_handler if (content_type_to_parse == 'pdf' and ocr_handler) else None
+            )
             extracted_text, pages_processed, extraction_error = extract_text_from_document(
                 content_to_parse, content_type_to_parse, company_no, actual_ocr_handler_for_call
             )
 
             if content_type_to_parse == 'pdf' and actual_ocr_handler_for_call and pages_processed > 0:
                 parsed_result["pages_ocrd"] = pages_processed
-            
-            if extraction_error: 
-                parsed_result["extraction_error"] = str(extraction_error)
-            elif not extracted_text: 
-                parsed_result["text_content"] = "" 
-                logger_param.info(f"GS Parse: Extraction from '{content_type_to_parse.upper()}' for doc '{doc_metadata.get('description', 'N/A')}' yielded no text.")
+                if is_priority_for_ocr:
+                    logger.info(
+                        f"OCR executed for prioritized PDF '{doc_metadata.get('description')}'."
+                    )
+                else:
+                    logger.info(
+                        f"OCR triggered for '{doc_metadata.get('description')}' due to low or no text."
+                    )
+            if extraction_error: parsed_result["extraction_error"] = str(extraction_error)
+            elif not extracted_text: parsed_result["text_content"] = ""
             else:
                 parsed_result["text_content"] = extracted_text
                 text_lower = extracted_text.lower()
@@ -461,13 +484,32 @@ def _fetch_and_parse_selected_documents(
     return processed_content_list
 
 # --- Main Orchestrator Function ---
-def analyze_company_group_structure( 
-    company_number: str, api_key: str, base_scratch_dir: _pl.Path, 
-    logger_param: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None,
-    analysis_mode: AnalysisMode = "profile_check", 
-    target_subsidiary_crns: Optional[List[str]] = None, 
-    session_data: Optional[Dict[str, Any]] = None 
-) -> Dict[str, Any]: 
+def analyze_company_group_structure(
+    company_number: str,
+    api_key: str,
+    base_scratch_dir: _pl.Path,
+    logger: logging.Logger,
+    ocr_handler: Optional[OCRHandlerType] = None,
+    analysis_mode: AnalysisMode = "profile_check",
+    target_subsidiary_crns: Optional[List[str]] = None,
+    session_data: Optional[Dict[str, Any]] = None,
+    known_structure: Optional[Dict[str, List[Dict[str, str]]]] = None,
+    use_public_sources_gpt: bool = False,
+    *,
+    docs_metadata_to_process: Optional[List[Dict[str, Any]]] = None,
+    years_to_scan: int = METADATA_YEARS_TO_SCAN,
+    metadata_only: bool = False,
+) -> Dict[str, Any]:
+    """High level orchestrator for group structure workflows.
+
+    If ``metadata_only`` is ``True`` the function returns filing metadata so the
+    caller can select which documents to process.  When ``docs_metadata_to_process``
+    is provided, only those filings will be fetched and parsed. ``years_to_scan``
+    controls the lookback window when fetching metadata. ``known_structure`` can
+    be supplied to merge a pre-existing list of subsidiaries into the results.
+    When ``use_public_sources_gpt`` is ``True`` the function will query GPT-4.1
+    for a preliminary list of subsidiaries based on public information.
+    """
     results: Dict[str, Any] = {
         "company_number_analyzed": company_number, "analysis_mode_executed": analysis_mode,
         "report_messages": [f"Group Structure Analysis for {company_number} - Mode: {analysis_mode}"],
@@ -479,15 +521,28 @@ def analyze_company_group_structure(
         "visualization_data": None, "subsidiary_details_list": [],
         "downloaded_documents_content": [] 
     }
+    if not known_structure and use_public_sources_gpt:
+        company_name_for_gpt = results.get("company_profile", {}).get("company_name", company_number)
+        gpt_subs = gpt_fetch_public_group_structure(company_name_for_gpt, company_number, logger)
+        if gpt_subs:
+            known_structure = {company_number: gpt_subs}
+
+    if known_structure:
+        preset_subs = known_structure.get(company_number, [])
+        if preset_subs:
+            existing = {frozenset(s.items()) for s in results["subsidiary_evolution"].get(0, [])}
+            for sub in preset_subs:
+                if isinstance(sub, dict) and frozenset(sub.items()) not in existing:
+                    results["subsidiary_evolution"].setdefault(0, []).append(sub)
     report_messages = results["report_messages"] 
 
     if not ch_api_utils_available:
         report_messages.append("CRITICAL ERROR: CH API utilities not available. Group structure analysis cannot proceed."); 
-        logger_param.critical("analyze_company_group_structure: ch_api_utils not available.")
+        logger.critical("analyze_company_group_structure: ch_api_utils not available.")
         return results
 
     if analysis_mode == "profile_check" or not results["company_profile"]:
-        logger_param.info(f"GS Mode '{analysis_mode}': Fetching/updating profile for {company_number}.")
+        logger.info(f"GS Mode '{analysis_mode}': Fetching/updating profile for {company_number}.")
         profile = get_company_profile(company_number, api_key)
         results["company_profile"] = profile
         if profile and isinstance(profile, dict) :
@@ -507,7 +562,7 @@ def analyze_company_group_structure(
             results["is_inferred_topco"] = session_data.get("user_stated_topco", False) if session_data else False 
             report_messages.append(f"Proceeding with TopCo status as: {results['is_inferred_topco']} (profile unavailable).")
     else:
-        logger_param.info(f"GS Mode '{analysis_mode}': Using existing profile for {company_number}.")
+        logger.info(f"GS Mode '{analysis_mode}': Using existing profile for {company_number}.")
         if session_data and "is_inferred_topco" in session_data:
              results["is_inferred_topco"] = session_data["is_inferred_topco"]
         elif results["company_profile"]: 
@@ -515,46 +570,62 @@ def analyze_company_group_structure(
             results["is_inferred_topco"] = (acc_req == "group")
 
     docs_to_process_metadata: List[Dict[str, Any]] = []
-    if analysis_mode in ["find_parent", "list_subsidiaries"]:
-        end_year, start_year = datetime.now().year, datetime.now().year - METADATA_YEARS_TO_SCAN + 1
-        categories_for_api = RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE
-        report_messages.append(f"Mode '{analysis_mode}': Fetching relevant filings metadata for {company_number} (Years: {start_year}-{end_year}).")
-        
-        target_docs_count_api = 3 if analysis_mode == "find_parent" else 10
-        
-        doc_items_meta, _, meta_err_msg = get_ch_documents_metadata(
-            company_no=company_number, api_key=api_key, categories=categories_for_api, 
-            items_per_page=100, 
-            max_docs_to_fetch_meta=150, 
-            target_docs_per_category_in_date_range=target_docs_count_api, 
-            year_range=(start_year, end_year)
+    if analysis_mode in ["find_parent", "list_subsidiaries"] and docs_metadata_to_process is None:
+        end_year = datetime.now().year
+        start_year = end_year - max(1, years_to_scan) + 1
+        categories = RELEVANT_CATEGORIES_FOR_GROUP_STRUCTURE
+        report_messages.append(
+            f"Mode '{analysis_mode}': Fetching filings for {company_number} over {years_to_scan} year(s)."
         )
-        if meta_err_msg: 
-            report_messages.append(f"Warning during metadata fetch: {meta_err_msg}")
-            logger_param.warning(f"GS Mode '{analysis_mode}': Metadata fetch warning for {company_number}: {meta_err_msg}")
-        
-        if doc_items_meta: 
-            report_messages.append(f"Found {len(doc_items_meta)} potentially relevant filings for '{analysis_mode}' mode.")
-            docs_to_process_metadata = doc_items_meta
-        else: 
-            report_messages.append(f"No relevant filings metadata found for '{analysis_mode}' mode with current criteria.")
-            logger_param.info(f"GS Mode '{analysis_mode}': No filings metadata for {company_number}.")
+        doc_items, _, meta_err = get_ch_documents_metadata(
+            company_no=company_number,
+            api_key=api_key,
+            categories=categories,
+            items_per_page=100,
+            max_docs_to_fetch_meta=150,
+            target_docs_per_category_in_date_range=(3 if analysis_mode == "find_parent" else 10),
+            year_range=(start_year, end_year),
+        )
+        if meta_err:
+            report_messages.append(f"Metadata fetch warning: {meta_err}")
+        if doc_items:
+            report_messages.append(
+                f"Found {len(doc_items)} potentially relevant filings for {analysis_mode} mode."
+            )
+            docs_to_process_metadata = doc_items
+        else:
+            report_messages.append(f"No relevant filings found for {analysis_mode} mode.")
+        results["retrieved_doc_metadata"] = docs_to_process_metadata
+        if docs_to_process_metadata:
+            for idx, itm in enumerate(docs_to_process_metadata):
+                desc = str(itm.get("description", "")).lower()
+                if any(keyword in desc for keyword in ACCOUNTS_PRIORITY_ORDER):
+                    results["recommended_doc_idx"] = idx
+                    break
+        if metadata_only:
+            return results
+    elif docs_metadata_to_process is not None:
+        docs_to_process_metadata = docs_metadata_to_process
 
     parsed_docs_data_list: List[Dict[str, Any]] = []
     if docs_to_process_metadata:
-        logger_param.info(f"GS Mode '{analysis_mode}': Processing {len(docs_to_process_metadata)} selected filings for {company_number}.")
+        logger.info(f"GS Mode '{analysis_mode}': Processing {len(docs_to_process_metadata)} selected filings for {company_number}.")
         parsed_docs_data_list = _fetch_and_parse_selected_documents(
-            company_number, docs_to_process_metadata, api_key, logger_param, ocr_handler,
+            company_number, docs_to_process_metadata, api_key, logger, ocr_handler,
             is_topco_analyzing_subs=(analysis_mode == "list_subsidiaries" and results["is_inferred_topco"])
         )
         results["downloaded_documents_content"] = parsed_docs_data_list 
         report_messages.append(f"Processed {len(parsed_docs_data_list)} documents. Check logs for details of each.")
 
     if analysis_mode == "find_parent":
-        logger_param.info(f"GS Mode 'find_parent': Extracting parent timeline for {company_number}.")
-        parent_timeline_data, pt_msgs = extract_parent_timeline(company_number, api_key, logger_param, parsed_docs_data_list)
+        logger.info(f"GS Mode 'find_parent': Extracting parent timeline for {company_number}.")
+        parent_timeline_data, pt_msgs = extract_parent_timeline(company_number, api_key, logger, parsed_docs_data_list)
         results["parent_timeline"] = parent_timeline_data
         report_messages.extend(pt_msgs)
+        latest_parent_entry = next((e for e in reversed(results["parent_timeline"]) if e.get('parent_number')), None)
+        if latest_parent_entry and isinstance(latest_parent_entry.get('parent_number'), str):
+            results["identified_parent_crn"] = latest_parent_entry['parent_number']
+        # The PSC-based parent lookup has been removed in favor of explicit user input or GPT analysis
         
         latest_parent_entry_with_crn = next((e for e in reversed(results["parent_timeline"]) if e.get('parent_number')), None)
         if latest_parent_entry_with_crn and isinstance(latest_parent_entry_with_crn.get('parent_number'), str):
@@ -563,7 +634,7 @@ def analyze_company_group_structure(
         
         if not results["identified_parent_crn"]:
             report_messages.append("No parent CRN found in filings timeline. Checking PSC data as fallback.")
-            psc_parent_info = _get_corporate_psc_parent_info(company_number, api_key, logger_param)
+            psc_parent_info = _get_corporate_psc_parent_info(company_number, api_key, logger)
             if psc_parent_info and isinstance(psc_parent_info.get('number'), str):
                 results["identified_parent_crn"] = psc_parent_info['number']
                 report_messages.append(f"Identified potential parent CRN from PSC data: {results['identified_parent_crn']} (Name: {psc_parent_info.get('name', 'N/A')})")
@@ -583,61 +654,25 @@ def analyze_company_group_structure(
         results["visualization_data"] = "\n".join(dot_lines_viz)
 
     elif analysis_mode == "list_subsidiaries":
-        logger_param.info(f"GS Mode 'list_subsidiaries': Extracting subsidiary evolution for {company_number}.")
+        logger.info(f"GS Mode 'list_subsidiaries': Extracting subsidiary evolution for {company_number}.")
         current_subs_evolution = results.get("subsidiary_evolution", defaultdict(list)) 
         
-        for doc_bundle in parsed_docs_data_list:
-            parsed_data = doc_bundle.get("parsed_data",{})
-            meta_data = doc_bundle.get("metadata",{})
-            doc_date_str_subs = meta_data.get("date", "N/A")
-            subs_in_doc_list = parsed_data.get("subsidiaries", []) 
-            
-            if subs_in_doc_list and doc_date_str_subs != "N/A":
-                try:
-                    year_of_doc = datetime.strptime(doc_date_str_subs, "%Y-%m-%d").year
-                    existing_subs_repr_for_year = {frozenset(s.items()) for s in current_subs_evolution.get(year_of_doc, [])}
-                    new_subs_for_year = [
-                        s for s in subs_in_doc_list 
-                        if isinstance(s, dict) and frozenset(s.items()) not in existing_subs_repr_for_year
-                    ]
-                    if new_subs_for_year:
-                        current_subs_evolution[year_of_doc].extend(new_subs_for_year)
-                        report_messages.append(f"Added {len(new_subs_for_year)} new subsidiaries from doc dated {doc_date_str_subs} for year {year_of_doc}.")
-                except ValueError: 
-                    logger_param.warning(f"Could not parse date '{doc_date_str_subs}' for subsidiary evolution. Skipping doc.")
-        
-        results["subsidiary_evolution"] = {k:v for k,v in current_subs_evolution.items()} 
-        
-        dot_lines_viz_subs = ["digraph G { rankdir=TB; node[shape=box, style=rounded];"]
-        topco_name_viz_subs = results.get("company_profile", {}).get('company_name', company_number)
-        dot_lines_viz_subs.append(f'"{company_number}" [label="{topco_name_viz_subs}\\n({company_number})\\nTopCo Analyzed", fillcolor=lightgreen, style="filled,rounded"];')
-        
-        latest_year_with_subs = None
-        if results["subsidiary_evolution"]:
-            try: latest_year_with_subs = max(k for k, v in results["subsidiary_evolution"].items() if v) 
-            except ValueError: pass 
-
-        if latest_year_with_subs and results["subsidiary_evolution"].get(latest_year_with_subs):
-            report_messages.append(f"Displaying subsidiaries reported around year {latest_year_with_subs} (up to 20).")
-            subs_to_display = results["subsidiary_evolution"][latest_year_with_subs][:20] 
-            for sub_item in subs_to_display: 
-                sub_name = sub_item.get("name","Unnamed Subsidiary") 
-                if not sub_name or not sub_name.strip(): sub_name = "Unnamed Subsidiary"
-                
-                sub_crn = sub_item.get("number") 
-                
-                node_id_sub_base = sub_crn if sub_crn and sub_crn != "N/A" else sub_name.replace(' ','_').replace('"', '').replace("'", "").replace("(", "").replace(")", "")
-                node_id_sub = f"{node_id_sub_base}_{hashlib.md5(str(sub_item).encode()).hexdigest()[:6]}" # Use hashlib
-
-
-                label_crn_part = f"\\n(CRN: {sub_crn})" if sub_crn and sub_crn != "N/A" else "\\n(CRN N/A)"
-                dot_lines_viz_subs.append(f'"{node_id_sub}" [label="{html.escape(sub_name)}{label_crn_part}", fillcolor=lightblue, style="filled,rounded"];')
-                dot_lines_viz_subs.append(f'"{company_number}" -> "{node_id_sub}";')
-        else:
-            report_messages.append("No subsidiaries found or reported in the analyzed documents for visualization.")
-            
-        dot_lines_viz_subs.append("}")
-        results["visualization_data"] = "\n".join(dot_lines_viz_subs)
+        dot_lines = ["digraph G { rankdir=TB; node[shape=box];"]
+        topco_name_viz = results.get("company_profile", {}).get('company_name', company_number) # Safe access
+        dot_lines.append(f'"{company_number}" [label="{topco_name_viz}\\n({company_number})\\nTopCo", color=lightgreen];')
+        latest_year_subs = max(results["subsidiary_evolution"].keys()) if results["subsidiary_evolution"] else None
+        if latest_year_subs:
+            subs_for_viz = results["subsidiary_evolution"][latest_year_subs]
+            # Limit number of subsidiaries displayed in the graph if SUBSIDIARY_VIZ_LIMIT is set
+            if SUBSIDIARY_VIZ_LIMIT is not None:
+                subs_for_viz = subs_for_viz[:SUBSIDIARY_VIZ_LIMIT]
+            for sub in subs_for_viz:
+                sub_name, sub_crn = sub.get("name","N/A"), sub.get("number","N/A")
+                node_id = sub_crn if sub_crn else f"{sub_name}_name_only"
+                dot_lines.append(f'"{node_id}" [label="{sub_name}\\n({sub_crn if sub_crn else "CRN N/A"})"];')
+                dot_lines.append(f'"{company_number}" -> "{node_id}";')
+        dot_lines.append("}")
+        results["visualization_data"] = "\n".join(dot_lines)
 
     elif analysis_mode == "subsidiary_details":
         if target_subsidiary_crns:
@@ -653,24 +688,23 @@ def analyze_company_group_structure(
             report_messages.append("Subsidiary profile fetching complete.")
         else: 
             report_messages.append("No target subsidiaries provided for detail fetching in 'subsidiary_details' mode.")
-            logger_param.info("GS Mode 'subsidiary_details': No target_subsidiary_crns provided.")
+            logger.info("GS Mode 'subsidiary_details': No target_subsidiary_crns provided.")
             
-    logger_param.info(f"Group structure analysis for {company_number} (Mode: {analysis_mode}) completed.")
+    logger.info(f"Group structure analysis for {company_number} (Mode: {analysis_mode}) completed.")
     return results
 
-def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_param: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None):
-    st.header("🏢 Company Group Structure Analysis") 
-    
-    default_gs_session_state = {
-        'gs_current_company_crn': "", 
-        'gs_user_stated_topco': False, 
-        'gs_analysis_results': {}, 
-        'gs_current_stage': "initial_input", 
-        'gs_selected_subs_for_details': [], 
-        'gs_selected_subs_for_details_display': [], 
-        'gs_show_downloaded_docs_expander': False 
+def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger: logging.Logger, ocr_handler: Optional[OCRHandlerType] = None):
+    st.header("🏢 Company Group Structure Analysis") # type: ignore
+    default_session_state = {
+        'gs_current_company_crn': "",
+        'gs_user_stated_topco': False,
+        'gs_analysis_results': {},
+        'gs_current_stage': "initial_input",
+        'gs_selected_subs_for_details': [],
+        'gs_years_choice': 5,
+        'gs_next_analysis_mode': None,
     }
-    for key, default_val in default_gs_session_state.items():
+    for key, default_val in default_session_state.items():
         if key not in st.session_state: 
             if isinstance(st.session_state, MockSessionState):
                 setattr(st.session_state, key, default_val)
@@ -692,13 +726,18 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_p
         st.session_state.gs_selected_subs_for_details_display = []
         st.session_state.gs_show_downloaded_docs_expander = False
     
-    user_stated_topco_ui = st.checkbox(
-        "This company is the UK Top Parent (TopCo)", 
-        st.session_state.get('gs_user_stated_topco', False), 
-        key="gs_topco_checkbox_widget" 
+    st.session_state.gs_user_stated_topco = st.checkbox(
+        "This company is the UK Top Parent",
+        st.session_state.get('gs_user_stated_topco', False),
+        key="gs_topco_checkbox_main",
+    )  # type: ignore
+
+    st.session_state.gs_years_choice = st.selectbox(
+        "How many years of filings to retrieve?",
+        options=[2, 5, 10],
+        index=[2, 5, 10].index(st.session_state.get('gs_years_choice', 5)),
+        key="gs_years_choice_select",
     )
-    if user_stated_topco_ui != st.session_state.get('gs_user_stated_topco'):
-        st.session_state.gs_user_stated_topco = user_stated_topco_ui
 
     if st.button("1. Fetch Profile & Determine Analysis Path", key="gs_fetch_profile_btn_widget"):
         if not st.session_state.get('gs_current_company_crn'): 
@@ -716,7 +755,7 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_p
                     company_number=st.session_state.get('gs_current_company_crn',''), 
                     api_key=api_key, 
                     base_scratch_dir=base_scratch_dir,
-                    logger_param=logger_param, 
+                    logger_param=logger, 
                     ocr_handler=ocr_handler, 
                     analysis_mode="profile_check", 
                     session_data=current_session_data_for_analysis
@@ -769,29 +808,98 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_p
 
 
     if st.session_state.get('gs_current_stage') == "profile_reviewed":
-        is_topco_inferred = results_from_analysis.get("is_inferred_topco", False)
-        col1_actions, col2_actions = st.columns(2)
-        with col1_actions:
-            if is_topco_inferred: 
-                if st.button("2a. Analyze Group Accounts for Subsidiaries", key="gs_analyze_subs_btn_widget", type="primary"):
-                    with st.spinner(f"Fetching and analyzing group accounts for {results_from_analysis.get('company_number_analyzed')}..."):
+        is_topco = results.get("is_inferred_topco", False)
+        col1, col2 = st.columns(2) # type: ignore
+        with col1:
+            if is_topco:
+                if st.button("2a. Select Group Accounts to Analyze", key="gs_analyze_subs_btn"):  # type: ignore
+                    with st.spinner(
+                        f"Fetching group accounts for {results.get('company_number_analyzed')}..."
+                    ):  # type: ignore
                         updated_results = analyze_company_group_structure(
-                            results_from_analysis.get('company_number_analyzed',''), api_key, base_scratch_dir, 
-                            logger_param, ocr_handler, "list_subsidiaries", session_data=results_from_analysis
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            "list_subsidiaries",
+                            session_data=results,
+                            metadata_only=True,
+                            years_to_scan=st.session_state.get('gs_years_choice', 5),
                         )
-                        st.session_state.gs_analysis_results = updated_results
-                        st.session_state.gs_current_stage = "subs_listed"
-                        st.rerun()
-            else: 
-                if st.button("2b. Find Parent Company", key="gs_find_parent_btn_widget", type="primary"):
-                    with st.spinner(f"Analyzing documents for {results_from_analysis.get('company_number_analyzed')} to find parent..."):
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = "docs_listed"  # type: ignore
+                        st.session_state.gs_next_analysis_mode = "list_subsidiaries"  # type: ignore
+                        st.rerun()  # type: ignore
+            else:
+                if st.button("2b. Find Parent Company", key="gs_find_parent_btn"):  # type: ignore
+                    with st.spinner(
+                        f"Fetching filings for {results.get('company_number_analyzed')}..."
+                    ):  # type: ignore
                         updated_results = analyze_company_group_structure(
-                            results_from_analysis.get('company_number_analyzed',''), api_key, base_scratch_dir, 
-                            logger_param, ocr_handler, "find_parent", session_data=results_from_analysis
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            "find_parent",
+                            session_data=results,
+                            metadata_only=True,
+                            years_to_scan=st.session_state.get('gs_years_choice', 5),
                         )
-                        st.session_state.gs_analysis_results = updated_results
-                        st.session_state.gs_current_stage = "parent_analyzed"
-                        st.rerun()
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = "docs_listed"  # type: ignore
+
+                        st.session_state.gs_next_analysis_mode = "find_parent"  # type: ignore
+                        st.rerun()  # type: ignore
+
+    if st.session_state.get('gs_current_stage') == "docs_listed":
+        docs_meta = results.get("retrieved_doc_metadata", [])
+        if not docs_meta:
+            st.warning("No filings found to select.")  # type: ignore
+        else:
+            st.subheader("Select Filings to Analyze")  # type: ignore
+            options_labels = [
+                f"{d.get('date','N/A')} | {d.get('category','N/A')} | {d.get('type','N/A')} | {d.get('description','N/A')}"
+                for d in docs_meta
+            ]
+            default_sel: List[str] = []
+            rec_idx = results.get("recommended_doc_idx")
+            if rec_idx is not None and 0 <= rec_idx < len(options_labels):
+                options_labels[rec_idx] += " [RECOMMENDED]"
+                default_sel.append(options_labels[rec_idx])
+                st.caption("Latest group/consolidated accounts pre-selected")  # type: ignore
+            selected_display = st.multiselect(
+                "Choose filings:",
+                options=options_labels,
+                default=default_sel,
+                key="gs_doc_multiselect",
+            )  # type: ignore
+            if st.button("Analyze Selected Filings", key="gs_process_docs_btn"):
+                indices = [options_labels.index(lbl) for lbl in selected_display]
+                chosen = [docs_meta[i] for i in indices]
+                if not chosen:
+                    st.warning("Please select at least one filing.")  # type: ignore
+                else:
+                    with st.spinner("Processing selected filings..."):
+                        updated_results = analyze_company_group_structure(
+                            results.get('company_number_analyzed', ''),
+                            api_key,
+                            base_scratch_dir,
+                            logger,
+                            ocr_handler,
+                            st.session_state.get('gs_next_analysis_mode', 'find_parent'),
+                            session_data=results,
+                            docs_metadata_to_process=chosen,
+                        )
+                        next_stage = (
+                            "subs_listed"
+                            if st.session_state.get('gs_next_analysis_mode') == "list_subsidiaries"
+                            else "parent_analyzed"
+                        )
+                        st.session_state.gs_analysis_results = updated_results  # type: ignore
+                        st.session_state.gs_current_stage = next_stage  # type: ignore
+                        st.rerun()  # type: ignore
     
     if st.session_state.get('gs_current_stage') == "parent_analyzed":
         st.subheader("Parent Company Analysis Results");
@@ -818,15 +926,35 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_p
             st.graphviz_chart(results_from_analysis["visualization_data"])
 
     if st.session_state.get('gs_current_stage') == "subs_listed":
-        st.subheader(f"Subsidiary Analysis for TopCo: {results_from_analysis.get('company_number_analyzed')}")
-        if results_from_analysis.get("visualization_data"): 
-            st.graphviz_chart(results_from_analysis["visualization_data"])
-        
-        subs_evolution_data = results_from_analysis.get("subsidiary_evolution", {})
-        latest_year_with_subs_data = None
-        if subs_evolution_data:
-            try: latest_year_with_subs_data = max(k for k, v_list in subs_evolution_data.items() if v_list)
-            except ValueError: pass 
+        st.subheader(f"Subsidiary Analysis for TopCo: {results.get('company_number_analyzed')}") # type: ignore
+        if results.get("visualization_data"): st.graphviz_chart(results["visualization_data"]) # type: ignore
+        subs_evo = results.get("subsidiary_evolution", {})
+        all_subs = get_all_subsidiaries(subs_evo)
+        if all_subs:
+            # Display a deduplicated list aggregated across all years
+            st.markdown("---"); st.subheader("Stage 3: Deeper Dive into Selected Subsidiaries") # type: ignore
+            subs_options = [f"{s.get('name', 'N/A')} ({s.get('number', 'N/A')})" for s in all_subs if s.get('number')]
+            selected_subs_display = st.multiselect("Select subsidiaries for status check:", options=subs_options, key="gs_subs_multiselect") # type: ignore
+            crns_to_fetch = [re.search(CRN_REGEX, disp).group(1) for disp in selected_subs_display if re.search(CRN_REGEX, disp)] if selected_subs_display else []
+            st.session_state.gs_selected_subs_for_details = crns_to_fetch # type: ignore
+            if st.button("Fetch Status for Selected Subsidiaries", key="gs_fetch_sub_details_btn"): # type: ignore
+                if not crns_to_fetch: st.warning("Please select subsidiaries with CRNs.") # type: ignore
+                else:
+                    with st.spinner("Fetching details..."): # type: ignore
+                        updated_results = analyze_company_group_structure(results.get('company_number_analyzed',''), api_key, base_scratch_dir, logger, ocr_handler, "subsidiary_details", target_subsidiary_crns=crns_to_fetch, session_data=results)
+                        st.session_state.gs_analysis_results, st.session_state.gs_current_stage = updated_results, "subs_detailed" # type: ignore
+                        st.rerun() # type: ignore
+    
+    if st.session_state.get('gs_current_stage') == "subs_detailed":
+        st.subheader("Selected Subsidiary Details") # type: ignore
+        sub_details_list = results.get("subsidiary_details_list", [])
+        if sub_details_list:
+            for detail in sub_details_list:
+                st.markdown(f"- **{detail.get('name')}** ({detail.get('crn')}) - Status: `{detail.get('status')}`") # type: ignore
+                if st.button(f"Analyze {detail.get('crn')} in detail", key=f"gs_analyze_sub_detail_{detail.get('crn')}"): # type: ignore
+                    st.session_state.gs_current_company_crn, st.session_state.gs_user_stated_topco = detail.get('crn'), False # type: ignore
+                    st.session_state.gs_analysis_results, st.session_state.gs_current_stage = {}, "initial_input" # type: ignore
+                    st.rerun() # type: ignore
 
         if latest_year_with_subs_data and subs_evolution_data.get(latest_year_with_subs_data):
             st.markdown("---"); st.subheader("Stage 3: Deeper Dive into Selected Subsidiaries")
@@ -865,7 +993,7 @@ def render_group_structure_ui(api_key: str, base_scratch_dir: _pl.Path, logger_p
                         with st.spinner("Fetching details for selected subsidiaries..."):
                             updated_results = analyze_company_group_structure(
                                 results_from_analysis.get('company_number_analyzed',''), api_key, base_scratch_dir, 
-                                logger_param, ocr_handler, "subsidiary_details", 
+                                logger, ocr_handler, "subsidiary_details", 
                                 target_subsidiary_crns=st.session_state.gs_selected_subs_for_details, 
                                 session_data=results_from_analysis
                             )
