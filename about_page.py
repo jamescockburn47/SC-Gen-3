@@ -115,6 +115,28 @@ def render_about_page():
         - **Detailed Logging:** AI interactions and CH analysis parameters are logged for review.
         """)
 
+    with st.expander("How It Works: Core Functions", expanded=False):
+        st.markdown("""
+        **Strategic Counsel's core modules work together to deliver robust, explainable AI-powered analysis:**
+
+        - **AI Summarization & Protocol Compliance:**
+          - Uses OpenAI or Gemini models to generate rigorous, objective summaries of legal and financial documents.
+          - Every AI output is checked against a master protocol to ensure professional standards and flag non-compliance.
+        - **Document & Web Intake:**
+          - Accepts uploads (PDF, DOCX, TXT) and URLs, extracting text using advanced libraries.
+          - Summarizes and prepares content for use as AI context or for quick review.
+        - **Group Structure Analysis:**
+          - Orchestrates step-by-step analysis of UK company group structures using Companies House data.
+          - Identifies parent/subsidiary relationships, processes filings, and visualizes group hierarchies.
+        - **Companies House API Integration:**
+          - Retrieves company profiles and filings directly from the official API, handling multiple formats and robust error cases.
+        - **OCR & AWS Textract:**
+          - Extracts text from scanned/image-based PDFs using AWS Textract, with fallback logic for difficult documents.
+        - **Session & Context Management:**
+          - Maintains topic-based workspaces, session digests, and persistent memories for each matter.
+          - Dynamically injects relevant context into every AI consultation for tailored, high-quality results.
+        """)
+
     st.markdown("---")
     st.subheader("Technology Stack Highlights")
     st.markdown(f"""
@@ -136,8 +158,7 @@ def render_about_page():
     # For CH_PIPELINE_TEXTRACT_FLAG, it's set in ch_pipeline.py and imported by app.py.
     # To make it accessible here via config, app.py would need to set it on the config object,
     # or ch_pipeline.py itself could set a flag on the config object.
-    # For simplicity, if app.py imports ch_pipeline, it can then set a flag on config.
-    # Assuming app.py might do: import config; from ch_pipeline import TEXTRACT_AVAILABLE; config.CH_PIPELINE_TEXTRACT_FLAG = TEXTRACT_AVAILABLE
+    # For simplicity, if app.py might do: import config; from ch_pipeline import TEXTRACT_AVAILABLE; config.CH_PIPELINE_TEXTRACT_FLAG = TEXTRACT_AVAILABLE
 
     # Safely access attributes that might be set by app.py on the config module
     app_base_path_str = str(config.APP_BASE_PATH) if hasattr(config, 'APP_BASE_PATH') else "N/A"

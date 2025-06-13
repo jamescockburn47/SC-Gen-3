@@ -1,82 +1,137 @@
 # Strategic Counsel Gen 3
 
-## Setup Overview
+## Overview
+Strategic Counsel Gen 3 is an advanced legal and corporate analysis platform that leverages AI (OpenAI, Gemini), AWS Textract OCR, and Google Drive integration to automate the extraction, summarization, and verification of information from Companies House filings, court dockets, and other legal documents. The app is built with Python and Streamlit, providing an interactive, user-friendly interface for legal professionals.
 
-1. **Install dependencies** *(while network is available)*
- ```bash
-  pip install -r requirements.txt
-  ```
-  The requirements file pins exact versions for every package, including
-  `pytest`, so install them before network access is disabled.  Verify with:
-  ```bash
-  pytest --version
-  ```
-   You can also run `./setup.sh` to automatically create a virtual environment
-   and install the pinned dependencies.
-    - Windows users may need to install the Microsoft Visual Studio Build Tools if pandas is built from source. Installer: https://visualstudio.microsoft.com/visual-cpp-build-tools/
-2. **Create a `.env` file** in the project root containing the required environment variables.
-3. **Run the application**
-   ```bash
-   streamlit run app.py
-   ```
+## Features
+- **AI-Powered Summarization & Analysis**: Uses OpenAI and Gemini models for document analysis, summaries, and protocol compliance checks.
+- **Companies House Integration**: Retrieves and analyzes filings, including scanned PDFs with OCR fallback.
+- **AWS Textract OCR**: Automatically processes image-based PDFs for text extraction.
+- **Google Drive Integration**: Browse, select, and process files directly from your Google Drive.
+- **Case Timeline Visualization**: Upload and visualize court dockets and case events.
+- **Citation Verification**: Checks and verifies legal citations against uploaded documents and public sources.
+- **Protocol Compliance**: Automatically checks AI outputs against strategic protocols and flags non-compliance.
+- **Comprehensive Test Suite**: Includes unit and integration tests with coverage reporting.
 
-## Required Environment Variables
+## Core Functions
 
-The application loads configuration from a `.env` file or the host environment. At a minimum, set the following keys:
+**AI Summarization & Protocol Compliance (`ai_utils.py`)**
+- Provides rigorous, objective AI-powered summaries of legal and financial documents using OpenAI or Gemini models.
+- Enforces a strict, factual prompt structure for extracting key financials, governance, risks, and events.
+- Supports chunking and aggregation for large documents.
+- Includes protocol compliance checks: every AI output is compared against a master protocol file to ensure professional standards and flag non-compliance.
 
-- `CH_API_KEY` – Companies House API key for retrieving filings.
-- `OPENAI_API_KEY` – API key for GPT models (used for summarisation and drafting).
-- `GEMINI_API_KEY` – API key for Google Gemini models.
-- `GEMINI_MODEL_FOR_SUMMARIES` – override the Gemini model used for summaries (default `gemini-1.5-flash-latest`).
-- `OPENAI_MODEL` – default OpenAI model for analysis tasks and fallback summaries (default `gpt-4o`).
--   If you encounter errors when using a newer model name such as `gpt-4o`, run
-    the helper `check_openai_model()` from `config.py` or `openai.models.list()`
-    to verify the model is available to your API key.
-- `GEMINI_MODEL_FOR_PROTOCOL_CHECK` – Gemini model used when checking responses against the strategic protocols.
-- `PROTOCOL_CHECK_MODEL_PROVIDER` – choose `gemini` (default) or `openai` for protocol compliance checks.
-- `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` – credentials used when AWS Textract OCR is enabled.
-- `AWS_DEFAULT_REGION` – AWS region (for Textract), for example `eu-west-2`.
-- `S3_TEXTRACT_BUCKET` – S3 bucket name used to temporarily store PDFs when sending them to Textract.
-- `MAX_TEXTRACT_WORKERS` – number of concurrent Textract OCR workers (default `4`).
-- `ENABLE_GOOGLE_DRIVE_INTEGRATION` – set to `true` to allow selecting files from Google Drive.
-- `GOOGLE_CLIENT_SECRET_FILE` – path to your OAuth client credentials JSON.
-- `GOOGLE_TOKEN_FILE` – file where OAuth tokens will be stored.
+**Document & Web Intake, Extraction, and Integration (`app_utils.py`)**
+- Handles file uploads (PDF, DOCX, TXT) and URL ingestion, extracting text using PyPDF2, pdfminer, python-docx, and BeautifulSoup4.
+- Summarizes uploaded or fetched content for quick review and context injection.
+- Integrates with Google Drive for direct file selection and processing.
+- Provides utility functions for extracting legal citations and verifying them against uploaded files or public sources.
 
-Gemini is the preferred model for generating summaries. If an OpenAI API key is provided, GPT models are used for analysis tasks and can power protocol checks when `PROTOCOL_CHECK_MODEL_PROVIDER` is set to `openai`.
+**Group Structure Analysis (`group_structure_utils.py`)**
+- Orchestrates the staged analysis of UK company group structures using Companies House data.
+- Fetches company profiles, identifies parent/subsidiary relationships, and processes filings across multiple years.
+- Prioritizes structured data (JSON, XHTML/XML) but falls back to PDF extraction and OCR when needed.
+- Extracts, deduplicates, and visualizes group hierarchies, timelines, and subsidiary evolution.
+- Integrates with AI summarization for objective, technical summaries of filings.
 
-Other optional variables (such as logging level or API retry options) can be defined as needed. See `config.py` for the full list.
+**Companies House API Integration (`ch_api_utils.py`)**
+- Interfaces with the Companies House Public Data API to retrieve company profiles, filings metadata, and document content.
+- Handles pagination, category filtering, and robust error handling for large-scale data pulls.
+- Supports multi-format document retrieval (JSON, XHTML, PDF) and metadata extraction for downstream analysis.
 
-Recent updates add support for OpenAI's **gpt‑4o** model and Google's **gemini‑1.5-pro**. Specify these model names via the `OPENAI_MODEL` and `GEMINI_MODEL_FOR_SUMMARIES` environment variables if you have access.
+**OCR & AWS Textract Integration**
+- Enables advanced text extraction from scanned/image-based PDFs using AWS Textract.
+- Runs OCR in parallel for large batches, with fallback logic if standard extraction fails.
+- Integrates seamlessly with group structure and document analysis workflows.
 
-## Enabling OCR with AWS Textract
+**Session & Context Management**
+- Maintains topic-based workspaces, session digests, and persistent memories for each matter.
+- Caches document summaries and analysis results to improve performance and reduce costs.
+- Provides dynamic context injection for AI consultations, ensuring highly relevant and tailored outputs.
 
-Within the **Group Structure** tab of the application there is a checkbox labelled **"Use AWS Textract for PDF OCR"**. When checked, the system attempts to initialise AWS Textract using the credentials above. Scanned or image-based PDFs from Companies House will then be sent to Textract for optical character recognition before analysis.
+## Setup
 
-If pdfminer extracts little or no text from a PDF, the system now automatically falls back to Textract whenever it is enabled. This means even filings that aren't explicitly flagged for OCR will still be processed when embedded text is missing.
+### 1. Clone the Repository
+```bash
+git clone <your-repo-url>
+cd SC_Gen3
+```
 
-Textract calls can now run in parallel to speed up large batches. The default maximum number of concurrent OCR workers is controlled by the `MAX_TEXTRACT_WORKERS` environment variable (default `4`). Reduce this value if you hit AWS rate limits.
+### 2. Install Dependencies
+#### Using pip
+```bash
+pip install -r requirements.txt
+```
+#### Or use the setup script (Unix)
+```bash
+./setup.sh
+```
+#### Windows Notes
+- You may need to install Microsoft Visual Studio Build Tools if pandas or other packages are built from source: https://visualstudio.microsoft.com/visual-cpp-build-tools/
+- You can use `init_SC_Gen3_generic.ps1` or `setup_and_launch_SC_Gen3.bat` for automated setup on Windows.
 
-Without OCR, many Companies House PDF filings cannot be parsed, meaning group-structure analysis may miss critical information contained in scanned documents. If OCR fails to initialise or the checkbox is left unchecked, only PDFs containing embedded text are analysed.
+### 3. Environment Variables
+Create a `.env` file in the project root with the following keys (see `config.py` for all options):
 
-When subsidiaries are listed after analysis the application now aggregates entries from all retrieved years into a single deduplicated list. Previously only the most recent year's subsidiaries were shown.
+```
+CH_API_KEY=your_companies_house_api_key
+OPENAI_API_KEY=your_openai_api_key
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL_FOR_SUMMARIES=gemini-1.5-flash-latest
+OPENAI_MODEL=gpt-4o
+GEMINI_MODEL_FOR_PROTOCOL_CHECK=gemini-1.5-pro
+PROTOCOL_CHECK_MODEL_PROVIDER=gemini
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_DEFAULT_REGION=eu-west-2
+S3_TEXTRACT_BUCKET=your_s3_bucket
+MAX_TEXTRACT_WORKERS=4
+ENABLE_GOOGLE_DRIVE_INTEGRATION=true
+GOOGLE_CLIENT_SECRET_FILE=client_secret.json
+GOOGLE_TOKEN_FILE=token.json
+```
 
-Companies House may label some group accounts filings as "legacy". The system now automatically highlights these documents when presenting the list of available filings.
+- See `config.py` for additional/optional variables (logging, retries, etc).
+- If using Google Drive, provide OAuth credentials and follow the first-time authorization prompt.
 
+### 4. Run the Application
+```bash
+streamlit run app.py
+```
 
-Refer back to this README whenever configuring a new environment or troubleshooting OCR setup.
+## Testing
 
-## Google Drive Integration
+### 1. Install Test Dependencies
+```bash
+pip install -r tests/requirements-test.txt
+```
 
-Set `ENABLE_GOOGLE_DRIVE_INTEGRATION=true` and provide a `GOOGLE_CLIENT_SECRET_FILE` pointing to your OAuth credentials. When first connecting you will be prompted to authorize access and a token is stored in `GOOGLE_TOKEN_FILE`. Once connected you can browse your Drive from the sidebar, select files and choose "Google Drive" as the OCR method for scanned PDFs.
+### 2. Run All Tests with Coverage
+```bash
+cd tests
+python run_tests.py
+```
+- Coverage reports are generated in the `coverage_html/` directory and as `coverage.xml`.
+- You can also run individual tests with `pytest`.
 
-## Case Timeline
+## Usage Highlights
+- **OCR**: Enable AWS Textract in the Group Structure tab to process scanned PDFs. The app will fallback to OCR if embedded text is missing.
+- **Google Drive**: Set up integration and select files from the sidebar.
+- **Case Timeline**: Upload CSV, JSON, or PDF dockets to visualize events.
+- **Citation Verification**: Unverified citations are flagged and can be manually resolved.
+- **Protocol Compliance**: Toggle auto-checks in the sidebar; view detailed reports for each response.
 
-The **📅 Case Timeline** tab lets you upload court docket files in CSV, JSON or PDF format. Dates and descriptions are extracted and displayed chronologically. Long descriptions are summarised using the same AI routines as the Companies House analysis. If the optional `streamlit_timeline` component is installed the events are shown on an interactive timeline, otherwise a simple table is displayed.
+## Troubleshooting
+- **Dependency Issues**: Ensure all dependencies are installed with the correct versions. Use the provided setup scripts for your OS.
+- **Model/API Errors**: Verify your API keys and model names. Use helper functions in `config.py` to check model availability.
+- **OCR Fails**: Check AWS credentials and S3 bucket configuration. Reduce `MAX_TEXTRACT_WORKERS` if you hit rate limits.
+- **Google Drive Auth**: Ensure your OAuth credentials are correct and follow the browser prompt on first use.
 
-## Citation Verification
+## Contributing
+Pull requests and issues are welcome! Please ensure all tests pass and follow the existing code style. For major changes, open an issue to discuss your proposal first.
 
-After each consultation the app scans the AI response for case names and statute titles. It then checks any uploaded documents for matching text and falls back to searching trusted public sources such as Bailii or Casemine. Citations that cannot be located are tagged with `[UNVERIFIED]` and a warning is shown asking you to provide the original document or a direct link. A form appears letting you enter a URL or reference for each citation and these links are stored in `verified_sources.json` for later checking. Verified citations are cached in the same file to speed up later runs.
+## Support
+For help, open an issue on GitHub or contact the maintainer.
 
-## Protocol Compliance Check
-
-Every AI response is automatically checked against the Strategic Protocols. Any non-compliance is flagged directly below the output with an expander showing the full report. You can disable this behaviour with the **Auto-check after each response** toggle in the sidebar and rerun the check manually at any time.
+---
+Refer to this README whenever configuring a new environment or troubleshooting setup. For advanced configuration, see `config.py` and the in-app instructions.

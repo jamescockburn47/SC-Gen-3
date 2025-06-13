@@ -1,63 +1,110 @@
 @echo off
+setlocal enabledelayedexpansion
+
 echo === Strategic Counsel Gen 3: Environment Setup and Launch ===
 
 REM Change directory to the script's location
 cd /d %~dp0
 echo Current directory: %cd%
 
+REM --- Environment Check ---
+if not exist ".env" (
+    echo WARNING: .env file not found in current directory.
+    echo Please ensure your .env file is properly configured.
+    echo Press any key to continue anyway or Ctrl+C to abort...
+    pause > nul
+)
+
+REM --- Python Version Check ---
+python --version > nul 2>&1
+if errorlevel 1 (
+    echo ERROR: Python is not installed or not in PATH.
+    echo Please install Python 3.8 or higher.
+    pause
+    exit /b 1
+)
+
 REM --- Virtual Environment Setup ---
 echo Ensuring virtual environment 'venv' exists...
-REM Always try to run the venv command. If venv exists and is healthy, it's a quick no-op.
-REM If it's missing or corrupted, this will attempt to create/repair it.
-python -m venv venv
-if errorlevel 1 (
-    echo ERROR: Failed to create or ensure virtual environment using 'python -m venv venv'.
-    echo Please ensure Python is installed and configured correctly in your PATH.
-    echo You might also try deleting the 'venv' folder manually and running this script again.
-    pause
-    exit /b 1
+if exist "venv" (
+    echo Found existing virtual environment.
+) else (
+    echo Creating new virtual environment...
+    python -m venv venv
+    if errorlevel 1 (
+        echo ERROR: Failed to create virtual environment.
+        echo Please ensure Python is installed and configured correctly in your PATH.
+        pause
+        exit /b 1
+    )
 )
-echo Virtual environment setup/check complete.
 
-REM Check if activate.bat exists *after* the python command
+REM --- Activate Virtual Environment ---
 if not exist "venv\Scripts\activate.bat" (
-    echo ERROR: 'venv\Scripts\activate.bat' was NOT found even after 'python -m venv venv' command.
-    echo This indicates a problem with Python's venv creation on your system when called from a batch file.
-    echo Please check your Python installation.
+    echo ERROR: Virtual environment appears to be corrupted.
+    echo Please delete the 'venv' folder and run this script again.
     pause
     exit /b 1
 )
-echo 'venv\Scripts\activate.bat' found.
 
 echo Activating virtual environment...
 call "venv\Scripts\activate.bat"
 if errorlevel 1 (
-    echo ERROR: Failed to activate the virtual environment using 'call venv\Scripts\activate.bat'.
-    echo The activation script might have encountered an error.
+    echo ERROR: Failed to activate virtual environment.
     pause
     exit /b 1
 )
-echo Virtual environment activated.
 
 REM --- Requirements Installation ---
-echo Installing requirements...
-pip install -r requirements.txt
+echo Checking and installing requirements...
+echo Upgrading pip...
+python -m pip install --upgrade pip
 if errorlevel 1 (
-    echo ERROR: Failed to install requirements using 'pip install -r requirements.txt'.
-    echo Check your requirements.txt file, network connection, and that the venv is active.
+    echo ERROR: Failed to upgrade pip.
     pause
     exit /b 1
 )
-echo Requirements installed.
+
+echo Installing requirements from requirements.txt...
+python -m pip install -r requirements.txt --no-cache-dir
+if errorlevel 1 (
+    echo ERROR: Failed to install requirements.
+    echo Please check your network connection and requirements.txt file.
+    pause
+    exit /b 1
+)
+
+REM --- Verify Critical Dependencies ---
+echo Verifying critical dependencies...
+python -c "import PyPDF2; print('PyPDF2 version:', PyPDF2.__version__)"
+if errorlevel 1 (
+    echo ERROR: PyPDF2 installation failed or is not accessible.
+    echo Please try running: pip install PyPDF2==3.0.1
+    pause
+    exit /b 1
+)
+
+REM --- Create Required Directories ---
+if not exist "scratch" mkdir scratch
+if not exist "logs" mkdir logs
+if not exist "exports" mkdir exports
+if not exist "summaries" mkdir summaries
+if not exist "memory" mkdir memory
 
 REM --- Launch Application ---
-echo Launching Strategic Counsel...
+echo.
+echo === Launching Strategic Counsel ===
+echo Press Ctrl+C to stop the application.
+echo.
 streamlit run app.py
 if errorlevel 1 (
-    echo ERROR: Failed to launch Streamlit application 'app.py'.
+    echo.
+    echo ERROR: Application terminated with an error.
+    echo Please check the logs for more information.
     pause
     exit /b 1
 )
 
-echo Strategic Counsel finished or closed by user.
+echo.
+echo Strategic Counsel has been closed.
 pause

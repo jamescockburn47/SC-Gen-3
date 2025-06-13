@@ -432,3 +432,23 @@ class CompanyHouseAPI:
         self, company_number: str, document_id: str, *, stream: bool = False, **_
     ):
         return _fetch_document_content_from_ch(company_number, document_id, stream=stream)
+
+def get_company_filings(company_number: str, api_key: str, categories: list = None, items_per_page: int = 100, max_docs_to_fetch_meta: int = 200, target_docs_per_category_in_date_range: int = 20, year_range: tuple = None):
+    """
+    Top-level function to fetch company filings for compatibility with ch_pipeline and tests.
+    """
+    if categories is None:
+        categories = ["accounts", "confirmation-statement", "capital", "mortgage", "officers"]
+    if year_range is None:
+        current_year = datetime.now().year
+        year_range = (current_year - 5, current_year)
+    filings, _, _ = get_ch_documents_metadata(
+        company_no=company_number,
+        api_key=api_key,
+        categories=categories,
+        items_per_page=items_per_page,
+        max_docs_to_fetch_meta=max_docs_to_fetch_meta,
+        target_docs_per_category_in_date_range=target_docs_per_category_in_date_range,
+        year_range=year_range
+    )
+    return filings

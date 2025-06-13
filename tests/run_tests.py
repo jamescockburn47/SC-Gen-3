@@ -3,9 +3,36 @@ import os
 import sys
 import pytest
 import coverage
+import argparse
+from datetime import datetime
+from pathlib import Path
 
-def run_tests():
-    """Run all tests with coverage reporting"""
+def setup_test_environment():
+    """Setup the test environment"""
+    # Add parent directory to path for imports
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    
+    # Create test output directory
+    test_output_dir = Path('test_output')
+    test_output_dir.mkdir(exist_ok=True)
+    
+    return test_output_dir
+
+def discover_test_files():
+    """Discover all test files in the tests directory."""
+    tests_dir = Path(__file__).parent
+    test_files = set()
+    for pattern in ["test_*.py", "*_test.py"]:
+        for f in tests_dir.glob(pattern):
+            if f.name != "conftest.py" and f.name != "run_tests.py":
+                test_files.add(str(f))
+    return sorted(test_files)
+
+def run_tests(verbose=False):
+    """Run tests with coverage reporting"""
+    test_output_dir = setup_test_environment()
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    
     # Start coverage
     cov = coverage.Coverage(
         branch=True,
@@ -19,26 +46,22 @@ def run_tests():
     )
     cov.start()
 
-    # Run tests
+    # Discover test files
+    test_files = discover_test_files()
+    if not test_files:
+        print("No test files found.")
+        return 1
+
+    # Prepare test arguments
     test_args = [
-        '--verbose',
+        '--verbose' if verbose else '-v',
         '--cov=.',
         '--cov-report=term-missing',
         '--cov-report=html',
         '--cov-report=xml',
-        '--junitxml=test-results.xml'
-    ]
-    
-    # Add test files
-    test_files = [
-        'test_config.py',
-        'test_ch_pipeline.py',
-        'test_ai_utils.py',
-        'test_text_extraction_utils.py',
-        'test_app_utils.py',
-        'test_aws_textract_utils.py',
-        'test_group_structure_utils.py',
-        'test_app.py'
+        f'--junitxml={test_output_dir}/test-results_{timestamp}.xml',
+        '--capture=tee-sys',  # Capture stdout/stderr
+        '-p', 'no:warnings'  # Disable warning capture
     ]
     
     # Run pytest
@@ -50,15 +73,17 @@ def run_tests():
     
     # Generate coverage reports
     cov.report()
-    cov.html_report(directory='coverage_html')
-    cov.xml_report(outfile='coverage.xml')
+    cov.html_report(directory=f'{test_output_dir}/coverage_html_{timestamp}')
+    cov.xml_report(outfile=f'{test_output_dir}/coverage_{timestamp}.xml')
     
     return result
 
+def main():
+    parser = argparse.ArgumentParser(description='Run all discovered tests with coverage reporting')
+    parser.add_argument('--verbose', action='store_true', help='Enable verbose output')
+    args = parser.parse_args()
+    exit_code = run_tests(args.verbose)
+    sys.exit(exit_code)
+
 if __name__ == '__main__':
-    # Add parent directory to path for imports
-    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-    
-    # Run tests
-    exit_code = run_tests()
-    sys.exit(exit_code) 
+    main() 

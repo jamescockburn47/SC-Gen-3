@@ -87,6 +87,7 @@ from ch_api_utils import (
     get_ch_documents_metadata,
     _fetch_document_content_from_ch,
     get_company_profile,
+    get_company_filings,
 )
 
 # Text Extraction Utilities & Type Alias
@@ -771,3 +772,6 @@ def run_batch_company_analysis(
     if executor:
         executor.shutdown(wait=True)
     return output_csv_path, batch_metrics
+
+# Re-export analyze_company_group_structure for test and integration use
+from group_structure_utils import analyze_company_group_structure
