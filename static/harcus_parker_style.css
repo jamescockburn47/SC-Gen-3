@@ -2,14 +2,30 @@
 
 /* Base layout */
 .stApp {
-    background-color: #f0f2f5;
+    background-color: #f8f9fa;
     font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #333333;
+    color: #212529;
+}
+
+/* Main content styling - ensure text is visible */
+.main {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+.main p, 
+.main div, 
+.main span, 
+.main label,
+.main .stMarkdown,
+.main .stText {
+    color: #212529 !important;
 }
 
 /* Main content padding */
 .main .block-container {
     padding: 2rem;
+    background-color: #ffffff;
 }
 
 /* Sidebar styling */
@@ -56,6 +72,14 @@ section[data-testid="stSidebar"] .stButton>button:hover {
     background-color: #d4a017;
 }
 
+/* Tab content styling */
+.stTabs [data-testid="stTabContent"] {
+    background-color: #ffffff;
+    color: #212529;
+    padding: 1rem;
+    border-radius: 0 0 8px 8px;
+}
+
 /* Buttons */
 .stButton>button {
     border: 2px solid #001f3f;
@@ -86,21 +110,35 @@ section[data-testid="stSidebar"] .stButton>button:hover {
     border-color: #b8860b !important;
 }
 
-/* Headers */
-h1, h2, h3 {
-    color: #001f3f;
+/* Headers - ensure they're visible in main content */
+h1, h2, h3, h4, h5, h6 {
+    color: #001f3f !important;
+}
+
+.main h1,
+.main h2,
+.main h3,
+.main h4,
+.main h5,
+.main h6 {
+    color: #001f3f !important;
 }
 
 /* Expanders */
 .stExpander {
     border: 1px solid #e1e8ed;
     border-radius: 8px;
+    background-color: #ffffff;
 }
 .stExpander header {
     background-color: #e1e8ed;
     color: #001f3f;
     font-weight: 600;
     border-radius: 8px 8px 0 0;
+}
+.stExpander div[data-testid="stExpanderContent"] {
+    background-color: #ffffff;
+    color: #212529;
 }
 
 /* Text inputs */
@@ -109,11 +147,25 @@ h1, h2, h3 {
     border: 1px solid #ced4da;
     border-radius: 4px;
     padding: 0.5rem;
+    background-color: #ffffff;
+    color: #212529;
 }
 .stTextInput input:focus,
 .stTextArea textarea:focus {
     border-color: #001f3f;
     box-shadow: 0 0 0 0.2rem rgba(0, 31, 63, 0.25);
+}
+
+/* Selectbox and other form elements */
+.stSelectbox > div > div {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+/* File uploader */
+.stFileUploader {
+    background-color: #ffffff;
+    color: #212529;
 }
 
 /* Metrics */
@@ -124,15 +176,32 @@ h1, h2, h3 {
     padding: 1rem;
 }
 .stMetric label {
-    color: #001f3f;
+    color: #001f3f !important;
 }
-.stMetric value {
-    color: #333333;
+.stMetric [data-testid="metric-value"] {
+    color: #212529 !important;
 }
 
 /* DataFrame */
 .stDataFrame {
     border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+/* Checkboxes and other widgets */
+.stCheckbox {
+    color: #212529 !important;
+}
+
+.stCheckbox > label {
+    color: #212529 !important;
+}
+
+/* Info/warning/error messages */
+.stAlert {
+    background-color: #ffffff;
+    color: #212529;
     border-radius: 8px;
 }
 
@@ -143,18 +212,20 @@ h1, h2, h3 {
     border-radius: 8px;
     margin: 8px 0;
     text-align: center;
-    color: #333;
-}
-
-/* Main content theming to mirror sidebar palette */
-.main h1,
-.main h2,
-.main h3,
-.main h4,
-.main h5 {
     color: #001f3f;
+    font-weight: 600;
 }
 
+/* Ensure all text in main content area is visible */
+.main * {
+    color: inherit;
+}
+
+.main .stMarkdown * {
+    color: #212529 !important;
+}
+
+/* Main content specific button styling */
 .main .stButton>button {
     border: 2px solid #d4a017;
     background-color: #001f3f;
@@ -166,7 +237,162 @@ h1, h2, h3 {
     color: #001f3f;
 }
 
-.main .block-container {
-    background-color: #ffffff;
+/* --- Widget visibility fix for main content --- */
+
+/* Text inputs and textareas */
+.main .stTextInput input,
+.main .stTextArea textarea {
+    background-color: #fff !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+}
+
+/* Placeholder text in text inputs and textareas */
+.main .stTextInput input::placeholder,
+.main .stTextArea textarea::placeholder {
+    color: #888 !important;
+    opacity: 1 !important;
+}
+
+/* File uploader */
+.main .stFileUploader,
+.main .stFileUploader label,
+.main .stFileUploader div {
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+
+/* Selectbox and dropdowns */
+.main .stSelectbox > div > div,
+.main .stSelectbox label {
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+
+/* Checkbox and radio labels */
+.main .stCheckbox > label,
+.main .stRadio > label {
+    color: #212529 !important;
+}
+
+/* Markdown and text in main area */
+.main .stMarkdown,
+.main .stMarkdown * {
+    color: #212529 !important;
+}
+
+/* Button text */
+.main .stButton > button {
+    color: #fff !important;
+}
+
+/* --- AGGRESSIVE TEXT VISIBILITY FIX --- */
+
+/* Force all text in main content to be dark */
+.main * {
+    color: #212529 !important;
+}
+
+/* Override specific Streamlit widget styling */
+div[data-testid="stApp"] .main .stTextInput > div > div > input {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+}
+
+div[data-testid="stApp"] .main .stTextArea > div > div > textarea {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+}
+
+/* Placeholder text */
+div[data-testid="stApp"] .main input::placeholder,
+div[data-testid="stApp"] .main textarea::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+}
+
+/* File uploader text */
+div[data-testid="stApp"] .main div[data-testid="stFileUploader"] * {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+/* All labels */
+div[data-testid="stApp"] .main label {
+    color: #212529 !important;
+}
+
+/* All markdown text */
+div[data-testid="stApp"] .main div[data-testid="stMarkdownContainer"] * {
+    color: #212529 !important;
+}
+
+/* Selectbox text */
+div[data-testid="stApp"] .main div[data-testid="stSelectbox"] * {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+/* Button text should remain white on dark background */
+div[data-testid="stApp"] .main button {
+    color: #ffffff !important;
+}
+
+/* Headers should be dark blue */
+div[data-testid="stApp"] .main h1,
+div[data-testid="stApp"] .main h2,
+div[data-testid="stApp"] .main h3,
+div[data-testid="stApp"] .main h4,
+div[data-testid="stApp"] .main h5,
+div[data-testid="stApp"] .main h6 {
+    color: #001f3f !important;
+}
+
+/* === EMERGENCY TEXT VISIBILITY FIX === */
+/* Force everything in main content to be visible */
+
+[data-testid="stApp"] .main,
+[data-testid="stApp"] .main * {
+    color: #000000 !important;
+}
+
+/* Force white backgrounds on all inputs */
+[data-testid="stApp"] .main input,
+[data-testid="stApp"] .main textarea,
+[data-testid="stApp"] .main select {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cccccc !important;
+}
+
+/* Force file uploader to be visible */
+[data-testid="stApp"] .main [data-testid="stFileUploader"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cccccc !important;
+}
+
+/* Force all text elements to be black */
+[data-testid="stApp"] .main p,
+[data-testid="stApp"] .main span,
+[data-testid="stApp"] .main div,
+[data-testid="stApp"] .main label {
+    color: #000000 !important;
+}
+
+/* Keep buttons readable */
+[data-testid="stApp"] .main button {
+    background-color: #0066cc !important;
+    color: #ffffff !important;
+    border: 1px solid #0066cc !important;
+}
+
+/* Headers */
+[data-testid="stApp"] .main h1,
+[data-testid="stApp"] .main h2, 
+[data-testid="stApp"] .main h3 {
+    color: #000080 !important;
 }
 

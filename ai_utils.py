@@ -25,10 +25,32 @@ from config import (
     get_gemini_model,
     OPENAI_MODEL_DEFAULT,
     GEMINI_MODEL_DEFAULT,
-    GEMINI_MODEL_FOR_PROTOCOL_CHECK, # New model for protocol checks
-    logger, # Use central logger
-    LOADED_PROTO_TEXT # Use loaded protocol text from config
+    GEMINI_MODEL_FOR_PROTOCOL_CHECK,
+    logger,
+    LOADED_PROTO_TEXT
 )
+
+# Import performance utilities
+try:
+    from performance_utils import cached, timed, memory_manager, normalize_text, chunk_text_efficiently
+    PERFORMANCE_UTILS_AVAILABLE = True
+except ImportError:
+    logger.warning("Performance utilities not available. Using fallback implementations.")
+    PERFORMANCE_UTILS_AVAILABLE = False
+    
+    # Fallback implementations
+    def cached(ttl=3600, max_size=100):
+        def decorator(func):
+            return func
+        return decorator
+    
+    def timed(operation_name=None):
+        def decorator(func):
+            return func
+        return decorator
+    
+    normalize_text = lambda x: x
+    chunk_text_efficiently = lambda text, chunk_size=100000, overlap=1000: [text] if len(text) <= chunk_size else [text[i:i+chunk_size] for i in range(0, len(text), chunk_size-overlap)]
 
 OBJECTIVE_CH_SUMMARIZATION_BASE_PROMPT = """
 You are an expert financial and legal analyst AI. Your task is to perform a rigorous and objective analysis of excerpts from UK Companies House filings.
@@ -111,6 +133,8 @@ def _prepare_full_prompt(base_prompt: str, specific_instructions: str, company_n
     return final_system_prompt, user_content
 
 
+@timed("gpt_summarise_ch_docs")
+@cached(ttl=1800, max_size=50)  # Cache for 30 minutes
 def gpt_summarise_ch_docs(
     text_to_summarize: str,
     company_no: str,

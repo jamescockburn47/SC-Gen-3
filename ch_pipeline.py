@@ -502,7 +502,7 @@ class CompanyHouseDocumentPipeline:
                     summary_text, _, _ = gpt_summarise_ch_docs(
                         text_to_summarize=combined_text_for_year, company_no=f"{self.company_number}_Year_{year}",
                         specific_instructions=f"Summarize key events, financial trends, governance changes for {self.company_number} in {year}.",
-                        model_to_use=config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1" # type: ignore
+                        model_to_use=config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o" # type: ignore
                     )
                 else:
                     logger.warning(f"No AI summarization client (Gemini/OpenAI) available/configured for {self.company_number} (Year {year}).")
@@ -672,7 +672,7 @@ def run_batch_company_analysis(
                         f"Batch Run {run_id} ({company_no}): Using Gemini ('{ai_model_to_use_for_summary}') for CH summary."
                     )
                 elif openai_key_ok:
-                    ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1"  # type: ignore
+                    ai_model_to_use_for_summary = config.OPENAI_MODEL_DEFAULT if hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4o"  # type: ignore
                     summarizer_func_to_call = gpt_summarise_ch_docs
                     logger.debug(
                         f"Batch Run {run_id} ({company_no}): Using OpenAI ('{ai_model_to_use_for_summary}') for CH summary (Gemini unavailable)."

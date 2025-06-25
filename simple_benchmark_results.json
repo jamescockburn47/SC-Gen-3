@@ -1,0 +1,20 @@
+{
+  "timestamp": 1750831229.3670568,
+  "python_version": "3.10.12 (main, May 27 2025, 17:12:29) [GCC 11.4.0]",
+  "platform": "linux",
+  "performance_utils": {
+    "caching_improvement": 99.95180525686435,
+    "memory_recovered_mb": 0.0,
+    "normalization_time": 0.0018570423126220703,
+    "success": true
+  },
+  "config": {
+    "openai_improvement": 99.99837494820147,
+    "ch_session_improvement": 24.938583374023438,
+    "success": true
+  },
+  "ai_utils": {
+    "caching_enabled": true,
+    "success": true
+  }
+}
