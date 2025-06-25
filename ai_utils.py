@@ -26,6 +26,7 @@ from config import (
     OPENAI_MODEL_DEFAULT,
     GEMINI_MODEL_DEFAULT,
     GEMINI_MODEL_FOR_PROTOCOL_CHECK,
+    GEMINI_API_KEY,
     logger,
     LOADED_PROTO_TEXT
 )
@@ -589,7 +590,7 @@ def check_protocol_compliance(
     logger.info(f"Starting protocol compliance check using {current_model_name}.")
 
     # Instruction for the AI performing the compliance check
-    # Based on M.E.4: "A sidebar button must run a “Protocol Compliance Report” listing section-by-section adherence or red flags."
+    # Based on M.E.4: "A sidebar button must run a "Protocol Compliance Report" listing section-by-section adherence or red flags."
     compliance_check_prompt = (
         "You are an AI Compliance Officer. Your task is to meticulously review an AI-generated text against a given set of 'Strategic Protocols'. "
         "Produce a 'Protocol Compliance Report' that assesses adherence to each protocol section (e.g., M.A, M.B, etc.) and its sub-points (e.g., M.A.1, M.A.2). "
@@ -630,3 +631,158 @@ def check_protocol_compliance(
         logger.info(f"Protocol compliance check successful. Tokens P:{p_tokens}/C:{c_tokens}. Report length: {len(report_text)} chars.")
     
     return report_text, p_tokens, c_tokens
+
+@timed("comprehensive_legal_consultation_with_protocols")
+@cached(ttl=3600, max_size=20)
+def comprehensive_legal_consultation_with_protocols(
+    user_question: str,
+    legal_topic: str,
+    topic_description: str,
+    document_context: str = "",
+    protocol_text: str = None,
+    model_name: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    Generate a comprehensive legal consultation, inject strategic protocols, and automatically verify citations.
+    Returns a dict with: response, prompt_tokens, completion_tokens, citations, verified_citations, 
+    protocol_report, protocol_tokens, protocol_completion_tokens
+    """
+    openai_client = get_openai_client()
+    protocol_text = protocol_text or LOADED_PROTO_TEXT
+    # Compose the prompt with protocol injection
+    consultation_prompt = f"""
+You are a senior legal counsel providing comprehensive legal advice. You specialize in {legal_topic} and are providing guidance to a client.
+
+CLIENT QUESTION:
+{user_question}
+
+LEGAL CONTEXT:
+{document_context if document_context else "No additional documents provided."}
+
+LEGAL TOPIC AREA: {legal_topic}
+Topic Description: {topic_description}
+
+---
+STRATEGIC PROTOCOLS (You must comply with these in your response):
+{protocol_text}
+---
+
+Please provide a comprehensive legal consultation that includes:
+1. **LEGAL ANALYSIS**
+2. **PRACTICAL ASSESSMENT**
+3. **RISK ANALYSIS**
+4. **STRATEGIC RECOMMENDATIONS**
+5. **NEXT STEPS**
+6. **IMPORTANT CAVEATS**
+
+Structure your response professionally with clear headings and detailed, actionable guidance. Include proper case law and legislation references where relevant. This is for informational purposes only and does not constitute formal legal advice.
+"""
+    result = {
+        "response": None,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "citations": [],
+        "verified_citations": {},
+        "protocol_report": None,
+        "protocol_tokens": 0,
+        "protocol_completion_tokens": 0
+    }
+    try:
+        if openai_client:
+            response = openai_client.chat.completions.create(
+                model=model_name or OPENAI_MODEL_DEFAULT,
+                temperature=0.3,
+                max_tokens=4000,
+                messages=[
+                    {"role": "system", "content": f"You are a senior legal counsel specializing in {legal_topic}. Comply with all protocols."},
+                    {"role": "user", "content": consultation_prompt}
+                ]
+            )
+            if response.choices and response.choices[0].message:
+                consultation_response = response.choices[0].message.content
+                result["prompt_tokens"] = response.usage.prompt_tokens if response.usage else 0
+                result["completion_tokens"] = response.usage.completion_tokens if response.usage else 0
+                
+                # Extract and verify citations automatically
+                citations = extract_legal_citations(consultation_response)
+                result["citations"] = citations
+                
+                # Automatically verify citations
+                if citations:
+                    try:
+                        from app_utils import verify_citations
+                        verified_results = verify_citations(citations, [], None)  # No uploaded files for now
+                        result["verified_citations"] = verified_results
+                        
+                        # Update the response with properly formatted citations
+                        updated_response = consultation_response
+                        for citation in citations:
+                            if verified_results.get(citation, False):
+                                # Replace [UNVERIFIED] with verified link or mark as verified
+                                bailii_url = f"https://www.bailii.org/search?q={citation.replace(' ', '+')}"
+                                updated_response = updated_response.replace(
+                                    f"{citation} [UNVERIFIED]", 
+                                    f"[{citation}]({bailii_url})"
+                                )
+                                # Also handle cases without [UNVERIFIED] tag
+                                if "[UNVERIFIED]" not in updated_response:
+                                    # Add verified indicator after first occurrence
+                                    updated_response = updated_response.replace(
+                                        citation, 
+                                        f"[{citation}]({bailii_url})",
+                                        1
+                                    )
+                            else:
+                                # Mark as unverified if not already marked
+                                if "[UNVERIFIED]" not in updated_response:
+                                    updated_response = updated_response.replace(
+                                        citation,
+                                        f"{citation} [UNVERIFIED]",
+                                        1
+                                    )
+                        
+                        result["response"] = updated_response
+                    except ImportError:
+                        logger.warning("Could not import verify_citations from app_utils. Citations will not be automatically verified.")
+                        result["response"] = consultation_response
+                        result["verified_citations"] = {}
+                else:
+                    result["response"] = consultation_response
+                    
+                # Protocol compliance check
+                protocol_report, ptok, ctok = check_protocol_compliance(result["response"], protocol_text)
+                result["protocol_report"] = protocol_report
+                result["protocol_tokens"] = ptok
+                result["protocol_completion_tokens"] = ctok
+            else:
+                result["response"] = "Error: No response generated from AI model."
+        else:
+            result["response"] = "Error: No AI model available."
+    except Exception as e:
+        logger.error(f"Error in comprehensive legal consultation: {e}", exc_info=True)
+        result["response"] = f"Error generating consultation: {e}"
+    return result
+
+def extract_legal_citations(text: str) -> list:
+    """
+    Extracts case law and legislation references from the text for user verification.
+    Uses the more sophisticated citation extraction from app_utils.
+    Returns a list of citation strings.
+    """
+    # Import the better citation extraction function
+    try:
+        from app_utils import extract_legal_citations as extract_citations_advanced
+        return extract_citations_advanced(text)
+    except ImportError:
+        # Fallback to simple extraction if import fails
+        if not text:
+            return []
+        # Simple regex for UK case law and legislation (expand as needed)
+        case_pattern = r"\b([A-Z][a-z]+ v [A-Z][a-z]+( \([0-9]{4}\))?)\b"
+        statute_pattern = r"\b([A-Z][a-z]+ Act 20[0-9]{2})\b"
+        citations = set()
+        for match in re.findall(case_pattern, text):
+            citations.add(match[0])
+        for match in re.findall(statute_pattern, text):
+            citations.add(match)
+        return list(citations)

@@ -521,15 +521,28 @@ def extract_legal_citations(text: str) -> List[str]:
     if not text:
         return []
 
-    case_pat = re.compile(r"\b([A-Z][A-Za-z0-9&.,'\-\s]+ v\.? [A-Z][A-Za-z0-9&.,'\-\s]+ \[[0-9]{4}\])")
-    statute_pat = re.compile(r"\b([A-Z][A-Za-z0-9()\-\s]+ (?:Act|Regulations) [12][0-9]{3})\b")
+    # More precise pattern for case citations - avoid capturing leading words
+    case_pat = re.compile(r"(?:^|[^A-Za-z])([A-Z][A-Za-z0-9&.,'\-]{1,30}(?: [A-Z][A-Za-z0-9&.,'\-]{1,30}){0,4} v\.? [A-Z][A-Za-z0-9&.,'\-]{1,30}(?: [A-Za-z0-9&.,'\-]{1,30}){0,4} \[[0-9]{4}\][^A-Za-z]*)")
+    # Pattern for legislation citations
+    statute_pat = re.compile(r"\b([A-Z][A-Za-z0-9()\-\s]{1,50} (?:Act|Regulations) [12][0-9]{3})\b")
 
     citations: List[str] = []
-    for pat in (case_pat, statute_pat):
-        for m in pat.finditer(text):
-            cit = m.group(1).strip()
-            if cit not in citations:
-                citations.append(cit)
+    
+    # Extract case citations
+    for m in case_pat.finditer(text):
+        cit = m.group(1).strip()
+        # Clean up the citation
+        cit = re.sub(r'^[^A-Z]*', '', cit)  # Remove any leading non-capital characters
+        cit = re.sub(r'[^A-Za-z0-9\[\]]*$', '', cit)  # Remove trailing non-alphanumeric except brackets
+        if cit and len(cit) > 10 and cit not in citations:  # Ensure minimum length
+            citations.append(cit)
+    
+    # Extract statute citations
+    for m in statute_pat.finditer(text):
+        cit = m.group(1).strip()
+        if cit not in citations:
+            citations.append(cit)
+    
     return citations
 
 
@@ -582,16 +595,23 @@ def verify_citations(
         found = any(cit.lower() in t for t in uploaded_texts)
 
         if not found:
+            # Try multiple search strategies
             search_bases = [
-                "https://www.bailii.org/search?q=",
                 "https://www.casemine.com/search?q=",
+                "https://www.bailii.org/cgi-bin/form.pl?db=&ctl=Search&method=boolean&query=",
             ]
+            
             for base in search_bases:
                 url = base + quote_plus(cit)
                 text, err = fetch_url_content(url)
-                if text and cit.lower() in text.lower():
-                    found = True
-                    break
+                if text:
+                    # More flexible matching - check for key parts of the citation
+                    citation_parts = cit.replace('[', '').replace(']', '').split()
+                    matches = sum(1 for part in citation_parts if len(part) > 2 and part.lower() in text.lower())
+                    # Consider verified if most parts of the citation are found
+                    if matches >= len(citation_parts) * 0.6:  # 60% of parts found
+                        found = True
+                        break
 
         results[cit] = found
         if found:

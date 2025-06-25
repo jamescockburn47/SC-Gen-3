@@ -101,99 +101,78 @@ f_handler.setFormatter(log_format)
 if not logger.handlers: 
     logger.addHandler(f_handler)
 
+# === RADICAL UI CUSTOMIZATION FOR TEXT VISIBILITY ===
 st.set_page_config(
-    page_title="Strategic Counsel",
-    page_icon=str(LOGO_PATH),
+    page_title="Strategic Counsel - AI Legal Platform",
+    page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded",
-    menu_items={'About': "# Strategic Counsel v3.6\nModular AI Legal Assistant Workspace."}
+    menu_items={
+        'Get Help': 'https://github.com/jamescockburn47/SC-Gen-3',
+        'Report a bug': "https://github.com/jamescockburn47/SC-Gen-3/issues",
+        'About': "# Strategic Counsel\nAI-powered legal analysis platform"
+    }
 )
 
-# Custom CSS (remains the same)
-st.markdown("""
+# Load external CSS for forced light theme
+try:
+    with open('static/force_light_theme.css', 'r') as f:
+        css_content = f.read()
+    st.markdown(f"""
     <style>
-        /* Base & Body */
-        .stApp {
-            background-color: #f0f2f5; 
-        }
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #333333; 
-        }
-        .main .block-container {
-            padding-top: 2rem; padding-bottom: 2rem;
-            padding-left: 2rem; padding-right: 2rem;
-        }
-        .st-emotion-cache-16txtl3 { 
-            background-color: #001f3f; 
-            color: #ffffff;
-        }
-        .st-emotion-cache-16txtl3 h1, .st-emotion-cache-16txtl3 h2, .st-emotion-cache-16txtl3 h3, .st-emotion-cache-16txtl3 h4, .st-emotion-cache-16txtl3 h5, .st-emotion-cache-16txtl3 p, .st-emotion-cache-16txtl3 label {
-            color: #ffffff !important;
-        }
-        .st-emotion-cache-16txtl3 .stSlider label, .st-emotion-cache-16txtl3 .stSelectbox label, .st-emotion-cache-16txtl3 .stMultiSelect label, .st-emotion-cache-16txtl3 .stCheckbox label {
-             color: #ffffff !important;
-        }
-         .st-emotion-cache-16txtl3 .stButton>button {
-            border: 1px solid #d4a017; background-color: transparent; color: #d4a017;
-        }
-        .st-emotion-cache-16txtl3 .stButton>button:hover {
-            background-color: #d4a017; color: #001f3f;
-        }
-        .stTabs [data-baseweb="tab-list"] {
-            background-color: #e1e8ed; border-radius: 8px;
-        }
-        .stTabs [data-baseweb="tab"] {
-            height: 44px; background-color: transparent; color: #001f3f; font-weight: 600;
-        }
-        .stTabs [data-baseweb="tab--selected"] {
-            background-color: #001f3f; color: #ffffff; border-radius: 8px 8px 0 0;
-        }
-        .stTabs [data-baseweb="tab-highlight"] {
-            background-color: #d4a017; 
-        }
-        .stButton>button {
-            border: 2px solid #001f3f; background-color: #001f3f; color: #ffffff; 
-            padding: 0.5rem 1rem; border-radius: 5px; font-weight: 600;
-        }
-        .stButton>button:hover {
-            background-color: #003366; border-color: #003366; color: #ffffff;
-        }
-        .stButton>button:active {
-            background-color: #002244 !important; border-color: #002244 !important;
-        }
-        .stButton[kind="primary"]>button, .stButton>button[kind="primary"] {
-             background-color: #d4a017 !important; border-color: #d4a017 !important;
-             color: #001f3f !important; 
-        }
-        .stButton[kind="primary"]>button:hover, .stButton>button[kind="primary"]:hover {
-            background-color: #b8860b !important; border-color: #b8860b !important;
-        }
-        h1, h2, h3 { color: #001f3f; }
-        .stExpander { border: 1px solid #e1e8ed; border-radius: 8px; }
-        .stExpander header {
-            background-color: #e1e8ed; color: #001f3f; font-weight: 600;
-            border-radius: 8px 8px 0 0;
-        }
-        .stTextInput input, .stTextArea textarea {
-            border: 1px solid #ced4da; border-radius: 4px; padding: 0.5rem;
-        }
-        .stTextInput input:focus, .stTextArea textarea:focus {
-            border-color: #001f3f; box-shadow: 0 0 0 0.2rem rgba(0, 31, 63, 0.25);
-        }
-        .stMetric {
-            background-color: #ffffff; border: 1px solid #e1e8ed;
-            border-radius: 8px; padding: 1rem;
-        }
-        .stMetric label { color: #001f3f; }
-        .stMetric value { color: #333333; }
-        .stDataFrame { border: 1px solid #e1e8ed; border-radius: 8px; }
-        .topic-display-box {
-            background-color: hsl(var(--topic-hue, 210), 70%, 90%); 
-            padding: 8px 12px; border-radius: 8px; margin: 8px 0; 
-            text-align: center; color: #333;
-        }
+    {css_content}
     </style>
+    """, unsafe_allow_html=True)
+except FileNotFoundError:
+    st.error("CSS file not found: static/force_light_theme.css")
+    # Fallback to inline CSS
+    st.markdown("""
+    <style>
+    /* Emergency fallback CSS */
+    .stApp, .stApp * {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Force light theme using JavaScript
+st.markdown("""
+<script>
+// Force light theme
+document.body.style.backgroundColor = '#ffffff';
+document.body.style.color = '#000000';
+
+// Override any dark theme classes
+document.body.classList.remove('dark');
+document.body.classList.add('light');
+
+// Force all text to be black
+const allElements = document.querySelectorAll('*');
+allElements.forEach(el => {
+    el.style.color = '#000000';
+    el.style.backgroundColor = el.tagName === 'BODY' ? '#ffffff' : el.style.backgroundColor;
+});
+
+// Monitor for dynamic content
+const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+            if (node.nodeType === 1) { // Element node
+                node.style.color = '#000000';
+                if (node.tagName === 'BODY') {
+                    node.style.backgroundColor = '#ffffff';
+                }
+            }
+        });
+    });
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+</script>
 """, unsafe_allow_html=True)
 
 try:
@@ -203,7 +182,7 @@ try:
     )
     from about_page import render_about_page
     from ch_pipeline import run_batch_company_analysis
-    from ai_utils import get_improved_prompt, check_protocol_compliance 
+    from ai_utils import get_improved_prompt, check_protocol_compliance, comprehensive_legal_consultation_with_protocols 
 except ImportError as e_app_utils_more:
     st.error(f"Fatal Error: Could not import app utilities or CH pipeline: {e_app_utils_more}")
     logger.error(f"ImportError from app_utils/about_page/ch_pipeline/ai_utils: {e_app_utils_more}", exc_info=True)
@@ -612,12 +591,19 @@ def main():
         )
         st.session_state.current_topic = selected_topic
         
-        # User question input
+        # In the AI Consultation section, add this before the main consultation button:
+        if 'improved_prompt' not in st.session_state:
+            st.session_state.improved_prompt = ""
+        if 'prompt_value' not in st.session_state:
+            st.session_state.prompt_value = ""
+        
+        # User question input - use the prompt_value if available, otherwise empty
         user_question = st.text_area(
             "Your question or situation description:",
             height=150,
             placeholder="e.g., I need advice on corporate governance issues...",
-            key="ai_consultation_question"
+            key="ai_consultation_question",
+            value=st.session_state.prompt_value
         )
         
         # Optional document upload for additional context
@@ -645,6 +631,20 @@ def main():
             key="ai_consultation_model"
         )
         
+        if st.button("💡 Suggest Improved Prompt", key="suggest_improved_prompt"):
+            with st.spinner("Improving your prompt..."):
+                improved = get_improved_prompt(user_question, selected_topic, selected_model)
+                st.session_state.improved_prompt = improved
+                st.success("Improved prompt generated below. You can edit it or use it as your main question.")
+
+        if st.session_state.improved_prompt:
+            st.markdown("**Improved Prompt:**")
+            improved = st.text_area("Edit improved prompt if needed:", value=st.session_state.improved_prompt, key="improved_prompt_text_area")
+            if st.button("Use Improved Prompt", key="use_improved_prompt"):
+                st.session_state.prompt_value = improved
+                st.session_state.improved_prompt = ""
+                st.rerun()
+
         # Generate consultation
         if st.button("🤖 Get AI Consultation", type="primary", key="generate_ai_consultation"):
             if not user_question.strip():
@@ -652,54 +652,311 @@ def main():
             else:
                 with st.spinner("Generating AI consultation..."):
                     try:
-                        # Build context from uploaded documents if any
-                        document_context = ""
-                        if 'uploaded_docs' in st.session_state and st.session_state.uploaded_docs:
-                            document_context = "\n\nAdditional Context from Uploaded Documents:\n"
-                            for doc in st.session_state.uploaded_docs[:5]:  # Limit to 5 docs
-                                try:
-                                    if hasattr(extract_text_from_uploaded_file, '__call__'):
-                                        content, error = extract_text_from_uploaded_file(io.BytesIO(doc.getvalue()), doc.name)
-                                        if content and not error:
-                                            document_context += f"\n--- {doc.name} ---\n{content[:2000]}...\n"
-                                except Exception as e:
-                                    logger.warning(f"Could not extract text from {doc.name}: {e}")
-                        
-                        # Prepare prompt
-                        full_prompt = f"""
-Topic: {selected_topic}
-
-Question: {user_question}
-
-{document_context}
-
-Please provide comprehensive legal guidance on this matter, considering:
-1. Relevant legal principles and regulations
-2. Practical recommendations
-3. Potential risks and considerations
-4. Next steps or actions to consider
-
-Please note this is for informational purposes and does not constitute formal legal advice.
-"""
-                        
-                        # Generate response using AI
-                        if hasattr(summarise_with_title, '__call__'):
-                            title, response = summarise_with_title(full_prompt, selected_topic, 2)
-                            
-                            st.markdown("### AI Consultation Response")
-                            st.markdown(f"**Topic:** {selected_topic}")
-                            st.markdown(f"**Model:** {selected_model}")
+                        # Load protocol text
+                        protocol_text = ""
+                        try:
+                            with open("strategic_protocols.txt", "r") as f:
+                                protocol_text = f.read()
+                        except Exception:
+                            protocol_text = ""
+                        # Call the comprehensive consultation function
+                        result = comprehensive_legal_consultation_with_protocols(
+                            user_question=user_question,
+                            legal_topic=selected_topic,
+                            topic_description=PREDEFINED_TOPICS.get(selected_topic, "General legal advice"),
+                            document_context=st.session_state.latest_digest_content,
+                            protocol_text=protocol_text,
+                            model_name=selected_model
+                        )
+                        st.markdown("### 🤖 AI Legal Consultation")
+                        st.markdown(f"**Legal Topic:** {selected_topic}")
+                        st.markdown(f"**AI Model:** {selected_model}")
+                        st.markdown("---")
+                        st.markdown(result["response"])
+                        # Protocol compliance report window
+                        with st.expander("🛡️ Protocol Compliance Report", expanded=False):
+                            st.markdown(result["protocol_report"] or "No protocol compliance report available.")
+                        # Citation verification display
+                        if result["citations"]:
                             st.markdown("---")
-                            st.markdown(response)
+                            st.markdown("#### ⚖️ Citations & Legal References")
+                            st.markdown("The following case law and legislation references were detected and automatically verified:")
                             
-                            # Estimate cost
-                            if selected_model in MODEL_PRICES_PER_1K_TOKENS_GBP:
-                                estimated_tokens = len(full_prompt + response) / 4  # Rough estimate
-                                estimated_cost = (estimated_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP[selected_model]
-                                st.caption(f"Estimated cost: £{estimated_cost:.4f}")
-                        else:
-                            st.error("AI summarization function not available.")
+                            verified_citations = result.get("verified_citations", {})
+                            citations_found = []
+                            citations_verified = []
+                            citations_unverified = []
                             
+                            for citation in result["citations"]:
+                                citations_found.append(citation)
+                                if verified_citations.get(citation, False):
+                                    citations_verified.append(citation)
+                                else:
+                                    citations_unverified.append(citation)
+                            
+                            # Display verification results
+                            if citations_verified:
+                                st.markdown("##### ✅ Automatically Verified Citations")
+                                for citation in citations_verified:
+                                    bailii_url = f"https://www.bailii.org/search?q={citation.replace(' ', '+')}"
+                                    st.markdown(f"• [{citation}]({bailii_url}) - Found and verified")
+                            
+                            if citations_unverified:
+                                st.markdown("##### ⚠️ Unverified Citations")
+                                for citation in citations_unverified:
+                                    st.markdown(f"• {citation} - Could not automatically verify")
+                            
+                            # Manual citation enhancement section
+                            if citations_unverified:
+                                st.markdown("---")
+                                st.markdown("##### 🔗 Manual Citation Links (Optional)")
+                                st.markdown("If you have specific Bailii or legislation.gov.uk links for the unverified citations, you can provide them below:")
+                                
+                                citation_links = {}
+                                for citation in citations_unverified:
+                                    link = st.text_input(
+                                        f"Link for: {citation}", 
+                                        key=f"citation_link_{citation}",
+                                        placeholder="https://www.bailii.org/... or https://www.legislation.gov.uk/...",
+                                        help="Paste the direct link to this case or legislation"
+                                    )
+                                    citation_links[citation] = link
+                                
+                                if st.button("🔍 Validate and Update Citations", key="update_with_manual_citations"):
+                                    # Validate and process manual citations
+                                    verified_response = result["response"]
+                                    manual_updates = 0
+                                    validation_results = []
+                                    
+                                    with st.spinner("Validating provided citation links..."):
+                                        for citation, link in citation_links.items():
+                                            if link.strip():
+                                                # Validate the provided link
+                                                from app_utils import fetch_url_content
+                                                content, error = fetch_url_content(link.strip())
+                                                
+                                                if error:
+                                                    validation_results.append({
+                                                        "citation": citation,
+                                                        "link": link.strip(),
+                                                        "status": "error",
+                                                        "message": f"Could not access link: {error}"
+                                                    })
+                                                    continue
+                                                
+                                                if not content:
+                                                    validation_results.append({
+                                                        "citation": citation,
+                                                        "link": link.strip(),
+                                                        "status": "error",
+                                                        "message": "No content found at the provided link"
+                                                    })
+                                                    continue
+                                                
+                                                # AI-powered validation: Check if the case actually supports the legal proposition
+                                                from ai_utils import get_openai_client
+                                                
+                                                # Extract the context around the citation in the consultation
+                                                consultation_text = result["response"]
+                                                citation_context = ""
+                                                
+                                                # Find sentences containing the citation
+                                                sentences = consultation_text.split('.')
+                                                for i, sentence in enumerate(sentences):
+                                                    if citation in sentence:
+                                                        # Get surrounding context (previous and next sentences)
+                                                        start_idx = max(0, i-1)
+                                                        end_idx = min(len(sentences), i+2)
+                                                        citation_context = '. '.join(sentences[start_idx:end_idx]).strip()
+                                                        break
+                                                
+                                                if not citation_context:
+                                                    citation_context = "Citation appears in consultation but context unclear."
+                                                
+                                                # Prepare AI validation prompt
+                                                validation_prompt = f"""
+You are a legal expert reviewing whether a case citation properly supports a legal proposition.
+
+CONSULTATION CONTEXT WHERE CITATION APPEARS:
+{citation_context}
+
+CITATION BEING CHECKED:
+{citation}
+
+CASE/LEGISLATION CONTENT FROM PROVIDED LINK:
+{content[:8000]}  
+
+ANALYSIS REQUIRED:
+1. Does the provided content actually contain the cited case/legislation?
+2. What are the key legal principles/holdings from this case/legislation?
+3. Does this case/legislation actually support the proposition made in the consultation context?
+4. Is the citation being used appropriately for the legal point being made?
+
+Respond with a JSON object containing:
+- "is_correct_document": true/false (is this the right case/legislation?)
+- "supports_proposition": true/false (does it support the legal point?)
+- "confidence": "high"/"medium"/"low"
+- "legal_principle": "brief description of what the case/legislation establishes"
+- "analysis": "detailed explanation of whether and how it supports the consultation's point"
+- "issues": "any problems with how the citation is being used"
+"""
+                                                
+                                                openai_client = get_openai_client()
+                                                if openai_client:
+                                                    try:
+                                                        ai_response = openai_client.chat.completions.create(
+                                                            model="gpt-4o",
+                                                            temperature=0.1,
+                                                            max_tokens=1000,
+                                                            messages=[
+                                                                {"role": "system", "content": "You are a legal expert analyzing case citations for accuracy and relevance."},
+                                                                {"role": "user", "content": validation_prompt}
+                                                            ],
+                                                            response_format={"type": "json_object"}
+                                                        )
+                                                        
+                                                        import json as json_module
+                                                        response_content = ai_response.choices[0].message.content
+                                                        if response_content:
+                                                            ai_analysis = json_module.loads(response_content)
+                                                        else:
+                                                            raise Exception("Empty response from AI")
+                                                        
+                                                        is_correct_doc = ai_analysis.get("is_correct_document", False)
+                                                        supports_prop = ai_analysis.get("supports_proposition", False)
+                                                        confidence = ai_analysis.get("confidence", "low")
+                                                        legal_principle = ai_analysis.get("legal_principle", "Unknown")
+                                                        analysis = ai_analysis.get("analysis", "Analysis unavailable")
+                                                        issues = ai_analysis.get("issues", "")
+                                                        
+                                                        if is_correct_doc and supports_prop and confidence in ["high", "medium"]:
+                                                            # Citation is valid and supports the proposition
+                                                            verified_response = verified_response.replace(
+                                                                f"{citation} [UNVERIFIED]", 
+                                                                f"[{citation}]({link.strip()})"
+                                                            )
+                                                            if "[UNVERIFIED]" not in result["response"]:
+                                                                verified_response = verified_response.replace(
+                                                                    citation, 
+                                                                    f"[{citation}]({link.strip()})",
+                                                                    1
+                                                                )
+                                                            manual_updates += 1
+                                                            validation_results.append({
+                                                                "citation": citation,
+                                                                "link": link.strip(),
+                                                                "status": "verified",
+                                                                "message": f"✅ **Validated ({confidence} confidence)**: {legal_principle}",
+                                                                "analysis": analysis
+                                                            })
+                                                        else:
+                                                            # Citation doesn't properly support the proposition
+                                                            rejection_reason = []
+                                                            if not is_correct_doc:
+                                                                rejection_reason.append("wrong document")
+                                                            if not supports_prop:
+                                                                rejection_reason.append("doesn't support proposition")
+                                                            if confidence == "low":
+                                                                rejection_reason.append("low confidence in analysis")
+                                                            
+                                                            validation_results.append({
+                                                                "citation": citation,
+                                                                "link": link.strip(),
+                                                                "status": "rejected",
+                                                                "message": f"❌ **Rejected**: {', '.join(rejection_reason)}",
+                                                                "analysis": analysis,
+                                                                "issues": issues
+                                                            })
+                                                    
+                                                    except Exception as e:
+                                                        validation_results.append({
+                                                            "citation": citation,
+                                                            "link": link.strip(),
+                                                            "status": "error",
+                                                            "message": f"AI validation failed: {str(e)}"
+                                                        })
+                                                else:
+                                                    validation_results.append({
+                                                        "citation": citation,
+                                                        "link": link.strip(),
+                                                        "status": "error",
+                                                        "message": "AI validation unavailable - OpenAI client not configured"
+                                                    })
+                                    
+                                    # Display validation results
+                                    st.markdown("#### 🔍 Citation Link Validation Results")
+                                    for result_item in validation_results:
+                                        if result_item["status"] == "verified":
+                                            st.success(f"✅ **{result_item['citation']}**")
+                                            st.success(result_item['message'])
+                                            if 'analysis' in result_item:
+                                                with st.expander("📋 Detailed Legal Analysis", expanded=False):
+                                                    st.markdown(result_item['analysis'])
+                                        elif result_item["status"] == "rejected":
+                                            st.warning(f"⚠️ **{result_item['citation']}**")
+                                            st.warning(result_item['message'])
+                                            if 'analysis' in result_item:
+                                                with st.expander("📋 Why This Citation Was Rejected", expanded=False):
+                                                    st.markdown(f"**Analysis:** {result_item['analysis']}")
+                                                    if 'issues' in result_item and result_item['issues']:
+                                                        st.markdown(f"**Issues:** {result_item['issues']}")
+                                        else:  # error
+                                            st.error(f"❌ **{result_item['citation']}**: {result_item['message']}")
+                                    
+                                    if manual_updates > 0:
+                                        # Re-run protocol compliance check
+                                        from ai_utils import check_protocol_compliance
+                                        protocol_report, ptok, ctok = check_protocol_compliance(verified_response, protocol_text)
+                                        
+                                        st.markdown("### 📄 Updated Consultation with Validated Citations")
+                                        st.success(f"Successfully validated and updated {manual_updates} citation(s).")
+                                        st.markdown(verified_response)
+                                        with st.expander("🛡️ Updated Protocol Compliance Report", expanded=False):
+                                            st.markdown(protocol_report or "No protocol compliance report available.")
+                                    else:
+                                        if validation_results:
+                                            st.warning("No citations were validated successfully. Please check that your links contain relevant legal content.")
+                                        else:
+                                            st.warning("Please provide at least one citation link to validate.")
+                                        
+                            if not citations_found:
+                                st.markdown("No legal citations detected in this consultation.")
+                            else:
+                                st.markdown(f"**Summary:** {len(citations_verified)} automatically verified, {len(citations_unverified)} unverified out of {len(citations_found)} total citations.")
+                        # Cost estimate
+                        if selected_model in MODEL_PRICES_PER_1K_TOKENS_GBP:
+                            total_tokens = result["prompt_tokens"] + result["completion_tokens"]
+                            estimated_cost = (total_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP[selected_model]
+                            st.caption(f"Estimated consultation cost: £{estimated_cost:.4f} (Tokens: {total_tokens})")
+                        # Export option
+                        if st.button("📄 Export Consultation to DOCX", key="export_consultation"):
+                            try:
+                                from app_utils import build_consult_docx
+                                import tempfile
+                                consultation_content = [
+                                    f"AI Legal Consultation Report",
+                                    f"Topic: {selected_topic}",
+                                    f"Model: {selected_model}",
+                                    f"Date: {_dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                                    "",
+                                    f"Client Question: {user_question}",
+                                    "",
+                                    result["response"]
+                                ]
+                                with tempfile.NamedTemporaryFile(suffix='.docx', delete=False) as tmp_file:
+                                    build_consult_docx(consultation_content, _pl.Path(tmp_file.name))
+                                    with open(tmp_file.name, 'rb') as f:
+                                        docx_data = f.read()
+                                    st.download_button(
+                                        label="📥 Download Consultation Report",
+                                        data=docx_data,
+                                        file_name=f"legal_consultation_{selected_topic.replace(' ', '_')}_{_dt.datetime.now().strftime('%Y%m%d_%H%M%S')}.docx",
+                                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                    )
+                                    _pl.Path(tmp_file.name).unlink()
+                            except Exception as e:
+                                st.error(f"Error exporting consultation: {e}")
+                                logger.error(f"Error exporting consultation: {e}", exc_info=True)
                     except Exception as e:
                         st.error(f"Error generating consultation: {e}")
                         logger.error(f"Error in AI consultation: {e}", exc_info=True)
@@ -1033,8 +1290,11 @@ Please note this is for informational purposes and does not constitute formal le
 
         st.markdown("---")
         st.markdown("#### Analysis Results")
-        df_results_available_ch = st.session_state.get('ch_last_df') is not None and \
-                               (pd is not None and not st.session_state.ch_last_df.empty)
+        ch_last_df = st.session_state.get('ch_last_df')
+        df_results_available_ch = (ch_last_df is not None and 
+                               pd is not None and 
+                               hasattr(ch_last_df, 'empty') and
+                               not ch_last_df.empty)
         
         if st.session_state.get('ch_last_narrative'):
             st.markdown("##### Narrative Summary & Key Findings")
@@ -1154,12 +1414,20 @@ Please note this is for informational purposes and does not constitute formal le
         st.info("Timeline functionality will be available when timeline_utils is properly configured.")
         
     with tab_about_rendered:
-        st.markdown("### About Strategic Counsel")
-        st.info("About page functionality will be available when about_page module is properly configured.")
+        try:
+            render_about_page()
+        except Exception as e:
+            st.error(f"Error rendering About page: {e}")
+            logger.error(f"Error rendering About page: {e}", exc_info=True)
+            st.info("About page functionality will be available when about_page module is properly configured.")
         
     with tab_instructions:
-        st.markdown("### Instructions")
-        st.info("Instructions page functionality will be available when instructions_page module is properly configured.")
+        try:
+            render_instructions_page()
+        except Exception as e:
+            st.error(f"Error rendering Instructions page: {e}")
+            logger.error(f"Error rendering Instructions page: {e}", exc_info=True)
+            st.info("Instructions page functionality will be available when instructions_page module is properly configured.")
 
     # --- End of Main App Area UI (Using Tabs) ---
 

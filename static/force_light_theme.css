@@ -1,0 +1,189 @@
+/* === FORCE LIGHT THEME AND TEXT VISIBILITY === */
+
+/* Root level overrides */
+:root {
+    --background-color: #ffffff !important;
+    --text-color: #000000 !important;
+    --primary-color: #0066cc !important;
+    --secondary-color: #f0f2f6 !important;
+}
+
+/* Force light theme on body */
+body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Override any dark theme */
+.stApp {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Force all text to be black */
+.stApp * {
+    color: #000000 !important;
+}
+
+/* Main content area */
+.main .block-container {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* All text elements */
+.main p, .main span, .main div, .main label, .main h1, .main h2, .main h3, .main h4, .main h5, .main h6 {
+    color: #000000 !important;
+}
+
+/* Input fields */
+.main input, .main textarea, .main select {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cccccc !important;
+}
+
+/* File uploader */
+.main [data-testid="stFileUploader"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cccccc !important;
+}
+
+/* Buttons */
+.main button {
+    background-color: #0066cc !important;
+    color: #ffffff !important;
+    border: 1px solid #0066cc !important;
+}
+
+/* Headers with navy blue */
+.main h1, .main h2, .main h3 {
+    color: #000080 !important;
+}
+
+/* Sidebar */
+.css-1d391kg {
+    background-color: #f0f2f6 !important;
+    color: #000000 !important;
+}
+
+/* Sidebar text */
+.css-1d391kg * {
+    color: #000000 !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+.stTabs [data-baseweb="tab"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Expanders */
+.streamlit-expanderHeader {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Dataframes */
+.stDataFrame {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Metrics */
+.stMetric {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Success/Error/Warning messages */
+.stAlert {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cccccc !important;
+}
+
+/* Code blocks */
+.stCodeBlock {
+    background-color: #f8f9fa !important;
+    color: #000000 !important;
+}
+
+/* Markdown */
+.stMarkdown {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Force Streamlit's internal elements */
+[data-testid="stApp"] {
+    background-color: #ffffff !important;
+}
+
+[data-testid="stApp"] * {
+    color: #000000 !important;
+}
+
+/* Emergency override for any remaining invisible text */
+* {
+    color: #000000 !important;
+}
+
+/* Specific overrides for common Streamlit classes */
+.css-1v0mbdj, .css-1wivap2, .css-1d391kg, .css-1lcbmhc, .css-1p05t8e {
+    color: #000000 !important;
+}
+
+/* Force all form elements to be visible */
+.stSelectbox, .stMultiselect, .stTextInput, .stTextArea, .stNumberInput {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Override any dark mode classes */
+.dark, .dark * {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Force visibility for all Streamlit widgets */
+[data-testid="stSelectbox"], [data-testid="stMultiselect"], 
+[data-testid="stTextInput"], [data-testid="stTextArea"], 
+[data-testid="stNumberInput"], [data-testid="stCheckbox"],
+[data-testid="stRadio"], [data-testid="stSlider"] {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Override any emotion cache classes */
+.st-emotion-cache-* {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Force all divs and spans */
+div, span, p, label, h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+}
+
+/* Override any remaining Streamlit classes */
+[class*="st-"] {
+    color: #000000 !important;
+}
+
+/* Force all form controls */
+input, textarea, select, button {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* Override any CSS-in-JS styles */
+[style*="color"] {
+    color: #000000 !important;
+} 
