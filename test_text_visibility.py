@@ -14,7 +14,7 @@ def main():
     
     # Load external CSS
     try:
-        with open('static/force_light_theme.css', 'r') as f:
+        with open('static/harcus_parker_style.css', 'r') as f:
             css_content = f.read()
         st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
     except FileNotFoundError:

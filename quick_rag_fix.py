@@ -1,55 +1,139 @@
 #!/usr/bin/env python3
 """
-Quick RAG Fix - Bypass Multi-Agent Issues
-Simple, working RAG interface while multi-agent system gets fixed
+Quick RAG fix for hallucination issues
+This bypasses the multi-agent system and uses direct, controlled prompts
 """
 
-import asyncio
 import streamlit as st
+import asyncio
+import aiohttp
 from local_rag_pipeline import rag_session_manager
 
-async def simple_rag_query(matter_id: str, query: str, model: str = "phi3:latest"):
-    """Simple RAG query without multi-agent complexity"""
+def create_strict_prompt(query: str, context: str) -> str:
+    """Create a strict prompt that prevents hallucination"""
+    return f"""You are a document analysis assistant. You MUST ONLY use information from the provided documents below.
+
+STRICT RULES:
+- Only state facts that are explicitly written in the documents
+- If information is not in the documents, say "This information is not provided in the documents"
+- Quote directly from documents when possible
+- Use the exact format [Source 1], [Source 2] etc. for citations
+- Do NOT make assumptions or inferences beyond what is written
+- Do NOT use placeholder text like "[DATE]" or "[Source X, Page XX]"
+
+QUERY: {query}
+
+DOCUMENTS:
+{context}
+
+RESPONSE (based ONLY on the provided documents):"""
+
+async def get_non_hallucinating_answer(query: str, matter_id: str = 'Corporate Governance', model: str = 'phi3:latest'):
+    """Get answer that strictly follows document content"""
     
     try:
-        # Get pipeline
+        # Get RAG pipeline
         pipeline = rag_session_manager.get_or_create_pipeline(matter_id)
         
-        # Check documents
-        status = pipeline.get_document_status()
-        if status['total_documents'] == 0:
+        # Search for relevant chunks
+        chunks = pipeline.search_documents(query, top_k=5)
+        
+        if not chunks:
             return {
-                'success': False,
-                'error': 'No documents loaded',
-                'answer': '',
-                'sources': []
+                'answer': "No relevant documents found for your query.",
+                'sources': [],
+                'model_used': model,
+                'debug_info': 'No chunks returned from search'
             }
         
-        # Generate answer
-        result = await pipeline.generate_rag_answer(
-            query, model, max_context_chunks=5, temperature=0.1
-        )
+        # Build context with real content validation
+        context_parts = []
+        valid_sources = []
         
-        # Ensure required fields exist
-        result['success'] = True
-        result['context_chunks'] = result.get('context_chunks', len(result.get('sources', [])))
+        for i, chunk in enumerate(chunks):
+            chunk_text = chunk.get('text', '').strip()
+            if len(chunk_text) > 20:  # Ensure chunk has meaningful content
+                context_parts.append(f"[Source {i+1}] {chunk_text}")
+                valid_sources.append({
+                    'chunk_id': chunk['id'],
+                    'document': chunk.get('document_info', {}).get('filename', 'Unknown'),
+                    'similarity_score': chunk['similarity_score'],
+                    'text_preview': chunk_text[:200] + "..." if len(chunk_text) > 200 else chunk_text
+                })
         
-        return result
+        if not context_parts:
+            return {
+                'answer': "Document chunks found but contain insufficient content for analysis.",
+                'sources': [],
+                'model_used': model,
+                'debug_info': 'Empty or too-short chunks'
+            }
         
+        context = "\n\n".join(context_parts)
+        prompt = create_strict_prompt(query, context)
+        
+        # Generate answer with strict controls
+        timeout = aiohttp.ClientTimeout(total=60)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            payload = {
+                "model": model,
+                "prompt": prompt,
+                "stream": False,
+                "temperature": 0.0,  # Most deterministic
+                "top_p": 0.9,
+                "repeat_penalty": 1.1
+            }
+            
+            async with session.post("http://localhost:11434/api/generate", json=payload) as response:
+                if response.status == 200:
+                    result = await response.json()
+                    answer = result.get('response', 'No response').strip()
+                    
+                    # Validate response for hallucination indicators
+                    hallucination_flags = []
+                    
+                    # Check for placeholder patterns
+                    placeholders = ['[OR:', '[DATE]', '[SOURCE X', 'Page XX', '[UNVERIFIED]']
+                    for placeholder in placeholders:
+                        if placeholder in answer:
+                            hallucination_flags.append(f"Contains placeholder: {placeholder}")
+                    
+                    # Check for vague language
+                    vague_phrases = ['I think', 'probably', 'might be', 'could be', 'generally speaking']
+                    for phrase in vague_phrases:
+                        if phrase.lower() in answer.lower():
+                            hallucination_flags.append(f"Contains uncertain language: {phrase}")
+                    
+                    return {
+                        'answer': answer,
+                        'sources': valid_sources,
+                        'model_used': model,
+                        'context_chunks_used': len(context_parts),
+                        'hallucination_flags': hallucination_flags,
+                        'debug_info': f"Prompt length: {len(prompt)} chars, Context length: {len(context)} chars"
+                    }
+                else:
+                    error_text = await response.text()
+                    return {
+                        'answer': f"Error: HTTP {response.status} - {error_text}",
+                        'sources': [],
+                        'model_used': model,
+                        'debug_info': f"HTTP error: {response.status}"
+                    }
+    
     except Exception as e:
         return {
-            'success': False,
-            'error': str(e),
-            'answer': f'Error: {str(e)}',
+            'answer': f"System error: {str(e)}",
             'sources': [],
-            'context_chunks': 0
+            'model_used': model,
+            'debug_info': f"Exception: {type(e).__name__}: {str(e)}"
         }
 
 def render_simple_rag_ui():
     """Render a simple RAG interface without multi-agent complications"""
     
-    st.markdown("### 🔧 Simple RAG Interface (Multi-Agent Bypassed)")
-    st.info("This is a simplified interface while we fix the multi-agent system issues.")
+    st.markdown("### 🔧 Anti-Hallucination RAG Interface")
+    st.info("📌 This interface uses strict prompting to prevent hallucinations and placeholder responses.")
     
     # Model selection
     available_models = ["phi3:latest", "deepseek-llm:7b", "mistral:latest", "mixtral:latest"]
@@ -60,61 +144,66 @@ def render_simple_rag_ui():
         help="phi3=fastest, deepseek-7b=balanced, mistral=professional, mixtral=complex"
     )
     
+    # Matter selection
+    matter_options = ["Corporate Governance", "Contract Analysis", "Litigation Review", "Compliance Audit"]
+    selected_matter = st.selectbox(
+        "Select Matter:",
+        matter_options,
+        index=0
+    )
+    
     # Query input
     query = st.text_area(
         "Ask about your documents:",
         height=100,
-        placeholder="What are the key legal issues in this case?"
+        placeholder="What is the case number? Who are the parties involved? What are the key legal issues?"
     )
     
-    if st.button("🧠 Generate Answer", type="primary", disabled=not query.strip()):
-        if query.strip():
-            with st.spinner(f"Generating answer with {selected_model}..."):
+    if st.button("🧠 Generate Strict Answer", type="primary", disabled=not query.strip()):
+        with st.spinner(f"Analyzing documents with {selected_model}..."):
+            try:
                 # Run async function
-                result = asyncio.run(simple_rag_query(
-                    "Corporate Governance", 
-                    query, 
-                    selected_model
-                ))
+                result = asyncio.run(get_non_hallucinating_answer(query, selected_matter, selected_model))
                 
-                if result['success']:
-                    st.markdown("#### 🤖 Answer")
-                    st.markdown(result['answer'])
-                    
-                    # Sources
-                    if result.get('sources'):
-                        st.markdown("#### 📚 Sources")
-                        for i, source in enumerate(result['sources'], 1):
-                            with st.expander(f"Source {i}: {source['document']} (Score: {source['similarity_score']:.3f})"):
-                                st.write(source['text_preview'])
-                    
-                    # Metadata
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        st.metric("Sources Used", len(result.get('sources', [])))
-                    with col2:
-                        st.metric("Context Chunks", result.get('context_chunks', 0))
-                    with col3:
-                        st.metric("Model", selected_model)
+                # Display results
+                st.markdown("### 📋 Analysis Result")
                 
-                else:
-                    st.error(f"❌ {result['error']}")
+                # Show answer
+                st.markdown("#### Answer:")
+                st.write(result['answer'])
+                
+                # Show hallucination warnings if any
+                if result.get('hallucination_flags'):
+                    st.warning("⚠️ Potential hallucination indicators detected:")
+                    for flag in result['hallucination_flags']:
+                        st.write(f"• {flag}")
+                
+                # Show sources
+                if result.get('sources'):
+                    st.markdown("#### Sources Used:")
+                    for i, source in enumerate(result['sources']):
+                        with st.expander(f"Source {i+1}: {source['document']} (Score: {source['similarity_score']:.3f})"):
+                            st.write(source['text_preview'])
+                
+                # Show metadata
+                with st.expander("🔍 Debug Information"):
+                    st.write(f"**Model Used:** {result['model_used']}")
+                    st.write(f"**Context Chunks:** {result.get('context_chunks_used', 0)}")
+                    st.write(f"**Debug Info:** {result.get('debug_info', 'None')}")
+                    
+            except Exception as e:
+                st.error(f"Error: {str(e)}")
+
+# Test function for debugging
+async def test_quick_fix():
+    """Test the quick fix with a simple query"""
+    query = "What is the case number?"
+    result = await get_non_hallucinating_answer(query)
+    print(f"Query: {query}")
+    print(f"Answer: {result['answer']}")
+    print(f"Sources: {len(result.get('sources', []))}")
+    print(f"Hallucination flags: {result.get('hallucination_flags', [])}")
 
 if __name__ == "__main__":
-    # For testing
-    import sys
-    if len(sys.argv) > 1:
-        query = sys.argv[1]
-        model = sys.argv[2] if len(sys.argv) > 2 else "phi3:latest"
-        
-        print(f"Testing RAG: {query} with {model}")
-        result = asyncio.run(simple_rag_query("Corporate Governance", query, model))
-        
-        if result['success']:
-            print(f"✅ Answer: {result['answer'][:200]}...")
-            print(f"📚 Sources: {len(result['sources'])}")
-        else:
-            print(f"❌ Error: {result['error']}")
-    else:
-        print("Usage: python3 quick_rag_fix.py 'your question' [model_name]")
-        print("Available models: phi3:latest, deepseek-llm:7b, mistral:latest, mixtral:latest") 
+    print("Testing anti-hallucination RAG...")
+    asyncio.run(test_quick_fix()) 

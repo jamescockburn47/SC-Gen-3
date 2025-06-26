@@ -381,7 +381,9 @@ class LocalRAGPipeline:
                 
                 # Normalize embeddings for cosine similarity
                 if np is not None:
-                    faiss.normalize_L2(embeddings.astype(np.float32))
+                    embeddings_normalized = embeddings.astype(np.float32)
+                    safe_faiss_normalize(embeddings_normalized)
+                    embeddings = embeddings_normalized
             elif faiss is not None and np is not None:
                 # Normalize new embeddings
                 faiss.normalize_L2(embeddings.astype(np.float32))
@@ -436,7 +438,8 @@ class LocalRAGPipeline:
         try:
             # Embed the query
             query_embedding = self.embedding_model.encode([query])
-            faiss.normalize_L2(query_embedding.astype(np.float32))
+            query_embedding = query_embedding.astype(np.float32)
+            safe_faiss_normalize(query_embedding)
             
             # Search vector index
             scores, indices = self.vector_index.search(query_embedding.astype(np.float32), top_k)
@@ -459,6 +462,68 @@ class LocalRAGPipeline:
             
         except Exception as e:
             logger.error(f"Search failed: {e}")
+            return []
+    
+    def search_documents_filtered(self, query: str, top_k: int = 5, document_ids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
+        """
+        Search for relevant document chunks from specific documents only
+        
+        Args:
+            query: Search query
+            top_k: Maximum number of results
+            document_ids: List of document IDs to search within
+        
+        Returns: List of chunks with similarity scores and metadata from selected documents
+        """
+        if not self.embedding_model or not self.vector_index or faiss is None or np is None:
+            return []
+        
+        if not document_ids:
+            # If no specific documents, use regular search
+            return self.search_documents(query, top_k)
+        
+        try:
+            # First get all chunks from the specified documents
+            filtered_chunk_indices = []
+            for i, chunk in enumerate(self.chunk_metadata):
+                if chunk['doc_id'] in document_ids:
+                    filtered_chunk_indices.append(i)
+            
+            if not filtered_chunk_indices:
+                logger.info(f"No chunks found for selected documents: {document_ids}")
+                return []
+            
+            # Embed the query
+            query_embedding = self.embedding_model.encode([query])
+            query_embedding = query_embedding.astype(np.float32)
+            safe_faiss_normalize(query_embedding)
+            
+            # Search with a larger top_k to get more candidates
+            search_k = min(len(self.chunk_metadata), top_k * 5)  # Search more broadly
+            scores, indices = self.vector_index.search(query_embedding.astype(np.float32), search_k)
+            
+            # Filter results to only include chunks from selected documents
+            results = []
+            for score, idx in zip(scores[0], indices[0]):
+                if idx in filtered_chunk_indices and len(results) < top_k:
+                    chunk = self.chunk_metadata[idx].copy()
+                    chunk['similarity_score'] = float(score)
+                    
+                    # Add document metadata
+                    doc_id = chunk['doc_id']
+                    if doc_id in self.document_metadata:
+                        chunk['document_info'] = self.document_metadata[doc_id]
+                    
+                    results.append(chunk)
+                    
+                    if len(results) >= top_k:
+                        break
+            
+            logger.info(f"Filtered search returned {len(results)} chunks from {len(document_ids)} selected documents")
+            return results
+            
+        except Exception as e:
+            logger.error(f"Filtered search failed: {e}")
             return []
     
     async def query_ollama_models(self) -> List[Dict[str, Any]]:

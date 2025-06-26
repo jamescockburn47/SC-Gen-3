@@ -298,7 +298,7 @@ def render_instructions_page():
     
     **Important Files:**
     - **Configuration:** `.streamlit/config.toml`
-    - **CSS Theme:** `static/force_light_theme.css`
+    - **CSS Theme:** `static/harcus_parker_style.css`
     - **Protocols:** `strategic_protocols.txt`
     """)
     

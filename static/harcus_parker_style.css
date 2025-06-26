@@ -371,6 +371,102 @@ section[data-testid="stSidebar"] .stButton > button:hover {
     color: var(--hp-cream) !important;
 }
 
+/* Dropdown menu options styling for visibility */
+.stSelectbox [role="listbox"],
+.stSelectbox [role="option"],
+.stSelectbox ul,
+.stSelectbox li {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+}
+
+.stSelectbox [role="option"]:hover,
+.stSelectbox li:hover {
+    background: var(--hp-navy) !important;
+    color: var(--hp-light-gold) !important;
+}
+
+.stSelectbox [role="option"][aria-selected="true"],
+.stSelectbox li[aria-selected="true"] {
+    background: var(--hp-gold) !important;
+    color: var(--hp-dark-navy) !important;
+}
+
+/* Additional dropdown visibility for various selectors */
+div[data-baseweb="select"] > div,
+div[data-baseweb="select"] ul,
+div[data-baseweb="select"] li {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+/* Comprehensive dropdown menu styling - target all possible selectors */
+[data-baseweb="select"] [role="listbox"],
+[data-baseweb="select"] [role="option"],
+[data-baseweb="popover"] [role="listbox"],
+[data-baseweb="popover"] [role="option"],
+.stSelectbox [data-baseweb="select"] ul,
+.stSelectbox [data-baseweb="select"] li,
+[data-baseweb="select"] ul,
+[data-baseweb="select"] li,
+[class*="option-"],
+[class*="listbox-"],
+div[role="listbox"],
+div[role="option"],
+ul[role="listbox"],
+li[role="option"] {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    border: none !important;
+    z-index: 9999 !important;
+}
+
+/* Hover states for dropdown options */
+[data-baseweb="select"] [role="option"]:hover,
+[data-baseweb="popover"] [role="option"]:hover,
+.stSelectbox [data-baseweb="select"] li:hover,
+[data-baseweb="select"] li:hover,
+[class*="option-"]:hover,
+div[role="option"]:hover,
+li[role="option"]:hover {
+    background: var(--hp-navy) !important;
+    color: var(--hp-light-gold) !important;
+}
+
+/* Selected states for dropdown options */
+[data-baseweb="select"] [role="option"][aria-selected="true"],
+[data-baseweb="popover"] [role="option"][aria-selected="true"],
+.stSelectbox [data-baseweb="select"] li[aria-selected="true"],
+[data-baseweb="select"] li[aria-selected="true"],
+[class*="option-"][aria-selected="true"],
+div[role="option"][aria-selected="true"],
+li[role="option"][aria-selected="true"] {
+    background: var(--hp-gold) !important;
+    color: var(--hp-dark-navy) !important;
+}
+
+/* Force styling on all dropdown containers */
+[data-baseweb="popover"] {
+    background: var(--hp-light-navy) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: var(--hp-border-radius-sm) !important;
+    box-shadow: 0 4px 20px var(--hp-shadow-medium) !important;
+    z-index: 9999 !important;
+}
+
+/* Override any white backgrounds */
+.stSelectbox * {
+    background-color: transparent !important;
+}
+
+.stSelectbox [style*="background-color: white"],
+.stSelectbox [style*="background-color: #ffffff"],
+.stSelectbox [style*="background-color: rgb(255, 255, 255)"] {
+    background-color: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
 /* === MULTISELECT === */
 
 .stMultiSelect > div > div {
@@ -974,5 +1070,80 @@ section[data-testid="stSidebar"] {
     z-index: 1000;
     box-shadow: 0 4px 12px var(--hp-shadow-medium);
     animation: fadeIn 0.3s ease-out;
+}
+
+/* === EMERGENCY DROPDOWN VISIBILITY FIX === */
+/* This section forcibly makes dropdowns visible by targeting all possible selectors */
+
+/* Force all dropdown containers to be visible */
+[data-baseweb="select"] * {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+[data-baseweb="popover"] * {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+/* Target dropdown list containers */
+div[role="listbox"],
+ul[role="listbox"],
+[role="listbox"] {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    z-index: 99999 !important;
+    box-shadow: 0 4px 20px var(--hp-shadow-medium) !important;
+}
+
+/* Target dropdown option items */
+div[role="option"],
+li[role="option"],
+[role="option"] {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    padding: 8px 12px !important;
+    cursor: pointer !important;
+}
+
+/* Hover states for dropdown options */
+div[role="option"]:hover,
+li[role="option"]:hover,
+[role="option"]:hover {
+    background: var(--hp-navy) !important;
+    color: var(--hp-light-gold) !important;
+}
+
+/* Selected states for dropdown options */
+div[role="option"][aria-selected="true"],
+li[role="option"][aria-selected="true"],
+[role="option"][aria-selected="true"] {
+    background: var(--hp-gold) !important;
+    color: var(--hp-dark-navy) !important;
+}
+
+/* Nuclear option: override ANY white backgrounds in selectboxes */
+.stSelectbox [style*="background"],
+.stSelectbox [style*="color"] {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+/* Extra aggressive overrides for specific Streamlit classes */
+.stSelectbox div,
+.stSelectbox ul,
+.stSelectbox li,
+.stSelectbox span {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+/* Final fallback for any remaining invisible elements */
+[data-baseweb="select"] div[style*="background-color: white"],
+[data-baseweb="select"] div[style*="background-color: #ffffff"],
+[data-baseweb="select"] div[style*="background-color: rgb(255, 255, 255)"] {
+    background-color: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
 }
 
