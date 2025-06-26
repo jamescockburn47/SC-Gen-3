@@ -1,0 +1,23 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Strategic Counsel
+Comment=Multi-Agent AI Legal Analysis Platform
+GenericName=Legal AI Platform
+Keywords=legal;ai;analysis;documents;contracts;counsel;
+Exec=/home/jcockburn/SC-Gen-3/launch_strategic_counsel.sh
+Icon=/home/jcockburn/SC-Gen-3/static/icons/strategic_counsel_logo.png
+Path=/home/jcockburn/SC-Gen-3
+Terminal=true
+StartupNotify=true
+Categories=Office;Science;Education;
+MimeType=application/pdf;application/msword;application/vnd.openxmlformats-officedocument.wordprocessingml.document;text/plain;
+Actions=restart;logs;
+
+[Desktop Action restart]
+Name=Restart Strategic Counsel
+Exec=/home/jcockburn/SC-Gen-3/launch_strategic_counsel.sh --port 8502
+
+[Desktop Action logs]
+Name=View Logs
+Exec=gnome-terminal -- tail -f /home/jcockburn/SC-Gen-3/logs/strategic_counsel.log 

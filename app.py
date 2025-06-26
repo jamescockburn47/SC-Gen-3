@@ -45,8 +45,7 @@ import config
 import ch_pipeline
 import app_utils 
 import ai_utils 
-from about_page import render_about_page
-from instructions_page import render_instructions_page
+# Legacy imports removed - now using consolidated help page
 
 try:
     import group_structure_utils
@@ -87,7 +86,7 @@ if not logging.getLogger().hasHandlers():
     )
 
 APP_BASE_PATH = APP_ROOT_DIR
-LOGO_PATH = APP_BASE_PATH / "static" / "logo" / "logo1.png"
+LOGO_PATH = APP_ROOT_DIR / "static" / "logo" / "logo1.png"
 
 LOG_DIR = APP_BASE_PATH / "logs"
 LOG_DIR.mkdir(exist_ok=True)
@@ -114,9 +113,10 @@ st.set_page_config(
     }
 )
 
-# Load external CSS for forced light theme
+# Load Harcus Parker branded theme
 try:
-    with open('static/force_light_theme.css', 'r') as f:
+    css_file_path = APP_ROOT_DIR / "static" / "harcus_parker_style.css"
+    with open(css_file_path, 'r') as f:
         css_content = f.read()
     st.markdown(f"""
     <style>
@@ -124,54 +124,66 @@ try:
     </style>
     """, unsafe_allow_html=True)
 except FileNotFoundError:
-    st.error("CSS file not found: static/force_light_theme.css")
-    # Fallback to inline CSS
+    st.error(f"CSS file not found: {css_file_path}")
+    # Fallback to basic dark theme
     st.markdown("""
     <style>
-    /* Emergency fallback CSS */
-    .stApp, .stApp * {
-        background-color: #ffffff !important;
-        color: #000000 !important;
+    .stApp {
+        background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+        color: #f8f6f0;
+    }
+    .main {
+        background: #1a2332;
+        color: #f8f6f0;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# Force light theme using JavaScript
+
+# Harcus Parker branding enhancement with JavaScript
 st.markdown("""
 <script>
-// Force light theme
-document.body.style.backgroundColor = '#ffffff';
-document.body.style.color = '#000000';
-
-// Override any dark theme classes
-document.body.classList.remove('dark');
-document.body.classList.add('light');
-
-// Force all text to be black
-const allElements = document.querySelectorAll('*');
-allElements.forEach(el => {
-    el.style.color = '#000000';
-    el.style.backgroundColor = el.tagName === 'BODY' ? '#ffffff' : el.style.backgroundColor;
-});
-
-// Monitor for dynamic content
-const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        mutation.addedNodes.forEach(function(node) {
-            if (node.nodeType === 1) { // Element node
-                node.style.color = '#000000';
-                if (node.tagName === 'BODY') {
-                    node.style.backgroundColor = '#ffffff';
-                }
-            }
+// Enhance Harcus Parker professional theme
+document.addEventListener('DOMContentLoaded', function() {
+    // Add professional law firm animations
+    const elements = document.querySelectorAll('.stApp > div');
+    elements.forEach((el, index) => {
+        el.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s both`;
+    });
+    
+    // Professional hover effects for buttons
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.transition = 'all 0.3s ease';
+        });
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+    
+    // Add gold accent to focus elements
+    const focusElements = document.querySelectorAll('input, textarea, select');
+    focusElements.forEach(el => {
+        el.addEventListener('focus', function() {
+            this.style.boxShadow = '0 0 0 3px rgba(212, 175, 55, 0.3)';
+        });
+        el.addEventListener('blur', function() {
+            this.style.boxShadow = '';
         });
     });
 });
 
-observer.observe(document.body, {
-    childList: true,
-    subtree: true
-});
+// Animation keyframes
+const style = document.createElement('style');
+style.textContent = `
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+`;
+document.head.appendChild(style);
 </script>
 """, unsafe_allow_html=True)
 
@@ -180,7 +192,7 @@ try:
         summarise_with_title, fetch_url_content, find_company_number,
         extract_text_from_uploaded_file
     )
-    from about_page import render_about_page
+    # Legacy about_page import removed
     from ch_pipeline import run_batch_company_analysis
     from ai_utils import get_improved_prompt, check_protocol_compliance, comprehensive_legal_consultation_with_protocols 
 except ImportError as e_app_utils_more:
@@ -571,9 +583,9 @@ def main():
             st.session_state.ocr_method_radio = 0
 
     # Create the main tab structure for the application
-    tab_ai_consultation, tab_companies_house, tab_group_structure, tab_timeline, tab_about_rendered, tab_instructions = st.tabs([
+    tab_ai_consultation, tab_companies_house, tab_group_structure, tab_rag, tab_help = st.tabs([
         "🤖 AI Consultation", "🏢 Companies House Analysis", "📊 Group Structure", 
-        "📅 Case Timeline", "ℹ️ About", "📖 Instructions"
+        "📚 Document RAG", "❓ Help & About"
     ])
 
     with tab_ai_consultation:
@@ -1409,25 +1421,453 @@ Respond with a JSON object containing:
 
     # --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
 
-    with tab_timeline:
-        st.markdown("### Case Timeline")
-        st.info("Timeline functionality will be available when timeline_utils is properly configured.")
+    with tab_rag:
+        st.markdown("### 📚 Document RAG System")
+        st.markdown("**Local Retrieval-Augmented Generation with your uploaded documents**")
         
-    with tab_about_rendered:
+        # Import RAG components
         try:
-            render_about_page()
-        except Exception as e:
-            st.error(f"Error rendering About page: {e}")
-            logger.error(f"Error rendering About page: {e}", exc_info=True)
-            st.info("About page functionality will be available when about_page module is properly configured.")
+            from local_rag_pipeline import rag_session_manager
+            from mcp_rag_server import mcp_rag_server
+            import asyncio
+            rag_available = True
+        except ImportError as e:
+            st.error(f"RAG system not available: {e}")
+            rag_available = False
         
-    with tab_instructions:
+        if not rag_available:
+            st.stop()
+        
+        # Initialize RAG pipeline for current matter
+        current_matter = st.session_state.current_topic
+        rag_pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
+        
+        # Document Management Section
+        st.markdown("---")
+        st.markdown("#### 📄 Document Management")
+        
+        # Current document status
+        doc_status = rag_pipeline.get_document_status()
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Documents", doc_status['total_documents'])
+        with col2:
+            st.metric("Text Chunks", doc_status['total_chunks'])
+        with col3:
+            st.metric("Vector Index Size", doc_status['vector_index_size'])
+        
+        # Document upload section
+        with st.expander("📁 Upload New Documents", expanded=doc_status['total_documents'] == 0):
+            uploaded_files = st.file_uploader(
+                "Upload documents for RAG analysis:",
+                accept_multiple_files=True,
+                type=['pdf', 'docx', 'txt', 'doc', 'rtf'],
+                key="rag_document_upload",
+                help="Supported formats: PDF, DOCX, TXT, DOC, RTF (Max 50MB per file)"
+            )
+            
+            if uploaded_files:
+                if st.button("🔄 Process and Index Documents", type="primary"):
+                    progress_bar = st.progress(0)
+                    status_text = st.empty()
+                    
+                    successful_uploads = 0
+                    failed_uploads = []
+                    
+                    for i, uploaded_file in enumerate(uploaded_files):
+                        progress = (i + 1) / len(uploaded_files)
+                        progress_bar.progress(progress)
+                        status_text.text(f"Processing {uploaded_file.name}...")
+                        
+                        # Validate upload with MCP server
+                        file_size = uploaded_file.size
+                        is_valid, validation_msg = mcp_rag_server.validate_document_upload(
+                            current_matter, uploaded_file.name, file_size
+                        )
+                        
+                        if not is_valid:
+                            failed_uploads.append(f"{uploaded_file.name}: {validation_msg}")
+                            continue
+                        
+                        # Process document
+                        file_obj = io.BytesIO(uploaded_file.getvalue())
+                        success, message, doc_info = rag_pipeline.add_document(
+                            file_obj, uploaded_file.name, st.session_state.ocr_method
+                        )
+                        
+                        if success:
+                            successful_uploads += 1
+                            st.success(f"✅ {uploaded_file.name}: {message}")
+                        else:
+                            failed_uploads.append(f"{uploaded_file.name}: {message}")
+                    
+                    progress_bar.progress(1.0)
+                    status_text.text("Processing complete!")
+                    
+                    if successful_uploads > 0:
+                        st.success(f"Successfully processed {successful_uploads} document(s)")
+                        st.rerun()
+                    
+                    if failed_uploads:
+                        st.error("Failed uploads:")
+                        for failure in failed_uploads:
+                            st.error(f"❌ {failure}")
+        
+        # Document list and management
+        if doc_status['total_documents'] > 0:
+            with st.expander("📋 Manage Existing Documents", expanded=False):
+                documents = doc_status['documents']
+                
+                for doc in documents:
+                    col1, col2, col3 = st.columns([3, 1, 1])
+                    
+                    with col1:
+                        st.write(f"**{doc['filename']}**")
+                        st.caption(f"Added: {doc['created_at'][:19]} | Chunks: {doc['chunk_count']} | Size: {doc['text_length']:,} chars")
+                    
+                    with col2:
+                        if st.button("👁️ Preview", key=f"preview_{doc['id']}"):
+                            # Show document preview
+                            doc_path = rag_pipeline.documents_path / f"{doc['id']}.txt"
+                            if doc_path.exists():
+                                with open(doc_path, 'r', encoding='utf-8') as f:
+                                    preview_text = f.read()[:1000]
+                                st.text_area(
+                                    f"Preview: {doc['filename']}", 
+                                    value=preview_text + "..." if len(preview_text) == 1000 else preview_text,
+                                    height=200,
+                                    disabled=True
+                                )
+                    
+                    with col3:
+                        if st.button("🗑️ Delete", key=f"delete_{doc['id']}", type="secondary"):
+                            success, message = rag_pipeline.delete_document(doc['id'])
+                            if success:
+                                st.success(message)
+                                st.rerun()
+                            else:
+                                st.error(message)
+        
+        # RAG Query Section
+        st.markdown("---")
+        st.markdown("#### 🔍 Query Your Documents")
+        
+        if doc_status['total_documents'] == 0:
+            st.info("📄 Upload documents above to start querying your document collection.")
+        else:
+            # Multi-Agent System Info
+            try:
+                from multi_agent_rag_orchestrator import get_orchestrator
+                orchestrator = get_orchestrator(current_matter)
+                
+                available_models = asyncio.run(rag_pipeline.query_ollama_models())
+                if available_models:
+                    model_names = [model['name'] for model in available_models]
+                    
+                    st.success(f"🤖 **Multi-Agent System Active** - {len(model_names)} models available")
+                    
+                    # Show agent specializations
+                    with st.expander("View Agent Specializations", expanded=False):
+                        agent_info = {
+                            "deepseek-llm:7b": "🧠 **Master Analyst**: Complex legal analysis, compliance checking, final synthesis",
+                            "mixtral:latest": "⚖️ **Legal Expert**: Contract analysis, legal extraction, risk assessment, obligations",
+                            "mistral:latest": "🔍 **Information Specialist**: Entity extraction, date identification, pattern recognition",
+                            "phi3:latest": "⚡ **Quick Responder**: Fast extraction, basic analysis, quick testing"
+                        }
+                        
+                        for model in model_names:
+                            if model in agent_info:
+                                st.markdown(f"• {agent_info[model]}")
+                            else:
+                                st.write(f"• **{model}**: General analysis capabilities")
+                        
+                        st.info("💡 **Smart Assignment**: The system automatically selects the best agents for your query type and runs multiple models in parallel for comprehensive analysis.")
+                    
+                    multi_agent_available = True
+                else:
+                    st.error("No Ollama models available. Please ensure Ollama is running with models loaded.")
+                    multi_agent_available = False
+                    st.stop()
+            except ImportError as e:
+                st.warning(f"Multi-agent system not available: {e}")
+                st.info("Falling back to single-model mode")
+                multi_agent_available = False
+                
+                # Fallback to single model selection
+                try:
+                    available_models = asyncio.run(rag_pipeline.query_ollama_models())
+                    if available_models:
+                        model_names = [model['name'] for model in available_models]
+                        selected_model = st.selectbox(
+                            "Select Ollama Model:",
+                            model_names,
+                            key="rag_model_selection",
+                            help="Choose the local LLM for answer generation"
+                        )
+                    else:
+                        st.error("No Ollama models available. Please ensure Ollama is running with models loaded.")
+                        st.stop()
+                except Exception as e:
+                    st.error(f"Failed to connect to Ollama: {e}")
+                    st.stop()
+            except Exception as e:
+                st.error(f"Failed to initialize multi-agent system: {e}")
+                multi_agent_available = False
+                st.stop()
+            
+            # Query input
+            user_query = st.text_area(
+                "Ask a question about your documents:",
+                height=100,
+                placeholder="e.g., What are the key risks mentioned in the documents?",
+                key="rag_query_input"
+            )
+            
+            # Advanced settings
+            with st.expander("⚙️ Advanced Settings", expanded=False):
+                col1, col2 = st.columns(2)
+                with col1:
+                    max_chunks = st.slider(
+                        "Max Context Chunks:", 1, 10, 5,
+                        help="Number of relevant document chunks to use for context"
+                    )
+                with col2:
+                    temperature = st.slider(
+                        "Temperature:", 0.0, 1.0, 0.1, 0.05,
+                        help="Controls randomness in the response"
+                    )
+            
+            # Generate answer
+            if st.button("🧠 Generate Answer", type="primary", disabled=not user_query.strip()):
+                if not user_query.strip():
+                    st.warning("Please enter a question.")
+                else:
+                    # Validate query with MCP server
+                    is_valid, validation_msg, validation_metadata = mcp_rag_server.validate_query(
+                        current_matter, user_query
+                    )
+                    
+                    if not is_valid:
+                        st.error(f"Query validation failed: {validation_msg}")
+                    else:
+                        with st.spinner("🤖 Multi-Agent Analysis in Progress..."):
+                            try:
+                                if multi_agent_available:
+                                    # Use multi-agent orchestrator
+                                    status_placeholder = st.empty()
+                                    status_placeholder.info("🔍 Analyzing query and assigning specialized agents...")
+                                    
+                                    rag_result = asyncio.run(orchestrator.process_query(
+                                        user_query, max_chunks
+                                    ))
+                                    
+                                    status_placeholder.success(f"✅ Analysis complete! Used {len(rag_result['agents_used'])} agents in {rag_result['execution_time']:.2f}s")
+                                    
+                                    # Enforce protocol with MCP server
+                                    is_compliant, compliance_msg, enforcement_metadata = mcp_rag_server.enforce_protocol_on_response(
+                                        current_matter, rag_result
+                                    )
+                                    
+                                    # Display results
+                                    st.markdown("---")
+                                    st.markdown("#### 🤖 Multi-Agent Analysis Results")
+                                    
+                                    if not is_compliant:
+                                        st.warning(f"Protocol Compliance Issue: {compliance_msg}")
+                                    
+                                    # Show agent breakdown
+                                    with st.expander(f"🔧 Agent Execution Summary ({len(rag_result['agents_used'])} agents used)", expanded=False):
+                                        for task_type, task_info in rag_result.get('task_breakdown', {}).items():
+                                            status_emoji = "✅" if task_info['success'] else "❌"
+                                            st.write(f"{status_emoji} **{task_type.replace('_', ' ').title()}**: {task_info['model']} ({task_info['execution_time']:.2f}s, {task_info['confidence']:.2%} confidence)")
+                                            if task_info.get('key_findings'):
+                                                for finding in task_info['key_findings']:
+                                                    st.caption(f"   • {finding}")
+                                    
+                                    st.markdown(rag_result['answer'])
+                                    
+                                else:
+                                    # Fallback to single model
+                                    rag_result = asyncio.run(rag_pipeline.generate_rag_answer(
+                                        user_query, selected_model, max_chunks, temperature
+                                    ))
+                                    
+                                    # Enforce protocol with MCP server
+                                    is_compliant, compliance_msg, enforcement_metadata = mcp_rag_server.enforce_protocol_on_response(
+                                        current_matter, rag_result
+                                    )
+                                    
+                                    # Display results
+                                    st.markdown("---")
+                                    st.markdown("#### 🤖 AI Response")
+                                    
+                                    if not is_compliant:
+                                        st.warning(f"Protocol Compliance Issue: {compliance_msg}")
+                                    
+                                    st.markdown(rag_result['answer'])
+                                
+                                # Source citations
+                                if rag_result['sources']:
+                                    st.markdown("#### 📚 Sources")
+                                    for i, source in enumerate(rag_result['sources'], 1):
+                                        with st.expander(f"Source {i}: {source['document']} (Similarity: {source['similarity_score']:.3f})", expanded=False):
+                                            st.write(f"**Chunk {source['chunk_index']}:**")
+                                            st.write(source['text_preview'])
+                                            
+                                            if st.button(f"Show Full Chunk {i}", key=f"show_chunk_{i}"):
+                                                # Find and display full chunk
+                                                chunk_id = source['chunk_id']
+                                                full_chunk = next(
+                                                    (chunk for chunk in rag_pipeline.chunk_metadata if chunk['id'] == chunk_id),
+                                                    None
+                                                )
+                                                if full_chunk:
+                                                    st.text_area(
+                                                        f"Full Chunk {i}:",
+                                                        value=full_chunk['text'],
+                                                        height=200,
+                                                        disabled=True
+                                                    )
+                                
+                                # Query metadata
+                                with st.expander("📊 Query Metadata", expanded=False):
+                                    col1, col2, col3 = st.columns(3)
+                                    with col1:
+                                        st.metric("Context Chunks", rag_result['context_chunks'])
+                                    with col2:
+                                        st.metric("Prompt Tokens", rag_result.get('prompt_tokens', 'N/A'))
+                                    with col3:
+                                        st.metric("Response Tokens", rag_result.get('response_tokens', 'N/A'))
+                                    
+                                    st.write(f"**Model Used:** {rag_result['model_used']}")
+                                    st.write(f"**Generated At:** {rag_result['generated_at']}")
+                                
+                                # Protocol compliance report
+                                if enforcement_metadata.get('warnings'):
+                                    with st.expander("⚠️ Protocol Compliance Warnings", expanded=False):
+                                        for warning in enforcement_metadata['warnings']:
+                                            st.warning(warning)
+                                
+                                # Citation audit
+                                citation_audit = mcp_rag_server.audit_citation_provenance(rag_result)
+                                with st.expander("🔍 Citation Audit", expanded=False):
+                                    st.metric("Overall Reliability", f"{citation_audit['overall_reliability']:.2%}")
+                                    st.json(citation_audit['source_reliability'])
+                                
+                                # Update session memory
+                                memory_state = mcp_rag_server.manage_session_memory(current_matter, rag_result)
+                                
+                            except Exception as e:
+                                st.error(f"Error generating answer: {e}")
+                                logger.error(f"RAG query error: {e}", exc_info=True)
+        
+        # Session History
+        if doc_status['total_documents'] > 0:
+            st.markdown("---")
+            st.markdown("#### 📈 Session History")
+            
+            session_history = rag_session_manager.get_session_history(current_matter)
+            matter_stats = mcp_rag_server.get_matter_statistics(current_matter)
+            
+            if session_history:
+                # Session metrics
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("Total Queries", matter_stats.get('total_queries', 0))
+                with col2:
+                    avg_sources = matter_stats.get('session_metrics', {}).get('avg_sources_per_query', 0)
+                    st.metric("Avg Sources/Query", f"{avg_sources:.1f}")
+                with col3:
+                    total_tokens = matter_stats.get('session_metrics', {}).get('total_response_tokens', 0)
+                    st.metric("Total Tokens", total_tokens)
+                with col4:
+                    unique_models = matter_stats.get('session_metrics', {}).get('unique_models_used', 0)
+                    st.metric("Models Used", unique_models)
+                
+                # Recent queries
+                with st.expander("📋 Recent Queries", expanded=False):
+                    for i, entry in enumerate(reversed(session_history[-10:]), 1):  # Last 10 queries
+                        st.write(f"**{i}.** {entry['query'][:100]}...")
+                        st.caption(f"Model: {entry['model_used']} | Sources: {entry['sources_count']} | {entry['timestamp'][:19]}")
+                        st.markdown("---")
+            else:
+                st.info("No queries yet. Ask a question to build your session history.")
+        
+        # Export options
+        if doc_status['total_documents'] > 0:
+            st.markdown("---")
+            st.markdown("#### 💾 Export Options")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button("📊 Export Matter Statistics"):
+                    stats = mcp_rag_server.get_matter_statistics(current_matter)
+                    st.download_button(
+                        "Download Statistics JSON",
+                        data=json.dumps(stats, indent=2),
+                        file_name=f"rag_statistics_{current_matter}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                        mime="application/json"
+                    )
+            
+            with col2:
+                if st.button("📋 Export Session History"):
+                    history = rag_session_manager.get_session_history(current_matter)
+                    if history:
+                        st.download_button(
+                            "Download Session History CSV",
+                            data=pd.DataFrame(history).to_csv(index=False) if pd else "Pandas not available",
+                            file_name=f"rag_session_{current_matter}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv"
+                        )
+        
+        # System information
+        with st.expander("🔧 System Information", expanded=False):
+            st.write(f"**Matter ID:** {current_matter}")
+            st.write(f"**Storage Path:** {doc_status['storage_path']}")
+            st.write(f"**Embedding Model:** {doc_status['embedding_model']}")
+            st.write(f"**Vector Database:** FAISS (Local)")
+            st.write(f"**MCP Server:** Active")
+            
+            if st.button("🧹 Clear All Data for This Matter", type="secondary"):
+                if st.button("⚠️ Confirm Deletion", type="secondary"):
+                    # This would need to be implemented in the pipeline
+                    st.warning("Data clearing functionality would be implemented here")
+        
+        # Help section
+        with st.expander("❓ How to Use Document RAG", expanded=False):
+            st.markdown("""
+            **Document RAG (Retrieval-Augmented Generation)** allows you to ask questions about your uploaded documents using local AI models.
+
+            **Steps:**
+            1. **Upload Documents**: Add PDF, DOCX, or TXT files using the upload section
+            2. **Ask Questions**: Type natural language questions about your documents
+            3. **Select Model**: Choose from available Ollama models for answer generation
+            4. **Review Answers**: Get AI responses with source citations and reliability scores
+
+            **Features:**
+            - **Local Processing**: All data stays on your machine
+            - **Source Citations**: Every answer includes references to source documents
+            - **Protocol Enforcement**: MCP server ensures compliance and quality
+            - **Session Memory**: Track your queries and build institutional knowledge
+            - **Multiple Models**: Choose from various Ollama models for different use cases
+
+            **Best Practices:**
+            - Upload related documents for comprehensive analysis
+            - Ask specific questions for better results
+            - Review source citations to verify AI responses
+            - Use different models for different types of questions
+            """)
+        
+        
+    with tab_help:
         try:
-            render_instructions_page()
+            from help_page import render_help_page
+            render_help_page()
         except Exception as e:
-            st.error(f"Error rendering Instructions page: {e}")
-            logger.error(f"Error rendering Instructions page: {e}", exc_info=True)
-            st.info("Instructions page functionality will be available when instructions_page module is properly configured.")
+            st.error(f"Error rendering Help page: {e}")
+            logger.error(f"Error rendering Help page: {e}", exc_info=True)
+            st.info("Help page functionality will be available when help_page module is properly configured.")
 
     # --- End of Main App Area UI (Using Tabs) ---
 

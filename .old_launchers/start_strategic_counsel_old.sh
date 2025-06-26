@@ -87,7 +87,35 @@ if [[ ! -f "app.py" ]]; then
     exit 1
 fi
 
+# Function to open browser after delay
+open_browser() {
+    sleep 3  # Wait for Streamlit to start
+    local url="http://localhost:$PORT"
+    echo "🌐 Opening browser to $url..."
+    
+    # Try different browser opening methods
+    if command -v wslview > /dev/null; then
+        # WSL-specific browser launcher
+        wslview "$url"
+    elif command -v xdg-open > /dev/null; then
+        # Linux default
+        xdg-open "$url"
+    elif command -v open > /dev/null; then
+        # macOS
+        open "$url"
+    elif command -v start > /dev/null; then
+        # Windows
+        start "$url"
+    else
+        echo "⚠️  Could not auto-open browser. Please manually navigate to: $url"
+    fi
+}
+
+# Start browser opener in background
+open_browser &
+
 # Start Streamlit
+echo "🌐 Browser will open automatically in 3 seconds..."
 ~/.local/bin/streamlit run app.py \
     --server.port $PORT \
     --server.headless false \

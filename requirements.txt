@@ -21,5 +21,18 @@ google-api-python-client==2.126.0
 google-auth-oauthlib==1.2.0
 google-auth-httplib2==0.2.0
 
+# RAG System Dependencies (Compatible versions)
+faiss-cpu==1.7.4  # Vector database for similarity search
+sentence-transformers==2.7.0  # Local embedding models - stable version
+transformers==4.21.0  # Compatible with sentence-transformers 2.7.0
+huggingface-hub==0.24.0  # Compatible with transformers 4.21.0
+aiohttp==3.9.3  # Async HTTP for Ollama API
+numpy==1.24.3  # Vector operations (compatible with other packages)
+
+# Advanced Multi-Agent RAG Dependencies
+spacy>=3.4.0  # NLP processing for legal metadata extraction
+scikit-learn>=1.0.0  # ML utilities for clustering and analysis
+regex>=2022.0.0  # Advanced regex for legal pattern matching
+
 # Testing
 pytest==8.3.5

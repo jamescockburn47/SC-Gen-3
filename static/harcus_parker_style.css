@@ -1,398 +1,978 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-/* Base layout */
+/* === HARCUS PARKER PROFESSIONAL DARK THEME === */
+
+:root {
+    --hp-navy: #1a2332;
+    --hp-dark-navy: #0f1419;
+    --hp-light-navy: #2a3442;
+    --hp-gold: #d4af37;
+    --hp-light-gold: #f0d865;
+    --hp-dark-gold: #b8941f;
+    --hp-cream: #f8f6f0;
+    --hp-light-grey: #e8e6e0;
+    --hp-medium-grey: #a8a6a0;
+    --hp-dark-grey: #4a4a4a;
+    --hp-text-light: #ffffff;
+    --hp-text-dark: #2a2a2a;
+    --hp-accent-blue: #4a90a4;
+    --hp-success: #2d5a27;
+    --hp-warning: #8b6914;
+    --hp-error: #8b2635;
+    
+    /* New enhancement variables */
+    --hp-shadow-light: rgba(212, 175, 55, 0.15);
+    --hp-shadow-medium: rgba(0, 0, 0, 0.25);
+    --hp-shadow-heavy: rgba(0, 0, 0, 0.4);
+    --hp-border-radius-sm: 6px;
+    --hp-border-radius-md: 12px;
+    --hp-border-radius-lg: 16px;
+    --hp-transition-fast: 0.2s ease;
+    --hp-transition-medium: 0.3s ease;
+    --hp-transition-slow: 0.5s ease;
+}
+
+/* === BASE APPLICATION STYLING === */
+
 .stApp {
-    background-color: #f8f9fa;
-    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #212529;
+    background: linear-gradient(135deg, var(--hp-dark-navy) 0%, var(--hp-navy) 50%, var(--hp-light-navy) 100%);
+    color: var(--hp-text-light);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* Main content styling - ensure text is visible */
+/* 1. IMPROVEMENT: Professional background pattern overlay */
+.stApp::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Remove all white spaces */
+.stApp, .stApp * {
+    background-color: transparent;
+}
+
+/* === MAIN CONTENT AREA === */
+
 .main {
-    background-color: #ffffff;
-    color: #212529;
+    background: linear-gradient(135deg, var(--hp-navy) 0%, var(--hp-light-navy) 100%);
+    color: var(--hp-text-light);
+    padding: 0;
+    position: relative;
+    z-index: 1;
 }
 
-.main p, 
-.main div, 
-.main span, 
-.main label,
-.main .stMarkdown,
-.main .stText {
-    color: #212529 !important;
-}
-
-/* Main content padding */
 .main .block-container {
+    background: var(--hp-navy);
     padding: 2rem;
-    background-color: #ffffff;
+    border-radius: var(--hp-border-radius-md);
+    margin: 1rem;
+    box-shadow: 
+        0 8px 32px var(--hp-shadow-medium),
+        0 2px 8px var(--hp-shadow-light),
+        inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    transition: var(--hp-transition-medium);
+    position: relative;
 }
 
-/* Sidebar styling */
-section[data-testid="stSidebar"] {
-    background-color: #001f3f;
-    color: #ffffff;
+/* 2. IMPROVEMENT: Hover effect for main container */
+.main .block-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 40px var(--hp-shadow-medium),
+        0 4px 12px var(--hp-shadow-light),
+        inset 0 1px 0 rgba(212, 175, 55, 0.15);
 }
+
+/* === TYPOGRAPHY === */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: var(--hp-light-gold) !important;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* 3. IMPROVEMENT: Professional header underline animation */
+h1::after, h2::after, h3::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--hp-gold), var(--hp-light-gold));
+    transition: var(--hp-transition-medium);
+}
+
+.main:hover h1::after,
+.main:hover h2::after,
+.main:hover h3::after {
+    width: 60px;
+}
+
+h1 { 
+    font-size: 2.5rem; 
+    letter-spacing: -0.025em;
+}
+h2 { 
+    font-size: 2rem; 
+    letter-spacing: -0.02em;
+}
+h3 { 
+    font-size: 1.5rem; 
+    letter-spacing: -0.015em;
+}
+
+p, span, div, label {
+    color: var(--hp-cream) !important;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+/* === SIDEBAR STYLING === */
+
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, var(--hp-dark-navy) 0%, var(--hp-navy) 100%);
+    border-right: 3px solid var(--hp-gold);
+    position: relative;
+}
+
+/* 4. IMPROVEMENT: Professional sidebar shadow and border */
+section[data-testid="stSidebar"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -6px;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(212, 175, 55, 0.4) 0%, 
+        rgba(212, 175, 55, 0.2) 50%, 
+        rgba(212, 175, 55, 0.4) 100%);
+    filter: blur(3px);
+}
+
+section[data-testid="stSidebar"] > div {
+    background: transparent;
+    padding: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
 section[data-testid="stSidebar"] h1,
 section[data-testid="stSidebar"] h2,
 section[data-testid="stSidebar"] h3,
 section[data-testid="stSidebar"] h4,
 section[data-testid="stSidebar"] h5,
 section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] label {
-    color: #ffffff !important;
-}
-section[data-testid="stSidebar"] .stButton>button {
-    border: 1px solid #d4a017;
-    background-color: transparent;
-    color: #d4a017;
-}
-section[data-testid="stSidebar"] .stButton>button:hover {
-    background-color: #d4a017;
-    color: #001f3f;
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] div {
+    color: var(--hp-cream) !important;
 }
 
-/* Tabs */
+/* === BUTTONS === */
+
+.stButton > button {
+    background: linear-gradient(135deg, var(--hp-gold) 0%, var(--hp-dark-gold) 100%);
+    color: var(--hp-dark-navy) !important;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--hp-border-radius-sm);
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: var(--hp-transition-medium);
+    box-shadow: 
+        0 4px 15px rgba(212, 175, 55, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+/* 5. IMPROVEMENT: Professional button shine effect */
+.stButton > button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transition: var(--hp-transition-medium);
+}
+
+.stButton > button:hover::before {
+    left: 100%;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(135deg, var(--hp-light-gold) 0%, var(--hp-gold) 100%);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(212, 175, 55, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stButton > button:active {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 4px 15px rgba(212, 175, 55, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Secondary buttons */
+section[data-testid="stSidebar"] .stButton > button {
+    background: transparent;
+    color: var(--hp-gold) !important;
+    border: 2px solid var(--hp-gold);
+    box-shadow: none;
+    backdrop-filter: blur(10px);
+}
+
+section[data-testid="stSidebar"] .stButton > button:hover {
+    background: var(--hp-gold);
+    color: var(--hp-dark-navy) !important;
+    backdrop-filter: none;
+}
+
+/* === TABS === */
+
 .stTabs [data-baseweb="tab-list"] {
-    background-color: #e1e8ed;
-    border-radius: 8px;
-}
-.stTabs [data-baseweb="tab"] {
-    height: 44px;
-    background-color: transparent;
-    color: #001f3f;
-    font-weight: 600;
-}
-.stTabs [data-baseweb="tab--selected"] {
-    background-color: #001f3f;
-    color: #ffffff;
-    border-radius: 8px 8px 0 0;
-}
-.stTabs [data-baseweb="tab-highlight"] {
-    background-color: #d4a017;
-}
-
-/* Tab content styling */
-.stTabs [data-testid="stTabContent"] {
-    background-color: #ffffff;
-    color: #212529;
-    padding: 1rem;
-    border-radius: 0 0 8px 8px;
-}
-
-/* Buttons */
-.stButton>button {
-    border: 2px solid #001f3f;
-    background-color: #001f3f;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    font-weight: 600;
-}
-.stButton>button:hover {
-    background-color: #003366;
-    border-color: #003366;
-    color: #ffffff;
-}
-.stButton>button:active {
-    background-color: #002244 !important;
-    border-color: #002244 !important;
-}
-.stButton[kind="primary"]>button,
-.stButton>button[kind="primary"] {
-    background-color: #d4a017 !important;
-    border-color: #d4a017 !important;
-    color: #001f3f !important;
-}
-.stButton[kind="primary"]>button:hover,
-.stButton>button[kind="primary"]:hover {
-    background-color: #b8860b !important;
-    border-color: #b8860b !important;
-}
-
-/* Headers - ensure they're visible in main content */
-h1, h2, h3, h4, h5, h6 {
-    color: #001f3f !important;
-}
-
-.main h1,
-.main h2,
-.main h3,
-.main h4,
-.main h5,
-.main h6 {
-    color: #001f3f !important;
-}
-
-/* Expanders */
-.stExpander {
-    border: 1px solid #e1e8ed;
-    border-radius: 8px;
-    background-color: #ffffff;
-}
-.stExpander header {
-    background-color: #e1e8ed;
-    color: #001f3f;
-    font-weight: 600;
-    border-radius: 8px 8px 0 0;
-}
-.stExpander div[data-testid="stExpanderContent"] {
-    background-color: #ffffff;
-    color: #212529;
-}
-
-/* Text inputs */
-.stTextInput input,
-.stTextArea textarea {
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+    background: var(--hp-dark-navy);
+    border-radius: var(--hp-border-radius-md);
     padding: 0.5rem;
-    background-color: #ffffff;
-    color: #212529;
-}
-.stTextInput input:focus,
-.stTextArea textarea:focus {
-    border-color: #001f3f;
-    box-shadow: 0 0 0 0.2rem rgba(0, 31, 63, 0.25);
+    border: 1px solid var(--hp-gold);
+    box-shadow: 0 4px 20px var(--hp-shadow-medium);
 }
 
-/* Selectbox and other form elements */
-.stSelectbox > div > div {
-    background-color: #ffffff;
-    color: #212529;
+.stTabs [data-baseweb="tab"] {
+    background: transparent;
+    color: var(--hp-cream) !important;
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    border-radius: var(--hp-border-radius-sm);
+    transition: var(--hp-transition-medium);
+    position: relative;
+    overflow: hidden;
 }
 
-/* File uploader */
-.stFileUploader {
-    background-color: #ffffff;
-    color: #212529;
+/* 6. IMPROVEMENT: Professional tab hover effect with gradient border */
+.stTabs [data-baseweb="tab"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+    opacity: 0;
+    transition: var(--hp-transition-medium);
 }
 
-/* Metrics */
-.stMetric {
-    background-color: #ffffff;
-    border: 1px solid #e1e8ed;
-    border-radius: 8px;
-    padding: 1rem;
-}
-.stMetric label {
-    color: #001f3f !important;
-}
-.stMetric [data-testid="metric-value"] {
-    color: #212529 !important;
+.stTabs [data-baseweb="tab"]:hover::before {
+    opacity: 1;
 }
 
-/* DataFrame */
-.stDataFrame {
-    border: 1px solid #e1e8ed;
-    border-radius: 8px;
-    background-color: #ffffff;
+.stTabs [data-baseweb="tab"]:hover {
+    color: var(--hp-light-gold) !important;
+    transform: translateY(-1px);
 }
 
-/* Checkboxes and other widgets */
-.stCheckbox {
-    color: #212529 !important;
-}
-
-.stCheckbox > label {
-    color: #212529 !important;
-}
-
-/* Info/warning/error messages */
-.stAlert {
-    background-color: #ffffff;
-    color: #212529;
-    border-radius: 8px;
-}
-
-/* Topic display box */
-.topic-display-box {
-    background-color: hsl(var(--topic-hue, 210), 70%, 90%);
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin: 8px 0;
-    text-align: center;
-    color: #001f3f;
+.stTabs [data-baseweb="tab--selected"] {
+    background: linear-gradient(135deg, var(--hp-gold) 0%, var(--hp-dark-gold) 100%);
+    color: var(--hp-dark-navy) !important;
     font-weight: 600;
+    box-shadow: 
+        0 2px 8px rgba(212, 175, 55, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* Ensure all text in main content area is visible */
-.main * {
-    color: inherit;
+.stTabs [data-testid="stTabContent"] {
+    background: var(--hp-light-navy);
+    padding: 2rem;
+    border-radius: 0 0 var(--hp-border-radius-md) var(--hp-border-radius-md);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-top: none;
+    box-shadow: 0 4px 20px var(--hp-shadow-medium);
 }
 
-.main .stMarkdown * {
-    color: #212529 !important;
+/* === FORM ELEMENTS === */
+
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stSelectbox > div > div > select {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 2px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: var(--hp-border-radius-sm);
+    padding: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    transition: var(--hp-transition-medium);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Main content specific button styling */
-.main .stButton>button {
-    border: 2px solid #d4a017;
-    background-color: #001f3f;
-    color: #d4a017;
+/* 7. IMPROVEMENT: Enhanced focus states with glow effect */
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    border-color: var(--hp-gold) !important;
+    box-shadow: 
+        0 0 0 3px rgba(212, 175, 55, 0.2) !important,
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(212, 175, 55, 0.1) !important;
+    transform: translateY(-1px);
 }
 
-.main .stButton>button:hover {
-    background-color: #d4a017;
-    color: #001f3f;
+.stTextInput > div > div > input::placeholder,
+.stTextArea > div > div > textarea::placeholder {
+    color: var(--hp-medium-grey) !important;
+    font-style: italic;
 }
 
-/* --- Widget visibility fix for main content --- */
+/* === SELECTBOX === */
 
-/* Text inputs and textareas */
-.main .stTextInput input,
-.main .stTextArea textarea {
-    background-color: #fff !important;
-    color: #212529 !important;
-    border: 1px solid #ced4da !important;
+.stSelectbox > div > div {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 2px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: var(--hp-border-radius-sm);
+    transition: var(--hp-transition-medium);
+    box-shadow: 0 2px 8px var(--hp-shadow-light);
 }
 
-/* Placeholder text in text inputs and textareas */
-.main .stTextInput input::placeholder,
-.main .stTextArea textarea::placeholder {
-    color: #888 !important;
-    opacity: 1 !important;
+/* 8. IMPROVEMENT: Dropdown hover effect */
+.stSelectbox > div > div:hover {
+    border-color: rgba(212, 175, 55, 0.5) !important;
+    box-shadow: 0 4px 12px var(--hp-shadow-light);
+    transform: translateY(-1px);
 }
 
-/* File uploader */
-.main .stFileUploader,
-.main .stFileUploader label,
-.main .stFileUploader div {
-    background-color: #fff !important;
-    color: #212529 !important;
+.stSelectbox > div > div > div {
+    color: var(--hp-cream) !important;
 }
 
-/* Selectbox and dropdowns */
-.main .stSelectbox > div > div,
-.main .stSelectbox label {
-    background-color: #fff !important;
-    color: #212529 !important;
+/* === MULTISELECT === */
+
+.stMultiSelect > div > div {
+    background: var(--hp-light-navy) !important;
+    border: 2px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: var(--hp-border-radius-sm);
+    transition: var(--hp-transition-medium);
 }
 
-/* Checkbox and radio labels */
-.main .stCheckbox > label,
-.main .stRadio > label {
-    color: #212529 !important;
+.stMultiSelect > div > div > div {
+    color: var(--hp-cream) !important;
 }
 
-/* Markdown and text in main area */
-.main .stMarkdown,
-.main .stMarkdown * {
-    color: #212529 !important;
+/* === CHECKBOXES AND RADIO === */
+
+.stCheckbox > label,
+.stRadio > label {
+    color: var(--hp-cream) !important;
+    transition: var(--hp-transition-fast);
 }
 
-/* Button text */
-.main .stButton > button {
-    color: #fff !important;
+/* 9. IMPROVEMENT: Enhanced checkbox/radio styling */
+.stCheckbox > label:hover,
+.stRadio > label:hover {
+    color: var(--hp-light-gold) !important;
+    transform: translateX(2px);
 }
 
-/* --- AGGRESSIVE TEXT VISIBILITY FIX --- */
-
-/* Force all text in main content to be dark */
-.main * {
-    color: #212529 !important;
+.stCheckbox input[type="checkbox"]:checked,
+.stRadio input[type="radio"]:checked {
+    background-color: var(--hp-gold) !important;
+    border-color: var(--hp-gold) !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
 }
 
-/* Override specific Streamlit widget styling */
-div[data-testid="stApp"] .main .stTextInput > div > div > input {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border: 1px solid #ced4da !important;
+/* === SLIDERS === */
+
+.stSlider > div > div > div > div {
+    background: var(--hp-gold) !important;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
 }
 
-div[data-testid="stApp"] .main .stTextArea > div > div > textarea {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border: 1px solid #ced4da !important;
+/* 10. IMPROVEMENT: Professional slider track */
+.stSlider > div > div > div {
+    background: var(--hp-dark-navy) !important;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Placeholder text */
-div[data-testid="stApp"] .main input::placeholder,
-div[data-testid="stApp"] .main textarea::placeholder {
-    color: #6c757d !important;
-    opacity: 1 !important;
+/* === FILE UPLOADER === */
+
+.stFileUploader > div {
+    background: var(--hp-light-navy) !important;
+    border: 2px dashed rgba(212, 175, 55, 0.5) !important;
+    border-radius: var(--hp-border-radius-md);
+    padding: 2rem;
+    transition: var(--hp-transition-medium);
+    position: relative;
+    overflow: hidden;
 }
 
-/* File uploader text */
-div[data-testid="stApp"] .main div[data-testid="stFileUploader"] * {
-    background-color: #ffffff !important;
-    color: #212529 !important;
+/* 11. IMPROVEMENT: File uploader hover animation */
+.stFileUploader > div:hover {
+    border-color: rgba(212, 175, 55, 0.8) !important;
+    background: rgba(42, 52, 66, 0.8) !important;
+    transform: scale(1.02);
 }
 
-/* All labels */
-div[data-testid="stApp"] .main label {
-    color: #212529 !important;
+.stFileUploader > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(212, 175, 55, 0.1), 
+        transparent);
+    transition: var(--hp-transition-slow);
 }
 
-/* All markdown text */
-div[data-testid="stApp"] .main div[data-testid="stMarkdownContainer"] * {
-    color: #212529 !important;
+.stFileUploader > div:hover::before {
+    left: 100%;
 }
 
-/* Selectbox text */
-div[data-testid="stApp"] .main div[data-testid="stSelectbox"] * {
-    background-color: #ffffff !important;
-    color: #212529 !important;
+.stFileUploader > div > div {
+    color: var(--hp-cream) !important;
+    position: relative;
+    z-index: 1;
 }
 
-/* Button text should remain white on dark background */
-div[data-testid="stApp"] .main button {
-    color: #ffffff !important;
+.stFileUploader button {
+    background: var(--hp-gold) !important;
+    color: var(--hp-dark-navy) !important;
+    border: none !important;
+    border-radius: var(--hp-border-radius-sm);
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: var(--hp-transition-medium);
 }
 
-/* Headers should be dark blue */
-div[data-testid="stApp"] .main h1,
-div[data-testid="stApp"] .main h2,
-div[data-testid="stApp"] .main h3,
-div[data-testid="stApp"] .main h4,
-div[data-testid="stApp"] .main h5,
-div[data-testid="stApp"] .main h6 {
-    color: #001f3f !important;
+.stFileUploader button:hover {
+    background: var(--hp-light-gold) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
 }
 
-/* === EMERGENCY TEXT VISIBILITY FIX === */
-/* Force everything in main content to be visible */
+/* === EXPANDERS === */
 
-[data-testid="stApp"] .main,
-[data-testid="stApp"] .main * {
-    color: #000000 !important;
+.stExpander {
+    background: var(--hp-light-navy);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--hp-border-radius-md);
+    margin: 1rem 0;
+    overflow: hidden;
+    transition: var(--hp-transition-medium);
+    box-shadow: 0 2px 8px var(--hp-shadow-light);
 }
 
-/* Force white backgrounds on all inputs */
-[data-testid="stApp"] .main input,
-[data-testid="stApp"] .main textarea,
-[data-testid="stApp"] .main select {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #cccccc !important;
+/* 12. IMPROVEMENT: Professional expander hover effect */
+.stExpander:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 0 4px 16px var(--hp-shadow-light);
+    transform: translateY(-1px);
 }
 
-/* Force file uploader to be visible */
-[data-testid="stApp"] .main [data-testid="stFileUploader"] {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    border: 2px solid #cccccc !important;
+.stExpander > div > div > div[data-testid="stExpanderHeader"] {
+    background: linear-gradient(135deg, var(--hp-dark-navy) 0%, var(--hp-navy) 100%);
+    color: var(--hp-light-gold) !important;
+    font-weight: 600;
+    padding: 1rem;
+    transition: var(--hp-transition-medium);
+    position: relative;
 }
 
-/* Force all text elements to be black */
-[data-testid="stApp"] .main p,
-[data-testid="stApp"] .main span,
-[data-testid="stApp"] .main div,
-[data-testid="stApp"] .main label {
-    color: #000000 !important;
+.stExpander > div > div > div[data-testid="stExpanderHeader"]:hover {
+    background: linear-gradient(135deg, var(--hp-navy) 0%, var(--hp-light-navy) 100%);
 }
 
-/* Keep buttons readable */
-[data-testid="stApp"] .main button {
-    background-color: #0066cc !important;
-    color: #ffffff !important;
-    border: 1px solid #0066cc !important;
+.stExpander > div > div > div[data-testid="stExpanderContent"] {
+    background: var(--hp-light-navy);
+    color: var(--hp-cream) !important;
+    padding: 1.5rem;
 }
 
-/* Headers */
-[data-testid="stApp"] .main h1,
-[data-testid="stApp"] .main h2, 
-[data-testid="stApp"] .main h3 {
-    color: #000080 !important;
+/* === DATAFRAMES === */
+
+.stDataFrame {
+    background: var(--hp-light-navy) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--hp-border-radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--hp-shadow-medium);
+    transition: var(--hp-transition-medium);
+}
+
+/* 13. IMPROVEMENT: Professional table hover effect */
+.stDataFrame:hover {
+    box-shadow: 0 8px 32px var(--hp-shadow-medium);
+    transform: translateY(-2px);
+}
+
+.stDataFrame table {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+}
+
+.stDataFrame th {
+    background: var(--hp-dark-navy) !important;
+    color: var(--hp-light-gold) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
+    padding: 1rem 0.75rem;
+    border-bottom: 2px solid var(--hp-gold);
+}
+
+.stDataFrame td {
+    background: var(--hp-light-navy) !important;
+    color: var(--hp-cream) !important;
+    padding: 0.75rem;
+    transition: var(--hp-transition-fast);
+}
+
+/* 14. IMPROVEMENT: Table row hover effect */
+.stDataFrame tr:hover td {
+    background: rgba(212, 175, 55, 0.1) !important;
+    color: var(--hp-light-gold) !important;
+}
+
+/* === METRICS === */
+
+.stMetric {
+    background: linear-gradient(135deg, var(--hp-light-navy) 0%, var(--hp-navy) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--hp-border-radius-md);
+    padding: 1.5rem;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(212, 175, 55, 0.1);
+    transition: var(--hp-transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 15. IMPROVEMENT: Metric cards hover animation */
+.stMetric:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.5);
+}
+
+.stMetric::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hp-gold), var(--hp-light-gold), var(--hp-gold));
+    opacity: 0;
+    transition: var(--hp-transition-medium);
+}
+
+.stMetric:hover::before {
+    opacity: 1;
+}
+
+.stMetric > div {
+    color: var(--hp-cream) !important;
+}
+
+.stMetric [data-testid="metric-value"] {
+    color: var(--hp-light-gold) !important;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* === ALERTS === */
+
+.stAlert {
+    border-radius: var(--hp-border-radius-md);
+    border: none;
+    padding: 1rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--hp-shadow-medium);
+    transition: var(--hp-transition-medium);
+}
+
+/* 16. IMPROVEMENT: Alert hover effects */
+.stAlert:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--hp-shadow-medium);
+}
+
+.stAlert[data-baseweb="notification"][kind="info"] {
+    background: linear-gradient(135deg, var(--hp-accent-blue) 0%, rgba(74, 144, 164, 0.8) 100%);
+    color: var(--hp-text-light) !important;
+    border-left: 4px solid #87ceeb;
+}
+
+.stAlert[data-baseweb="notification"][kind="success"] {
+    background: linear-gradient(135deg, var(--hp-success) 0%, rgba(45, 90, 39, 0.8) 100%);
+    color: var(--hp-text-light) !important;
+    border-left: 4px solid #90ee90;
+}
+
+.stAlert[data-baseweb="notification"][kind="warning"] {
+    background: linear-gradient(135deg, var(--hp-warning) 0%, rgba(139, 105, 20, 0.8) 100%);
+    color: var(--hp-text-light) !important;
+    border-left: 4px solid #ffd700;
+}
+
+.stAlert[data-baseweb="notification"][kind="error"] {
+    background: linear-gradient(135deg, var(--hp-error) 0%, rgba(139, 38, 53, 0.8) 100%);
+    color: var(--hp-text-light) !important;
+    border-left: 4px solid #ff6b6b;
+}
+
+/* === CODE BLOCKS === */
+
+.stCodeBlock {
+    background: var(--hp-dark-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: var(--hp-border-radius-sm);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 2px 8px var(--hp-shadow-light);
+    transition: var(--hp-transition-medium);
+}
+
+/* 17. IMPROVEMENT: Code block hover effect */
+.stCodeBlock:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 4px 12px var(--hp-shadow-light);
+}
+
+/* === TOPIC DISPLAY BOX === */
+
+.topic-display-box {
+    background: linear-gradient(135deg, var(--hp-gold) 0%, var(--hp-dark-gold) 100%);
+    color: var(--hp-dark-navy) !important;
+    padding: 1rem;
+    border-radius: var(--hp-border-radius-md);
+    margin: 1rem 0;
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Playfair Display', serif;
+    box-shadow: 
+        0 4px 15px rgba(212, 175, 55, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: var(--hp-transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 18. IMPROVEMENT: Topic box pulse animation */
+.topic-display-box::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: var(--hp-transition-slow);
+}
+
+.topic-display-box:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.topic-display-box:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 6px 20px rgba(212, 175, 55, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* === PROGRESS BARS === */
+
+.stProgress > div > div > div {
+    background: linear-gradient(90deg, var(--hp-gold), var(--hp-light-gold)) !important;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+/* === SPINNER === */
+
+.stSpinner > div {
+    border-top-color: var(--hp-gold) !important;
+    border-right-color: var(--hp-light-gold) !important;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+}
+
+/* === SIDEBAR SPECIFIC WIDGETS === */
+
+section[data-testid="stSidebar"] .stTextInput > div > div > input,
+section[data-testid="stSidebar"] .stTextArea > div > div > textarea,
+section[data-testid="stSidebar"] .stSelectbox > div > div {
+    background: var(--hp-navy) !important;
+    color: var(--hp-cream) !important;
+    border: 1px solid rgba(212, 175, 55, 0.5) !important;
+    backdrop-filter: blur(10px);
+}
+
+section[data-testid="stSidebar"] .stSlider > div > div > div > div {
+    background: var(--hp-gold) !important;
+}
+
+/* === FOOTER === */
+
+footer {
+    background: var(--hp-dark-navy);
+    color: var(--hp-medium-grey);
+    border-top: 2px solid var(--hp-gold);
+    padding: 2rem 0;
+    position: relative;
+}
+
+/* 19. IMPROVEMENT: Professional footer styling */
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--hp-gold), 
+        transparent);
+}
+
+/* === SCROLLBARS === */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--hp-dark-navy);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--hp-gold), var(--hp-dark-gold));
+    border-radius: 6px;
+    border: 2px solid var(--hp-dark-navy);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--hp-light-gold), var(--hp-gold));
+}
+
+/* === LOGO STYLING === */
+
+section[data-testid="stSidebar"] img {
+    filter: brightness(0.9) contrast(1.1) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    border-radius: var(--hp-border-radius-sm);
+    margin-bottom: 1rem;
+    transition: var(--hp-transition-medium);
+}
+
+section[data-testid="stSidebar"] img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.0) contrast(1.2) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* === RESPONSIVE DESIGN === */
+
+@media (max-width: 768px) {
+    .main .block-container {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+    
+    .stButton > button {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* === ACCESSIBILITY === */
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--hp-light-gold);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* === ANIMATION === */
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideInFromLeft {
+    from { 
+        opacity: 0; 
+        transform: translateX(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+    }
+    50% { 
+        opacity: 0.8; 
+    }
+}
+
+/* 20. IMPROVEMENT: Staggered animation for all components */
+.stApp > div {
+    animation: fadeIn 0.6s ease-out;
+}
+
+section[data-testid="stSidebar"] {
+    animation: slideInFromLeft 0.8s ease-out;
+}
+
+.stButton > button,
+.stMetric,
+.stExpander,
+.stAlert {
+    animation: fadeIn 0.5s ease-out backwards;
+}
+
+/* Stagger animation delays */
+.stButton > button:nth-child(1) { animation-delay: 0.1s; }
+.stButton > button:nth-child(2) { animation-delay: 0.2s; }
+.stButton > button:nth-child(3) { animation-delay: 0.3s; }
+
+.stMetric:nth-child(1) { animation-delay: 0.1s; }
+.stMetric:nth-child(2) { animation-delay: 0.2s; }
+.stMetric:nth-child(3) { animation-delay: 0.3s; }
+
+/* === FORCE ALL TEXT VISIBILITY === */
+
+[data-testid="stApp"] * {
+    color: inherit !important;
+}
+
+/* Force specific Streamlit elements */
+[data-testid="stMarkdownContainer"] * {
+    color: var(--hp-cream) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] * {
+    color: var(--hp-cream) !important;
+}
+
+/* Override any remaining white backgrounds */
+.stApp [style*="background-color: rgb(255, 255, 255)"],
+.stApp [style*="background-color: white"],
+.stApp [style*="background: white"],
+.stApp [style*="background: rgb(255, 255, 255)"] {
+    background: var(--hp-navy) !important;
+}
+
+/* === PROFESSIONAL LOADING STATES === */
+
+.stSpinner {
+    position: relative;
+}
+
+.stSpinner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--hp-gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === PROFESSIONAL TOOLTIPS === */
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    background: var(--hp-dark-navy);
+    color: var(--hp-cream);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--hp-border-radius-sm);
+    border: 1px solid var(--hp-gold);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 12px var(--hp-shadow-medium);
+    animation: fadeIn 0.3s ease-out;
 }
 

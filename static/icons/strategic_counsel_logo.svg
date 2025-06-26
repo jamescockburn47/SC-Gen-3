@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#0066cc" stroke="#003d7a" stroke-width="3"/>
+  
+  <!-- Scales of justice base -->
+  <rect x="95" y="140" width="10" height="40" fill="#ffffff"/>
+  <ellipse cx="100" cy="180" rx="25" ry="8" fill="#ffffff"/>
+  
+  <!-- Central column -->
+  <rect x="97" y="80" width="6" height="70" fill="#ffffff"/>
+  
+  <!-- Scale beam -->
+  <rect x="70" y="78" width="60" height="4" fill="#ffffff" rx="2"/>
+  
+  <!-- Left scale -->
+  <g transform="translate(75,82)">
+    <!-- Chain -->
+    <line x1="0" y1="0" x2="0" y2="20" stroke="#ffffff" stroke-width="2"/>
+    <line x1="-2" y1="2" x2="2" y2="2" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="6" x2="2" y2="6" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="10" x2="2" y2="10" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="14" x2="2" y2="14" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="18" x2="2" y2="18" stroke="#ffffff" stroke-width="1"/>
+    
+    <!-- Scale pan -->
+    <ellipse cx="0" cy="25" rx="15" ry="3" fill="#ffffff"/>
+    <rect x="-15" y="22" width="30" height="6" fill="#ffffff" rx="3"/>
+  </g>
+  
+  <!-- Right scale -->
+  <g transform="translate(125,82)">
+    <!-- Chain -->
+    <line x1="0" y1="0" x2="0" y2="20" stroke="#ffffff" stroke-width="2"/>
+    <line x1="-2" y1="2" x2="2" y2="2" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="6" x2="2" y2="6" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="10" x2="2" y2="10" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="14" x2="2" y2="14" stroke="#ffffff" stroke-width="1"/>
+    <line x1="-2" y1="18" x2="2" y2="18" stroke="#ffffff" stroke-width="1"/>
+    
+    <!-- Scale pan -->
+    <ellipse cx="0" cy="25" rx="15" ry="3" fill="#ffffff"/>
+    <rect x="-15" y="22" width="30" height="6" fill="#ffffff" rx="3"/>
+  </g>
+  
+  <!-- AI Circuit elements on scales -->
+  <!-- Left scale - Traditional law -->
+  <g transform="translate(75,95)">
+    <circle cx="-8" cy="5" r="3" fill="#0066cc"/>
+    <circle cx="8" cy="5" r="3" fill="#0066cc"/>
+    <rect x="-8" y="2" width="16" height="1" fill="#0066cc"/>
+    <rect x="-1" y="-3" width="2" height="8" fill="#0066cc"/>
+  </g>
+  
+  <!-- Right scale - AI Technology -->
+  <g transform="translate(125,95)">
+    <polygon points="-8,2 -4,8 4,8 8,2 4,-4 -4,-4" fill="#00cc66"/>
+    <circle cx="0" cy="2" r="2" fill="#0066cc"/>
+    <rect x="-6" y="0" width="12" height="1" fill="#0066cc"/>
+    <rect x="-1" y="-2" width="2" height="6" fill="#0066cc"/>
+  </g>
+  
+  <!-- Strategic elements - Chess piece crown -->
+  <g transform="translate(100,45)">
+    <polygon points="-12,15 -8,5 -4,10 0,0 4,10 8,5 12,15" fill="#ffffff"/>
+    <rect x="-12" y="15" width="24" height="4" fill="#ffffff" rx="2"/>
+    <circle cx="-8" cy="8" r="2" fill="#0066cc"/>
+    <circle cx="0" cy="3" r="2" fill="#0066cc"/>
+    <circle cx="8" cy="8" r="2" fill="#0066cc"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="35" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">STRATEGIC</text>
+  <text x="100" y="200" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">COUNSEL</text>
+  
+  <!-- AI indicators - small dots around the edge -->
+  <circle cx="170" cy="70" r="3" fill="#00cc66" opacity="0.8"/>
+  <circle cx="160" cy="40" r="2" fill="#00cc66" opacity="0.6"/>
+  <circle cx="130" cy="25" r="2" fill="#00cc66" opacity="0.7"/>
+  <circle cx="70" cy="25" r="2" fill="#00cc66" opacity="0.6"/>
+  <circle cx="40" cy="40" r="2" fill="#00cc66" opacity="0.7"/>
+  <circle cx="30" cy="70" r="3" fill="#00cc66" opacity="0.8"/>
+  <circle cx="30" cy="130" r="3" fill="#00cc66" opacity="0.8"/>
+  <circle cx="40" cy="160" r="2" fill="#00cc66" opacity="0.6"/>
+  <circle cx="160" cy="160" r="2" fill="#00cc66" opacity="0.7"/>
+  <circle cx="170" cy="130" r="3" fill="#00cc66" opacity="0.8"/>
+</svg> 

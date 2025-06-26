@@ -1,13 +1,22 @@
-Set WshShell = WScript.CreateObject("WScript.Shell")
-Set oShellLink = WshShell.CreateShortcut(WshShell.SpecialFolders("Desktop") & "\Strategic Counsel.lnk")
+Set WshShell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
 
-oShellLink.TargetPath = "cmd"
-oShellLink.Arguments = "/c ""wsl -d Ubuntu-22.04 bash -c 'cd /home/jcockburn/SC-Gen-3 && /home/jcockburn/.local/bin/streamlit run app.py --server.headless false --server.port 8501 --browser.gatherUsageStats false'"""
-oShellLink.WorkingDirectory = "C:\Users\James"
-oShellLink.Description = "Strategic Counsel - AI Legal Analysis Platform"
-oShellLink.WindowStyle = 1
+' Get user's desktop path
+DesktopPath = WshShell.SpecialFolders("Desktop")
+
+' Create shortcut
+Set oShellLink = WshShell.CreateShortcut(DesktopPath & "\Strategic Counsel.lnk")
+oShellLink.TargetPath = DesktopPath & "\Strategic Counsel.bat"
+oShellLink.WorkingDirectory = DesktopPath
+oShellLink.Description = "Strategic Counsel - Multi-Agent AI Legal Analysis Platform"
+
+' Set icon if the PNG file exists (Windows will convert it automatically)
+IconPath = DesktopPath & "\strategic_counsel_logo.png"
+If fso.FileExists(IconPath) Then
+    oShellLink.IconLocation = IconPath
+End If
 
 oShellLink.Save
 
-WScript.Echo "Desktop shortcut created successfully!"
-WScript.Echo "You can now double-click 'Strategic Counsel' on your desktop to launch the app." 
+WScript.Echo "Strategic Counsel shortcut created successfully!"
+WScript.Echo "Location: " & DesktopPath & "\Strategic Counsel.lnk" 
