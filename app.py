@@ -582,13 +582,111 @@ def main():
             st.session_state.ocr_method = "local"
             st.session_state.ocr_method_radio = 0
 
+    # Clear workflow guidance banner
+    st.markdown("""
+    <div style="background: linear-gradient(90deg, #d4af37 0%, #b8941f 100%); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <h2 style="color: #1a2332; margin: 0; text-align: center;">📚 Strategic Counsel Document Analysis</h2>
+        <div style="text-align: center; margin-top: 15px;">
+            <span style="background: rgba(26,35,50,0.1); padding: 8px 15px; border-radius: 20px; margin: 0 5px; color: #1a2332; font-weight: bold;">
+                📁 1. Upload Documents
+            </span>
+            <span style="color: #1a2332; font-size: 18px; margin: 0 10px;">→</span>
+            <span style="background: rgba(26,35,50,0.1); padding: 8px 15px; border-radius: 20px; margin: 0 5px; color: #1a2332; font-weight: bold;">
+                🔍 2. Search & Analyze  
+            </span>
+            <span style="color: #1a2332; font-size: 18px; margin: 0 10px;">→</span>
+            <span style="background: rgba(26,35,50,0.1); padding: 8px 15px; border-radius: 20px; margin: 0 5px; color: #1a2332; font-weight: bold;">
+                📊 3. Results
+            </span>
+        </div>
+        <p style="text-align: center; margin: 10px 0 0 0; color: #1a2332; opacity: 0.8;">
+            <strong>Simple workflow:</strong> Upload your documents first, then ask questions to get AI-powered analysis
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
     # Create the main tab structure for the application
-    tab_ai_consultation, tab_companies_house, tab_ch_rag, tab_group_structure, tab_document_management, tab_rag, tab_help = st.tabs([
-        "🤖 AI Consultation", "🏢 Companies House Analysis", "🏢📊 CH RAG Analysis", "📊 Group Structure", 
-        "📚 Document Management", "🔍 Document RAG", "❓ Help & About"
+    tab_upload, tab_search, tab_advanced = st.tabs([
+        "📁 Upload Documents", "🔍 Search & Analyze", "⚙️ Advanced Tools"
     ])
 
-    with tab_ai_consultation:
+    with tab_upload:
+        st.markdown("### 📁 Step 1: Upload Your Documents")
+        st.markdown("Start here! Upload documents to begin analysis.")
+        
+        # Import and render simplified document workflow interface
+        try:
+            from simple_document_workflow import render_simple_document_management as render_document_management
+            
+            # Get the current RAG pipeline for the matter
+            from local_rag_pipeline import rag_session_manager
+            current_matter = st.session_state.current_topic
+            pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
+            
+            # Show current status prominently
+            status = pipeline.get_document_status()
+            if status['total_documents'] > 0:
+                st.success(f"✅ Ready! You have {status['total_documents']} documents ({status['total_chunks']} text chunks) loaded and ready for analysis.")
+                st.info("👉 **Next step**: Go to the 'Search & Analyze' tab to ask questions about your documents.")
+            else:
+                st.warning("⚠️ No documents uploaded yet. Upload documents below to get started.")
+            
+            # Render the simplified workflow with the pipeline
+            render_document_management(pipeline)
+            
+        except ImportError as e:
+            st.error(f"❌ Document Management interface not available: {e}")
+            st.info("💡 Please ensure simple_document_workflow.py is available")
+        except Exception as e:
+            st.error(f"❌ Error in Document Management: {e}")
+            logger.error(f"Error in Document Management tab: {e}", exc_info=True)
+
+    with tab_search:
+        st.markdown("### 🔍 Step 2: Search & Analyze Your Documents")
+        
+        # Check if documents are available first
+        try:
+            from local_rag_pipeline import rag_session_manager
+            current_matter = st.session_state.current_topic
+            pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
+            status = pipeline.get_document_status()
+            
+            if status['total_documents'] == 0:
+                st.warning("⚠️ **No documents loaded yet!**")
+                st.info("👈 Please go to the '📁 Upload Documents' tab first to upload documents.")
+                st.markdown("---")
+                st.markdown("#### What you can do once documents are uploaded:")
+                st.markdown("- Ask questions about your documents")
+                st.markdown("- Get AI-powered analysis and summaries")
+                st.markdown("- Extract key facts and insights")
+                st.markdown("- Generate timeline analyses")
+            else:
+                st.success(f"✅ Ready to analyze {status['total_documents']} documents ({status['total_chunks']} text chunks)")
+                
+                # Render the Simple RAG interface
+                try:
+                    from simple_rag_interface import render_simple_rag_interface
+                    render_simple_rag_interface()
+                except ImportError as e:
+                    st.error(f"❌ Search interface not available: {e}")
+                    st.info("💡 Please check that simple_rag_interface.py is available")
+                except Exception as e:
+                    st.error(f"❌ Error in search interface: {e}")
+                    st.info("Please check the system logs for details")
+                
+        except Exception as e:
+            st.error(f"❌ Error accessing document system: {e}")
+
+    with tab_advanced:
+        st.markdown("### ⚙️ Advanced Tools")
+        st.markdown("Additional analysis and configuration options.")
+        
+        # Create sub-tabs for advanced features
+        adv_tab_ai, adv_tab_ch, adv_tab_group, adv_tab_help = st.tabs([
+            "🤖 AI Consultation", "🏢 Companies House", "📊 Group Analysis", "❓ Help"
+        ])
+
+    with adv_tab_ai:
         st.markdown("### AI Legal Consultation")
         
         # AI consultation should work independently without requiring document uploads
@@ -973,7 +1071,7 @@ Respond with a JSON object containing:
                         st.error(f"Error generating consultation: {e}")
                         logger.error(f"Error in AI consultation: {e}", exc_info=True)
 
-    with tab_companies_house:
+    with adv_tab_ch:
         st.markdown("### Companies House Analysis")
         
         # Companies House specific inputs
@@ -1355,41 +1453,7 @@ Respond with a JSON object containing:
             
             m_col3_disp_final.metric("Est. Cost", cost_display_final_metric if cost_display_final_metric != "N/A" else "£0.0000")
 
-    with tab_ch_rag:
-        # Companies House RAG Analysis Tab
-        try:
-            from companies_house_rag_interface import render_companies_house_rag_interface
-            render_companies_house_rag_interface()
-        except ImportError as e:
-            st.error(f"❌ Companies House RAG interface not available: {e}")
-            st.info("💡 Please ensure companies_house_rag_interface.py is available")
-            st.markdown("""
-            ### 🔧 Setup Instructions
-            
-            To enable Companies House RAG Analysis:
-            
-            1. **Install Dependencies:**
-            ```bash
-            pip install aiohttp faiss-cpu sentence-transformers PyPDF2
-            ```
-            
-            2. **Configure API Key:**
-            Set `CH_API_KEY` in your config.py file
-            
-            3. **Restart Application:**
-            The interface will be available after restart
-            
-            ### 🌟 Features Coming Soon:
-            - **Local LLM OCR** for scanned PDFs
-            - **RAG-powered semantic search** across CH documents  
-            - **Comprehensive company analysis** with document grounding
-            - **Alternative to cloud processing** for enhanced privacy
-            """)
-        except Exception as e:
-            st.error(f"❌ Error in Companies House RAG: {e}")
-            logger.error(f"Error in CH RAG tab: {e}", exc_info=True)
-
-    with tab_group_structure:
+    with adv_tab_group:
         if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
             # Simplified OCR - no AWS Textract options
             ocr_handler_for_group_tab = None  
@@ -1421,40 +1485,7 @@ Respond with a JSON object containing:
         else:
             st.error("Group Structure functionality is not available ('group_structure_utils' module failed to load).")
 
-    # --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
-
-    with tab_document_management:
-        # Import and render simplified document workflow interface
-        try:
-            from simple_document_workflow import render_simple_document_management as render_document_management
-            
-            # Get the current RAG pipeline for the matter
-            from local_rag_pipeline import rag_session_manager
-            current_matter = st.session_state.current_topic
-            pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
-            
-            # Render the simplified workflow with the pipeline
-            render_document_management(pipeline)
-            
-        except ImportError as e:
-            st.error(f"❌ Document Management interface not available: {e}")
-            st.info("💡 Please ensure simple_document_workflow.py is available")
-        except Exception as e:
-            st.error(f"❌ Error in Document Management: {e}")
-            logger.error(f"Error in Document Management tab: {e}", exc_info=True)
-
-    with tab_rag:
-        try:
-            from simple_rag_interface import render_simple_rag_interface
-            render_simple_rag_interface()
-        except ImportError as e:
-            st.error(f"❌ Simple RAG interface not available: {e}")
-            st.info("💡 Please check that simple_rag_interface.py is available")
-        except Exception as e:
-            st.error(f"❌ Error in RAG interface: {e}")
-            st.info("Please check the system logs for details")
-
-    with tab_help:
+    with adv_tab_help:
         try:
             from help_page import render_help_page
             render_help_page()
