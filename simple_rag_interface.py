@@ -9,28 +9,35 @@ No clutter, just ask questions and get answers.
 
 import streamlit as st
 import asyncio
+import aiohttp
+import time
 from typing import Dict, Any, List
 from local_rag_pipeline import rag_session_manager
 
-def simple_rag_query_sync(query: str, matter_id: str) -> Dict[str, Any]:
-    """Synchronous RAG query that works reliably in Streamlit"""
+async def intelligent_rag_query_async(query: str, matter_id: str) -> Dict[str, Any]:
+    """AI-powered RAG query that actually understands legal disputes"""
     
     try:
         # Get the RAG pipeline
-        from local_rag_pipeline import rag_session_manager
         pipeline = rag_session_manager.get_or_create_pipeline(matter_id)
         
-        # Detect if this is a timeline query
+        # Detect query type for optimal retrieval
         timeline_keywords = ['timeline', 'chronological', 'sequence', 'dates', 'history', 'progression', 'order', 'when', 'date']
         is_timeline_query = any(keyword in query.lower() for keyword in timeline_keywords)
         
-        # Use enhanced settings for timeline queries  
+        dispute_keywords = ['dispute', 'case', 'litigation', 'claim', 'allegation', 'parties', 'plaintiff', 'defendant', 'about']
+        is_dispute_query = any(keyword in query.lower() for keyword in dispute_keywords)
+        
+        # Use enhanced settings for different query types
         if is_timeline_query:
-            max_chunks = 50  # Much more comprehensive for timelines
-            if 'st' in globals():
-                st.info("🕒 **Timeline Query Detected** - Using comprehensive document coverage for chronological analysis")
+            max_chunks = 50
+            chunk_strategy = "timeline"
+        elif is_dispute_query:
+            max_chunks = 30  # More context needed to understand disputes
+            chunk_strategy = "comprehensive"
         else:
-            max_chunks = 25  # Standard enhanced retrieval
+            max_chunks = 25
+            chunk_strategy = "standard"
         
         # Get search results
         search_results = pipeline.search_documents(query, top_k=max_chunks)
@@ -40,20 +47,20 @@ def simple_rag_query_sync(query: str, matter_id: str) -> Dict[str, Any]:
                 'answer': 'No relevant documents found for your query. Please try rephrasing your question.',
                 'sources': [],
                 'chunks_used': 0,
-                'model_used': 'basic_search',
+                'model_used': 'no_model',
                 'generation_time': 0,
                 'is_timeline_query': is_timeline_query,
                 'max_chunks_used': max_chunks
             }
         
-        # Create a comprehensive answer from search results
+        # Build rich context for AI analysis
         context_parts = []
         sources = []
         
         for i, result in enumerate(search_results[:max_chunks]):
             if isinstance(result, dict) and 'text' in result:
                 text = result['text']
-                if text and len(text.strip()) > 20:  # Only include substantial content
+                if text and len(text.strip()) > 20:
                     context_parts.append(text)
                     
                     # Build source info
@@ -64,49 +71,175 @@ def simple_rag_query_sync(query: str, matter_id: str) -> Dict[str, Any]:
                     }
                     sources.append(source_info)
         
-        # Create structured answer
-        if context_parts:
-            # Simple but effective answer generation
-            answer_parts = []
-            
-            # Timeline-specific structure
-            if is_timeline_query:
-                answer_parts.append("**Timeline Analysis:**\\n")
-                answer_parts.append("Based on the documents, here are the key events and dates:\\n")
-            else:
-                answer_parts.append("**Analysis:**\\n")
-                answer_parts.append("Based on the available documents:\\n")
-            
-            # Add key content from top results
-            for i, content in enumerate(context_parts[:5]):  # Use top 5 for answer
-                answer_parts.append(f"\\n**Key Point {i+1}:**")
-                answer_parts.append(content[:300] + '...' if len(content) > 300 else content)
-            
-            # Add summary
-            answer_parts.append(f"\\n**Summary:**")
-            answer_parts.append(f"The analysis is based on {len(sources)} relevant document sections.")
-            
-            if is_timeline_query:
-                answer_parts.append("For chronological accuracy, this analysis used enhanced document coverage.")
-            
-            final_answer = '\\n'.join(answer_parts)
-        else:
-            final_answer = "Found documents but could not extract meaningful content. Please try a different query."
+        if not context_parts:
+            return {
+                'answer': 'Found documents but could not extract meaningful content. Please try a different query.',
+                'sources': [],
+                'chunks_used': 0,
+                'model_used': 'no_model',
+                'generation_time': 0
+            }
         
-        return {
-            'answer': final_answer,
-            'sources': sources,
-            'chunks_used': len(context_parts),
-            'model_used': 'basic_rag',
-            'generation_time': 0.5,  # Approximate processing time
-            'protocol_compliance': {'overall_score': 0.8},  # Good basic compliance
-            'is_timeline_query': is_timeline_query,
-            'max_chunks_used': max_chunks
-        }
+        # Create comprehensive context for AI
+        context = "\n\n".join(context_parts)
+        
+        # Create specialized prompts based on query type
+        if is_dispute_query or "about" in query.lower():
+            prompt = f"""You are a legal AI assistant analyzing court documents. The user is asking about the nature of a legal dispute.
+
+QUESTION: {query}
+
+DOCUMENTS:
+{context}
+
+Please provide a comprehensive analysis that covers:
+
+1. **DISPUTE OVERVIEW**: What is this case/dispute fundamentally about? What are the core issues?
+
+2. **PARTIES INVOLVED**: Who are the main parties (plaintiff, defendant, other key figures)?
+
+3. **KEY ALLEGATIONS/CLAIMS**: What are the primary legal claims or allegations being made?
+
+4. **BACKGROUND/CONTEXT**: What led to this dispute? What are the underlying facts?
+
+5. **LEGAL ISSUES**: What are the main legal questions or issues at stake?
+
+6. **DAMAGES/RELIEF SOUGHT**: What compensation or relief is being sought?
+
+Provide a clear, coherent analysis based ONLY on the documents provided. If specific information isn't available in the documents, say so. Be comprehensive but concise."""
+
+        elif is_timeline_query:
+            prompt = f"""You are a legal AI assistant analyzing court documents for chronological information.
+
+QUESTION: {query}
+
+DOCUMENTS:
+{context}
+
+Please create a chronological timeline based on the documents. Include:
+
+1. **KEY DATES**: Important dates mentioned in chronological order
+2. **EVENTS**: What happened on or around each date
+3. **SIGNIFICANCE**: Why each event is important to the case
+4. **CONTEXT**: How events relate to each other chronologically
+
+Present the timeline in a clear, organized format. Only include information that is explicitly stated in the documents."""
+
+        else:
+            prompt = f"""You are a legal AI assistant. Analyze the provided court documents to answer the user's question comprehensively and accurately.
+
+QUESTION: {query}
+
+DOCUMENTS:
+{context}
+
+Please provide a thorough, well-structured answer based ONLY on the information in the documents. 
+
+Structure your response with:
+1. **DIRECT ANSWER**: Address the specific question asked
+2. **SUPPORTING DETAILS**: Relevant details that support your answer
+3. **CONTEXT**: Additional context that helps understand the answer
+4. **LIMITATIONS**: Note if information is incomplete or unclear
+
+Be precise, factual, and comprehensive. If the documents don't contain enough information to fully answer the question, explain what information is missing."""
+        
+        # Use the pipeline's AI generation
+        start_time = time.time()
+        
+        # Try to use generate_rag_answer if available
+        try:
+            # Use the best available model
+            model = "mixtral:latest"  # Most powerful model for comprehensive legal analysis
+            
+            # Generate AI response using the pipeline's method
+            result = await pipeline.generate_rag_answer(
+                query, 
+                model_name=model,
+                max_context_chunks=len(context_parts),
+                temperature=0.1  # Low temperature for factual accuracy
+            )
+            
+            end_time = time.time()
+            generation_time = end_time - start_time
+            
+            return {
+                'answer': result.get('answer', 'AI model generated an empty response.'),
+                'sources': sources,
+                'chunks_used': len(context_parts),
+                'model_used': model,
+                'generation_time': generation_time,
+                'protocol_compliance': result.get('protocol_compliance', {'overall_score': 0.8}),
+                'is_timeline_query': is_timeline_query,
+                'max_chunks_used': max_chunks,
+                'strategy_used': chunk_strategy,
+                'context_length': len(context)
+            }
+            
+        except Exception as llm_error:
+            # Fallback to direct Ollama call with custom prompt if pipeline method fails
+            try:
+                async with aiohttp.ClientSession() as session:
+                    ollama_payload = {
+                        "model": "mixtral:latest",
+                        "prompt": prompt,
+                        "stream": False,
+                        "options": {
+                            "temperature": 0.1,
+                            "top_p": 0.9
+                        }
+                    }
+                    
+                    async with session.post("http://localhost:11434/api/generate", json=ollama_payload) as response:
+                        if response.status == 200:
+                            result = await response.json()
+                            end_time = time.time()
+                            generation_time = end_time - start_time
+                            
+                            return {
+                                'answer': result.get('response', 'AI model generated an empty response.'),
+                                'sources': sources,
+                                'chunks_used': len(context_parts),
+                                'model_used': 'mixtral:latest',
+                                'generation_time': generation_time,
+                                'protocol_compliance': {'overall_score': 0.8},
+                                'is_timeline_query': is_timeline_query,
+                                'max_chunks_used': max_chunks,
+                                'strategy_used': chunk_strategy + '_fallback',
+                                'context_length': len(context)
+                            }
+                        else:
+                            raise Exception(f"Ollama API error: {response.status}")
+                            
+            except Exception as fallback_error:
+                return {
+                    'answer': f"AI analysis failed. Pipeline error: {str(llm_error)}. Fallback error: {str(fallback_error)}. Please ensure Ollama is running with mixtral:latest model.",
+                    'sources': sources,
+                    'chunks_used': len(context_parts),
+                    'model_used': 'error',
+                    'generation_time': 0,
+                    'error': f"Pipeline: {llm_error}, Fallback: {fallback_error}"
+                }
         
     except Exception as e:
         return {
-            'answer': f"Error processing query: {str(e)}\\n\\nPlease try again or contact support if the issue persists.",
+            'answer': f"Error processing query: {str(e)}\n\nPlease try again or contact support if the issue persists.",
+            'sources': [],
+            'chunks_used': 0,
+            'error': str(e)
+        }
+
+def simple_rag_query_sync(query: str, matter_id: str) -> Dict[str, Any]:
+    """Synchronous wrapper for the intelligent RAG query"""
+    try:
+        # Run the async function
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        result = loop.run_until_complete(intelligent_rag_query_async(query, matter_id))
+        loop.close()
+        return result
+    except Exception as e:
+        return {
+            'answer': f"Synchronous execution error: {str(e)}",
             'sources': [],
             'chunks_used': 0,
             'error': str(e)
@@ -114,9 +247,8 @@ def simple_rag_query_sync(query: str, matter_id: str) -> Dict[str, Any]:
 
 # Keep the async version for backwards compatibility
 async def simple_rag_query(query: str, matter_id: str) -> Dict[str, Any]:
-    """Async version - use simple_rag_query_sync in Streamlit instead"""
-    sync_result = simple_rag_query_sync(query, matter_id)
-    return sync_result
+    """Async version - now properly using AI"""
+    return await intelligent_rag_query_async(query, matter_id)
 
 def render_simple_rag_interface():
     """Simple, clean RAG interface with minimal clutter"""
@@ -161,7 +293,7 @@ def render_simple_rag_interface():
         with col2:
             st.metric("📝 Text Chunks", status['total_chunks'])
         with col3:
-            st.metric("🧠 AI Model", "Mistral", help="Using mistral:latest for best accuracy")
+            st.metric("🧠 AI Model", "Mixtral", help="Using mixtral:latest for most powerful analysis")
         
         st.markdown("---")
         
@@ -253,7 +385,7 @@ def render_simple_rag_interface():
         # Show system info
         with st.expander("ℹ️ System Information", expanded=False):
             st.markdown("**Enhanced Features Active:**")
-            st.markdown("- 🧠 **Mistral AI** for intelligent analysis")
+            st.markdown("- 🧠 **Mixtral AI** for intelligent analysis")
             st.markdown("- 🔍 **25 chunks** enhanced retrieval")
             st.markdown("- 🛡️ **Protocol compliance** checking")
             st.markdown("- 📊 **Citation tracking** for source verification")

@@ -78,7 +78,7 @@ check_requirements() {
     
     # Check if we're in the right directory
     if [[ ! -f "$SCRIPT_DIR/app.py" ]]; then
-        echo -e "${RED}❌ app.py not found. Please run from the SC-Gen-3 directory.${NC}"
+        echo -e "${RED}❌ app.py not found. Please run from the SC-Gen-4 directory.${NC}"
         exit 1
     fi
     

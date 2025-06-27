@@ -1,8 +1,8 @@
-# Strategic Counsel Gen 3 - Complete User Guide
+# Strategic Counsel Gen 4 - Complete User Guide
 
 ## 🎯 System Overview
 
-**Strategic Counsel Gen 3** is a professional AI-powered legal analysis platform featuring a **revolutionary multi-agent RAG system** that automatically orchestrates specialized AI models for comprehensive legal document analysis.
+**Strategic Counsel Gen 4** is a professional AI-powered legal analysis platform featuring **LawMA legal specialist reranking** and a **revolutionary multi-agent RAG system** that automatically orchestrates specialized AI models for comprehensive legal document analysis.
 
 ### Current System Status
 - **Default Model:** Mixtral (26GB, most powerful)
@@ -171,7 +171,7 @@
 ### **1. Basic Setup**
 ```bash
 git clone <your-repo-url>
-cd SC-Gen-3
+cd SC-Gen-4
 pip install -r requirements.txt
 ```
 
@@ -300,4 +300,4 @@ python -c "from local_rag_pipeline import rag_session_manager; print('RAG system
 
 ---
 
-**Strategic Counsel Gen 3** - Professional AI legal analysis with multi-agent intelligence, optimized for complex legal workflows with enterprise-grade features and performance.
+**Strategic Counsel Gen 4** - Professional AI legal analysis with LawMA legal specialist integration and multi-agent intelligence, optimized for complex legal workflows with enterprise-grade features and performance.

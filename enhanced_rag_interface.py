@@ -896,38 +896,76 @@ def render_enhanced_rag_interface():
         # Check advanced capabilities
         advanced_retrieval = AdvancedRetrieval(selected_matter)
         
-        # Advanced retrieval options with intelligent defaults
-        st.markdown("**🚀 Cutting-Edge Retrieval Methods (Intelligent Defaults):**")
-        
-        # Hierarchical retrieval option (DEFAULT ON - fastest enhancement)
-        use_hierarchical = st.checkbox(
-            "📊 **Hierarchical Retrieval** (Context-aware document structure)",
-            value=True,  # DEFAULT ENABLED
-            help="✅ RECOMMENDED: Considers document structure, section titles, and legal context for better relevance scoring. (~0.1s processing time)"
+        # NEW: LawMA Enhanced Pipeline Option
+        st.markdown("**🏛️ LawMA Legal Specialist Pipeline:**")
+        use_lawma_pipeline = st.checkbox(
+            "🏛️ **LawMA Enhanced Pipeline** (BGE → LawMA Legal Filter → Generation)",
+            value=True,  # DEFAULT ENABLED - this is the new recommended approach
+            help="🚀 RECOMMENDED: Uses LawMA-8B as a legal content filter. Pipeline: BGE retrieval (25 candidates) → LawMA legal relevance filtering (top 8) → Generation. Superior legal accuracy."
         )
         
-        # Adaptive chunking option (DEFAULT ON - significant improvement)
-        use_adaptive_chunking = st.checkbox(
-            "🎯 **Adaptive Chunking** (Query-type optimized search)",
-            value=True,  # DEFAULT ENABLED
-            help="✅ RECOMMENDED: Dynamically adjusts search strategy based on query type (factual, summary, legal, procedural). (~0.2s processing time)"
-        )
+        if use_lawma_pipeline:
+            st.success("✅ **Enhanced Legal Pipeline Active**: BGE → LawMA Legal Filter → Mixtral Generation")
+            
+            # LawMA pipeline options
+            col_lawma1, col_lawma2 = st.columns(2)
+            with col_lawma1:
+                enable_citation_verification = st.checkbox(
+                    "🔍 **Citation Verification**",
+                    value=False,  # Optional feature
+                    help="Use LawMA to verify that generated citations are supported by source documents"
+                )
+            
+            with col_lawma2:
+                lawma_top_k = st.slider(
+                    "LawMA Final Chunks:",
+                    min_value=3,
+                    max_value=15,
+                    value=8,  # As suggested in user's approach
+                    help="Number of legally relevant chunks after LawMA filtering"
+                )
+        else:
+            st.info("ℹ️ **Standard Pipeline**: Using BGE embeddings with traditional reranking")
         
-        # Knowledge graph option (DEFAULT ON if available)
-        use_knowledge_graph = st.checkbox(
-            "🌐 **Knowledge Graph Enhancement** (Entity-relationship aware)",
-            value=GRAPH_PROCESSING_AVAILABLE,  # DEFAULT ENABLED if NetworkX available
-            disabled=not GRAPH_PROCESSING_AVAILABLE,
-            help="✅ RECOMMENDED: Uses knowledge graphs to understand entity relationships and improve context retrieval. (~0.3s processing time)"
-        )
-        
-        # Late interaction option (NOW ENABLED BY DEFAULT)
-        use_late_interaction = st.checkbox(
-            "🧠 **ColBERT Late Interaction** (Token-level semantic matching)",
-            value=True,  # DEFAULT ENABLED - faster processing with existing model
-            disabled=not advanced_retrieval.late_interaction_available,
-            help="🚀 ENABLED: Uses ColBERT-style token-level interactions for better precision with existing all-mpnet-base-v2 model. (~0.5s processing time)"
-        )
+        # Traditional advanced retrieval options (when not using LawMA pipeline)
+        if not use_lawma_pipeline:
+            st.markdown("**🚀 Traditional Advanced Methods:**")
+            
+            # Hierarchical retrieval option (DEFAULT ON - fastest enhancement)
+            use_hierarchical = st.checkbox(
+                "📊 **Hierarchical Retrieval** (Context-aware document structure)",
+                value=True,  # DEFAULT ENABLED
+                help="✅ RECOMMENDED: Considers document structure, section titles, and legal context for better relevance scoring. (~0.1s processing time)"
+            )
+            
+            # Adaptive chunking option (DEFAULT ON - significant improvement)
+            use_adaptive_chunking = st.checkbox(
+                "🎯 **Adaptive Chunking** (Query-type optimized search)",
+                value=True,  # DEFAULT ENABLED
+                help="✅ RECOMMENDED: Dynamically adjusts search strategy based on query type (factual, summary, legal, procedural). (~0.2s processing time)"
+            )
+            
+            # Knowledge graph option (DEFAULT ON if available)
+            use_knowledge_graph = st.checkbox(
+                "🌐 **Knowledge Graph Enhancement** (Entity-relationship aware)",
+                value=GRAPH_PROCESSING_AVAILABLE,  # DEFAULT ENABLED if NetworkX available
+                disabled=not GRAPH_PROCESSING_AVAILABLE,
+                help="✅ RECOMMENDED: Uses knowledge graphs to understand entity relationships and improve context retrieval. (~0.3s processing time)"
+            )
+            
+            # Late interaction option (NOW ENABLED BY DEFAULT)
+            use_late_interaction = st.checkbox(
+                "🧠 **ColBERT Late Interaction** (Token-level semantic matching)",
+                value=True,  # DEFAULT ENABLED - faster processing with existing model
+                disabled=not advanced_retrieval.late_interaction_available,
+                help="🚀 ENABLED: Uses ColBERT-style token-level interactions for better precision with existing all-mpnet-base-v2 model. (~0.5s processing time)"
+            )
+        else:
+            # Set defaults when using LawMA pipeline (these won't be used but needed for variable consistency)
+            use_hierarchical = False
+            use_adaptive_chunking = False
+            use_knowledge_graph = False
+            use_late_interaction = False
         
         if use_knowledge_graph and not GRAPH_PROCESSING_AVAILABLE:
             st.warning("⚠️ Knowledge graph processing not available. Install with: `pip install networkx`")
@@ -1131,10 +1169,48 @@ def render_enhanced_rag_interface():
                     st.session_state.comparison_results = None
         else:
             # Single model analysis
-            with st.spinner(f"🔍 {'Advanced semantic analysis' if use_late_interaction else 'Analyzing documents'}..."):
+            with st.spinner(f"🔍 {'LawMA Enhanced Legal Analysis' if use_lawma_pipeline else 'Advanced semantic analysis' if use_late_interaction else 'Analyzing documents'}..."):
                 try:
-                    # Use advanced retrieval if enabled
-                    if use_late_interaction and advanced_retrieval.late_interaction_available:
+                    # Use LawMA enhanced pipeline if enabled
+                    if use_lawma_pipeline:
+                        from enhanced_lawma_pipeline import execute_enhanced_legal_query, get_enhanced_pipeline
+                        
+                        # Execute the enhanced legal pipeline
+                        enhanced_chunks, pipeline_metadata = asyncio.run(execute_enhanced_legal_query(
+                            query=user_query.strip(),
+                            matter_id=selected_matter,
+                            top_k=lawma_top_k,
+                            enable_lawma_reranking=True,
+                            enable_citation_verification=enable_citation_verification
+                        ))
+                        
+                        # Generate answer using enhanced chunks with the selected model
+                        result = asyncio.run(get_protocol_compliant_answer(
+                            user_query.strip(), 
+                            selected_matter, 
+                            selected_model, 
+                            lawma_top_k,  # Use LawMA filtered chunks
+                            anonymise=enable_anonymisation if ANONYMISATION_AVAILABLE else False
+                        ))
+                        
+                        # Enhance result with LawMA metadata
+                        result['lawma_enhanced'] = True
+                        result['pipeline_metadata'] = pipeline_metadata
+                        result['enhanced_chunks'] = enhanced_chunks
+                        result['retrieval_method'] = 'lawma_enhanced'
+                        
+                        # Add LawMA citation verification if enabled
+                        if enable_citation_verification and result.get('answer'):
+                            enhanced_pipeline = get_enhanced_pipeline(selected_matter)
+                            
+                            verification_result = asyncio.run(enhanced_pipeline.verify_answer_citations(
+                                result['answer'], 
+                                enhanced_chunks
+                            ))
+                            result['citation_verification'] = verification_result
+                        
+                    elif use_late_interaction and advanced_retrieval.late_interaction_available:
+                        # Use advanced retrieval if enabled
                         result = asyncio.run(get_protocol_compliant_answer_with_advanced_retrieval(
                             user_query.strip(), 
                             selected_matter, 
@@ -1171,7 +1247,43 @@ def render_enhanced_rag_interface():
         
         # Show retrieval method used
         retrieval_method = result.get('retrieval_method', 'standard')
-        if retrieval_method == 'late_interaction':
+        if retrieval_method == 'lawma_enhanced':
+            st.success("🏛️ **Enhanced Legal Pipeline Used**: BGE → LawMA Legal Filter")
+            
+            # Show LawMA pipeline details if available
+            if result.get('pipeline_metadata'):
+                pipeline_meta = result['pipeline_metadata']
+                st.caption(f"Pipeline: {' → '.join(pipeline_meta.get('stages_executed', []))}")
+                
+                # Show performance metrics
+                if pipeline_meta.get('timing_breakdown'):
+                    timing = pipeline_meta['timing_breakdown']
+                    timing_text = []
+                    if 'bge_search' in timing:
+                        timing_text.append(f"BGE: {timing['bge_search']:.3f}s")
+                    if 'lawma_reranking' in timing:
+                        timing_text.append(f"LawMA: {timing['lawma_reranking']:.3f}s")
+                    
+                    if timing_text:
+                        st.caption(f"Timing: {' | '.join(timing_text)}")
+                
+                # Show legal enhancement metrics
+                if pipeline_meta.get('legal_enhancement'):
+                    legal_stats = pipeline_meta['legal_enhancement']
+                    st.caption(f"LawMA Relevance: {legal_stats.get('avg_lawma_relevance', 0):.3f} | "
+                             f"Avg Rank Improvement: {legal_stats.get('avg_rank_improvement', 0):.1f}")
+                             
+            # Show citation verification if available
+            if result.get('citation_verification'):
+                verification = result['citation_verification']
+                if verification.get('verified', True):
+                    st.success("🔍 **Citation Verification**: ✅ All claims supported")
+                else:
+                    st.warning("🔍 **Citation Verification**: ⚠️ Some claims need review")
+                    if verification.get('hallucination_flags'):
+                        st.caption(f"Flagged claims: {len(verification['hallucination_flags'])}")
+                        
+        elif retrieval_method == 'late_interaction':
             st.success("🧠 **Advanced Retrieval Used**: ColBERT Late Interaction")
         else:
             st.info("📊 **Standard Retrieval Used**: Dense Vector Similarity")

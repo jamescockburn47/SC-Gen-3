@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Simple setup script for Strategic Counsel Gen 3
+# Simple setup script for Strategic Counsel Gen 4
 set -euo pipefail
 
 python3 -m venv venv

@@ -1,6 +1,6 @@
 # help_page.py
 """
-Comprehensive Help & Documentation for Strategic Counsel Gen 3
+Comprehensive Help & Documentation for Strategic Counsel Gen 4
 Multi-Agent AI Legal Analysis Platform
 """
 
@@ -14,7 +14,7 @@ def render_help_page():
     # Header with current system status
     st.markdown("""
     <div style="text-align: center; padding: 2rem 0;">
-        <h1>⚖️ Strategic Counsel Gen 3</h1>
+        <h1>⚖️ Strategic Counsel Gen 4</h1>
         <h3 style="color: #0066cc; margin-top: -1rem;">Multi-Agent AI Legal Analysis Platform</h3>
         <p style="color: #666; font-size: 1.1rem;">Professional legal AI with automatic model orchestration and enhanced RAG</p>
     </div>
@@ -72,10 +72,10 @@ def render_help_page():
 def render_overview():
     """Render the main overview section"""
     
-    st.markdown("## 🎯 What is Strategic Counsel Gen 3?")
+    st.markdown("## 🎯 What is Strategic Counsel Gen 4?")
     
     st.success("""
-    **Strategic Counsel Gen 3** is a professional AI legal analysis platform featuring a **revolutionary multi-agent RAG system** 
+    **Strategic Counsel Gen 4** is a professional AI legal analysis platform featuring **LawMA legal specialist integration** and a **revolutionary multi-agent RAG system** 
     that automatically orchestrates specialized AI models to provide comprehensive legal analysis.
     
     🔹 **5 Specialized AI Models** with automatic task assignment  

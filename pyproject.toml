@@ -1,0 +1,122 @@
+[tool.poetry]
+name = "strategic-counsel-rag"
+version = "2.0.0"
+description = "SOTA Legal RAG System with Enhanced Citation Control"
+authors = ["Strategic Counsel Team"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "legal_rag"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+# Core Streamlit and web
+streamlit = "^1.33.0"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.3"
+
+# Data handling
+pandas = "^2.2.2"
+PyPDF2 = "^3.0.1"
+pdfminer-six = "^20221105"
+python-docx = "^1.1.0"
+openpyxl = "^3.1.2"
+xmltodict = "^0.13.0"
+pdfplumber = "^0.10.0"  # Enhanced PDF processing
+
+# AI / cloud (existing)
+openai = "^1.23.6"
+google-generativeai = "^0.3.1"
+boto3 = "^1.34.130"
+python-dotenv = "^1.0.1"
+streamlit-timeline = "^0.0.2"
+google-api-python-client = "^2.126.0"
+google-auth-oauthlib = "^1.2.0"
+google-auth-httplib2 = "^0.2.0"
+aiohttp = "^3.9.3"
+
+# SOTA RAG System Dependencies
+# Embeddings - BGE models for SOTA retrieval performance
+sentence-transformers = "^2.7.0"
+FlagEmbedding = "^1.2.10"  # BGE models and reranker
+transformers = "^4.36.0"  # Updated for BGE compatibility
+huggingface-hub = "^0.19.0"
+
+# Vector database with optimizations
+faiss-cpu = "^1.7.4"
+faiss-gpu = {version = "^1.7.4", optional = true}
+
+# Local LLM generation - Mistral-7B support
+llama-cpp-python = "^0.2.20"
+torch = "^2.1.0"
+
+# Advanced text processing for legal documents
+spacy = "^3.7.0"
+regex = "^2023.0.0"
+nltk = "^3.8.1"
+
+# Enhanced chunking and metadata
+langchain = "^0.1.0"
+langchain-text-splitters = "^0.0.1"
+
+# Scientific computing (compatible versions)
+numpy = "^1.24.0,<1.27.0"  # FAISS compatibility
+scikit-learn = "^1.3.0"
+
+# Citation and verification
+dateparser = "^1.2.0"
+fuzzywuzzy = "^0.18.0"
+python-levenshtein = "^0.25.0"
+
+# Testing and development
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+black = "^23.0.0"
+isort = "^5.12.0"
+mypy = "^1.7.0"
+
+[tool.poetry.extras]
+gpu = ["faiss-gpu", "torch"]
+dev = ["pytest", "pytest-asyncio", "black", "isort", "mypy"]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+black = "^23.0.0"
+isort = "^5.12.0"
+mypy = "^1.7.0"
+
+[tool.poetry.scripts]
+rag-ask = "legal_rag.cli.ask:main"
+rag-ingest = "legal_rag.ingest.embed:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto" 

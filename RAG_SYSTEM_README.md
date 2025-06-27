@@ -266,7 +266,7 @@ The MCP Server provides several layers of validation:
 ## File Structure
 
 ```
-SC-Gen-3/
+SC-Gen-4/
 ├── local_rag_pipeline.py          # Core RAG implementation
 ├── mcp_rag_server.py              # Protocol enforcement server
 ├── rag_storage/                   # Per-matter storage

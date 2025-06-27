@@ -1,7 +1,7 @@
-# Strategic Counsel Gen 3
+# Strategic Counsel Gen 4
 
 ## Overview
-Strategic Counsel Gen 3 is an advanced AI-powered legal analysis platform featuring **multi-agent RAG (Retrieval Augmented Generation)** with automatic model orchestration. The system intelligently deploys multiple specialized AI models to provide comprehensive legal document analysis, with enhanced timeline processing, document archiving, and protocol compliance checking.
+Strategic Counsel Gen 4 is an advanced AI-powered legal analysis platform featuring **LawMA legal specialist reranking** and **multi-agent RAG (Retrieval Augmented Generation)** with automatic model orchestration. The system intelligently deploys multiple specialized AI models including LawMA-8B for superior legal relevance filtering to provide comprehensive legal document analysis, with enhanced timeline processing, document archiving, and protocol compliance checking.
 
 ## 🚀 Key Features
 
@@ -71,7 +71,7 @@ Strategic Counsel Gen 3 is an advanced AI-powered legal analysis platform featur
 ### 1. Clone and Install Dependencies
 ```bash
 git clone <your-repo-url>
-cd SC-Gen-3
+cd SC-Gen-4
 pip install -r requirements.txt
 ```
 
@@ -299,4 +299,4 @@ nvidia-smi  # Verify GPU availability
 
 ---
 
-**Strategic Counsel Gen 3** - Professional AI legal analysis with multi-agent intelligence, optimized for complex legal workflows with enterprise-grade features and performance.
+**Strategic Counsel Gen 4** - Professional AI legal analysis with LawMA legal specialist integration and multi-agent intelligence, optimized for complex legal workflows with enterprise-grade features and performance.

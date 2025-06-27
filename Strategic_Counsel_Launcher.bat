@@ -25,7 +25,7 @@ echo Please wait while the application starts...
 echo.
 
 REM Start in background and open browser
-start /min wsl bash -c "cd /home/jcockburn/SC-Gen-3 && python3 -m streamlit run app.py --server.port 8501 --server.headless true --browser.gatherUsageStats false"
+start /min wsl bash -c "cd /home/jcockburn/SC-Gen-4 && python3 -m streamlit run app.py --server.port 8501 --server.headless true --browser.gatherUsageStats false"
 
 echo Waiting for application to start...
 timeout /t 8 /nobreak >nul

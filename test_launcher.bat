@@ -20,7 +20,7 @@ echo ✅ Streamlit available
 echo.
 
 echo Testing project directory...
-wsl ls /home/jcockburn/SC-Gen-3/app.py || (echo ❌ Project directory not found & pause & exit)
+wsl ls /home/jcockburn/SC-Gen-4/app.py || (echo ❌ Project directory not found & pause & exit)
 echo ✅ Project directory found
 echo.
 
@@ -39,7 +39,7 @@ if "%choice%"=="1" (
 ) else if "%choice%"=="2" (
     echo Starting Strategic Counsel manually...
     echo You can close this window after the browser opens.
-    wsl bash -c "cd /home/jcockburn/SC-Gen-3 && python3 -m streamlit run app.py --server.port 8501"
+    wsl bash -c "cd /home/jcockburn/SC-Gen-4 && python3 -m streamlit run app.py --server.port 8501"
 ) else (
     echo Goodbye!
     pause

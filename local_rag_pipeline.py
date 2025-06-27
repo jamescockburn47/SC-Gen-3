@@ -64,6 +64,8 @@ except ImportError:
     MCP_AVAILABLE = False
     mcp_rag_server = None
 
+from legal_lawma_reranker import lawma_reranker, get_lawma_enhanced_chunks
+
 def load_strategic_protocols() -> str:
     """Load strategic protocols for RAG prompt generation"""
     try:
@@ -474,11 +476,16 @@ class LocalRAGPipeline:
             logger.error(f"Failed to add document {filename}: {e}")
             return False, f"Processing error: {str(e)}", {}
     
-    def search_documents(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+    def search_documents(self, query: str, top_k: int = 5, enable_lawma_reranking: bool = True) -> List[Dict[str, Any]]:
         """
-        Enhanced search with BGE reranking for superior relevance.
+        Enhanced search with LawMA Legal Reranking pipeline:
         
-        Returns: List of chunks with similarity scores and metadata
+        1. BGE embeddings & vector search (get top_k * 3 candidates)
+        2. BGE reranker (if available) 
+        3. LawMA legal relevance filtering (reduces to top_k best legal matches)
+        4. Final results with legal expertise applied
+        
+        Returns: List of chunks with similarity scores and legal relevance metadata
         """
         if not self.embedding_model or not self.vector_index or faiss is None or np is None:
             return []
@@ -487,7 +494,9 @@ class LocalRAGPipeline:
             start_time = datetime.now()
             
             # Step 1: Initial vector search (get more candidates for reranking)
-            initial_k = top_k * 3 if self.enable_reranking and self.reranker_model else top_k
+            # Get extra candidates for LawMA legal filtering
+            candidate_multiplier = 4 if enable_lawma_reranking else 3
+            initial_k = top_k * candidate_multiplier if self.enable_reranking and self.reranker_model else top_k * 2
             
             # Embed the query using BGE or fallback
             if self.is_using_bge and hasattr(self.embedding_model, 'encode_queries'):
@@ -514,7 +523,7 @@ class LocalRAGPipeline:
             safe_faiss_normalize(query_embedding)
             
             # Search vector index
-            scores, indices = self.vector_index.search(query_embedding, initial_k)
+            scores, indices = self.vector_index.search(query_embedding.astype(np.float32), initial_k)
             
             # Retrieve initial chunk metadata
             initial_results = []
@@ -553,13 +562,10 @@ class LocalRAGPipeline:
                 # Sort by rerank score (higher is better)
                 initial_results.sort(key=lambda x: x['rerank_score'], reverse=True)
                 
-                # Add final ranks
+                # Add BGE ranks
                 for i, chunk in enumerate(initial_results):
-                    chunk['final_rank'] = i + 1
-                    chunk['rank_improvement'] = chunk['initial_rank'] - chunk['final_rank']
-                
-                # Take top_k after reranking
-                results = initial_results[:top_k]
+                    chunk['bge_rank'] = i + 1
+                    chunk['rank_improvement'] = chunk['initial_rank'] - chunk['bge_rank']
                 
                 rerank_time = (datetime.now() - rerank_start).total_seconds()
                 self.performance_stats['rerank_time'].append(rerank_time)
@@ -567,37 +573,147 @@ class LocalRAGPipeline:
                 logger.info(f"🎯 BGE reranking completed in {rerank_time:.3f}s")
                 
                 # Track performance improvement safely
-                if results:
-                    improvements = [r.get('score_improvement', 0.0) for r in results]
+                if initial_results:
+                    improvements = [r.get('score_improvement', 0.0) for r in initial_results]
                     if improvements:
                         avg_improvement = float(np.mean(improvements))
                         self.performance_stats['search_improvements'].append(avg_improvement)
-                
+            
             else:
-                # No reranking - use initial results
-                results = initial_results[:top_k]
-                for i, chunk in enumerate(results):
-                    chunk['final_rank'] = i + 1
+                # No BGE reranking - prepare for LawMA
+                for i, chunk in enumerate(initial_results):
+                    chunk['bge_rank'] = i + 1
                     chunk['rerank_score'] = chunk['similarity_score']  # Same as similarity
+            
+            # Step 3: LawMA Legal Relevance Filtering (NEW)
+            if enable_lawma_reranking and lawma_reranker.available and initial_results:
+                lawma_start = datetime.now()
+                
+                # Use LawMA to rerank by legal relevance
+                # Take more candidates for LawMA to work with
+                lawma_candidates = initial_results[:top_k * 2] if len(initial_results) >= top_k * 2 else initial_results
+                
+                # Apply LawMA legal reranking using sync wrapper
+                try:
+                    # Use the synchronous wrapper for LawMA to avoid async conflicts
+                    results = self._run_lawma_reranking_sync(query, lawma_candidates, top_k)
+                    
+                    lawma_time = (datetime.now() - lawma_start).total_seconds()
+                    
+                    # Add metadata about the enhanced pipeline
+                    for chunk in results:
+                        chunk['pipeline_stage'] = 'lawma_filtered'
+                        chunk['lawma_processing_time'] = lawma_time
+                    
+                    logger.info(f"🏛️ LawMA legal filtering completed in {lawma_time:.3f}s")
+                    
+                except Exception as e:
+                    logger.error(f"LawMA legal filtering failed: {e}")
+                    results = initial_results[:top_k]  # Fallback to BGE results
+            else:
+                # No LawMA filtering - use BGE/initial results
+                results = initial_results[:top_k]
+                for chunk in results:
+                    chunk['pipeline_stage'] = 'bge_only'
+            
+            # Add final ranks after all processing
+            for i, chunk in enumerate(results):
+                chunk['final_rank'] = i + 1
             
             total_time = (datetime.now() - start_time).total_seconds()
             self.performance_stats['embedding_time'].append(total_time)
             
-            # Add search metadata
+            # Add comprehensive search metadata
             for chunk in results:
                 chunk['search_metadata'] = {
                     'using_bge': self.is_using_bge,
-                    'reranking_applied': self.enable_reranking and self.reranker_model is not None,
+                    'bge_reranking_applied': self.enable_reranking and self.reranker_model is not None,
+                    'lawma_reranking_applied': enable_lawma_reranking and lawma_reranker.available,
                     'embedding_model': self.embedding_model_name,
-                    'search_time': total_time
+                    'search_time': total_time,
+                    'pipeline_stages': self._get_pipeline_stages(enable_lawma_reranking)
                 }
             
-            logger.info(f"🔍 Search completed in {total_time:.3f}s ({'BGE' if self.is_using_bge else 'Standard'} embeddings)")
+            # Log the complete pipeline
+            pipeline_desc = self._describe_pipeline(enable_lawma_reranking)
+            logger.info(f"🔍 {pipeline_desc} completed in {total_time:.3f}s")
+            
             return results
             
         except Exception as e:
-            logger.error(f"Enhanced search failed: {e}")
+            logger.error(f"Enhanced search with LawMA failed: {e}")
             return []
+    
+    def _get_pipeline_stages(self, lawma_enabled: bool) -> List[str]:
+        """Get the stages used in the current pipeline"""
+        stages = []
+        
+        if self.is_using_bge:
+            stages.append("BGE_Embeddings")
+        else:
+            stages.append("Standard_Embeddings")
+        
+        stages.append("Vector_Search")
+        
+        if self.enable_reranking and self.reranker_model:
+            stages.append("BGE_Reranker")
+        
+        if lawma_enabled and lawma_reranker.available:
+            stages.append("LawMA_Legal_Filter")
+        
+        return stages
+    
+    def _describe_pipeline(self, lawma_enabled: bool) -> str:
+        """Describe the current pipeline configuration"""
+        if lawma_enabled and lawma_reranker.available:
+            if self.is_using_bge and self.enable_reranking:
+                return "🚀 Advanced Legal Pipeline (BGE → BGE Reranker → LawMA Legal Filter)"
+            elif self.is_using_bge:
+                return "🎯 Legal-Enhanced BGE Pipeline (BGE → LawMA Legal Filter)"
+            else:
+                return "🏛️ LawMA-Enhanced Pipeline (Standard → LawMA Legal Filter)"
+        else:
+            if self.is_using_bge and self.enable_reranking:
+                return "🎯 BGE Advanced Pipeline (BGE → BGE Reranker)"
+            elif self.is_using_bge:
+                return "🚀 BGE Pipeline (BGE Embeddings)"
+            else:
+                return "📊 Standard Pipeline"
+    
+    def _run_lawma_reranking_sync(self, query: str, candidates: List[Dict[str, Any]], top_k: int) -> List[Dict[str, Any]]:
+        """
+        Synchronous wrapper for LawMA reranking to avoid async event loop conflicts
+        """
+        try:
+            import concurrent.futures
+            import threading
+            
+            def run_lawma_in_thread():
+                # Create a new event loop for this thread
+                import asyncio
+                new_loop = asyncio.new_event_loop()
+                try:
+                    asyncio.set_event_loop(new_loop)
+                    return new_loop.run_until_complete(
+                        lawma_reranker.rerank_chunks_by_legal_relevance(
+                            query, candidates, top_k
+                        )
+                    )
+                finally:
+                    new_loop.close()
+                    asyncio.set_event_loop(None)
+            
+            # Run in a separate thread to avoid event loop conflicts
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(run_lawma_in_thread)
+                results = future.result(timeout=30)  # 30 second timeout
+                
+            return results
+            
+        except Exception as e:
+            logger.error(f"LawMA sync wrapper failed: {e}")
+            # Fallback to original order
+            return candidates[:top_k]
     
     def search_documents_filtered(self, query: str, top_k: int = 5, document_ids: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         """

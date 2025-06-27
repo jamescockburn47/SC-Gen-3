@@ -10,7 +10,7 @@ echo ""
 
 # Check current directory
 if [ ! -f "app.py" ]; then
-    echo "❌ Error: Please run this script from the Strategic Counsel directory (SC-Gen-3)"
+    echo "❌ Error: Please run this script from the Strategic Counsel directory (SC-Gen-4)"
     exit 1
 fi
 

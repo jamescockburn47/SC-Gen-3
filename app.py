@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strategic Counsel v3.6 - Corrected logger argument for group structure UI
+"""Strategic Counsel v4.0 - Enhanced LawMA Legal Specialist Integration
 
 Key Changes:
 - Fixed TypeError by passing 'logger_param' instead of 'logger' to render_group_structure_ui.
@@ -102,14 +102,14 @@ if not logger.handlers:
 
 # === RADICAL UI CUSTOMIZATION FOR TEXT VISIBILITY ===
 st.set_page_config(
-    page_title="Strategic Counsel - AI Legal Platform",
+    page_title="Strategic Counsel Gen 4 - AI Legal Platform",
     page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
-        'Get Help': 'https://github.com/jamescockburn47/SC-Gen-3',
-        'Report a bug': "https://github.com/jamescockburn47/SC-Gen-3/issues",
-        'About': "# Strategic Counsel\nAI-powered legal analysis platform"
+        'Get Help': 'https://github.com/jamescockburn47/SC-Gen-4',
+        'Report a bug': "https://github.com/jamescockburn47/SC-Gen-4/issues",
+        'About': "# Strategic Counsel Gen 4\nAI-powered legal analysis platform with LawMA integration"
     }
 )
 
@@ -686,205 +686,205 @@ def main():
             "🤖 AI Consultation", "🏢 Companies House", "📊 Group Analysis", "❓ Help"
         ])
 
-    with adv_tab_ai:
-        st.markdown("### AI Legal Consultation")
-        
-        # AI consultation should work independently without requiring document uploads
-        st.markdown("**Ask your legal question or describe your situation:**")
-        
-        # Topic selection
-        selected_topic = st.selectbox(
-            "Select consultation topic:",
-            options=list(PREDEFINED_TOPICS.keys()),
-            index=0,
-            key="ai_consultation_topic"
-        )
-        st.session_state.current_topic = selected_topic
-        
-        # In the AI Consultation section, add this before the main consultation button:
-        if 'improved_prompt' not in st.session_state:
-            st.session_state.improved_prompt = ""
-        if 'prompt_value' not in st.session_state:
-            st.session_state.prompt_value = ""
-        
-        # User question input - use the prompt_value if available, otherwise empty
-        user_question = st.text_area(
-            "Your question or situation description:",
-            height=150,
-            placeholder="e.g., I need advice on corporate governance issues...",
-            key="ai_consultation_question",
-            value=st.session_state.prompt_value
-        )
-        
-        # Optional document upload for additional context
-        with st.expander("📁 Optional: Upload Supporting Documents", expanded=False):
-            st.caption("You can optionally upload documents to provide additional context to your consultation.")
-            uploaded_docs_ai = st.file_uploader(
-                "Upload documents (optional):",
-                accept_multiple_files=True,
-                type=['pdf', 'txt', 'docx'],
-                key="ai_consultation_docs"
+        with adv_tab_ai:
+            st.markdown("### AI Legal Consultation")
+            
+            # AI consultation should work independently without requiring document uploads
+            st.markdown("**Ask your legal question or describe your situation:**")
+            
+            # Topic selection
+            selected_topic = st.selectbox(
+                "Select consultation topic:",
+                options=list(PREDEFINED_TOPICS.keys()),
+                index=0,
+                key="ai_consultation_topic"
+            )
+            st.session_state.current_topic = selected_topic
+            
+            # In the AI Consultation section, add this before the main consultation button:
+            if 'improved_prompt' not in st.session_state:
+                st.session_state.improved_prompt = ""
+            if 'prompt_value' not in st.session_state:
+                st.session_state.prompt_value = ""
+            
+            # User question input - use the prompt_value if available, otherwise empty
+            user_question = st.text_area(
+                "Your question or situation description:",
+                height=150,
+                placeholder="e.g., I need advice on corporate governance issues...",
+                key="ai_consultation_question",
+                value=st.session_state.prompt_value
             )
             
-            # Process uploaded documents if any
-            if uploaded_docs_ai:
-                if st.button("Process Uploaded Documents", key="process_ai_docs"):
-                    # Process documents similar to the existing logic but simplified
-                    st.session_state.uploaded_docs = uploaded_docs_ai
-                    st.success(f"Uploaded {len(uploaded_docs_ai)} document(s) for additional context.")
+            # Optional document upload for additional context
+            with st.expander("📁 Optional: Upload Supporting Documents", expanded=False):
+                st.caption("You can optionally upload documents to provide additional context to your consultation.")
+                uploaded_docs_ai = st.file_uploader(
+                    "Upload documents (optional):",
+                    accept_multiple_files=True,
+                    type=['pdf', 'txt', 'docx'],
+                    key="ai_consultation_docs"
+                )
+                
+                # Process uploaded documents if any
+                if uploaded_docs_ai:
+                    if st.button("Process Uploaded Documents", key="process_ai_docs"):
+                        # Process documents similar to the existing logic but simplified
+                        st.session_state.uploaded_docs = uploaded_docs_ai
+                        st.success(f"Uploaded {len(uploaded_docs_ai)} document(s) for additional context.")
 
-        # AI model selection
-        selected_model = st.selectbox(
-            "Select AI Model:",
-            options=list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys()),
-            index=list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys()).index("gpt-4.1"),
-            key="ai_consultation_model"
-        )
-        
-        if st.button("💡 Suggest Improved Prompt", key="suggest_improved_prompt"):
-            with st.spinner("Improving your prompt..."):
-                improved = get_improved_prompt(user_question, selected_topic, selected_model)
-                st.session_state.improved_prompt = improved
-                st.success("Improved prompt generated below. You can edit it or use it as your main question.")
+            # AI model selection
+            selected_model = st.selectbox(
+                "Select AI Model:",
+                options=list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys()),
+                index=list(MODEL_PRICES_PER_1K_TOKENS_GBP.keys()).index("gpt-4.1"),
+                key="ai_consultation_model"
+            )
+            
+            if st.button("💡 Suggest Improved Prompt", key="suggest_improved_prompt"):
+                with st.spinner("Improving your prompt..."):
+                    improved = get_improved_prompt(user_question, selected_topic, selected_model)
+                    st.session_state.improved_prompt = improved
+                    st.success("Improved prompt generated below. You can edit it or use it as your main question.")
 
-        if st.session_state.improved_prompt:
-            st.markdown("**Improved Prompt:**")
-            improved = st.text_area("Edit improved prompt if needed:", value=st.session_state.improved_prompt, key="improved_prompt_text_area")
-            if st.button("Use Improved Prompt", key="use_improved_prompt"):
-                st.session_state.prompt_value = improved
-                st.session_state.improved_prompt = ""
-                st.rerun()
+            if st.session_state.improved_prompt:
+                st.markdown("**Improved Prompt:**")
+                improved = st.text_area("Edit improved prompt if needed:", value=st.session_state.improved_prompt, key="improved_prompt_text_area")
+                if st.button("Use Improved Prompt", key="use_improved_prompt"):
+                    st.session_state.prompt_value = improved
+                    st.session_state.improved_prompt = ""
+                    st.rerun()
 
-        # Generate consultation
-        if st.button("🤖 Get AI Consultation", type="primary", key="generate_ai_consultation"):
-            if not user_question.strip():
-                st.warning("Please enter your question or describe your situation.")
-            else:
-                with st.spinner("Generating AI consultation..."):
-                    try:
-                        # Load protocol text
-                        protocol_text = ""
+            # Generate consultation
+            if st.button("🤖 Get AI Consultation", type="primary", key="generate_ai_consultation"):
+                if not user_question.strip():
+                    st.warning("Please enter your question or describe your situation.")
+                else:
+                    with st.spinner("Generating AI consultation..."):
                         try:
-                            with open("strategic_protocols.txt", "r") as f:
-                                protocol_text = f.read()
-                        except Exception:
+                            # Load protocol text
                             protocol_text = ""
-                        # Call the comprehensive consultation function
-                        result = comprehensive_legal_consultation_with_protocols(
-                            user_question=user_question,
-                            legal_topic=selected_topic,
-                            topic_description=PREDEFINED_TOPICS.get(selected_topic, "General legal advice"),
-                            document_context=st.session_state.latest_digest_content,
-                            protocol_text=protocol_text,
-                            model_name=selected_model
-                        )
-                        st.markdown("### 🤖 AI Legal Consultation")
-                        st.markdown(f"**Legal Topic:** {selected_topic}")
-                        st.markdown(f"**AI Model:** {selected_model}")
-                        st.markdown("---")
-                        st.markdown(result["response"])
-                        # Protocol compliance report window
-                        with st.expander("🛡️ Protocol Compliance Report", expanded=False):
-                            st.markdown(result["protocol_report"] or "No protocol compliance report available.")
-                        # Citation verification display
-                        if result["citations"]:
+                            try:
+                                with open("strategic_protocols.txt", "r") as f:
+                                    protocol_text = f.read()
+                            except Exception:
+                                protocol_text = ""
+                            # Call the comprehensive consultation function
+                            result = comprehensive_legal_consultation_with_protocols(
+                                user_question=user_question,
+                                legal_topic=selected_topic,
+                                topic_description=PREDEFINED_TOPICS.get(selected_topic, "General legal advice"),
+                                document_context=st.session_state.latest_digest_content,
+                                protocol_text=protocol_text,
+                                model_name=selected_model
+                            )
+                            st.markdown("### 🤖 AI Legal Consultation")
+                            st.markdown(f"**Legal Topic:** {selected_topic}")
+                            st.markdown(f"**AI Model:** {selected_model}")
                             st.markdown("---")
-                            st.markdown("#### ⚖️ Citations & Legal References")
-                            st.markdown("The following case law and legislation references were detected and automatically verified:")
-                            
-                            verified_citations = result.get("verified_citations", {})
-                            citations_found = []
-                            citations_verified = []
-                            citations_unverified = []
-                            
-                            for citation in result["citations"]:
-                                citations_found.append(citation)
-                                if verified_citations.get(citation, False):
-                                    citations_verified.append(citation)
-                                else:
-                                    citations_unverified.append(citation)
-                            
-                            # Display verification results
-                            if citations_verified:
-                                st.markdown("##### ✅ Automatically Verified Citations")
-                                for citation in citations_verified:
-                                    bailii_url = f"https://www.bailii.org/search?q={citation.replace(' ', '+')}"
-                                    st.markdown(f"• [{citation}]({bailii_url}) - Found and verified")
-                            
-                            if citations_unverified:
-                                st.markdown("##### ⚠️ Unverified Citations")
-                                for citation in citations_unverified:
-                                    st.markdown(f"• {citation} - Could not automatically verify")
-                            
-                            # Manual citation enhancement section
-                            if citations_unverified:
+                            st.markdown(result["response"])
+                            # Protocol compliance report window
+                            with st.expander("🛡️ Protocol Compliance Report", expanded=False):
+                                st.markdown(result["protocol_report"] or "No protocol compliance report available.")
+                            # Citation verification display
+                            if result["citations"]:
                                 st.markdown("---")
-                                st.markdown("##### 🔗 Manual Citation Links (Optional)")
-                                st.markdown("If you have specific Bailii or legislation.gov.uk links for the unverified citations, you can provide them below:")
+                                st.markdown("#### ⚖️ Citations & Legal References")
+                                st.markdown("The following case law and legislation references were detected and automatically verified:")
                                 
-                                citation_links = {}
-                                for citation in citations_unverified:
-                                    link = st.text_input(
-                                        f"Link for: {citation}", 
-                                        key=f"citation_link_{citation}",
-                                        placeholder="https://www.bailii.org/... or https://www.legislation.gov.uk/...",
-                                        help="Paste the direct link to this case or legislation"
-                                    )
-                                    citation_links[citation] = link
+                                verified_citations = result.get("verified_citations", {})
+                                citations_found = []
+                                citations_verified = []
+                                citations_unverified = []
                                 
-                                if st.button("🔍 Validate and Update Citations", key="update_with_manual_citations"):
-                                    # Validate and process manual citations
-                                    verified_response = result["response"]
-                                    manual_updates = 0
-                                    validation_results = []
+                                for citation in result["citations"]:
+                                    citations_found.append(citation)
+                                    if verified_citations.get(citation, False):
+                                        citations_verified.append(citation)
+                                    else:
+                                        citations_unverified.append(citation)
+                                
+                                # Display verification results
+                                if citations_verified:
+                                    st.markdown("##### ✅ Automatically Verified Citations")
+                                    for citation in citations_verified:
+                                        bailii_url = f"https://www.bailii.org/search?q={citation.replace(' ', '+')}"
+                                        st.markdown(f"• [{citation}]({bailii_url}) - Found and verified")
+                                
+                                if citations_unverified:
+                                    st.markdown("##### ⚠️ Unverified Citations")
+                                    for citation in citations_unverified:
+                                        st.markdown(f"• {citation} - Could not automatically verify")
+                                
+                                # Manual citation enhancement section
+                                if citations_unverified:
+                                    st.markdown("---")
+                                    st.markdown("##### 🔗 Manual Citation Links (Optional)")
+                                    st.markdown("If you have specific Bailii or legislation.gov.uk links for the unverified citations, you can provide them below:")
                                     
-                                    with st.spinner("Validating provided citation links..."):
-                                        for citation, link in citation_links.items():
-                                            if link.strip():
-                                                # Validate the provided link
-                                                from app_utils import fetch_url_content
-                                                content, error = fetch_url_content(link.strip())
-                                                
-                                                if error:
-                                                    validation_results.append({
-                                                        "citation": citation,
-                                                        "link": link.strip(),
-                                                        "status": "error",
-                                                        "message": f"Could not access link: {error}"
-                                                    })
-                                                    continue
-                                                
-                                                if not content:
-                                                    validation_results.append({
-                                                        "citation": citation,
-                                                        "link": link.strip(),
-                                                        "status": "error",
-                                                        "message": "No content found at the provided link"
-                                                    })
-                                                    continue
-                                                
-                                                # AI-powered validation: Check if the case actually supports the legal proposition
-                                                from ai_utils import get_openai_client
-                                                
-                                                # Extract the context around the citation in the consultation
-                                                consultation_text = result["response"]
-                                                citation_context = ""
-                                                
-                                                # Find sentences containing the citation
-                                                sentences = consultation_text.split('.')
-                                                for i, sentence in enumerate(sentences):
-                                                    if citation in sentence:
-                                                        # Get surrounding context (previous and next sentences)
-                                                        start_idx = max(0, i-1)
-                                                        end_idx = min(len(sentences), i+2)
-                                                        citation_context = '. '.join(sentences[start_idx:end_idx]).strip()
-                                                        break
-                                                
-                                                if not citation_context:
-                                                    citation_context = "Citation appears in consultation but context unclear."
-                                                
-                                                # Prepare AI validation prompt
-                                                validation_prompt = f"""
+                                    citation_links = {}
+                                    for citation in citations_unverified:
+                                        link = st.text_input(
+                                            f"Link for: {citation}", 
+                                            key=f"citation_link_{citation}",
+                                            placeholder="https://www.bailii.org/... or https://www.legislation.gov.uk/...",
+                                            help="Paste the direct link to this case or legislation"
+                                        )
+                                        citation_links[citation] = link
+                                    
+                                    if st.button("🔍 Validate and Update Citations", key="update_with_manual_citations"):
+                                        # Validate and process manual citations
+                                        verified_response = result["response"]
+                                        manual_updates = 0
+                                        validation_results = []
+                                        
+                                        with st.spinner("Validating provided citation links..."):
+                                            for citation, link in citation_links.items():
+                                                if link.strip():
+                                                    # Validate the provided link
+                                                    from app_utils import fetch_url_content
+                                                    content, error = fetch_url_content(link.strip())
+                                                    
+                                                    if error:
+                                                        validation_results.append({
+                                                            "citation": citation,
+                                                            "link": link.strip(),
+                                                            "status": "error",
+                                                            "message": f"Could not access link: {error}"
+                                                        })
+                                                        continue
+                                                    
+                                                    if not content:
+                                                        validation_results.append({
+                                                            "citation": citation,
+                                                            "link": link.strip(),
+                                                            "status": "error",
+                                                            "message": "No content found at the provided link"
+                                                        })
+                                                        continue
+                                                    
+                                                    # AI-powered validation: Check if the case actually supports the legal proposition
+                                                    from ai_utils import get_openai_client
+                                                    
+                                                    # Extract the context around the citation in the consultation
+                                                    consultation_text = result["response"]
+                                                    citation_context = ""
+                                                    
+                                                    # Find sentences containing the citation
+                                                    sentences = consultation_text.split('.')
+                                                    for i, sentence in enumerate(sentences):
+                                                        if citation in sentence:
+                                                            # Get surrounding context (previous and next sentences)
+                                                            start_idx = max(0, i-1)
+                                                            end_idx = min(len(sentences), i+2)
+                                                            citation_context = '. '.join(sentences[start_idx:end_idx]).strip()
+                                                            break
+                                                    
+                                                    if not citation_context:
+                                                        citation_context = "Citation appears in consultation but context unclear."
+                                                    
+                                                    # Prepare AI validation prompt
+                                                    validation_prompt = f"""
 You are a legal expert reviewing whether a case citation properly supports a legal proposition.
 
 CONSULTATION CONTEXT WHERE CITATION APPEARS:
@@ -910,589 +910,589 @@ Respond with a JSON object containing:
 - "analysis": "detailed explanation of whether and how it supports the consultation's point"
 - "issues": "any problems with how the citation is being used"
 """
-                                                
-                                                openai_client = get_openai_client()
-                                                if openai_client:
-                                                    try:
-                                                        ai_response = openai_client.chat.completions.create(
-                                                            model="gpt-4o",
-                                                            temperature=0.1,
-                                                            max_tokens=1000,
-                                                            messages=[
-                                                                {"role": "system", "content": "You are a legal expert analyzing case citations for accuracy and relevance."},
-                                                                {"role": "user", "content": validation_prompt}
-                                                            ],
-                                                            response_format={"type": "json_object"}
-                                                        )
-                                                        
-                                                        import json as json_module
-                                                        response_content = ai_response.choices[0].message.content
-                                                        if response_content:
-                                                            ai_analysis = json_module.loads(response_content)
-                                                        else:
-                                                            raise Exception("Empty response from AI")
-                                                        
-                                                        is_correct_doc = ai_analysis.get("is_correct_document", False)
-                                                        supports_prop = ai_analysis.get("supports_proposition", False)
-                                                        confidence = ai_analysis.get("confidence", "low")
-                                                        legal_principle = ai_analysis.get("legal_principle", "Unknown")
-                                                        analysis = ai_analysis.get("analysis", "Analysis unavailable")
-                                                        issues = ai_analysis.get("issues", "")
-                                                        
-                                                        if is_correct_doc and supports_prop and confidence in ["high", "medium"]:
-                                                            # Citation is valid and supports the proposition
-                                                            verified_response = verified_response.replace(
-                                                                f"{citation} [UNVERIFIED]", 
-                                                                f"[{citation}]({link.strip()})"
-                                                            )
-                                                            if "[UNVERIFIED]" not in result["response"]:
-                                                                verified_response = verified_response.replace(
-                                                                    citation, 
-                                                                    f"[{citation}]({link.strip()})",
-                                                                    1
-                                                                )
-                                                            manual_updates += 1
-                                                            validation_results.append({
-                                                                "citation": citation,
-                                                                "link": link.strip(),
-                                                                "status": "verified",
-                                                                "message": f"✅ **Validated ({confidence} confidence)**: {legal_principle}",
-                                                                "analysis": analysis
-                                                            })
-                                                        else:
-                                                            # Citation doesn't properly support the proposition
-                                                            rejection_reason = []
-                                                            if not is_correct_doc:
-                                                                rejection_reason.append("wrong document")
-                                                            if not supports_prop:
-                                                                rejection_reason.append("doesn't support proposition")
-                                                            if confidence == "low":
-                                                                rejection_reason.append("low confidence in analysis")
-                                                            
-                                                            validation_results.append({
-                                                                "citation": citation,
-                                                                "link": link.strip(),
-                                                                "status": "rejected",
-                                                                "message": f"❌ **Rejected**: {', '.join(rejection_reason)}",
-                                                                "analysis": analysis,
-                                                                "issues": issues
-                                                            })
                                                     
-                                                    except Exception as e:
+                                                    openai_client = get_openai_client()
+                                                    if openai_client:
+                                                        try:
+                                                            ai_response = openai_client.chat.completions.create(
+                                                                model="gpt-4o",
+                                                                temperature=0.1,
+                                                                max_tokens=1000,
+                                                                messages=[
+                                                                    {"role": "system", "content": "You are a legal expert analyzing case citations for accuracy and relevance."},
+                                                                    {"role": "user", "content": validation_prompt}
+                                                                ],
+                                                                response_format={"type": "json_object"}
+                                                            )
+                                                            
+                                                            import json as json_module
+                                                            response_content = ai_response.choices[0].message.content
+                                                            if response_content:
+                                                                ai_analysis = json_module.loads(response_content)
+                                                            else:
+                                                                raise Exception("Empty response from AI")
+                                                            
+                                                            is_correct_doc = ai_analysis.get("is_correct_document", False)
+                                                            supports_prop = ai_analysis.get("supports_proposition", False)
+                                                            confidence = ai_analysis.get("confidence", "low")
+                                                            legal_principle = ai_analysis.get("legal_principle", "Unknown")
+                                                            analysis = ai_analysis.get("analysis", "Analysis unavailable")
+                                                            issues = ai_analysis.get("issues", "")
+                                                            
+                                                            if is_correct_doc and supports_prop and confidence in ["high", "medium"]:
+                                                                # Citation is valid and supports the proposition
+                                                                verified_response = verified_response.replace(
+                                                                    f"{citation} [UNVERIFIED]", 
+                                                                    f"[{citation}]({link.strip()})"
+                                                                )
+                                                                if "[UNVERIFIED]" not in result["response"]:
+                                                                    verified_response = verified_response.replace(
+                                                                        citation, 
+                                                                        f"[{citation}]({link.strip()})",
+                                                                        1
+                                                                    )
+                                                                manual_updates += 1
+                                                                validation_results.append({
+                                                                    "citation": citation,
+                                                                    "link": link.strip(),
+                                                                    "status": "verified",
+                                                                    "message": f"✅ **Validated ({confidence} confidence)**: {legal_principle}",
+                                                                    "analysis": analysis
+                                                                })
+                                                            else:
+                                                                # Citation doesn't properly support the proposition
+                                                                rejection_reason = []
+                                                                if not is_correct_doc:
+                                                                    rejection_reason.append("wrong document")
+                                                                if not supports_prop:
+                                                                    rejection_reason.append("doesn't support proposition")
+                                                                if confidence == "low":
+                                                                    rejection_reason.append("low confidence in analysis")
+                                                                
+                                                                validation_results.append({
+                                                                    "citation": citation,
+                                                                    "link": link.strip(),
+                                                                    "status": "rejected",
+                                                                    "message": f"❌ **Rejected**: {', '.join(rejection_reason)}",
+                                                                    "analysis": analysis,
+                                                                    "issues": issues
+                                                                })
+                                                        
+                                                        except Exception as e:
+                                                            validation_results.append({
+                                                                "citation": citation,
+                                                                "link": link.strip(),
+                                                                "status": "error",
+                                                                "message": f"AI validation failed: {str(e)}"
+                                                            })
+                                                    else:
                                                         validation_results.append({
                                                             "citation": citation,
                                                             "link": link.strip(),
                                                             "status": "error",
-                                                            "message": f"AI validation failed: {str(e)}"
+                                                            "message": "AI validation unavailable - OpenAI client not configured"
                                                         })
-                                                else:
-                                                    validation_results.append({
-                                                        "citation": citation,
-                                                        "link": link.strip(),
-                                                        "status": "error",
-                                                        "message": "AI validation unavailable - OpenAI client not configured"
-                                                    })
-                                    
-                                    # Display validation results
-                                    st.markdown("#### 🔍 Citation Link Validation Results")
-                                    for result_item in validation_results:
-                                        if result_item["status"] == "verified":
-                                            st.success(f"✅ **{result_item['citation']}**")
-                                            st.success(result_item['message'])
-                                            if 'analysis' in result_item:
-                                                with st.expander("📋 Detailed Legal Analysis", expanded=False):
-                                                    st.markdown(result_item['analysis'])
-                                        elif result_item["status"] == "rejected":
-                                            st.warning(f"⚠️ **{result_item['citation']}**")
-                                            st.warning(result_item['message'])
-                                            if 'analysis' in result_item:
-                                                with st.expander("📋 Why This Citation Was Rejected", expanded=False):
-                                                    st.markdown(f"**Analysis:** {result_item['analysis']}")
-                                                    if 'issues' in result_item and result_item['issues']:
-                                                        st.markdown(f"**Issues:** {result_item['issues']}")
-                                        else:  # error
-                                            st.error(f"❌ **{result_item['citation']}**: {result_item['message']}")
-                                    
-                                    if manual_updates > 0:
-                                        # Re-run protocol compliance check
-                                        from ai_utils import check_protocol_compliance
-                                        protocol_report, ptok, ctok = check_protocol_compliance(verified_response, protocol_text)
                                         
-                                        st.markdown("### 📄 Updated Consultation with Validated Citations")
-                                        st.success(f"Successfully validated and updated {manual_updates} citation(s).")
-                                        st.markdown(verified_response)
-                                        with st.expander("🛡️ Updated Protocol Compliance Report", expanded=False):
-                                            st.markdown(protocol_report or "No protocol compliance report available.")
-                                    else:
-                                        if validation_results:
-                                            st.warning("No citations were validated successfully. Please check that your links contain relevant legal content.")
-                                        else:
-                                            st.warning("Please provide at least one citation link to validate.")
+                                        # Display validation results
+                                        st.markdown("#### 🔍 Citation Link Validation Results")
+                                        for result_item in validation_results:
+                                            if result_item["status"] == "verified":
+                                                st.success(f"✅ **{result_item['citation']}**")
+                                                st.success(result_item['message'])
+                                                if 'analysis' in result_item:
+                                                    with st.expander("📋 Detailed Legal Analysis", expanded=False):
+                                                        st.markdown(result_item['analysis'])
+                                            elif result_item["status"] == "rejected":
+                                                st.warning(f"⚠️ **{result_item['citation']}**")
+                                                st.warning(result_item['message'])
+                                                if 'analysis' in result_item:
+                                                    with st.expander("📋 Why This Citation Was Rejected", expanded=False):
+                                                        st.markdown(f"**Analysis:** {result_item['analysis']}")
+                                                        if 'issues' in result_item and result_item['issues']:
+                                                            st.markdown(f"**Issues:** {result_item['issues']}")
+                                            else:  # error
+                                                st.error(f"❌ **{result_item['citation']}**: {result_item['message']}")
                                         
-                            if not citations_found:
-                                st.markdown("No legal citations detected in this consultation.")
-                            else:
-                                st.markdown(f"**Summary:** {len(citations_verified)} automatically verified, {len(citations_unverified)} unverified out of {len(citations_found)} total citations.")
-                        # Cost estimate
-                        if selected_model in MODEL_PRICES_PER_1K_TOKENS_GBP:
-                            total_tokens = result["prompt_tokens"] + result["completion_tokens"]
-                            estimated_cost = (total_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP[selected_model]
-                            st.caption(f"Estimated consultation cost: £{estimated_cost:.4f} (Tokens: {total_tokens})")
-                        # Export option
-                        if st.button("📄 Export Consultation to DOCX", key="export_consultation"):
-                            try:
-                                from app_utils import build_consult_docx
-                                import tempfile
-                                consultation_content = [
-                                    f"AI Legal Consultation Report",
-                                    f"Topic: {selected_topic}",
-                                    f"Model: {selected_model}",
-                                    f"Date: {_dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
-                                    "",
-                                    f"Client Question: {user_question}",
-                                    "",
-                                    result["response"]
-                                ]
-                                with tempfile.NamedTemporaryFile(suffix='.docx', delete=False) as tmp_file:
-                                    build_consult_docx(consultation_content, _pl.Path(tmp_file.name))
-                                    with open(tmp_file.name, 'rb') as f:
-                                        docx_data = f.read()
-                                    st.download_button(
-                                        label="📥 Download Consultation Report",
-                                        data=docx_data,
-                                        file_name=f"legal_consultation_{selected_topic.replace(' ', '_')}_{_dt.datetime.now().strftime('%Y%m%d_%H%M%S')}.docx",
-                                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                    )
-                                    _pl.Path(tmp_file.name).unlink()
-                            except Exception as e:
-                                st.error(f"Error exporting consultation: {e}")
-                                logger.error(f"Error exporting consultation: {e}", exc_info=True)
-                    except Exception as e:
-                        st.error(f"Error generating consultation: {e}")
-                        logger.error(f"Error in AI consultation: {e}", exc_info=True)
-
-    with adv_tab_ch:
-        st.markdown("### Companies House Analysis")
-        
-        # Companies House specific inputs
-        ch_company_numbers_input = st.text_area(
-            "Company Numbers (one per line or comma-separated):",
-            height=100,
-            placeholder="00000001\n12345678\nor: 00000001, 12345678",
-            key="ch_company_numbers_input_main"
-        )
-        
-        col_ch_1, col_ch_2 = st.columns(2)
-        with col_ch_1:
-            st.session_state.ch_start_year_input_main = st.number_input(
-                "Start Year:", min_value=1990, max_value=2030, value=2020, key="ch_start_year_main"
-            )
-        with col_ch_2:
-            st.session_state.ch_end_year_input_main = st.number_input(
-                "End Year:", min_value=1990, max_value=2030, value=2024, key="ch_end_year_main"
-            )
-        
-        ch_selected_categories_multiselect = st.multiselect(
-            "Document Categories:",
-            options=list(CH_CATEGORIES.keys()),
-            default=["Accounts", "Confirmation Stmt"],
-            key="ch_categories_multiselect_main"
-        )
-        ch_selected_categories_api = [CH_CATEGORIES[cat] for cat in ch_selected_categories_multiselect]
-
-        st.markdown("---")
-        st.markdown("#### Step 1: Find Available Company Documents")
-
-        ch_company_numbers_list = []
-        if ch_company_numbers_input: 
-            raw_list = [num.strip() for num in ch_company_numbers_input.replace(',', '\\n').splitlines() if num.strip()]
-            ch_company_numbers_list = list(dict.fromkeys(raw_list))
-
-        if st.button("🔍 Search for Available Documents", key="ch_search_documents_button"):
-            if not ch_company_numbers_list:
-                st.warning("Please enter at least one company number.")
-            elif st.session_state.ch_start_year_input_main > st.session_state.ch_end_year_input_main:
-                st.warning("Start Year cannot be after End Year.")
-            elif not CH_API_KEY_PRESENT:
-                 st.error("Companies House API Key is not configured. Cannot search for documents.")
-            elif 'ch_pipeline' not in globals() or not hasattr(ch_pipeline, 'get_relevant_filings_metadata'): 
-                st.error("CH Search function is not available. Please check ch_pipeline.py.")
-            else:
-                with st.spinner("Searching for available documents... This may take a moment."):
-                    try:
-                        all_docs_for_all_companies = []
-                        all_profiles_map = {} 
-                        any_meta_error = None
-
-                        for company_no_iter in ch_company_numbers_list:
-                            if not config.CH_API_KEY: 
-                                st.error(f"CH API Key missing for processing {company_no_iter}.")
-                                any_meta_error = f"CH API Key missing for {company_no_iter}"
-                                continue
-
-                            years_back_calc = st.session_state.ch_end_year_input_main - st.session_state.ch_start_year_input_main
-                            if years_back_calc < 0: years_back_calc = 0 
-
-                            docs_for_this_co, profile_for_this_co, meta_err_this_co = ch_pipeline.get_relevant_filings_metadata(
-                                company_number=company_no_iter,
-                                api_key=config.CH_API_KEY, 
-                                years_back=years_back_calc +1, 
-                                categories_to_fetch=ch_selected_categories_api if ch_selected_categories_api else list(CH_CATEGORIES.values()),
-                            )
-
-                            if meta_err_this_co:
-                                any_meta_error = meta_err_this_co 
-                                st.warning(f"Error fetching metadata for {company_no_iter}: {meta_err_this_co}")
-                            if docs_for_this_co:
-                                for doc in docs_for_this_co: 
-                                    doc['company_number'] = company_no_iter 
-                                all_docs_for_all_companies.extend(docs_for_this_co)
-                            if profile_for_this_co:
-                                all_profiles_map[company_no_iter] = profile_for_this_co
-                        
-                        for doc in all_docs_for_all_companies:
-                            doc['id'] = doc.get('transaction_id') or doc.get('links', {}).get('document_metadata') or \
-                                        f"{doc.get('company_number','')}_{doc.get('date','')}_{doc.get('type','')}_{doc.get('description','N/A')[:10]}"
-                        
-                        st.session_state.ch_available_documents = all_docs_for_all_companies
-                        st.session_state.ch_document_selection = {
-                            doc['id']: True for doc in st.session_state.ch_available_documents
-                        }
-                        st.session_state.ch_company_profiles_map = all_profiles_map 
-
-                        if any_meta_error:
-                            st.warning(f"Some errors occurred during metadata retrieval. Check logs. First error: {any_meta_error}")
-                        if not st.session_state.ch_available_documents and ch_company_numbers_list:
-                            st.info("No documents found matching your criteria. Try adjusting categories or date range.")
-                        elif st.session_state.ch_available_documents:
-                            st.success(f"Found {len(st.session_state.ch_available_documents)} potentially relevant document(s). Please review and select below.")
-                    except Exception as e_fetch_meta:
-                        st.error(f"Error fetching CH document metadata: {e_fetch_meta}")
-                        logger.error(f"Error in CH metadata fetch (app.py): {e_fetch_meta}", exc_info=True)
-                    st.rerun()
-
-        if st.session_state.ch_available_documents:
-            st.markdown("---")
-            st.markdown("#### Step 2: Select Documents for Analysis")
-            st.caption("Review the list of documents found. Uncheck any you don't want to include in the analysis.")
-
-            docs_by_company_display = {}
-            for doc_detail in st.session_state.ch_available_documents:
-                docs_by_company_display.setdefault(doc_detail['company_number'], []).append(doc_detail)
-
-            for company_num_iter_display, docs_list_display in docs_by_company_display.items():
-                company_name_display = company_num_iter_display 
-                profile_data = st.session_state.ch_company_profiles_map.get(company_num_iter_display)
-                if profile_data and profile_data.get("company_name"):
-                    company_name_display = f"{profile_data.get('company_name')} ({company_num_iter_display})"
-
-                with st.expander(f"Documents for {company_name_display} ({len(docs_list_display)} found)", expanded=True):
-                    for doc_detail_display in docs_list_display:
-                        display_name = (
-                            f"{doc_detail_display.get('date', 'N/A')} | {doc_detail_display.get('type', 'N/A')} | "
-                            f"{doc_detail_display.get('description', 'N/A')}"
-                        )
-                        doc_id_display = doc_detail_display['id']
-                        checked_display = st.session_state.ch_document_selection.get(doc_id_display, True)
-                        st.session_state.ch_document_selection[doc_id_display] = st.checkbox(
-                            display_name, value=checked_display,
-                            key=f"ch_doc_select_{doc_id_display.replace('/','_')}", 
-                            help=(f"Company: {doc_detail_display.get('company_number', 'N/A')}\n"
-                                  f"Type: {doc_detail_display.get('type', 'N/A')}\n"
-                                  f"Date: {doc_detail_display.get('date', 'N/A')}\n"
-                                  f"Description: {doc_detail_display.get('description', 'N/A')}\n"
-                                  f"Transaction ID: {doc_detail_display.get('transaction_id', 'N/A')}")
-                        )
-            st.markdown("---")
-
-        st.markdown("#### Step 3: Configure and Run Analysis")
-        st.text_area(
-            "Additional AI Instructions for Summaries (Optional):",
-            value=st.session_state.additional_ai_instructions_ch_text_area_value,
-            height=100, key="additional_ai_instructions_ch_text_area_main",
-            on_change=lambda: st.session_state.update(additional_ai_instructions_ch_text_area_value=st.session_state.additional_ai_instructions_ch_text_area_main),
-            help="e.g., 'Focus on financial risks and director changes.' This will be applied to each selected document's summary."
-        )
-        
-        ch_keywords_for_filter_input = st.text_input(
-            "Keywords to Highlight/Filter in Analysis (comma-separated, optional)",
-            key="ch_keywords_input_main",
-            help="These keywords can be used to guide the AI or highlight sections in the final report."
-        )
-        ch_keywords_for_filter = [kw.strip() for kw in ch_keywords_for_filter_input.split(',') if kw.strip()]
-
-        is_any_doc_selected = any(st.session_state.ch_document_selection.values()) if st.session_state.ch_document_selection else False
-
-        if st.button("📊 Run Analysis on Selected Documents", type="primary", key="ch_run_analysis_selected_button", disabled=not is_any_doc_selected):
-            if not CH_API_KEY_PRESENT:
-                st.error("Companies House API Key is not configured. Cannot run analysis.")
-            elif not st.session_state.ch_document_selection: 
-                st.warning("Please select at least one document for analysis.")
-            elif not st.session_state.ch_available_documents: 
-                st.warning("No available documents to analyze. Please search for documents first.")
-            else:
-                with st.spinner("Running Companies House analysis..."):
-                    try:
-                        company_numbers_with_selected_docs = list(set(
-                            doc['company_number'] for doc_id, is_selected in st.session_state.ch_document_selection.items() if is_selected
-                            for doc in st.session_state.ch_available_documents if doc['id'] == doc_id
-                        ))
-
-                        docs_to_process_by_company_map = {cn: [] for cn in company_numbers_with_selected_docs}
-                        for doc_id, is_selected in st.session_state.ch_document_selection.items():
-                            if is_selected:
-                                selected_doc_detail = next((doc for doc in st.session_state.ch_available_documents if doc['id'] == doc_id), None)
-                                if selected_doc_detail:
-                                    company_num_of_doc = selected_doc_detail['company_number']
-                                    if company_num_of_doc in docs_to_process_by_company_map:
-                                         docs_to_process_by_company_map[company_num_of_doc].append(selected_doc_detail)
-                        
-                        docs_to_process_by_company_map = {k: v for k, v in docs_to_process_by_company_map.items() if v}
-
-                        if not docs_to_process_by_company_map:
-                            st.warning("No documents selected for analysis. Please select documents and try again.")
-                        elif not config.CH_API_KEY: 
-                            st.error("CH API Key missing. Cannot run batch analysis.")
-                        else:
-                            output_csv_path, batch_metrics = ch_pipeline.run_batch_company_analysis(
-                                company_numbers_list=list(docs_to_process_by_company_map.keys()), 
-                                selected_filings_metadata_by_company=docs_to_process_by_company_map,
-                                company_profiles_map=st.session_state.ch_company_profiles_map,
-                                ch_api_key_batch=config.CH_API_KEY, 
-                                model_prices_gbp=MODEL_PRICES_PER_1K_TOKENS_GBP,
-                                specific_ai_instructions=st.session_state.additional_ai_instructions_ch_text_area_value,
-                                filter_keywords_str=ch_keywords_for_filter,
-                                base_scratch_dir=APP_BASE_PATH / "temp_ch_runs",
-                                keep_days=7,
-                                use_textract_ocr=False,
-                                textract_workers=1,
-                            )
-                            
-                            st.session_state.ch_last_digest_path = batch_metrics.get("output_docx_path")
-                            st.session_state.ch_last_batch_metrics = batch_metrics
-                            st.session_state.ch_last_df = None  
-                            st.session_state.ch_analysis_summaries_for_injection = []  
-                            st.session_state.ch_last_narrative = "Analysis initiated..."
-
-                            main_json_data_list = None
-                            main_json_path_str = batch_metrics.get("output_json_path")
-                            json_processed_successfully = False
-                            
-                            if main_json_path_str:
-                                main_json_path = _pl.Path(main_json_path_str)
-                                if (main_json_path.exists()):
-                                    try:
-                                        with open(main_json_path, 'r', encoding='utf-8') as f_json:
-                                            loaded_json_content = json.load(f_json)
-                                        
-                                        if isinstance(loaded_json_content, list): main_json_data_list = loaded_json_content
-                                        elif isinstance(loaded_json_content, dict):
-                                            if "processed_documents" in loaded_json_content and isinstance(loaded_json_content["processed_documents"], list): main_json_data_list = loaded_json_content["processed_documents"]
-                                            elif "output_data_rows" in loaded_json_content and isinstance(loaded_json_content["output_data_rows"], list): main_json_data_list = loaded_json_content["output_data_rows"]
-                                        
-                                        if main_json_data_list and pd is not None: 
-                                            json_processed_successfully = True
-                                            logger.info(f"Successfully loaded and parsed main JSON ({main_json_path.name}) for individual document details.")
-                                            st.session_state.ch_last_df = pd.DataFrame(main_json_data_list)
+                                        if manual_updates > 0:
+                                            # Re-run protocol compliance check
+                                            from ai_utils import check_protocol_compliance
+                                            protocol_report, ptok, ctok = check_protocol_compliance(verified_response, protocol_text)
                                             
-                                            temp_summaries_for_injection = []
-                                            for item_idx, item in enumerate(main_json_data_list):
-                                                if isinstance(item, dict):
-                                                    company_id_item = str(item.get('company_number', f'Comp_N/A_{item_idx}'))
-                                                    doc_date_item = item.get('document_date', item.get('date', 'N/A')) 
-                                                    doc_type_item = item.get('document_type', item.get('type', 'N/A')) 
-                                                    doc_desc_raw_item = item.get('document_description', item.get('description', 'Document')) 
-                                                    doc_description_item = str(doc_desc_raw_item if pd.notna(doc_desc_raw_item) and str(doc_desc_raw_item).strip() else doc_type_item) if pd is not None else str(doc_desc_raw_item or doc_type_item)
-                                                    title_item = f"{doc_date_item} - {doc_type_item} - {doc_description_item[:75]}"
-                                                    if len(doc_description_item) > 75: title_item += "..."
-                                                    
-                                                    individual_summary_text_item = str(item.get('summary', 'Individual summary not available in JSON.'))
-                                                    
-                                                    status_item = item.get('processing_status', item.get('ai_summary_status', item.get('text_extraction_status'))) 
-                                                    if status_item and str(status_item).lower() not in ["success", "completed", "ok", "processed", "summarized"] and "error" not in str(status_item).lower() and "fail" not in str(status_item).lower():
-                                                        title_item += f" (Status: {status_item})"
-                                                    elif "error" in str(status_item).lower() or "fail" in str(status_item).lower():
-                                                        title_item += f" (Processing Issue)"
-
-                                                    temp_summaries_for_injection.append((company_id_item, title_item, individual_summary_text_item))
-                                            st.session_state.ch_analysis_summaries_for_injection = temp_summaries_for_injection
-                                        elif pd is None:
-                                            msg = "Pandas library is not available. Cannot process JSON data into DataFrame."
-                                            logger.error(msg); st.error(msg)
-                                        else: 
-                                            msg = f"Main JSON ({main_json_path.name}) loaded but document list not found in expected structure."
-                                            logger.warning(msg); st.warning(msg)
-                                    except Exception as e_json_load:
-                                        msg = f"Error processing main JSON output from {main_json_path_str}: {e_json_load}"
-                                        logger.error(msg, exc_info=True); st.error(msg)
-                                else: 
-                                    msg = f"Main JSON output file specified by pipeline but not found: {main_json_path_str}"
-                                    logger.warning(msg); st.warning(msg)
-                            else: 
-                                msg = "Pipeline did not provide a path for the main JSON output (for individual document details)."
-                                logger.warning(msg); st.warning(msg)
-
-                            narrative_parts = []
-                            num_companies_processed = batch_metrics.get("total_companies_processed", 0)
-                            num_docs_analyzed = batch_metrics.get("total_documents_analyzed", 0)
-
-                            if num_companies_processed > 0 or num_docs_analyzed > 0: narrative_parts.append(f"Pipeline metrics indicate processing for **{num_companies_processed}** company/ies and **{num_docs_analyzed}** document(s).")
-                            else: narrative_parts.append("Pipeline metrics did not report specific company or document counts from the overall analysis.")
-
-                            if json_processed_successfully and st.session_state.ch_last_df is not None and not st.session_state.ch_last_df.empty:
-                                df_company_count = st.session_state.ch_last_df['company_number'].nunique() if 'company_number' in st.session_state.ch_last_df.columns else 0
-                                df_doc_count = len(st.session_state.ch_last_df)
-                                if df_company_count > 0 or df_doc_count > 0: narrative_parts.append(f"The loaded JSON data provides details for **{df_company_count}** company/ies and **{df_doc_count}** document(s).")
-                                else: narrative_parts.append("The loaded JSON data was empty or did not contain countable company/document details.")
-                                    
-                                actual_individual_summaries_count = sum(1 for s_inj in st.session_state.ch_analysis_summaries_for_injection if s_inj[2] != 'Individual summary not available in JSON.')
-                                if actual_individual_summaries_count > 0: narrative_parts.append(f"Found **{actual_individual_summaries_count}** individual document summaries in JSON for review/injection.")
-                                else: narrative_parts.append("Individual document summaries were not found or were placeholders in the JSON data.")
-                            else: 
-                                if not json_processed_successfully: narrative_parts.append("Detailed information from the JSON output was not available or failed to load.")
-                                elif st.session_state.ch_last_df is None or (pd is not None and st.session_state.ch_last_df.empty): narrative_parts.append("The JSON data, even if loaded, appeared empty or did not yield document details.")
-                                elif pd is None: narrative_parts.append("Pandas not available, cannot determine if JSON data is empty.")
-
-
-                            consolidated_summary_from_csv = None
-                            if output_csv_path and _pl.Path(output_csv_path).exists() and pd is not None:
+                                            st.markdown("### 📄 Updated Consultation with Validated Citations")
+                                            st.success(f"Successfully validated and updated {manual_updates} citation(s).")
+                                            st.markdown(verified_response)
+                                            with st.expander("🛡️ Updated Protocol Compliance Report", expanded=False):
+                                                st.markdown(protocol_report or "No protocol compliance report available.")
+                                        else:
+                                            if validation_results:
+                                                st.warning("No citations were validated successfully. Please check that your links contain relevant legal content.")
+                                            else:
+                                                st.warning("Please provide at least one citation link to validate.")
+                                            
+                                if not citations_found:
+                                    st.markdown("No legal citations detected in this consultation.")
+                                else:
+                                    st.markdown(f"**Summary:** {len(citations_verified)} automatically verified, {len(citations_unverified)} unverified out of {len(citations_found)} total citations.")
+                            # Cost estimate
+                            if selected_model in MODEL_PRICES_PER_1K_TOKENS_GBP:
+                                total_tokens = result["prompt_tokens"] + result["completion_tokens"]
+                                estimated_cost = (total_tokens / 1000) * MODEL_PRICES_PER_1K_TOKENS_GBP[selected_model]
+                                st.caption(f"Estimated consultation cost: £{estimated_cost:.4f} (Tokens: {total_tokens})")
+                            # Export option
+                            if st.button("📄 Export Consultation to DOCX", key="export_consultation"):
                                 try:
-                                    df_csv_digest = pd.read_csv(output_csv_path)
-                                    if not df_csv_digest.empty and 'Summary of Findings' in df_csv_digest.columns:
-                                        consolidated_summary_from_csv = df_csv_digest['Summary of Findings'].iloc[0]
-                                        if pd.notna(consolidated_summary_from_csv) and consolidated_summary_from_csv.strip(): narrative_parts.append("A consolidated 'Summary of Findings' was successfully extracted from the CSV digest.")
-                                        else: consolidated_summary_from_csv = None; narrative_parts.append("CSV digest was read, but 'Summary of Findings' was empty or not found.")
-                                    elif not df_csv_digest.empty: narrative_parts.append("CSV digest was read, but the 'Summary of Findings' column was missing.")
-                                    else: narrative_parts.append("CSV digest file was empty.")
-                                except KeyError as e_csv_key:
-                                    narrative_parts.append(f"Could not read 'Summary of Findings' from CSV digest due to missing column: {e_csv_key}."); logger.warning(f"KeyError reading CSV digest {output_csv_path}: {e_csv_key}")
-                                except Exception as e_csv_read:
-                                    narrative_parts.append(f"Failed to read or process the CSV digest at {output_csv_path}: {e_csv_read}"); logger.error(f"Error reading CSV digest {output_csv_path}: {e_csv_read}", exc_info=True)
-                            elif output_csv_path and pd is None:
-                                narrative_parts.append(f"Pandas not available. Cannot read CSV digest at {output_csv_path}.")
-                            elif output_csv_path: narrative_parts.append(f"CSV digest file specified by pipeline but not found at {output_csv_path}.")
-                            
-                            cost_str_display = ""
-                            total_ai_cost_gbp = batch_metrics.get("total_ai_summarization_cost_gbp")
-                            if isinstance(total_ai_cost_gbp, (float, int)): 
-                                cost_str_display = f"£{total_ai_cost_gbp:.4f} (AI Processing)"
-                            
-                            if cost_str_display: 
-                                narrative_parts.append(f"Estimated processing cost: {cost_str_display}.")
-                            
-                            st.session_state.ch_last_narrative = " ".join(narrative_parts)
-                            st.session_state.ch_consolidated_summary = consolidated_summary_from_csv if consolidated_summary_from_csv else None
-                            st.success("Companies House analysis processing complete.")
-                    except Exception as e_batch_run: 
-                        st.error(f"An error occurred during the Companies House analysis: {e_batch_run}") 
-                        logger.error(f"Error during CH analysis batch processing: {e_batch_run}", exc_info=True) 
-                        st.session_state.ch_last_narrative = "Analysis failed. Please check error messages and logs." 
-                        st.session_state.ch_last_df = None 
-                        st.session_state.ch_last_digest_path = None 
-                        st.session_state.ch_last_batch_metrics = {}
-                        st.session_state.ch_analysis_summaries_for_injection = []
-                        st.session_state.ch_consolidated_summary = None
+                                    from app_utils import build_consult_docx
+                                    import tempfile
+                                    consultation_content = [
+                                        f"AI Legal Consultation Report",
+                                        f"Topic: {selected_topic}",
+                                        f"Model: {selected_model}",
+                                        f"Date: {_dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
+                                        "",
+                                        f"Client Question: {user_question}",
+                                        "",
+                                        result["response"]
+                                    ]
+                                    with tempfile.NamedTemporaryFile(suffix='.docx', delete=False) as tmp_file:
+                                        build_consult_docx(consultation_content, _pl.Path(tmp_file.name))
+                                        with open(tmp_file.name, 'rb') as f:
+                                            docx_data = f.read()
+                                        st.download_button(
+                                            label="📥 Download Consultation Report",
+                                            data=docx_data,
+                                            file_name=f"legal_consultation_{selected_topic.replace(' ', '_')}_{_dt.datetime.now().strftime('%Y%m%d_%H%M%S')}.docx",
+                                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        )
+                                        _pl.Path(tmp_file.name).unlink()
+                                except Exception as e:
+                                    st.error(f"Error exporting consultation: {e}")
+                                    logger.error(f"Error exporting consultation: {e}", exc_info=True)
+                        except Exception as e:
+                            st.error(f"Error generating consultation: {e}")
+                            logger.error(f"Error in AI consultation: {e}", exc_info=True)
 
-
-        st.markdown("---")
-        st.markdown("#### Analysis Results")
-        ch_last_df = st.session_state.get('ch_last_df')
-        df_results_available_ch = (ch_last_df is not None and 
-                               pd is not None and 
-                               hasattr(ch_last_df, 'empty') and
-                               not ch_last_df.empty)
-        
-        if st.session_state.get('ch_last_narrative'):
-            st.markdown("##### Narrative Summary & Key Findings")
-            st.markdown(st.session_state.ch_last_narrative, unsafe_allow_html=True)
-        elif not df_results_available_ch: 
-            st.info("Run an analysis to see results here.")
-
-        if st.session_state.get('ch_consolidated_summary'):
-            st.markdown("---")
-            st.markdown("##### Consolidated Summary of Findings (from CSV Digest)")
-            st.markdown(st.session_state.ch_consolidated_summary, unsafe_allow_html=True) 
-
-        ch_last_digest_path_val_results = st.session_state.get('ch_last_digest_path')
-        if ch_last_digest_path_val_results and isinstance(ch_last_digest_path_val_results, (str, _pl.Path)):
-            try:
-                digest_path_obj_results_display = _pl.Path(ch_last_digest_path_val_results)
-                if digest_path_obj_results_display.exists():
-                    with open(digest_path_obj_results_display, "rb") as fp_results_display:
-                        st.download_button(
-                            label="📥 Download Full CH Report (DOCX)", data=fp_results_display,
-                            file_name=digest_path_obj_results_display.name,
-                            mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        )
-                else: st.warning(f"Report file (DOCX) not found at: {digest_path_obj_results_display}")
-            except Exception as e_dl_results_display:
-                st.warning(f"Could not prepare CH report (DOCX) for download: {e_dl_results_display}")
-                logger.error(f"Error preparing CH report (DOCX) for download {ch_last_digest_path_val_results}: {e_dl_results_display}", exc_info=True)
-        
-        if df_results_available_ch:
-            st.markdown("---")
-            st.markdown("##### Detailed Document Information (from JSON)")
-            cols_to_show = ['company_number', 'document_date', 'document_type', 'document_description', 'text_extraction_status', 'extracted_text_length', 'ai_summary_status', 'summary', 'ocr_pages_processed', 'processing_error']
-            if st.session_state.ch_last_df is not None: # Check again before column access
-                display_df_ch = st.session_state.ch_last_df[[col for col in cols_to_show if col in st.session_state.ch_last_df.columns]]
-                st.dataframe(display_df_ch)
-        elif st.session_state.get('ch_last_narrative'): 
-            st.info("Detailed document information from JSON is not available or failed to load.")
-
-
-        if st.session_state.get('ch_last_batch_metrics'):
-            st.markdown("##### Processing Metrics")
-            metrics_data_display_final = st.session_state.ch_last_batch_metrics
-            m_col1_disp_final, m_col2_disp_final, m_col3_disp_final = st.columns(3)
-            m_col1_disp_final.metric("Companies Processed", metrics_data_display_final.get("total_companies_processed", 0))
-            m_col2_disp_final.metric("Documents Analyzed", metrics_data_display_final.get("total_documents_analyzed", 0))
+        with adv_tab_ch:
+            st.markdown("### Companies House Analysis")
             
-            cost_display_final_metric = "N/A"
-            if "total_ai_summarization_cost_gbp" in metrics_data_display_final:
-                cost_display_final_metric = f"£{metrics_data_display_final.get('total_ai_summarization_cost_gbp', 0.0):.4f} (AI)"
+            # Companies House specific inputs
+            ch_company_numbers_input = st.text_area(
+                "Company Numbers (one per line or comma-separated):",
+                height=100,
+                placeholder="00000001\n12345678\nor: 00000001, 12345678",
+                key="ch_company_numbers_input_main"
+            )
             
-            m_col3_disp_final.metric("Est. Cost", cost_display_final_metric if cost_display_final_metric != "N/A" else "£0.0000")
+            col_ch_1, col_ch_2 = st.columns(2)
+            with col_ch_1:
+                st.session_state.ch_start_year_input_main = st.number_input(
+                    "Start Year:", min_value=1990, max_value=2030, value=2020, key="ch_start_year_main"
+                )
+            with col_ch_2:
+                st.session_state.ch_end_year_input_main = st.number_input(
+                    "End Year:", min_value=1990, max_value=2030, value=2024, key="ch_end_year_main"
+                )
+            
+            ch_selected_categories_multiselect = st.multiselect(
+                "Document Categories:",
+                options=list(CH_CATEGORIES.keys()),
+                default=["Accounts", "Confirmation Stmt"],
+                key="ch_categories_multiselect_main"
+            )
+            ch_selected_categories_api = [CH_CATEGORIES[cat] for cat in ch_selected_categories_multiselect]
 
-    with adv_tab_group:
-        if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
-            # Simplified OCR - no AWS Textract options
-            ocr_handler_for_group_tab = None  
-            st.caption("📄 Local OCR available for PDF processing in Group Structure Analysis")
-            
             st.markdown("---")
+            st.markdown("#### Step 1: Find Available Company Documents")
 
-            try:
-                if callable(getattr(group_structure_utils, 'render_group_structure_ui', None)):
-                    if not config.CH_API_KEY:
-                         st.error("Companies House API Key is not configured. Group Structure Analysis cannot proceed.")
-                    else:
-                        # Pass logger_param as expected by the function definition
-                        group_structure_utils.render_group_structure_ui(
-                            api_key=config.CH_API_KEY, 
-                            base_scratch_dir=APP_BASE_PATH / "temp_group_structure_runs",
-                            logger=logger, # Fixed parameter name
-                            ocr_handler=ocr_handler_for_group_tab
-                        )
+            ch_company_numbers_list = []
+            if ch_company_numbers_input: 
+                raw_list = [num.strip() for num in ch_company_numbers_input.replace(',', '\\n').splitlines() if num.strip()]
+                ch_company_numbers_list = list(dict.fromkeys(raw_list))
+
+            if st.button("🔍 Search for Available Documents", key="ch_search_documents_button"):
+                if not ch_company_numbers_list:
+                    st.warning("Please enter at least one company number.")
+                elif st.session_state.ch_start_year_input_main > st.session_state.ch_end_year_input_main:
+                    st.warning("Start Year cannot be after End Year.")
+                elif not CH_API_KEY_PRESENT:
+                     st.error("Companies House API Key is not configured. Cannot search for documents.")
+                elif 'ch_pipeline' not in globals() or not hasattr(ch_pipeline, 'get_relevant_filings_metadata'): 
+                    st.error("CH Search function is not available. Please check ch_pipeline.py.")
                 else:
-                    st.error("Group Structure UI utility not available.")
-                    logger.error("group_structure_utils.render_group_structure_ui is not callable.")
-            except ImportError as e_import_gs_tab: 
-                st.error(f"Group Structure UI could not be loaded: {e_import_gs_tab}.")
-                logger.error(f"ImportError for group_structure_utils in tab: {e_import_gs_tab}", exc_info=True)
-            except Exception as e_render_gs_tab:
-                st.error(f"An error occurred in the Group Structure tab: {str(e_render_gs_tab)}")
-                logger.error(f"Error in Group Structure tab (app.py level): {e_render_gs_tab}", exc_info=True)
-        else:
-            st.error("Group Structure functionality is not available ('group_structure_utils' module failed to load).")
+                    with st.spinner("Searching for available documents... This may take a moment."):
+                        try:
+                            all_docs_for_all_companies = []
+                            all_profiles_map = {} 
+                            any_meta_error = None
 
-    with adv_tab_help:
-        try:
-            from help_page import render_help_page
-            render_help_page()
-        except Exception as e:
-            st.error(f"Error rendering Help page: {e}")
-            logger.error(f"Error rendering Help page: {e}", exc_info=True)
-            st.info("Help page functionality will be available when help_page module is properly configured.")
+                            for company_no_iter in ch_company_numbers_list:
+                                if not config.CH_API_KEY: 
+                                    st.error(f"CH API Key missing for processing {company_no_iter}.")
+                                    any_meta_error = f"CH API Key missing for {company_no_iter}"
+                                    continue
+
+                                years_back_calc = st.session_state.ch_end_year_input_main - st.session_state.ch_start_year_input_main
+                                if years_back_calc < 0: years_back_calc = 0 
+
+                                docs_for_this_co, profile_for_this_co, meta_err_this_co = ch_pipeline.get_relevant_filings_metadata(
+                                    company_number=company_no_iter,
+                                    api_key=config.CH_API_KEY, 
+                                    years_back=years_back_calc +1, 
+                                    categories_to_fetch=ch_selected_categories_api if ch_selected_categories_api else list(CH_CATEGORIES.values()),
+                                )
+
+                                if meta_err_this_co:
+                                    any_meta_error = meta_err_this_co 
+                                    st.warning(f"Error fetching metadata for {company_no_iter}: {meta_err_this_co}")
+                                if docs_for_this_co:
+                                    for doc in docs_for_this_co: 
+                                        doc['company_number'] = company_no_iter 
+                                    all_docs_for_all_companies.extend(docs_for_this_co)
+                                if profile_for_this_co:
+                                    all_profiles_map[company_no_iter] = profile_for_this_co
+                            
+                            for doc in all_docs_for_all_companies:
+                                doc['id'] = doc.get('transaction_id') or doc.get('links', {}).get('document_metadata') or \
+                                            f"{doc.get('company_number','')}_{doc.get('date','')}_{doc.get('type','')}_{doc.get('description','N/A')[:10]}"
+                            
+                            st.session_state.ch_available_documents = all_docs_for_all_companies
+                            st.session_state.ch_document_selection = {
+                                doc['id']: True for doc in st.session_state.ch_available_documents
+                            }
+                            st.session_state.ch_company_profiles_map = all_profiles_map 
+
+                            if any_meta_error:
+                                st.warning(f"Some errors occurred during metadata retrieval. Check logs. First error: {any_meta_error}")
+                            if not st.session_state.ch_available_documents and ch_company_numbers_list:
+                                st.info("No documents found matching your criteria. Try adjusting categories or date range.")
+                            elif st.session_state.ch_available_documents:
+                                st.success(f"Found {len(st.session_state.ch_available_documents)} potentially relevant document(s). Please review and select below.")
+                        except Exception as e_fetch_meta:
+                            st.error(f"Error fetching CH document metadata: {e_fetch_meta}")
+                            logger.error(f"Error in CH metadata fetch (app.py): {e_fetch_meta}", exc_info=True)
+                        st.rerun()
+
+            if st.session_state.ch_available_documents:
+                st.markdown("---")
+                st.markdown("#### Step 2: Select Documents for Analysis")
+                st.caption("Review the list of documents found. Uncheck any you don't want to include in the analysis.")
+
+                docs_by_company_display = {}
+                for doc_detail in st.session_state.ch_available_documents:
+                    docs_by_company_display.setdefault(doc_detail['company_number'], []).append(doc_detail)
+
+                for company_num_iter_display, docs_list_display in docs_by_company_display.items():
+                    company_name_display = company_num_iter_display 
+                    profile_data = st.session_state.ch_company_profiles_map.get(company_num_iter_display)
+                    if profile_data and profile_data.get("company_name"):
+                        company_name_display = f"{profile_data.get('company_name')} ({company_num_iter_display})"
+
+                    with st.expander(f"Documents for {company_name_display} ({len(docs_list_display)} found)", expanded=True):
+                        for doc_detail_display in docs_list_display:
+                            display_name = (
+                                f"{doc_detail_display.get('date', 'N/A')} | {doc_detail_display.get('type', 'N/A')} | "
+                                f"{doc_detail_display.get('description', 'N/A')}"
+                            )
+                            doc_id_display = doc_detail_display['id']
+                            checked_display = st.session_state.ch_document_selection.get(doc_id_display, True)
+                            st.session_state.ch_document_selection[doc_id_display] = st.checkbox(
+                                display_name, value=checked_display,
+                                key=f"ch_doc_select_{doc_id_display.replace('/','_')}", 
+                                help=(f"Company: {doc_detail_display.get('company_number', 'N/A')}\n"
+                                      f"Type: {doc_detail_display.get('type', 'N/A')}\n"
+                                      f"Date: {doc_detail_display.get('date', 'N/A')}\n"
+                                      f"Description: {doc_detail_display.get('description', 'N/A')}\n"
+                                      f"Transaction ID: {doc_detail_display.get('transaction_id', 'N/A')}")
+                            )
+                st.markdown("---")
+
+            st.markdown("#### Step 3: Configure and Run Analysis")
+            st.text_area(
+                "Additional AI Instructions for Summaries (Optional):",
+                value=st.session_state.additional_ai_instructions_ch_text_area_value,
+                height=100, key="additional_ai_instructions_ch_text_area_main",
+                on_change=lambda: st.session_state.update(additional_ai_instructions_ch_text_area_value=st.session_state.additional_ai_instructions_ch_text_area_main),
+                help="e.g., 'Focus on financial risks and director changes.' This will be applied to each selected document's summary."
+            )
+            
+            ch_keywords_for_filter_input = st.text_input(
+                "Keywords to Highlight/Filter in Analysis (comma-separated, optional)",
+                key="ch_keywords_input_main",
+                help="These keywords can be used to guide the AI or highlight sections in the final report."
+            )
+            ch_keywords_for_filter = [kw.strip() for kw in ch_keywords_for_filter_input.split(',') if kw.strip()]
+
+            is_any_doc_selected = any(st.session_state.ch_document_selection.values()) if st.session_state.ch_document_selection else False
+
+            if st.button("📊 Run Analysis on Selected Documents", type="primary", key="ch_run_analysis_selected_button", disabled=not is_any_doc_selected):
+                if not CH_API_KEY_PRESENT:
+                    st.error("Companies House API Key is not configured. Cannot run analysis.")
+                elif not st.session_state.ch_document_selection: 
+                    st.warning("Please select at least one document for analysis.")
+                elif not st.session_state.ch_available_documents: 
+                    st.warning("No available documents to analyze. Please search for documents first.")
+                else:
+                    with st.spinner("Running Companies House analysis..."):
+                        try:
+                            company_numbers_with_selected_docs = list(set(
+                                doc['company_number'] for doc_id, is_selected in st.session_state.ch_document_selection.items() if is_selected
+                                for doc in st.session_state.ch_available_documents if doc['id'] == doc_id
+                            ))
+
+                            docs_to_process_by_company_map = {cn: [] for cn in company_numbers_with_selected_docs}
+                            for doc_id, is_selected in st.session_state.ch_document_selection.items():
+                                if is_selected:
+                                    selected_doc_detail = next((doc for doc in st.session_state.ch_available_documents if doc['id'] == doc_id), None)
+                                    if selected_doc_detail:
+                                        company_num_of_doc = selected_doc_detail['company_number']
+                                        if company_num_of_doc in docs_to_process_by_company_map:
+                                             docs_to_process_by_company_map[company_num_of_doc].append(selected_doc_detail)
+                            
+                            docs_to_process_by_company_map = {k: v for k, v in docs_to_process_by_company_map.items() if v}
+
+                            if not docs_to_process_by_company_map:
+                                st.warning("No documents selected for analysis. Please select documents and try again.")
+                            elif not config.CH_API_KEY: 
+                                st.error("CH API Key missing. Cannot run batch analysis.")
+                            else:
+                                output_csv_path, batch_metrics = ch_pipeline.run_batch_company_analysis(
+                                    company_numbers_list=list(docs_to_process_by_company_map.keys()), 
+                                    selected_filings_metadata_by_company=docs_to_process_by_company_map,
+                                    company_profiles_map=st.session_state.ch_company_profiles_map,
+                                    ch_api_key_batch=config.CH_API_KEY, 
+                                    model_prices_gbp=MODEL_PRICES_PER_1K_TOKENS_GBP,
+                                    specific_ai_instructions=st.session_state.additional_ai_instructions_ch_text_area_value,
+                                    filter_keywords_str=ch_keywords_for_filter,
+                                    base_scratch_dir=APP_BASE_PATH / "temp_ch_runs",
+                                    keep_days=7,
+                                    use_textract_ocr=False,
+                                    textract_workers=1,
+                                )
+                                
+                                st.session_state.ch_last_digest_path = batch_metrics.get("output_docx_path")
+                                st.session_state.ch_last_batch_metrics = batch_metrics
+                                st.session_state.ch_last_df = None  
+                                st.session_state.ch_analysis_summaries_for_injection = []  
+                                st.session_state.ch_last_narrative = "Analysis initiated..."
+
+                                main_json_data_list = None
+                                main_json_path_str = batch_metrics.get("output_json_path")
+                                json_processed_successfully = False
+                                
+                                if main_json_path_str:
+                                    main_json_path = _pl.Path(main_json_path_str)
+                                    if (main_json_path.exists()):
+                                        try:
+                                            with open(main_json_path, 'r', encoding='utf-8') as f_json:
+                                                loaded_json_content = json.load(f_json)
+                                            
+                                            if isinstance(loaded_json_content, list): main_json_data_list = loaded_json_content
+                                            elif isinstance(loaded_json_content, dict):
+                                                if "processed_documents" in loaded_json_content and isinstance(loaded_json_content["processed_documents"], list): main_json_data_list = loaded_json_content["processed_documents"]
+                                                elif "output_data_rows" in loaded_json_content and isinstance(loaded_json_content["output_data_rows"], list): main_json_data_list = loaded_json_content["output_data_rows"]
+                                            
+                                            if main_json_data_list and pd is not None: 
+                                                json_processed_successfully = True
+                                                logger.info(f"Successfully loaded and parsed main JSON ({main_json_path.name}) for individual document details.")
+                                                st.session_state.ch_last_df = pd.DataFrame(main_json_data_list)
+                                                
+                                                temp_summaries_for_injection = []
+                                                for item_idx, item in enumerate(main_json_data_list):
+                                                    if isinstance(item, dict):
+                                                        company_id_item = str(item.get('company_number', f'Comp_N/A_{item_idx}'))
+                                                        doc_date_item = item.get('document_date', item.get('date', 'N/A')) 
+                                                        doc_type_item = item.get('document_type', item.get('type', 'N/A')) 
+                                                        doc_desc_raw_item = item.get('document_description', item.get('description', 'Document')) 
+                                                        doc_description_item = str(doc_desc_raw_item if pd.notna(doc_desc_raw_item) and str(doc_desc_raw_item).strip() else doc_type_item) if pd is not None else str(doc_desc_raw_item or doc_type_item)
+                                                        title_item = f"{doc_date_item} - {doc_type_item} - {doc_description_item[:75]}"
+                                                        if len(doc_description_item) > 75: title_item += "..."
+                                                        
+                                                        individual_summary_text_item = str(item.get('summary', 'Individual summary not available in JSON.'))
+                                                        
+                                                        status_item = item.get('processing_status', item.get('ai_summary_status', item.get('text_extraction_status'))) 
+                                                        if status_item and str(status_item).lower() not in ["success", "completed", "ok", "processed", "summarized"] and "error" not in str(status_item).lower() and "fail" not in str(status_item).lower():
+                                                            title_item += f" (Status: {status_item})"
+                                                        elif "error" in str(status_item).lower() or "fail" in str(status_item).lower():
+                                                            title_item += f" (Processing Issue)"
+
+                                                        temp_summaries_for_injection.append((company_id_item, title_item, individual_summary_text_item))
+                                                st.session_state.ch_analysis_summaries_for_injection = temp_summaries_for_injection
+                                            elif pd is None:
+                                                msg = "Pandas library is not available. Cannot process JSON data into DataFrame."
+                                                logger.error(msg); st.error(msg)
+                                            else: 
+                                                msg = f"Main JSON ({main_json_path.name}) loaded but document list not found in expected structure."
+                                                logger.warning(msg); st.warning(msg)
+                                        except Exception as e_json_load:
+                                            msg = f"Error processing main JSON output from {main_json_path_str}: {e_json_load}"
+                                            logger.error(msg, exc_info=True); st.error(msg)
+                                    else: 
+                                        msg = f"Main JSON output file specified by pipeline but not found: {main_json_path_str}"
+                                        logger.warning(msg); st.warning(msg)
+                                else: 
+                                    msg = "Pipeline did not provide a path for the main JSON output (for individual document details)."
+                                    logger.warning(msg); st.warning(msg)
+
+                                narrative_parts = []
+                                num_companies_processed = batch_metrics.get("total_companies_processed", 0)
+                                num_docs_analyzed = batch_metrics.get("total_documents_analyzed", 0)
+
+                                if num_companies_processed > 0 or num_docs_analyzed > 0: narrative_parts.append(f"Pipeline metrics indicate processing for **{num_companies_processed}** company/ies and **{num_docs_analyzed}** document(s).")
+                                else: narrative_parts.append("Pipeline metrics did not report specific company or document counts from the overall analysis.")
+
+                                if json_processed_successfully and st.session_state.ch_last_df is not None and not st.session_state.ch_last_df.empty:
+                                    df_company_count = st.session_state.ch_last_df['company_number'].nunique() if 'company_number' in st.session_state.ch_last_df.columns else 0
+                                    df_doc_count = len(st.session_state.ch_last_df)
+                                    if df_company_count > 0 or df_doc_count > 0: narrative_parts.append(f"The loaded JSON data provides details for **{df_company_count}** company/ies and **{df_doc_count}** document(s).")
+                                    else: narrative_parts.append("The loaded JSON data was empty or did not contain countable company/document details.")
+                                        
+                                    actual_individual_summaries_count = sum(1 for s_inj in st.session_state.ch_analysis_summaries_for_injection if s_inj[2] != 'Individual summary not available in JSON.')
+                                    if actual_individual_summaries_count > 0: narrative_parts.append(f"Found **{actual_individual_summaries_count}** individual document summaries in JSON for review/injection.")
+                                    else: narrative_parts.append("Individual document summaries were not found or were placeholders in the JSON data.")
+                                else: 
+                                    if not json_processed_successfully: narrative_parts.append("Detailed information from the JSON output was not available or failed to load.")
+                                    elif st.session_state.ch_last_df is None or (pd is not None and st.session_state.ch_last_df.empty): narrative_parts.append("The JSON data, even if loaded, appeared empty or did not yield document details.")
+                                    elif pd is None: narrative_parts.append("Pandas not available, cannot determine if JSON data is empty.")
+
+
+                                consolidated_summary_from_csv = None
+                                if output_csv_path and _pl.Path(output_csv_path).exists() and pd is not None:
+                                    try:
+                                        df_csv_digest = pd.read_csv(output_csv_path)
+                                        if not df_csv_digest.empty and 'Summary of Findings' in df_csv_digest.columns:
+                                            consolidated_summary_from_csv = df_csv_digest['Summary of Findings'].iloc[0]
+                                            if pd.notna(consolidated_summary_from_csv) and consolidated_summary_from_csv.strip(): narrative_parts.append("A consolidated 'Summary of Findings' was successfully extracted from the CSV digest.")
+                                            else: consolidated_summary_from_csv = None; narrative_parts.append("CSV digest was read, but 'Summary of Findings' was empty or not found.")
+                                        elif not df_csv_digest.empty: narrative_parts.append("CSV digest was read, but the 'Summary of Findings' column was missing.")
+                                        else: narrative_parts.append("CSV digest file was empty.")
+                                    except KeyError as e_csv_key:
+                                        narrative_parts.append(f"Could not read 'Summary of Findings' from CSV digest due to missing column: {e_csv_key}."); logger.warning(f"KeyError reading CSV digest {output_csv_path}: {e_csv_key}")
+                                    except Exception as e_csv_read:
+                                        narrative_parts.append(f"Failed to read or process the CSV digest at {output_csv_path}: {e_csv_read}"); logger.error(f"Error reading CSV digest {output_csv_path}: {e_csv_read}", exc_info=True)
+                                elif output_csv_path and pd is None:
+                                    narrative_parts.append(f"Pandas not available. Cannot read CSV digest at {output_csv_path}.")
+                                elif output_csv_path: narrative_parts.append(f"CSV digest file specified by pipeline but not found at {output_csv_path}.")
+                                
+                                cost_str_display = ""
+                                total_ai_cost_gbp = batch_metrics.get("total_ai_summarization_cost_gbp")
+                                if isinstance(total_ai_cost_gbp, (float, int)): 
+                                    cost_str_display = f"£{total_ai_cost_gbp:.4f} (AI Processing)"
+                                
+                                if cost_str_display: 
+                                    narrative_parts.append(f"Estimated processing cost: {cost_str_display}.")
+                                
+                                st.session_state.ch_last_narrative = " ".join(narrative_parts)
+                                st.session_state.ch_consolidated_summary = consolidated_summary_from_csv if consolidated_summary_from_csv else None
+                                st.success("Companies House analysis processing complete.")
+                        except Exception as e_batch_run: 
+                            st.error(f"An error occurred during the Companies House analysis: {e_batch_run}") 
+                            logger.error(f"Error during CH analysis batch processing: {e_batch_run}", exc_info=True) 
+                            st.session_state.ch_last_narrative = "Analysis failed. Please check error messages and logs." 
+                            st.session_state.ch_last_df = None 
+                            st.session_state.ch_last_digest_path = None 
+                            st.session_state.ch_last_batch_metrics = {}
+                            st.session_state.ch_analysis_summaries_for_injection = []
+                            st.session_state.ch_consolidated_summary = None
+
+
+            st.markdown("---")
+            st.markdown("#### Analysis Results")
+            ch_last_df = st.session_state.get('ch_last_df')
+            df_results_available_ch = (ch_last_df is not None and 
+                                   pd is not None and 
+                                   hasattr(ch_last_df, 'empty') and
+                                   not ch_last_df.empty)
+            
+            if st.session_state.get('ch_last_narrative'):
+                st.markdown("##### Narrative Summary & Key Findings")
+                st.markdown(st.session_state.ch_last_narrative, unsafe_allow_html=True)
+            elif not df_results_available_ch: 
+                st.info("Run an analysis to see results here.")
+
+            if st.session_state.get('ch_consolidated_summary'):
+                st.markdown("---")
+                st.markdown("##### Consolidated Summary of Findings (from CSV Digest)")
+                st.markdown(st.session_state.ch_consolidated_summary, unsafe_allow_html=True) 
+
+            ch_last_digest_path_val_results = st.session_state.get('ch_last_digest_path')
+            if ch_last_digest_path_val_results and isinstance(ch_last_digest_path_val_results, (str, _pl.Path)):
+                try:
+                    digest_path_obj_results_display = _pl.Path(ch_last_digest_path_val_results)
+                    if digest_path_obj_results_display.exists():
+                        with open(digest_path_obj_results_display, "rb") as fp_results_display:
+                            st.download_button(
+                                label="📥 Download Full CH Report (DOCX)", data=fp_results_display,
+                                file_name=digest_path_obj_results_display.name,
+                                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            )
+                    else: st.warning(f"Report file (DOCX) not found at: {digest_path_obj_results_display}")
+                except Exception as e_dl_results_display:
+                    st.warning(f"Could not prepare CH report (DOCX) for download: {e_dl_results_display}")
+                    logger.error(f"Error preparing CH report (DOCX) for download {ch_last_digest_path_val_results}: {e_dl_results_display}", exc_info=True)
+            
+            if df_results_available_ch:
+                st.markdown("---")
+                st.markdown("##### Detailed Document Information (from JSON)")
+                cols_to_show = ['company_number', 'document_date', 'document_type', 'document_description', 'text_extraction_status', 'extracted_text_length', 'ai_summary_status', 'summary', 'ocr_pages_processed', 'processing_error']
+                if st.session_state.ch_last_df is not None: # Check again before column access
+                    display_df_ch = st.session_state.ch_last_df[[col for col in cols_to_show if col in st.session_state.ch_last_df.columns]]
+                    st.dataframe(display_df_ch)
+            elif st.session_state.get('ch_last_narrative'): 
+                st.info("Detailed document information from JSON is not available or failed to load.")
+
+
+            if st.session_state.get('ch_last_batch_metrics'):
+                st.markdown("##### Processing Metrics")
+                metrics_data_display_final = st.session_state.ch_last_batch_metrics
+                m_col1_disp_final, m_col2_disp_final, m_col3_disp_final = st.columns(3)
+                m_col1_disp_final.metric("Companies Processed", metrics_data_display_final.get("total_companies_processed", 0))
+                m_col2_disp_final.metric("Documents Analyzed", metrics_data_display_final.get("total_documents_analyzed", 0))
+                
+                cost_display_final_metric = "N/A"
+                if "total_ai_summarization_cost_gbp" in metrics_data_display_final:
+                    cost_display_final_metric = f"£{metrics_data_display_final.get('total_ai_summarization_cost_gbp', 0.0):.4f} (AI)"
+                
+                m_col3_disp_final.metric("Est. Cost", cost_display_final_metric if cost_display_final_metric != "N/A" else "£0.0000")
+
+        with adv_tab_group:
+            if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
+                # Simplified OCR - no AWS Textract options
+                ocr_handler_for_group_tab = None  
+                st.caption("📄 Local OCR available for PDF processing in Group Structure Analysis")
+                
+                st.markdown("---")
+
+                try:
+                    if callable(getattr(group_structure_utils, 'render_group_structure_ui', None)):
+                        if not config.CH_API_KEY:
+                             st.error("Companies House API Key is not configured. Group Structure Analysis cannot proceed.")
+                        else:
+                            # Pass logger_param as expected by the function definition
+                            group_structure_utils.render_group_structure_ui(
+                                api_key=config.CH_API_KEY, 
+                                base_scratch_dir=APP_BASE_PATH / "temp_group_structure_runs",
+                                logger=logger, # Fixed parameter name
+                                ocr_handler=ocr_handler_for_group_tab
+                            )
+                    else:
+                        st.error("Group Structure UI utility not available.")
+                        logger.error("group_structure_utils.render_group_structure_ui is not callable.")
+                except ImportError as e_import_gs_tab: 
+                    st.error(f"Group Structure UI could not be loaded: {e_import_gs_tab}.")
+                    logger.error(f"ImportError for group_structure_utils in tab: {e_import_gs_tab}", exc_info=True)
+                except Exception as e_render_gs_tab:
+                    st.error(f"An error occurred in the Group Structure tab: {str(e_render_gs_tab)}")
+                    logger.error(f"Error in Group Structure tab (app.py level): {e_render_gs_tab}", exc_info=True)
+            else:
+                st.error("Group Structure functionality is not available ('group_structure_utils' module failed to load).")
+
+        with adv_tab_help:
+            try:
+                from help_page import render_help_page
+                render_help_page()
+            except Exception as e:
+                st.error(f"Error rendering Help page: {e}")
+                logger.error(f"Error rendering Help page: {e}", exc_info=True)
+                st.info("Help page functionality will be available when help_page module is properly configured.")
 
     # --- End of Main App Area UI (Using Tabs) ---
 
