@@ -401,8 +401,8 @@ def render_documents_table(documents: List[Dict[str, Any]], pipeline):
                 show_document_details(doc)
         
         with col4:
-            if st.button("🗑️ Delete", key=f"delete_table_{doc['id']}", type="secondary"):
-                confirm_delete_document(doc, pipeline)
+            if st.button("📦 Archive", key=f"archive_table_{doc['id']}", type="secondary"):
+                confirm_archive_document(doc, pipeline)
 
 def render_documents_detailed(documents: List[Dict[str, Any]], pipeline, compact: bool = False, show_previews: bool = False):
     """Render documents in detailed card format"""
@@ -434,8 +434,8 @@ def render_documents_detailed(documents: List[Dict[str, Any]], pipeline, compact
                             show_document_details(doc)
                     
                     with action_col3:
-                        if st.button("🗑️", key=f"delete_{doc['id']}", help="Delete", type="secondary"):
-                            confirm_delete_document(doc, pipeline)
+                        if st.button("📦", key=f"archive_{doc['id']}", help="Archive", type="secondary"):
+                            confirm_archive_document(doc, pipeline)
                 
                 # Show preview if enabled
                 if show_previews:
@@ -503,17 +503,17 @@ def show_document_details(doc: Dict[str, Any]):
         st.write(f"- **Chunk Size:** {doc.get('chunk_size', 'N/A')}")
         st.write(f"- **Pipeline:** Legacy RAG")
 
-def confirm_delete_document(doc: Dict[str, Any], pipeline):
-    """Confirm and execute document deletion"""
+def confirm_archive_document(doc: Dict[str, Any], pipeline):
+    """Confirm and execute document archiving"""
     
     # Use a unique key for the confirmation to avoid conflicts
-    confirm_key = f"confirm_delete_{doc['id']}"
+    confirm_key = f"confirm_archive_{doc['id']}"
     
-    if st.button(f"⚠️ Confirm Delete '{doc['filename'][:20]}...'", 
+    if st.button(f"⚠️ Confirm Archive '{doc['filename'][:20]}...'", 
                 key=confirm_key, 
                 type="secondary"):
         
-        success, message = pipeline.delete_document(doc['id'])
+        success, message = pipeline.delete_document(doc['id'])  # This now archives instead of deletes
         if success:
             st.success(f"✅ {message}")
             st.rerun()

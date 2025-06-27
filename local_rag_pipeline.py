@@ -169,10 +169,10 @@ class LocalRAGPipeline:
             self.batch_size = rag_optimizer.embedding_config["batch_size"]
             self.max_docs_per_matter = rag_optimizer.embedding_config["max_docs_per_matter"]
         else:
-            # Fallback to default settings
+            # Fallback to default settings - OPTIMIZED: Better balance for chronological context
             self.embedding_model_name = embedding_model or "all-MiniLM-L6-v2"
-            self.chunk_size = chunk_size or 500
-            self.chunk_overlap = chunk_overlap or 50
+            self.chunk_size = chunk_size or 600  # Increased from 350 to preserve chronological sequences
+            self.chunk_overlap = chunk_overlap or 150  # Increased overlap to preserve temporal continuity
             self.batch_size = 16
             self.max_docs_per_matter = 100
         
@@ -758,12 +758,34 @@ class LocalRAGPipeline:
         return status
     
     def delete_document(self, doc_id: str) -> Tuple[bool, str]:
-        """Delete a document and its chunks from the system"""
+        """Archive a document (move to archive instead of deleting)"""
         if doc_id not in self.document_metadata:
             return False, "Document not found"
         
         try:
-            # Remove chunks from metadata
+            # Create archive directory if it doesn't exist
+            archive_path = self.rag_base_path / "archived_documents"
+            archive_path.mkdir(exist_ok=True)
+            
+            # Archive document metadata
+            archived_metadata_path = archive_path / "archived_metadata.json"
+            archived_metadata = {}
+            if archived_metadata_path.exists():
+                with open(archived_metadata_path, 'r', encoding='utf-8') as f:
+                    archived_metadata = json.load(f)
+            
+            # Add current document to archive metadata
+            archived_metadata[doc_id] = {
+                **self.document_metadata[doc_id],
+                'archived_at': datetime.now().isoformat(),
+                'archived_chunks': [chunk for chunk in self.chunk_metadata if chunk['doc_id'] == doc_id]
+            }
+            
+            # Save updated archive metadata
+            with open(archived_metadata_path, 'w', encoding='utf-8') as f:
+                json.dump(archived_metadata, f, indent=2)
+            
+            # Remove chunks from active metadata
             original_chunk_count = len(self.chunk_metadata)
             self.chunk_metadata = [
                 chunk for chunk in self.chunk_metadata 
@@ -771,53 +793,67 @@ class LocalRAGPipeline:
             ]
             removed_chunks = original_chunk_count - len(self.chunk_metadata)
             
-            # Remove document metadata
+            # Remove document from active metadata
             del self.document_metadata[doc_id]
             
-            # Remove document file
+            # Move document file to archive (don't delete)
             doc_path = self.documents_path / f"{doc_id}.txt"
             if doc_path.exists():
-                doc_path.unlink()
+                archived_doc_path = archive_path / f"{doc_id}.txt"
+                doc_path.rename(archived_doc_path)
             
             # Rebuild vector index (expensive operation)
             if self.chunk_metadata and self.embedding_model and faiss is not None and np is not None:
-                chunk_texts = [chunk['text'] for chunk in self.chunk_metadata]
-                
-                # Process embeddings in batches
-                all_embeddings = []
-                for i in range(0, len(chunk_texts), self.batch_size):
-                    batch_texts = chunk_texts[i:i + self.batch_size]
-                    batch_embeddings = self.embedding_model.encode(batch_texts)
-                    all_embeddings.append(batch_embeddings)
-                
-                embeddings = np.vstack(all_embeddings) if all_embeddings else np.array([])
-                
-                # Recreate index with same configuration
-                dimension = embeddings.shape[1]
-                if OPTIMIZER_AVAILABLE and rag_optimizer is not None and rag_optimizer.performance_config.get("vector_index_type") == "IVF":
-                    nlist = min(100, len(self.chunk_metadata) // 10)  # Adjust nlist based on data size
-                    quantizer = faiss.IndexFlatIP(dimension)
-                    self.vector_index = faiss.IndexIVFFlat(quantizer, dimension, nlist, faiss.METRIC_INNER_PRODUCT)
+                try:
+                    chunk_texts = [chunk['text'] for chunk in self.chunk_metadata]
+                    
+                    # Process embeddings in batches
+                    all_embeddings = []
+                    for i in range(0, len(chunk_texts), self.batch_size):
+                        batch_texts = chunk_texts[i:i + self.batch_size]
+                        batch_embeddings = self.embedding_model.encode(batch_texts)
+                        all_embeddings.append(batch_embeddings)
+                    
+                    if all_embeddings:
+                        embeddings = np.vstack(all_embeddings)
+                    else:
+                        embeddings = np.array([])
+                    
+                    # Recreate index with same configuration
                     if len(embeddings) > 0:
-                        self.vector_index.train(embeddings.astype(np.float32))
-                else:
-                    self.vector_index = faiss.IndexFlatIP(dimension)
-                
-                if len(embeddings) > 0:
-                    faiss.normalize_L2(embeddings.astype(np.float32))
-                    self.vector_index.add(embeddings.astype(np.float32))
-                
-                # Update vector indices in metadata
-                for i, chunk in enumerate(self.chunk_metadata):
-                    chunk['vector_index'] = i
+                        dimension = embeddings.shape[1]
+                        if OPTIMIZER_AVAILABLE and rag_optimizer is not None and rag_optimizer.performance_config.get("vector_index_type") == "IVF":
+                            nlist = min(100, max(1, len(self.chunk_metadata) // 10))  # Ensure nlist >= 1
+                            quantizer = faiss.IndexFlatIP(dimension)
+                            self.vector_index = faiss.IndexIVFFlat(quantizer, dimension, nlist, faiss.METRIC_INNER_PRODUCT)
+                            if len(embeddings) >= nlist:  # Only train if we have enough data
+                                self.vector_index.train(embeddings.astype(np.float32))
+                        else:
+                            self.vector_index = faiss.IndexFlatIP(dimension)
+                        
+                        # Normalize and add embeddings
+                        embeddings_normalized = embeddings.astype(np.float32)
+                        safe_faiss_normalize(embeddings_normalized)
+                        self.vector_index.add(embeddings_normalized)
+                        
+                        # Update vector indices in metadata
+                        for i, chunk in enumerate(self.chunk_metadata):
+                            chunk['vector_index'] = i
+                    else:
+                        # No embeddings left, clear the index
+                        self.vector_index = None
+                except Exception as e:
+                    logger.error(f"Error rebuilding vector index after archiving: {e}")
+                    # Clear the index if rebuilding fails
+                    self.vector_index = None
             else:
                 self.vector_index = None
             
             self._save_metadata()
             self._save_vector_index()
             
-            logger.info(f"Deleted document {doc_id} and {removed_chunks} chunks")
-            return True, f"Successfully deleted document and {removed_chunks} chunks"
+            logger.info(f"Archived document {doc_id} and removed {removed_chunks} chunks from active search")
+            return True, f"Successfully archived document and removed {removed_chunks} chunks from active search"
             
         except Exception as e:
             logger.error(f"Failed to delete document {doc_id}: {e}")

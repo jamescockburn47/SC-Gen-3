@@ -1,0 +1,2167 @@
+1 
+ 7th Respondent  
+Adam Zoubir  
+20h Witness Statement  
+Exhibit AKZ 20 
+31 October  2024  
+ 
+IN THE HIGH COURT OF JUSTICE   Claim No. CL -2017-000323  
+BUSINESS AND PROPERTY COURTS  
+OF ENGLAND & WALES  
+COMMERCIAL COURT (QBD)  
+ 
+IN THE MATTER OF GERALD MARTIN SMITH  
+AND IN THE MATTER OF THE CRIMINAL JUSTICE ACT 1988  
+ 
+B E T W E E N :  
+(1)  THE SERIOUS FRAUD OFFICE  
+(2)  MR JOHN MILSOM AND MR DAVID STANDISH  
+(as joint Enforcement Receivers in respect of the realisable property of Gerald Martin Smith)  
+Applicants  
+- and  
+ 
+(1) LITIGATION CAPITAL LIMITED  
+(a company incorporated in the Marshall Islands)  
+& Others  
+  Respondents  
+ 
+ 
+20th WITNESS STATEMENT OF ADAM KARIM ZOUBIR  
+ 
+ 
+I, ADAM KARIM ZOUBIR , of Harcus Parker Limited, 7th Floor, Melbourne House, 44 -46 
+Aldwych, London, WC2B 4LL, DO SAY AS FOLLOWS : 
+A. Introduction  
+1 I am a partner in the firm of Harcus Parker Limited, which has conduct of this matter on 
+behalf of Harbour Fund II , L.P. (“Harbour ”).  This is my 20thth witness statement in this 
+action (the “ Proceedings ”) and is made  following the conclusion of the trial  pursuant to 
+which Mr Justice Foxton rendered his judgment on 18 May 2021 (the “ Directed Trial 
+Judgment ”)1 and subsequent Consequentials Order dated 11 June 2021 (the 
+“Consequentials Order ”) (pages  1-20).  
+ 
+1 The Serious Fraud Office & Anor v Litigation Capital Ltd & Ors [2021] EWHC 1272 (Comm) (18 May 2021) 
+(bailii.org)  
+2 
+ 2 Insofar as the contents of this witness statement are within my own knowledge they are 
+true and , insofar as they are based on things I have read or which  have been told to me by 
+others, they are true to the best of my information and belief (the source of such 
+information and belief being identified below).   
+3 Nothing I say in this witness statement constitutes, or is intended to constitute, a waiver 
+of Harbour’s legal professional privilege  or that of the Settlement Parties (as hereinafter 
+defined) .   
+4 There is now shown to me a bundle of paginated documents marked AKZ -20 containing 
+true cop ies of the documents to which I refer herein.  
+5 I make this statement in support of Harbour’s application for various relief as set out in 
+draft order provided with the application. In summary, Harbour seeks : 
+5.1 An order or declaration to the effect that Dr Cochrane is not permitted to seek to 
+challenge the outcome of the Directed Trial (to include the Court’s findings in 
+relation to the ownership of Orb, and its conclusions concerning Harbour’s 
+entitlements based  on its Investment Agreement), by reason of her signing the 
+LCL Settlement Agreement  as well as a deed  dated 23 October 20142 (the “ 2014 
+Harbour Deed ”) (pages 21 – 31)  (addressed further below);  
+5.2 An order or declaration to the effect that any attempt now made (whether by Dr 
+Cochrane, Mr Thomas or anyone else) to raise arguments challenging Harbour’s 
+entitlements as found in the Directed Trial, or otherwise seeking to disturb the 
+outcome of the Directed Trial, is an abuse of process or otherwise barred by 
+doctrines of estoppel or similar principles , or is time barred , including  (in the case 
+of Dr Cochrane and Mr Thomas ) estoppe l by the terms of  the Harbour Deed );  
+5.3 An order or declaration rejecting any argument to the effect that the Harbour IA 
+is unenforceable by reason of the decision of the  Supreme Court in R (on the 
+application of PACCAR Inc and others (Appellants) v Competition Appeal 
+Tribunal and others (Respondents) [2023] UKSC 28  (the “ PACCAR Decision ”), 
+or in the alternative that it is only unenforceable in part ;  
+ 
+2 The Harbour 2014 Deed was signed by or on behalf of the following parties between October 2014 and December 
+2014. The final signatory to the deed was Stewarts who signed at the end of January 2015.  
+3 
+ 5.4 Further and  other directions as may be appropriate in order that this matter may 
+be case managed appropriately  and/or ; 
+5.5 Such further or other relief as is appropriate.  
+6 This application has been necessitated by the actions and conduct of the now thrice -
+convicted fraudster, Dr Gerald Smith  (“Dr Smith ”), and parties and entities closely 
+associated with him , including  but not limited to  his ex -wife, Dr Gail Cochrane (“ Dr 
+Cochrane ”) and Messrs Nicholas Thomas and Roger Taylor ( “Messrs Thomas and 
+Taylor ”)3, (together “ the Smith Parties ”.)  
+7 It has become apparent over time that these parties will , regrettably,  stop at nothing to 
+frustrate the effect of the Directed Trial Judgment and Consequentials  Order , whether via 
+the pursuit of meritless litigation  before this Court , the making of false allegations against 
+the Settlement Parties in correspondence,  the participation  in and prolongation of related 
+disputes in foreign jurisdictions or the direct obstruction of the authorised acts of court -
+appointed office holders  whose role is to manage, realise and distribute assets .  
+8 The PACCAR Decision represents the latest hook upon which the Smith Parties seek to 
+hang a n attempt to prevent the Directed Trial Judgment and Consequentials Order taking 
+effect.  
+9 Specifically, i n the case of Dr Cochrane , she has argued before the Royal Court of Jersey 
+(the “ Jersey Court ”), in the context of an application dated  21 November 2023  to recall 
+her personal désastre  as well as that of Orb a.r.l (“ Orb”) (i.e. her bankruptcy and its 
+insolvency, respectively) , that the rights of Harbour and others which were established at 
+the Directed Trial shou ld be disregarded  by the Jersey Court  (the “ Jersey Recall 
+Applications ”). 
+10 In summary (as I will explain further below ), the Jersey Recall Applications  are ostensibly 
+premised on the effect of  Dr Cochrane’s contention , albeit not fully articulated  at this 
+stage, that “By operation of section 58AA of the UK Courts and Legal Services Act 1990 and the 
+ 
+3 It appears that Mr T aylor has had little or no direct involvement in these proceedings  since the Directed Trial. While 
+Mr Thomas has often corresponded with Harbour and the other Settlement Parties  on behalf of himself and Mr 
+Taylor , I understand that Mr Taylor may no longer be involved in this matter on a day to day basis.  Notably, as I 
+explain further below, Mr Thomas has recently caused a letter before action to be sent to Harbour  and has instructed 
+solicitors in his sole name.  
+4 
+ Damages Based Agreements Regulation (SI 2013/609), the Harbour IA was at all material times and 
+is unenforceable .”4 
+11 By the Jersey Recall Application s, Dr Cochrane effectively seeks to cancel or unwind her 
+bankruptcy  and the insolvency of Orb .  
+12 However, Harbour believes that the natural jurisdiction for the determination of 
+arguments  connected  to the Directed Trial  and the potential impact of the PACCAR 
+Decision on the Directed Trial Judgment and Consequentials Order is England and Wales,  
+given that they relate in large part to the validity and enforceability of  existing findings 
+made by the English Court, including in relation to  the funding agreement entered into 
+between Harbour  and Messrs Thomas and Taylor  and Or b (the “ Orb Claimants ”) on 10 
+July 2013 (the “ Harbour IA ”) (pages  32-86) and other  matters with which this Court is 
+familiar . As such, Harbour has sought a stay of the Jersey Recall Application s pending the 
+determination of this Application5.  
+13 In response to its stay application , pursuant to a hearing on 25 June 2024 the Royal Court 
+of Jersey directed Harbour to inter alia  produce to it a draft of th is Application by 2 August 
+2024, which it did.  A hearing is listed on 12 November 2024 before the Jersey Court to 
+determine Harbour’s stay application , but in the meantime Harbour considers it 
+appropriate to proceed as intended, now that its interactions with Mr Thomas (set out 
+below) appear to have reached their natural conclusion in terms of their usefulness . 
+14 In addition to (and I believe  in connection with) the Jersey Recall Applications, on 11 July 
+2024 Harbour received a letter before action from Marriot Harrison  LLP, instructed by 
+Mr Thomas  (the “ Thomas  Letter  Before Action ”) (pages  87-106). According to the 
+Thomas  Letter  Before Action , Mr Thomas now intends  to challenge the validity of the 
+Harbour IA in the English Courts, on the basis of the PACCAR Decision.  
+15 Correspondence has passed between Marriott Harrison and my firm since my firm’s 
+receipt of the Thomas Letter Before Action  (pages  107-145), regarding appropriate pre -
+action steps and the applicability of the 31 March 2023 Order of Foxton J , which required 
+Messrs Thomas and Taylor to provide evidence regarding their source of funding for any 
+ 
+4 Paragraph 7 of Dr Cochrane’s A mended Representation  (page  978) 
+5 Harbour had originally intended to seek a stay in reliance upon the passage through Parliament of the Litigation 
+Funding (Enforceability) Bill, which had been expected to pass into law this year and cure with retrospective effect 
+any PACCAR issues, but did not as a result of the calling of the election on 4 July 2024.  
+5 
+ further application of claim against the Settlement Parties, along with disclosing any 
+involvement of Dr Smith or related parties as well as satisfying their considerable 
+outstanding costs orders in favour of the Settlement Parties, before any such applica tion 
+or claim would be allowed to proceed (the " Debarring/Stay Directions ").  
+16 For context, I note that Mr Thomas’ potential action has been threatened  obliquely  for 
+many months  and was referred to by counsel for Dr Cochrane at the Convening Hearing  
+that took place on 6 February 2024  in respect of the Jersey Recall Applications  (a note of 
+the hearing , prepared by Harbour’s Jersey lawyers, Bedell Cristin, is at pages  146-156). The 
+cooperation between M r Thomas  and Dr Cochrane (doubtless both under the direction 
+of and in conjunction with  Dr Smith) is apparent both from this reference and the Thomas  
+Letter  Before Action , which expressly refers to the Jersey Recall Applications , 
+notwithstanding the fact that he is not ostensibly involved in th e Jersey  proceedings .6  
+17 As indicated above, m y firm  has exchanged  correspond ence with Marriott Harrison  with 
+a view to narrowing  the issues between our respective clients . This has included our  
+provi sion to  them of a draft of this application  as filed with the Jersey Court  on 2 August 
+2024  (including a draft of this witness statement, albeit that it has since been further 
+developed  in some respects ). Despite this, it has unfortunately  not been possible for the 
+parties to narrow their differences , with the parties’ positions being  diametrically  opposed . 
+As part of this correspondence , we have repeatedly invited Mr Thomas to set out in detail  
+the consequences of the relief he intends to seek  – in other words  – what the effect would 
+be on the findings made in the Directed Trial Judgment as reflected in the Consequentials 
+Order  of an order declaring the Harbour IA to be unenforceable . This is an important 
+point in circumstances where Mr Thomas’ own case at the Directed Trial was advanced 
+on the basis of proprietary rights he asserted as having arise n under the Harbour Trust , 
+and he advanced no alternative proprietary claim. In their letter dated 25 September 2024, 
+Marriott Harrison have said that the effect of their client’s application succeeding would 
+be that Harbour would not be entitled to any part of the assets listed in paragraph 4 of the 
+Consequential s Order and their beneficial owners would be the Orb Claimants. No 
+ 
+6 I note that in an affidavit served by Dr Cochrane  on 24 September 2024  in support of the  Jersey Recall Applications, 
+Dr Cochrane stated “while I am aware of other proceedings being taken in respect of the illegality  issue and other matters, I am not 
+acting in concert with any others ”. Unfortunately, given my and my client’s extensive experience in these proceedings, I do 
+not accept that either this Court or the Jersey Court can take this suggestion at face value . 
+6 
+ detailed analysis  has been provi ded of how this alleged beneficial interest arises  or its 
+interaction with  third party proprietary claims advanced at the Directed Trial . 
+18 Mr Thomas has also sought to argue that the terms of the Debarring /Stay Directions did 
+not reflect the Court’s ruling  of 31  March 2023  and has sought to question the way in 
+which the draft order  was finalised, despite having been copied on all relevant 
+correspondence with the Court regarding the same , and his comments on the draft having 
+been provided to the Court . In particular, he suggests via Marriott Harrison that  the 
+Court’s only intenti on was that he should be required to pay outstanding costs orders in 
+order to pursue any claim or application against the Settlement Parties.  
+19 In terms of the position in relation to the outstanding costs orders, Mr Thomas has settled  
+the outstanding costs payments to Harbour due under paragraph 25 of the costs  Order of 
+21 October 2021 , paragraph 3 of the costs order of 8 July 20227and paragraph 8 of the 
+costs  order of 24 March 2023.  The final costs order was settled by Mr Thomas on 22 
+October 2024.  
+20 However, Harbour considers  it to be  clear that , given the content of Harbour’s  application 
+for a debarring order and the Court’s previous experience of Mr Thomas’ conduct in the 
+Part 8 Proceedings  and the revelations  as to the funding of that matter , the Court i ntended 
+what its order requires, i.e. that Mr Thomas should also provide evidence of both (a) the 
+source of funding for any further claim or application and (b) the involvement of Dr Smith 
+and Mr McNally , or any persons Mr Thomas knows  the be associated with them . The 
+Debarring/Stay Directions accordingly accurately reflect the Court’s intention . Harbour’s 
+position, which m y firm  has conveyed to  Mr Thomas ’s solicitors  is that  the terms of the 
+Debarring/Stay Directions will apply in the event that Mr Thomas files his threatened 
+ 
+7 My understanding, derived from discussions with Stewarts (privilege in relation to which is not waived) is that Messrs 
+Thomas and Taylor were able to make this payment pursuant to a settlement reached with St Paul ’s Solicitors  (in 
+liquidation)  (“St Paul ’s”), a firm instructed by them on various occasions in these proceedings , and previous ly run by  
+Mr Andrew Crossley . My understanding is that on 16 May 2023,  Messrs Thomas and Taylor filed a professional 
+negligence claim against St Pauls  (the “ St Paul’s Claim ”), due to the failure by St Paul ’s to serve the particulars of 
+claim in separate proceedings against Stewarts  which were consequently dismissed by the court . Ultimately, St Paul ’s 
+insurer settled  the claim . In the interim, as the Court is aware, Stewarts Law filed a third party debt order  application  
+(“TPDO  Application ”) in respect of the settlement monies  . On 9 July 2024 , the TPDO  Application  was dismissed 
+by consent , on terms that provided for  (inter alia)  significant payments to the funder and ATE providers in respect of 
+Messrs Thomas  and Taylor ’s negligence claim, a firm of solicitors, as well as payments in respect of Messrs Thomas 
+and Taylor’s outstanding costs obligations.  The relevant consent order (“ TPDO Consent Order ”) is at pages 157 -
+159. While I am not aware of the full background to the St Paul ’s Claim, I note that St Paul’s appear s to have accepted 
+that it breached the duties it owed to Messrs Thomas and Taylor  relatively soon after the negligence action  was 
+commenced . Mr Crossley is currently a consultant at another firm, Taylor Rose . I understand that  while at Tay lor 
+Rose, Mr Crossley acted for  Ms Dawna  Stickler in matters related to these proceedings.   
+7 
+ application  first, makes  a cross -application in response to this Application, or otherwise 
+seeks any relief in response to Harbour’s Application .  
+21 Accordingly, r egardless of whether Mr Thomas has satisfied the costs orders referred to 
+above , it remains  Harbour’s position that Mr Thomas must satisfy the remaining 
+provisions of the Debarring/Stay Directions  before he is able actively to do anything else. 
+The Debarring/Stay Directions were made  in light of Mr Thomas’s repeated efforts to 
+obstruct the Settlement Parties ’ efforts to enforce their rights pursuant to the Directed 
+Trial, with support and funding  provided by Dr Smith and his associates , and ul timately in 
+those parties’ interests . 
+22 In light of all of the above , Harbour  seeks, by this Application, to achieve a (further) 
+confirmation  of finality in terms of the status of the Directed Trial Judgment and related 
+orders  and the Harbour IA , such that the Smith Parties are precluded , to the greatest extent 
+possible, from continuing to interfere with the judicial findings of this Court  with the result 
+that the realisation process can continue unimpeded . Harbour is aware that to the extent 
+that it is required to go beyond questions of whether Mr Thomas or Dr Cochrane are shut 
+out from re -opening argument, this Application may engage the interests of other parties 
+to the se proceedings . Given the lack of clarity provided by Mar riott Harrison in respect of 
+Mr Thomas’s intended  course of  action, other parties may argue that, should Mr Thomas 
+succeed, this could potentially re -engage those other parties’ interests  in the assets which 
+were the subject of the Directed Trial.  
+23 As such, if Mr Thomas complies with all the provisions of the Debarring/Stay Directions 
+and this Application is subsequently opposed by Mr Thomas, these type of extremely 
+complex follow -on issues (as well as alternative arguments potentially available to Harbour 
+to sustain its rights) mean that the overriding objective is likely to be best served by case 
+managing issues of principle to be resolved at  a first stage, and only if: (a) arguments based 
+on the PACCAR Decision are open to Mr Thomas (and Dr Cochran e); and (b) are 
+successful, to then convene a second stage which can take account of these broader 
+questions . Harbour intends to make more detailed case management proposals in this 
+regard once the initial round of evidence has been exchanged  in response to this 
+Application.   
+24 I should note that Harbour presents this application to this Court, because this Court has 
+substantial familiarity with the underlying history and plainly has an interest in seeing its 
+8 
+ existing findings and conclusions respected. In addition, the agreements  that are  the subject 
+of the relevant disputes are governed by English law and  contain  jurisdiction clauses in 
+favour of the English Courts. It appears, from the Thomas  Letter  Before Action , that Mr 
+Thomas also envisages bringing his challenge before this Court. However , I note for 
+completeness that the Court’s view may be  that although the English Courts are competent 
+and best placed to hear these issues, some of the arguments being co ntemplated by Mr 
+Thomas can only be (or are most appropriately) pursued by way of application for 
+permission to appeal the outcome of the Directed Trial  to the Court of Appeal , albeit long 
+out of time , rather than to the first instance Court .  
+25 Indeed, I note in this regard that on 28 September 2023, Mr Thomas wrote to Harbour 
+(on an open basis) enclosing a draft appellant’s notice . Mr Thomas  stated in the 
+accompanying letter (marked “Urgent and Immediate ”) that his intention was to “appeal 
+against the Directed Trial Judgement  of Foxton J. (in particular various terms of the 11 June 
+Consequentials Order, the 14 December 2022 Tru st and Receivership Orders, and the 31 March 2023 
+Directions (Debarring/Stay application order) ” (pages  160-172). Mr Thom as acknowledged that 
+the proposed appeal was out of time, and sought Harbour’s consent to its terms . 
+26 My firm responded on 29 September  2023 , noting that Mr Thomas’s letter was not 
+accompan ied by grounds of appeal , skeleton argument, any evidence in support o r draft 
+orders  (pages  173-174). In fact , it set out no grounds at all for the proposed appeal.  Our 
+email stated that we would consider the substance of the application  when such materials 
+were provided. Mr Thomas  provided no such further materials .  
+27 I note that Mr Thomas , nine months after his intimated  appeal  to the Court of Appeal , 
+appears to have  decided to take a different approach , instead propos ing to ap ply to th is 
+Court . 
+28 At this point, as noted above, the precise form of relief sought by Mr Thomas is not 
+entirely clear.  The Thomas Letter Before Action  concludes that Harbour is “ not entitled to 
+any sums from the Proceeds pursuant to the Harbour IA and all of the assets held pursuant to the Harbour 
+Trust are to be released to the funded parties in their appropriate proportions .” and that “Appropriate 
+consequential steps will follow in respect of the assets currently held pursuant to the Harbour Trust, which 
+we would also seek to agree with you without the need for litigation .”. When my firm p ressed for 
+further details of Mr Thomas’s intended relief, Marriott Harrison responded that :  
+9 
+ “1. It is perfectly clear  that if our client succeeds in  demonstrating that  the Harbour  IA (or  any specific 
+DBA part of it)  is unenforceable:  
+(i) Harbour will not be entitled to any part of the assets listed in paragraph 4 of the Consequentials Order 
+(and we note that you do not argue to the contrary); and  
+(ii) their beneficial owners would be the Orb Claimants  (in their appropriate proportions)  as the claimants 
+in the claim of which these assets are the proceeds. ” 
+29 It is therefore not entirely clear what the appropriate procedural route for such relief 
+sought by Mr Thomas  might be , and it is obviously an incomplete analysis, because if Mr 
+Thomas’ rights under the Harbour IA (which were themselves established at the Directed 
+Trial) fall away, he does not articulate how he would nevertheless establish his entitlement 
+to any relevant a ssets. Despite this, and w hilst it will be a matter primarily for submissions , 
+I would respectfully suggest that  at least some of the reli ef sought by way of this 
+Application can properly be sought from the first instance Court – by way of example, this 
+Court can rule on the request for relief concerning Dr Cochrane and the LCL Settlement 
+Agreement  (which we expand upon at paragraph  84-97 below) , and this Court can also, 
+for example, confirm the present validity of its existing findings so far as it is concerned – 
+without trespassing on any matters which might fall within the appellate jurisdiction. 
+Further, the time for pursuing any appeal o f the Directed Trial outcome has long since 
+passed, and indeed the PACCAR Decision is no longer recent  (having been handed down 
+over a year ago) , such that it is very difficult to see on what basis any prospective appellant 
+could seek permission to appeal out of time from the Court of Appeal in any event .   
+30 It is also not clear what Mr Taylor’s position is on Mr Thomas’s intended relief, or whether  
+he is even aware of this matter. Harbour will serve a copy of this Application on Mr Taylor 
+and invite him to confirm his position in advance of any hearing.  
+31 Harbour’s position in respect of the relief sought by Mr Thomas  is necessarily reserved, 
+pending compliance with the Debarring/ Stay Directions  and clarification of the precise 
+approach taken by him in this litigation, and the basis for that approach. However, 
+Harbour does invite this Court to make such orders as are within its jurisdiction to confirm 
+the final nature of the findings and orders it has made, so as to deal as fully as possible 
+with the  recent challenges which have been intimated.   
+B. Executive Summary of the basis of the relief sought by Harbour  
+10 
+ 32 In accordance with its obligations under the Harbour IA, Harbour provided nearly £5.2 
+million of funding to the Orb Claimants, in order for them to pursue claims against Mr 
+Andrew Ruhan and others in proceedings numbered CL-2012 -000625  (the “ Orb 
+Litigation ”). I will address  further below the mechanism by which Harbour’s entitlement 
+to a return on its investment is calculated . However , it is also relevant to note here that 
+Harbour’s entitlements were secured by:  
+32.1 a debenture giving Harbour fixed and floating charges over the whole, or 
+substantially the whole, of Orb’s property; and  
+32.2 a guarantee from  Dr Cochrane which was in turn secured by a security interest 
+agreement over the shares in Orb.  
+33 As this Court knows , the Harbour IA is governed by the law of England and Wales  (as are 
+the other transaction documents) . 
+34 Harbour’s position, in summary, is that there is no basis for disturbing the outcome of t he 
+Directed Trial , to include the  Consequentials Order . It is too late for any such attempt to 
+be made now to this Court, and i t would be an abuse of process for the Dr Cochrane, or 
+Messrs Thomas and Taylor  (or any other party) to argue otherwise.  Moreover, (a) so far as 
+Dr Cochrane is concerned, she has signed a Deed by which she has expressly agreed not 
+to pursue such points ; and (b) so far as both Dr Cochrane and Mr Thomas are concerned,  
+they signed  the 2014 Harbour  Deed  by which they agreed that the recoveries under the 
+IOM Settlement were to be treated as “Proceeds received as a result of Success in the 
+Proceedings” for the purposes of Cl 9.1 of the Harbour IA an d were to be applied in 
+accordance with the terms of that clause . 
+35 Further, to the extent that Mr Thomas or others seek to rely on the  PACCAR Decisio n, 
+and to the extent this Court is prepared to entertain such arguments at all, its  effect was 
+not to make new law regarding whether or not litigation funding agreements , such as the 
+Harbour IA , were Damages Based Agreements  (a “DBA ” or collectively “ DBAs ”), subject 
+to the terms of the DBA Regulations 2013  (“the DBA Regulations ”). The argument that 
+the Harbour IA is a DBA  has been available to the Orb Claimants since the agree ment was 
+first entered into and the possibility that the funding arrangements such as the Harbour 
+IA were in fact subject to the DBA Regulations ha s been publicly debated in legal, 
+academic and political circles since at least 201 4. 
+11 
+ 36 I will set out further below the extensive opportunities that the Orb Claimants  have had 
+prior to and during the Directed Trial to seek to run the arguments that Dr Cochrane now 
+advances  in the Jersey Recall Application s, and that Mr Thomas has threatened in the 
+Thomas  Letter  Before Action . Harbour’s position is that the arguments  advanced by both 
+Dr Cochrane and Mr Thomas  (as well as any argument  that she or others may advance in 
+opposition to Harbour’s present application), constitute an abuse of process. In the 
+alternative, if that is not the case, they are time barred.   
+37 Further , and to the extent necessary , Harbour also contends that in any event, the 
+PACCAR Decision, even on its merits, does not render  the Harbour IA  unenforceable, or 
+that if it does so to some extent, that it is only unenforceable in part . Again, Harbour’s 
+arguments will be further developed in its submissions, but a summary of the key points 
+advanced, and the evidence upon which they are based, is set out below .  
+38 The remainder of this witness statement is accordingly divided into the following sections : 
+38.1 The outcome of the Directed Trial as regards Harbour and the Orb Claimants  
+(Section C) ; 
+38.2 The Smith Parties’  actions since the Directed Trial  (Section D) ; 
+38.3 The Actions of Dr Cochrane specifically  (Section E) ;  
+38.4 The PACCAR decision and its relevance to the  Harbour IA  (Section F) ;  
+38.5 The LCL Settlement Agreement  and the 2014 Harbour Deed (Section G) ; 
+38.6 The abusive nature of the Smith Parties’ attempt to  seek to invalidate the Harbour 
+IA (Section H) ; 
+38.7 Severability of the Harbour IA  (Section I) ; 
+38.8 Harbour’s detrimental reliance on the Harbour IA  (Section J) ; 
+38.9 Limitation  (Section K) ; 
+38.10  Dr Cochrane’s standing  (Section L) ; and 
+38.11  Conclusions  (Section M) . 
+12 
+ C. The outcome of the Directed Trial as regards Harbour and the Orb Claimants  
+39 Given the Court’s familiarity with the Directed Trial, I will not rehearse the extensive 
+background here. By way of summary only, I set out below the salient facts insofar as this 
+Application is concerned.  
+40 The Directed Trial in these proceedings commenced on 19 January 2021. Shortly thereafter  
+and just before Dr Smith was due to give evidence , on 27 January 2021, the Smith Parties  
+(including Dr Smith and Dr Cochrane, but not including Messrs Thomas and Taylor)  
+entered into a settlement agreement (the “ LCL Settlement  Agreement ”) (pages  175-
+337) with Harbour,  the Serious Fraud Office (“ SFO ”), Stewarts Law LLP (“ Stewarts ”), 
+the liquidators of a  group of BVI companies (the “ Joint Liquidators ”), the Viscount of 
+the Royal Court of Jersey in  her capacity as the administrator of the en désastres  of Dr 
+Cochrane and Orb (the “ Viscount ”), and the Receivers of the realisable property of Dr 
+Smith (the “ Enforcement Receivers ”, together the “ Settlement Parties ”). The Smith 
+Parties (known in the  LCL Settlement  Agreement  as the LCL Parties)  provided 
+undertakings to the Court to assist the Settlement Parties (recorded in an order made on 4 
+February 2021  (the “ LCL Discontinuance Order ”)) (pages  338-348) and discontinued 
+their claims , taking no further part in the Directed Trial.  
+41 On 16 May 2021, the Directed Trial Judgment was handed down. All of the claims 
+advanced by Harbour and the other Settlement Parties succeeded in all material respects.  
+42 In respect of Orb and Dr Cochrane, the Judge made the following findings:  
+42.1 The shares of Orb were found to be the realisable property of Dr Smith, further 
+to a Confiscation Order obtained by the SFO on 13 November 2007 in the sum 
+of £40,856,9118 (the “ Confiscation Order ”). 
+42.2 More generally, the judge found that Dr Cochrane held the shares in the Non -
+Arena Companies (including Orb), for Dr Smith, as his nominee.  
+42.3 Separately, the Judge found that 50% of Bodega (the company which owns 
+Steephill, the property in Jersey in which Dr Cochrane resides) was held by its legal 
+owner (Dr Cochrane) on the terms of the Harbour Trust in respect of which the 
+Judge subsequently, on 14 December 2022, appointed receivers on the application 
+ 
+8 I understand  that the current balance of the Confiscation Order, including interest, is around £82 million.  
+13 
+ of Harbour and others and removed the Orb Claimants as trustees (in a further 
+significant judgment in relation to this matter  handed down on 30 November 
+2022). The remaining 50% is vested in the Viscount as administrator of Dr 
+Cochrane’s désastre .  
+43 The practical outcome of the Directed Trial was reflected in the Consequentials Order. 
+The Judge ordered the following in respect of Harbour’s and the Orb Claimants’ 
+entitlement:  
+ “4. The interests in the following assets are held by their legal owners on the terms of the Harbour Trust 
+and are to be applied and apportioned between the beneficiaries, namely Harbour, Orb arl, and Messrs 
+Thomas and Taylor, in accordance with those term s (save as set out below):  
+a. The shares in the Arena Companies (as set out in Schedule 2 to this order);  
+b. Such future distributions as may be paid or payable to the shareholders of the Arena 
+Companies;  
+ c. The traceable proceeds of the IOM Settlement Cash, but in particular:  
+  i. An equitable interest of 100% in Flat 24 Hamilton House;  
+  ii. An equitable interest in 50% of the shares in Bodega;  
+  iii. An equitable interest of 100% in Flat 2 Hamilton House;  
+  iv. An equitable interest of 15% in Flat 22 Hamilton House;  
+v. An equitable interest of 20.26% in the headlease / leasehold of 
+Hamilton House and Flats 1, 10, and 14 Hamilton House (for Flats 
+10 and 14 Hamilton House, taking effect by way of a first ranking charge 
+arising by way of subrogation to discharged securit y); 
+vi. An equitable interest of 16.62% in Flats 11, 21 and 23 Hamilton 
+House;  
+  vii. An equitable interest of 10% in Flat 17 Hamilton House  
+d. The traceable proceeds of the £23,921,641.59 paid to Candey LLP which derived 
+from the $43.5m Qatar Settlement Payment, but in particular:  
+14 
+ i. An equitable interest of 90% in Flat 12 Hamilton House 
+(reflecting the balance of the purchase price);  
+ii. An equitable interest of 88.05% in Montagu Square (reflecting 
+the balance of the purchase price);  
+subject to such claims as remain available to Mr Pelz following the findings in the Trial Judgment as set 
+out below at paragraph [23] (for the avoidance of doubt, this qualification applies only to the assets listed 
+at items 2.d.i and ii above).  
+5. Any share of the proceeds under the Harbour Trust which is attributable to Orb and Messrs Thomas 
+and Taylor shall be adjusted as follows:  
+a. The entitlement of Orb and Messrs Thomas and Taylor (after payment out of the 
+prior items in the waterfall under the Harbour Trust) shall first be determined without 
+any adjustments, based on the following percentages: 62.5% to Orb, 18.75% to Mr 
+Thomas and 18.75% to Mr Taylor;  
+ b. Thereafter:  
+i. Mr Thomas is required to give credit in the sum of £1,010,097.75 
+and his entitlement shall be reduced accordingly;  
+ii. Mr Taylor is required to give credit in the sum of £1,546,998 and 
+his entitlement shall be reduced accordingly.  
+c. For the avoidance of doubt, no payment shall be made in respect of the adjusted shares 
+until after the amounts secured by the Stewarts lien set out in paragraph [8] have been 
+fully satisfied.”  
+44 In respect of the Viscount’s entitlement, the Judge ordered the following:  
+“14. The Jersey Properties, namely:  
+a. 1 Moedwill  Cottage (Les Vaux Cottage), Les Grand Vaux, St Saviour, Jersey JE2 
+7NA;  
+b. 2 Moedwill Cottage (Les Vaux Cottage), Les Grand Vaux, St Saviour, Jersey JE2 
+7NA;  
+15 
+  c. Montrose, Les Grand Vaux, St Saviour, Jersey JE2 7NA; and  
+d. Antoinette Gardens, 49 Langtry Gardens, St Saviour’s Hill, St Saviour, Jersey, 
+JE2 7AG,  
+ are vested in the Viscount of the Royal Court of Jersey, in her capacity as the administrator of the en 
+désastre (bankruptcy) proceedings of Dr Cochrane, free from adverse proprietary rights, save in respect of 
+the unchallenged life interest in Antoinette Gardens, which is unaffected by this order.  
+ The equitable interest in the 50% of the shares in Bodega vest in the Viscount of the Royal Court of Jersey 
+in her capacity as administrator of the en désastre of Dr Cochrane, free from adverse proprietary rights.”  
+45 As to the SFO’s position, the Consequentials Order provided for the following regarding 
+assets that were the realisable property of Dr Smith and therefore subject to the 
+Confiscation Order:  
+“16. With the exception of the shares in Bodega, Dr Gerald Martin Smith holds 100% of the equitable 
+interest in the shares of each of the Non Arena Companies (as set out in Schedule 2 to this order).  
+17. To the extent that the whole equitable interest in Flat 1 Hamilton House is not exhausted by the 
+equitable interests of the beneficiaries under the Harbour Trust and the companies under the Joint 
+Liquidators’ control respectively, the balance of the eq uitable interest is attributable to Dr Gerald Martin 
+Smith.  
+18. All of the shares in Litigation Capital Limited are held in the name of Conduit Asset Management 
+Limited for Anthony Smith, who in turn holds them as a nominee for Dr Gerald Martin Smith, who 
+thereby holds a 100% equitable interest in the said shares.  
+19. Save as otherwise provided for by the declarations in this order any and all residuary equitable interests 
+in the Relevant Property and IUAs are held either by the Viscount of the Royal Court of Jersey, in her 
+capacity as the administrator of the en dé sastre (bankruptcy) proceedings of Dr Cochrane, or by Dr Gerald 
+Martin Smith.”  
+46 The most immediately relevant aspect of the Directed Trial findings in respect of the SFO 
+is that Orb (a Non -Arena Company)  is the realisable  property  of Dr Smith  and therefore 
+subject to the SFO’s Confiscation Order , per paragraph 16 of the Consequentials Order.  
+While I understand that Dr Cochrane remains the nominal legal shareholder of Orb, the 
+Consequentials Order is unequivocal : she has no right to Orb or its assets.   
+16 
+ 47 Dr Cochrane sought, by an application of 10 January 2024 of which I provide further 
+details below, to remove Orb from the list of Non -Arena companies in the Consequentials 
+Order, and her application was dismissed and certified as being “ totally without merit ”. As 
+such, Dr Cochrane has identified no basis for disturbing paragraph 16 of the 
+Consequentials Order.  
+48 It is particularly notable that Dr Cochrane’s Jersey Recall  Applications , and in particular 
+the exercise she proposes in order to assess her personal financial position  are premised in 
+large part on  an account of Orb’s assets , which she assert ed (wrongly)  were to be treated 
+as her own . In her third affidavit of  11 March 2024 , Dr Cochrane  also initially claimed to  
+“own 100% of the shares of Orb”  (pages 349 – 365), and omitted to inform the Jersey 
+Court of the full effect of the Directed Trial’s finding that  Orb’s shares constituted the 
+realisable property of Dr Smith.  At the hearing of 26 June  2024 , the Jersey Court indicated 
+its disapproval of Dr Cochrane’s failure to e xplain the findings as to Orb in the Directed 
+Trial Judgment given that she was subject t o a duty of full and frank disclosure when 
+seeking permission to serve the Recall Application out of the jurisdiction , and required Dr 
+Cochrane to explain her omission . As I note further below, Dr Cochrane has since 
+amended her position in relation to the shares of Orb.  
+D. The Smith Parties’ actions since the Directed Trial  
+49 As indicated above, the Smith Parties have by various means  sought to frustrate the 
+outcome of the Directed Trial Judgment and related orders. Given the many separate 
+instances, these , with the exception of Dr Cochrane’s activities in Jersey given the recen t 
+nature  of the Jersey Recall Applications,  are only summarised in this witness statement. 
+Appendix 1 to this statement  contains a more detailed record of the activities in question9.  
+50 The disruptive actions , unlawful conduct  and court proceedings issued or necessitated  
+include:  
+50.1 Resistance on the part of Dr Cochrane of the steps taken by the Enforcement 
+Receivers regarding the control  of Casa Coloniches  (a Non -Arena Company) ;  
+ 
+9 Appendix 1 cross -refers to official reports provided by the Enforcement Receivers , in accordance with  the terms of 
+the Variation Order dated 7 December 2017  (which I refer to by the prefix “MR ”) and the Receivership Order date d 
+14 De cember 2022 . They are restricted to a circulation list which includes Harbour, the Viscount and Mr Thomas, 
+but are otherwise confidential.  The Enforcement Receivers have confirmed that these documents may , in redacted 
+form,  be referred to for the purp oses of this application. Redactions have been applied in respect of commercially 
+sensitive information.  
+17 
+ 50.2 Failure by Dr Smith and o thers to provide  vacant possession of Flats 11, 12, 19, 
+20 and 21 Hamilton House , in contravention of their court -ordered obligations ; 
+50.3 The failed  Part 8 Claim commenced by Messrs Thomas and Taylor by which , 
+among other things,  they sought to appoint Mr Ticehurst as a trustee for an 
+improper purpose , resulting in their being removed as trustees ; 
+50.4 The commencement and/or defence of five sets of interlinked proceedings in the 
+Republic of the Marshall Islands by associates of Dr Smith including Mr Thomas, 
+which include opposing the recognition of the Enforcement Receivers' 
+appointment over shares of t he Non -Arena Companies;  
+50.5 Conduct of Mr Thomas in relation to the purported transfer by LCL of it s shares 
+in SMA and GACH which led to the Enforcement Receivers commencing 
+contempt proceedings against him ;  
+50.6 The actions of Dr Smith which led to his being convicted of contempt of court in 
+July 2022;  
+50.7 Mr Thomas’ application for permission to appea l the receivership order made by 
+Foxton J on 14 December 2022 and seeking a stay of the receivership arising 
+thereunder (which was dismissed by the Court of Appeal)  (pages  366-378); 
+50.8 Attempts made by the Smith Parties , via companies called Minardi and BKV, to  
+prevent the transfer of the shares of SMA to  newly appointed trustees of the 
+Harbour Trust;  
+50.9 An application by Messrs Thomas and Taylor  for an order that claims to certain 
+assets be assigned to them  (pages 3 79-381). This led to the Debarring/Stay 
+Directions  (pages  382-384); 
+50.10  Proceedings involving Mr Sodzawiczny  before the Isle of Man  courts, which 
+culminated in Mr Thomas and a Mr Miah  (who  had been involved in the activities 
+referred to at paragraph 50.8 above ) being found to be in contempt of court as a 
+result of their failure to remove  a company director whose actions were in breach 
+of an injunction protecting Mr Sodzawiczny’s interests in property in Spain ;  
+18 
+ 50.11  Prolonged o bstruction  of the Enforcement Receivers  by Dr Cochrane and other 
+Dr Smith associates10 in respect of C’an  Agata and Son Montserrat (the “Spanish 
+Properties ”); 
+50.12  Dr Smith and Dr Cochrane purporting to commence an LCIA Arbitration 
+resulting in Mr Sodzawiczny needing to seek and obtaining an anti -arbitration 
+injunction;  
+50.13  The Slip Rule Application;  
+50.14  Mr Thomas’s threatened claim against Harbour  in respect of his purported rights 
+under the Harbour IA to require H arbour to indemn ify him for his own 
+outstanding costs obligations  (pages 3 88 – 389)11; 
+50.15  Dr Smith being convicted of fraud on 29 July 2024 in relation to fraudulently 
+obtaining COVID -19 Bounce Back Loans , and subsequently on 20 September 
+2024 sentenced to 18 months imprisonment12. A portion of the funds he 
+fraudulently obtained were used to pay costs orders owed to the SFO pursuant to 
+an order made by Foxton  J on 29 June 2020 ; 
+50.16  Actions of Dr Smith  in breach of the Restraint Order and in breach of the 
+undertakings given in relation to the LCL Settlement Agreement. This has led to 
+the SFO commencing further contempt of court proceedings against him which 
+are due to be heard in October 2024 ;  
+50.17  Further to the actions of Dr Cochrane in relation to the Spanish Properties which 
+I refer to above, she subsequently sought to argue in these proceedings that the 
+LCL Settlemen t Agreement and LCL Discontinuance Order had been 
+“superseded ”13. This matter culminated in a ruling from Foxton J on 18 April 2024 
+that it had not, which I describe in further detail below ; 
+ 
+10 Mr Thomas wrote to Harbour and the E nforcement Receiver s and well as the Viscount  and others  on 28 September  
+2023, claiming that the ERs needed the Orb Claimants’  consent to sell Son Monser rat, and that  its proposed sale 
+would be unlawful  (pages  385-387). Mr Thomas’s  position was entirely incorrect, as confirmed by Foxton J’s 18 April 
+2024 ruling which I refer to below.  
+11 On 31 May 2024, we replied to Mr Thomas  to indicate that Harbour did not accept the liability alleged in his letter  
+(page 389A ). 
+12 https://www.cityoflondon.police.uk/news/city -of-london/news/2024/september/man -jailed -for-fraudulently -
+receiving -a-50000 -covid -bounce -back-loan-to-help-pay-back-historic -72-million -fraud -court -order/  (pages 390-
+391). 
+13 Witness Statement of Dr Cochrane dated 24 April 2024  (pages 392-401) 
+19 
+ 50.18  Dr Smith’s a pplication  of 8 July 2024 to discharge  the SFO’s Restraint  Order of 
+2005 and set aside the Confiscation Order of 200714 (pages  402-438), and related 
+subsequent receivership orders made in these proceedings  (the “ Discharge 
+Application ”); and  
+50.19  Dr Smith’s subsequent letter of 12 July 2024 (pages  439-441) in which he again 
+asserted rights over the Hamilton House properties I refer to above, and sought to 
+undermine the outcome of the Directed Trial.  
+51 It is clear from this correspondence and my prior knowledge of these proceedings that the 
+actions of Dr Cochrane and Mr Thomas are being orchestrated by Dr Smith  in order to 
+force the Settlement Parties, including  Harbour to expend further time and costs and to 
+erode the value of the assets under the management of the various office holders , and , via 
+threat s of interminable legal action by Dr Smith and/or his proxies, to  pressurise  the 
+Settlement Parties into foregoing the fruits of their success at the Directed Trial.  
+52 The actions of the Smith Parties  (described in more detail in Appendix 1)  to seek to deprive 
+Harbour of its entitlement pursuant to the Harbour IA , as well as their resistance to and 
+obstruction of  the efforts of the court-appointed office holders whose job is to manage 
+and realise the assets which were the subject of the Directed Trial , have been almost  
+continuous  since the Directed Trial Judgment was handed down on 18 May 2021. I would 
+respectfully suggest that t he challenges which they have mounted in re liance upon  the 
+PACCAR Decision should be considered  in that context ; namely, that arguments  over 
+enforceability of the Harbour IA are merely the latest means by which  these parties seek 
+to undermine  decisions of this court with  which  Dr Smith and others do not agree.  
+E. The actions of Dr Cochrane  specifically  
+53 This section  of my witness statement  describes certain  relevant  actions of Dr Cochrane in 
+this jurisdiction and elsewhere both before and after the Directed Trial Judgment . Conduct 
+of Dr Cochrane not covered below is either addresse d in Appendix 1 or has been deemed 
+unnecessary to include  at this stage .   
+Correspondence between Dr Cochrane and Harbour since April 2023  
+ 
+14 I note that by his covering letter  of the same date , Dr Smith stated that “ As this matter will impact the Orb Claimants, 
+Dr Cochrane, the Attorney General of Jersey and Harbour it has been copied to them ”. 
+20 
+ 54 In a letter dated 11 April 2023  (pages  439-448) Dr Cochrane alleged breaches by Harbour 
+of the Harbour IA, a conspiracy against the Orb Claimants by Harbour and the Settlement 
+Parties, and that (directly contrary to the findings of the Directed Tr ial) she was personal ly 
+entitle d to the assets of Orb.  Specifically, her letter stated : 
+ “by failing to honour [Harbour’s] agreements terms [they] prevented us from obtaining 
+additional litigation funding…this was [Harbour’s] first repudiatory breach”.  
+ 
+“the [2019 Settlement Agreement] sets outs out the mechanics of [Harbour’s] conspiracy against 
+the Orb Claimants”   
+ 
+“The Orb claimants won [the Directed Trial]. The so called settling parties have not. And yet 
+you have over the last 2 years, as “Lead” conspired to prevent the Harbour Trust from coming 
+into functional being in fundamental breach of your own Harbour IA te rms”. 
+ 
+“The monies recovered by the Orb Claimants belong to them pursuant to the terms of the Harbour 
+IA trust arrangements. I, as the 100% owner of Orb, want it to receive what it is entitled to.”  
+55 My firm responded to these accusations on 11 May 2023  (pages 452-454): 
+55.1 confirming that Harbour emphatically den ied any impropriety or breach of any 
+obligations , or that it has  caused Dr Cochrane  any loss; 
+ 
+55.2 Reiterating the position on Orb’s ownership, referring to the Directed Trial 
+judgment whereby it was held that, notwithstanding Dr Cochrane being the 
+registered shareholder, the shares held in Orb were held as nominee for Dr Smith 
+and therefore, recoverable by the SFO ; and 
+55.3 Indicating  to Dr Cochrane that her correspondence appeared to be a “ coordinated 
+attempt by [her], Mr Thomas and Dr Smith to further frustrate the outcome of the Directed 
+Trial” . 
+56 It is clear to me that  from at least April 2023, Dr Cochrane’s intention was to gain control 
+of the assets of the Harbour Trust, as well as the assets of Orb. This is the position she 
+maintains now , albeit premised on the alleged unenforceability of the Harbour IA, rather 
+than the previous allegations of (presumably repudiatory) breache s of the Harbour IA  by 
+21 
+ Harbour.  However, as the Court will note, this chain of communications was commenced 
+by Dr Cochrane before  the PACCAR Decision  was handed down .  
+57 Following the PACCAR Decision , Dr Cochrane re -commenced correspondence with 
+Harbour, now seeking its agreement to an application to set aside or annul her désastre , and 
+that of Orb, on the ground that they were obtained by Harbour in circumstances where  
+the Harbour IA was an unlawful and/or unenforceable agreement.  
+58 On numerous  occasions during this period, Harbour set out its position to Dr Cochrane 
+in correspondence. By way of example, in a letter of 10 August 2023  (pages 452-453), my 
+firm responded to Dr Cochrane as follows:  
+“5. As to paragraph 7 of your letter, Harbour’s position is as follows:  
+a) The orders made in and in relation to the SFO Proceedings numbered CL -2017- 000323 
+including the Directed Trial Consequentials Order and the 14 December 2022 Trust and 
+Receivership Order remain valid, binding and enforceable and Harbour will naturally a bide by 
+their terms.  
+b) No party sought to challenge the enforceability of the Investment Agreement at the Directed 
+Trial despite having had the opportunity to do so. Any attempt to do so now would constitute an 
+abuse of the court’s process.  
+c) Your suggestion that the Investment Agreement “was unlawful from its signature and is 
+unenforceable” is legally misconceived, for various reasons, and is in any case irrelevant given that 
+the underlying issues have already been adjudicated.”  
+59 On 14 August 2023, Dr Cochrane accused both Harbour and the Viscount of an “ unlawful 
+means conspiracy to manipulate [her] circumstances to keep [her] in a state of “desastre” for [their] 
+improper economic purposes. Manipulation that has been ongoing for almost 7 years ” (pages  457-458). 
+The letter, as well as a letter dated 16 August 2023  (pages  459-460), sought to obtain their 
+consent to support Dr Cochrane’s application to “set aside/ annul” the désastre  orders.  
+60 On 21 August 2023, Dr Cochrane again accused Harbour of “ an evolving conspiracy that 
+repetitively breached the Harbour IA terms ”, alleging that Harbour “ victimised ” the funded parties  
+(pages  461- 463).  
+61 In a letter dated 25 August 2023, Dr Cochrane assert ed that she intended to seek 
+“…compensatory and or restitutionary damages. Be that through the Courts of Jersey, the Privy Counsel  
+22 
+ [sic], the English High Court or the courts of the Cayman Islands or the USA ”. In the same letter, 
+Dr Cochrane again allege d that Harbour has “ deliberately and with malice and forethought  [sic], 
+unlawfully damaged and impacted my family’s and my life and the Orb Claimants rights ” (pages  464-
+465). 
+62 On 23 October 2023, Dr Cochrane made another request for Harbour to agree to a 
+consent order in support of her set aside application  (pages 466-467). On the same day, 
+our firm responded, repeating Harbour’s position that her assertion as to  the supposed 
+“mistake”  in the drafting of the Consequentials Order was “baseless and inaccurate”  (pages  
+468-469). 
+63 Materially similar allegations were made by Dr Cochrane on the next day, 24 October 2023, 
+in relation to the composition of the Non -Arena companies and Orb’s ownership in direct 
+conflict with the Directed Trial Judgment and Consequentials Order, as well as  against 
+Harbour of “ serial (and most probably repudiatory breaches) of its own agreements terms ” (pages  470-
+474). 
+The Slip Rule Application  
+64 Notwithstanding this firm having set  out Harbour’s  position  on the matter  in 
+correspondence , Dr Cochrane  ultimately filed an application on 10 January 2024 to amend 
+the Consequentials Order purportedly under the ‘Slip Rule’ to remove Orb from the list 
+of Non -Arena Companies, on the basis that it had been included by mistake when the 
+order was drafted (the “ Slip Rule Application ”) (pages  475-487). 
+65 On 15 January 2024, my firm filed written submissions in response to the Slip Rule 
+Application  (pages  488-494), arguing that the application should be dismissed for the 
+following reasons:  
+65.1 Dr Cochrane did  not have standing to bring this application, on the basis that she 
+remains subject to désastre  in Jersey and is represented by the Viscount;  
+65.2 The application was without merit ; and  
+65.3 The application was made by and/or with the support of Dr Smith and his 
+associates, with the aim of frustrating court judgments and orders. All of the 
+previous correspondence purportedly sent by Dr Cochrane bear s the distinctive 
+hallmarks of Dr Smith ’s letter -writing style . Further,  Harbour ’s submissions  
+referred to  a letter of 2 January 2024 which purports to have been sent by Dr 
+23 
+ Cochrane and Mr Thomas to Susan Dunn of Harbour, Mr Jackson of Quantuma 
+(one of the Joint Liquidators) as well as the managing partner of Stewarts Law, Mr 
+Dench, containing allegations of conspiracy by Harbour, the Joint Liquidators and 
+Stewarts against the Orb Claimants. The metadata on this letter showed  that it was 
+drafted by Dr Smith (who is listed as the ‘author’), rather than by Dr Cochrane.  
+66 On 17 January 2024, Dr Cochrane responded to Harbour’s  submissions by asserting that:  
+“…the Directed Trial did not determine that my ownership of Orb arl was as a nominee for Dr Gerald 
+Smith as paragraph 1 of the Consequentials Order makes clear ” (paragraph 4)  (pages  495-500). 
+67 On the same day, Dr Cochrane wrote to the Viscount’s Jersey lawyers, Ogier  (pages  501-
+503). In particular, she wrote that : 
+“I understand from that advice that at the convening hearing the Royal Court will be asked to 
+make substantive decisions as to whether certain claimants who have filed claims in my désastre 
+process and the désastre process of Orb a.r.l (Orb) are properly t o be treated as creditors. It 
+would be unreasonable to ask the Royal Court to undertake the process of reviewing all the 
+claims with respect to Orb if it is a Non -Arena company.”  
+68 Shortly thereafter,  on 22 January 2024 , Foxton J dismissed the Slip Rule Application on 
+the papers, on the basis  that D r Cochrane had no standing , and certified the application 
+itself as being “ totally without merit”  (“the Slip Rule Application Ruling ”) (pages  504-
+505). In his ruling, Foxton J highlighted (inter alia) the following relevant passages of the 
+Directed Trial Judgment  (with emphasis added ): 
+ 
+“606. Subject to (a) my finding as to the Retained 50% in Bodega (at [503(iv)] above) and (b) any issues 
+which arise as to the effect of the Ozturk No 2 Trust which do not form part of the Directed Trial, I am 
+satisfied that Dr Cochrane held the shares in the Non -Arena Companies as Dr Smith’s nominee. I would 
+note that neither Dr Cochrane nor Dr Smith now seek to challenge this finding, and I am satisfied that it 
+is established on the evidence.  In summary:  
+ 
+i) Dr Smith has a track record of seeking to disguise his interest in assets behind Dr Cochrane. 
+The investigations brought by the SFO in connection with the Izodia Theft identified a ski chalet 
+held through a corporate vehicle of which Dr Cochrane was a di rector and the transfer of his 
+luxury car collection into Dr Cochrane’s name shortly after the Izodia Theft came to light.  
+24 
+  
+ii) Although notionally assetless, Dr Smith has been able to live “high on the hog” (in his own 
+phrase) off assets notionally owned by Dr Cochrane, spending those assets in accordance with Dr 
+Smith’s idiosyncratic tastes (including a commissioned water clo ck and artwork chosen by Dr 
+Smith) or for his personal benefit (for example on private jet travel, much of which involved Dr 
+Smith travelling alone). While I accept that much of the money spent by Dr Smith belonged to 
+others, the freedom with which he diss ipated assets notionally in Dr Cochrane’s ownership is 
+relevant when considering whether such interest as Dr Cochrane had in those assets was held in 
+her own right, or as Dr Smith’s nominee.  
+ 
+iii) Dr Cochrane has on a number of occasions proclaimed that she is a “busy GP with two young 
+daughters and no real business experience”, with minimal knowledge of Dr Smith’s business 
+activities. Dr Smith has himself accepted that Dr Cochrane lacked “any independent experience 
+of the world of business, the world of property deals ”. The vast network of companies which she 
+apparently owns, and the complex web of dealings in which those companies have engaged, strongly 
+support the suggestion that her involvem ent is nothing more than as a cipher, and that Dr Smith 
+– with his extensive track -record of complex, contrived and dishonest business dealings – is 
+“calling the shots” .  
+ 
+iv) Dr Cochrane has no obvious sources of independent wealth from which she might have acquired 
+these assets independently of Dr Smith. In 2005, according to her own evidence, she was close to 
+destitution, and in 2014 and 2016, she gave accounts of her assets and wealth which identified 
+no substantial assets beyond those transferred under the IOM Settlement .  
+ 
+v) The confiscation order made against Dr Smith gave him every incentive to hide his ownership 
+of assets behind a nominee owner who he could trust to follow his directions.  It is clear that Dr 
+Smith has acted at all times since the Confiscation Order was made with a view to making it 
+appear as if he has no assets – for example his Deed of Separation with Dr Cochrane of 11 
+March 2014 sought to give Dr Smith all the benefits o f certain properties, while transferring no 
+property for the SFO to attach.  
+ 
+69 The Slip Rule Application Ruling  constituted an unambiguous rejection of  Dr Cochrane’s 
+contention that she was entitled to treat  Orb’s assets as her own on the basis that Orb was 
+not a Non -Arena Company.  By extension, her contention that Orb’s assets should be 
+25 
+ treated as her own  for the purposes of determining  her balance sheet solvency is 
+unsustainable . Notwithstanding this definitive ruling  (and the Directed Trial Judgment  and 
+the LCL Settlement  Agreement ), this assertion as to Dr Cochrane’s ownership of Orb was 
+advanced in Dr Cochrane’s Third Affidavit of 11 March 2024 in support of her Amended 
+Representation  (pages 348-364) (as described in more detail at paragraph 33 of  Appendix 
+2 below), in which at paragraph 28 she states that she “ holds 100% of the shares  of Orb a.r.l ” 
+(omitting any mention of the findings of the Directed Trial in relation to Orb) and then, 
+at paragraph 35, claims that Orb’s assets are “ relevant in calculating [her] balance sheet solvency ”. 
+I respectfully suggest that, in so doing, she was seeking actively to mislead the Jersey Court.  
+70 Perhaps in response to the concerns raised by the Jersey Court over her characterisation 
+of the ownership of Orb , Dr Cochrane ’s position in Jersey has more recently developed, 
+such that she now concedes that “it is correct that paragra ph 16 of the Order of Foxton J dated 11 
+June 2021 … states that Dr Smith holds 100 % of the equitable interest of the shares in the Non -Arena 
+Companies (listed in Schedule 2 of that Order )”. However, in order to maintain her position in 
+respect of Orb’s recall application, Dr Co chrane now argues that  “the Directed Trial did not 
+determine the ownership of the assets owned by the Non -Arena Companies ”, which, for the first time, 
+she now asserts “ are held on resulting trust of [sic] the benefit of the Orb Claimants ”. (page 1061 ) 
+Dr Cochrane has not yet elucidated how her arguments regarding Orb are to her own 
+benefit, given that she holds no interest in Orb , and it is not a fully accurate statement in 
+any event, given that the IUAs (which the Directed Trial did determine ownership of ) were 
+owned by various Non -Arena Companies .  
+71 A summary of the background to Dr Cochrane’s Jersey Recall Applications is set out in 
+Appendix 2 to this statement , which has been prepared with the assistance of Harbour’s 
+Jersey lawyers . 
+F. The PACCAR Decision  and its relevance  to the Harbour IA  
+72 This Court will be  aware of the PACCAR Decision. By way of very brief summary, the 
+Supreme  Court found that certain litigation funding  agreements fell within the definition 
+of DBAs , for the purposes of the section 58AA of the Courts and Legal Services Act 1990  
+(“CLSA 1990 ”). 
+73 However, in order to establish if the Harbour IA  is in fact a DBA, a thorough  analysis is 
+required of the relevant regulatory framework, and of the Harbour IA itself.  
+26 
+ 74 For an agreement to qualify as a damages based agreement, such that it is subject to the 
+DBA Regulations, it must satisfy three requirements (see Section 58AA (3) CLSA 1990 ): 
+74.1 First, it must be an agreement between a person providing “ advocacy services,  litigation 
+services or claims management services ” and the recipient of those services;  
+74.2 Second, it must provide for the recipient “ to make a payment to the service provider if the 
+recipient obtains a specified financial benefit in connection with the matter in relation to which the 
+services are provided ”; and  
+74.3 Third, the amount of that payment must be “ determined by reference to the amount of the 
+financial benefit obtained by the recipient ”. 
+75 My understanding is that the PACCAR Decision revolved principally around the first of 
+these grounds, and established that litigation funders were providers of “ claims management 
+services ”. Harbour cannot, and does not, dispute this finding or the reasoned conclusions 
+of the Supreme Court  before this Court (although it reserves its position in the event that 
+any other point ultimately had to be determined by the Supreme Court) .15 As such, for 
+these purposes  Harbour proceeds on the basis that it provides claims management 
+services, and thus the Harbour IA  satisfies the first requirement  of a DBA according to 
+the CLSA 1990.  
+76 In relation to the second requirement, I understand this to apply to any contingent  funding, 
+non-recourse agreement whereby the funder will only receive a return if the funded parties 
+succeed and proceeds are received.  This is the basis upon which Harbour and other 
+funders  structure their funding agreements, and Harbour will not seek to contend 
+otherwise in respect of the Harbour IA.  
+77 For the purposes of this statement, I will focus on the third CLSA requirement, namely 
+that a DBA contains provision for a funder’s return which are “ determined by reference to the 
+amount of the financial benefit obtained by the recipient ”. I understand this to mean, in simple 
+terms, where a funding agreement provides for a funder’s return to be calculat ed by 
+ 
+15 I note, however, that considerable efforts have been made by the legislature to introduce legislation in order to 
+correct this position, which appears not to have been intended by the drafters of the amendment to the CLSA 1990. 
+Unfortunately given the timing of the General Election , it has not yet been possible for this legislation to be passed. 
+While Harbour, alongside others in the funding industry, remain hopeful that such legislation will be introduced, in 
+the intervening period the PACCAR Decision has allowed parties such as Dr  Cochrane and others to seek to 
+undermine funding agreements such as the Harbour IA  notwithstanding the fact that the funded parties have taken 
+the benefit of the funding . 
+27 
+ reference to a percentage of the proceeds of the funded action, and it also satisfies the first 
+two criteria set out above, it will meet the definition of a DBA.  
+78 The Harbour IA , at Schedule 2,  contains a mechanism for calculating Harbour’s return in 
+the event that the Orb Claimants succeeded in the funded proceedings, which I extract 
+below  (“Schedule 2 ”): 
+ 
+79 This tiered structure was agreed in order to  account for both the time period of the receipt 
+of any Proceeds, as well as the amount of such proceeds. As I understand it, this again 
+conforms with standard industry practice. The first two rows were agreed to cover the 
+eventuality of an early settlemen t of the funded proceedings, in order to allow for greater 
+
+28 
+ recovery by the Orb Claimants in the event that the proceedings were brief. Harbour’s 
+return is therefore based on recovery both on a percentage basis, and by reference to a 
+multiple of its investment.  
+80 If a funding agreement meets the criteria  set out in the CLSA 1990  it is a DBA which must 
+also comply with the requirements of the DBA Regulations , in particular Section 3 of those 
+regulations:  
+3.  The requirements prescribed for the purposes of section 58AA(4)(c) of the Act are that the terms and 
+conditions of a damages -based agreement must specify — 
+(a) the claim or proceedings or parts of them to which the agreement relates;  
+(b) the circumstances in which the representative’s payment, expenses and costs, or part 
+of them, are payable; and  
+ (c) the reason for setting the amount of the payment at the level agreed, which, in an 
+employment matter, shall include having regard to, where appropriate, whether the claim 
+or proceedings is one of several similar claims or proceedings.  
+81 It is my understanding that it has never been  standard practice in the funding industry, as 
+reflected in  the approach taken in the Harbour IA , to include  reasons in funding 
+agreements  for the funder’s return. No such reasons are set out in the Harbour IA. As 
+such, again, Harbour does not conten d that the Harbour IA  meets the requirements of the 
+DBA Regulations.  I note that the Minister of State responsible for piloting the DBA 
+Regulations through Parliament, Lord McNally, followed up questions on the draft 
+regulations in Grand Committee with a formal written response to Lord Beecham on 5 
+March 20 13 (pages 50 6-510), shortly before they were promulgated  on 1 April 2013 . He 
+stated that: “ The DBA Re gulations update the 2010 regulations, and take account of recommendations 
+made by the Civil Justice Council (CJC) .” 
+82 The CJC’s position had been set out in a letter dated 24 October 2012 to the Ministry of 
+Justice  (pages 5 11-514) in the context of the statutory consultation required under LASPO , 
+which was also extended to non -statutory stakeholders . Among the CJC’s  
+recommendations had been a  proposed  amendment to the information required to be 
+given to a client entering a DBA , which referred to the availability of other methods of 
+financing the claim or financing the proceedings. The CJC suggested the addition of third 
+29 
+ party litigation funding into the list, reflecting its view that this was a type of alternative to 
+a DBA, not a DBA itself , and that the Government was not consulting on the basis that 
+litigation funding agreements would be subject to the regulations .  
+83 The CJC’s suggestion was not taken up. However, in Lord McNally’s letter, u nder the 
+heading “Third party litigation funding” he expressly stated  on behalf of the Government : 
+The matter was debated at some length during the passage of the LASPO Act through Parliament. Some 
+colleagues were concerned about the future growth of third party litigation funding arrangements and, in 
+particular, a move into personal injury claims. While there was a call for the introduction of statutory 
+regulation, the Government does not believe this is the right course of action at this  stage: rather this is an 
+issue that we are keeping under review and we will not hesitate to act should we need to do  so in the future.  
+ 
+G. The LCL Settlement Agreement  and the 2014 Harbour Deed  
+ 
+84 As outlined above, on 27 January 2021, shortly after the Directed Trial commenced , Dr 
+Smith,  Dr Cochrane  and other Smith Parties entered into the LCL Settlement  Agreement .  
+85 The relevant terms of this agreement are:  
+85.1 Paragraph 3  
+“The LCL Parties hereby release, discharge and waive (and agree to treat as released, discharged 
+and waived in all respects and for all purposes) all and any actions, claims, rights, demands and 
+set-offs, whether capable of being litigated or enforced in t his jurisdiction or any other, whether 
+presently known or unknown to the Parties or to the law, and whether arising in law or equity, 
+under statute or otherwise, that they have, had, may have or hereafter can or shall or may 
+subsequently acquire, against t he Settlement Parties or any other person, where such action, claim, 
+right, demand or set -off etc relates to or arises out of or in connection with:  
+3.1. The Relevant Property;  
+3.2. The Identified Underlying Assets and the £2 million paid into Stewarts’ client account in 
+September 2016;  
+3.3. The Settlement Assets, Jersey Settlement Assets, Arena Property, Additional Settlement 
+Assets, Arena Surplus and Net Proceeds of Realisation as defined in the Settlement Agreement;  
+30 
+ 3.4. Any property transferred under the IOM Settlement and / or Geneva Settlement and/or 
+the substitute or traceable proceeds thereof; and  
+3.5. (For the avoidance of doubt) The LCL Parties’ claims to the assets listed in Schedule 1;  
+For the avoidance of doubt, and consistent with the general nature of the release, discharge and 
+waiver intended to be provided by this Clause 3, the claims released by this paragraph shall include 
+but not be limited to any proprietary, equitable or other claims of any nature whatsoever, including 
+(without limitation) any asserted equitable interests, mere equities, security interests, or asserted 
+claims or entitlements to tenancies, licences  or other rights to possession of any real  property  
+comprised with in the said assets (or directly or indirectly held by companies whose shares are 
+included within the said assets) and where the asset in question relates to shares in a company, 
+any claims held against the company in question  and its direct or indirect subsidiaries, in addition 
+to the shares themselves.  
+(together the “ Paragraph 3 Property ”)” 
+85.2 Paragraph 6:  
+“Further to the above paragraph, and for the avoidance of doubt, the LCL Parties will not seek 
+to challenge the Settlement Parties’ cases at the Directed Trial, including their cases to the effect 
+that the Paragraph 3 Property is the realisable property of Gerald Martin Smith, subject to any 
+equitable/proprietary interests therein which may be established and which  take priority pursuant 
+to the provisions of the Criminal Justice Act 1988, and / or their cases that the Paragraph 3 
+Property falls within Dr Co chrane’s en désastre estate, or Orb ARL’s en désastre estate, subject 
+to any such prior equitable/proprietary interests as are capable of binding such estates.”  
+85.3 Paragraph 9  
+9. The LCL Parties and each of them undertake to the Settlement Parties and will undertake to 
+the Court (in an order bearing a penal notice):  
+9.1. To use their reasonable endeavours to assist the Settlement Parties and each of them to realise 
+the Paragraph 3 Property for the benefit of whichever person is ultimately found by the Court, or 
+is agreed to be, entitled to that Paragraph 3 Property.  
+31 
+ 9.2. Not to impede, obstruct or hinder in any way, whether directly or indirectly or by way of 
+assistance rendered to any third party, any attempts made by the Settlement Parties or any of them 
+to safeguard and/or realise the Paragraph 3 Property.  
+9.3. To comply, as soon as reasonably practicable, with reasonable requests made of them by the 
+ERs, JLs and/or Viscount (including, for the avoidance of doubt, by meeting with the ERs, JLs 
+and/or Viscount, providing them with information or documentation,  and executing such 
+documents as they may require) in connection with safeguarding and/or realising the Paragraph 
+3 Property.  
+9.4. To take the specific steps or refrain from taking the specific steps (as the case may be) as set 
+out in Schedule 3, save that a reference to one or more of the LCL Parties individually in relation 
+to a specific obligation contained therein shall not b e considered to be an obligation owed by the 
+remaining LCL Parties.”  
+86 It has be come  apparent to Harbour, and to me, that the Smith Parties, in particular Dr 
+Smith and Dr Cochrane, have never intended to honour the terms of the LCL Settlement 
+Agreement. Indeed, shortly after the conclusion of the Directed Trial, on 9 August 2021, 
+my firm received a letter from Mr Spragg of Keystone Law, solicitors to Litigation Capital 
+Limited (“ LCL ”)16, arguing that Harbour did not succeed at the Directed Trial and 
+therefore the LCL Settlement Agreement had “ no continuing force or effect ” (page  515). We 
+responded on 12 August 2021, refuting this assertion. Mr Spragg responded on 16 August 
+2021, noting (without explanation) that:  
+• “The judgement awarded all the assets to the Orb Claimants,  
+• The LCL parties’ – SPs parties’ agreement was conditional and between themselves.  It did not 
+include the Orb Claimants,  
+• LCL did not release the Orb Claimants ” (pages  516-517). 
+87 The background to LCL ’s involvement in these proceedings  is well known to the Court 
+and I will not rehearse it in detail  here. In short, LCL is a vehicle of the Smith Parties, and 
+at various times Dr Cochrane, Mr Taylor and Mr Anthony Smith (Dr Smith’s brother) 
+ 
+16 On 24 November 2021 , we received an email from an ‘Admin  LCL’ proton  mail account  attaching a document 
+headed ‘Notice of Change’ which stated that  Keystone Law no longer acted for LCL and that LCL would be acting 
+in person.  
+32 
+ have been its directors. I n the circumstances,  therefore , Mr Spragg’s correspondence was 
+sent in the interests (and most  likely at the direction) of Dr Smith, Dr Cochrane and Messrs 
+Thomas and Taylor , who , as early as two months after the Consequentials Order was made,  
+were already putting into motion plans  to prevent the Settlement Parties from enforcing 
+the rights they had established at the Directed Trial. While no party has formally sought to 
+challenge the validity of the LCL Settlement Agreement, sever al of the Smith Parties have 
+acted in clear breach of its terms. I summarise several such acts below, and refer to further 
+details which are set out in Appendix 1:  
+87.1 Mr Thomas appears to have colluded with LCL in relation to its efforts in the 
+Republic of the Marshall Islands to frustrate the efforts of the Enforcement 
+Receivers, in contravention of LCLs’ obligations under the LCL Settlement 
+Agreement and the LCL Disco ntinuance Order. In doing so, Mr Thomas incited 
+a clear breach of the LCL Discontinuance Order by LCL. The Enforcement 
+Receivers commenced contempt proceedings against Mr Thomas, which were 
+ultimately discontinued when Mr Thomas corrected the position.  
+87.2 Dr Smith directly committed numerous breaches of the LCL Settlement 
+Agreement by impeding the Enforcement Receivers’ attempts to manage and 
+realise assets to which Harbour is entitled pursuant to the Directed Trial Judgment, 
+namely the Hamilton House properties;  
+87.3 Dr Cochrane breached her obligations under the LCL Settlement Agreement by 
+impeding the efforts of the Enforcement Receivers to manage and realise 
+properties in Spain, which ultimately led to the ruling of 18 April 2024 to which I 
+refer below.  
+88 In the case of Dr Cochrane,  as I outline above, the release of claims under the LCL 
+Settlement is directly relevant to  the Jersey Recall Applications . This is because  Dr 
+Cochrane has asserted  proprietary  rights over Orb  (which also disregards the outcome of 
+the Directed Trial) , as well as listing within her estate various properties to which she has 
+waived any rights by way of the LCL Settlement  Agreement . 
+89 Although this will be a matter for development in submissions, Harbour’s position is that 
+the release and waiver given by Dr Cochrane and the other Smith Parties under the LCL 
+Settlement  Agreement  is broad and (as set out above) extends to, among other things: “all 
+33 
+ and any actions, claims, rights, demands and set -offs, whether capable of being litigated or enforced in this 
+jurisdiction or any other, whether presently known or unknown to the Parties or to the law, and whether 
+arising in law or equity, under statute or  otherwise, that they have, had, may have or hereafter can or shall 
+or may subsequently acquire …” 
+90 The LCL Settlement Agreement also contains no -contest clauses. I would respectfully 
+suggest that , taken as a whole, the LCL Settlement Agreement  precludes Dr Cochrane 
+from seeking to ventilate the arguments that she does in relation to the effect of PACCAR 
+on the Directed Trial Judgment and the Harbour IA in  the Jersey Proceedings – she has 
+agreed to a full settlement and is no longer entitled to seek to go behind Harbour’s 
+entitlements.  
+91 As I explain above, while LCL (and thus, undoubtedly, Dr Smith) questioned the validity 
+and enforceability of the LCL Settlement Agreement, Dr Cochrane has not formally 
+advanced this position, as far as Harbour is aware . Instead, in her Jersey Recall Applications 
+she has sought simply to ignore it. As the Court is aware, however, the issue of the validity 
+of the LCL Settlement Agreement (and more specifically the LCL Discontinuance Order) 
+came before the Court earlier this year  and has been determined . 
+92 While Harbour was not directly involved, I am aware of a ruling in these proceedings given 
+on 18 April 2024 (the “ LCL Undertakings Ruling ”) (pages  518-519). I understand the 
+context of this ruling is complex, and relates to efforts made by the Enforcement Receivers 
+to carry out their duties to realise certain assets in Spain, which Dr Cochrane has incorrectly 
+asserted belong to the Orb Claimants. As set out above and further explained in Appendix 
+1, Dr Cochrane has impeded the efforts of the Enforcement Rec eivers, in direct 
+contravention of the undertakings she gave in the LCL Discontinuance Order, which 
+reflect Dr Cochrane’s obligations pursuant to the LCL Settlement Agreement, and which 
+are accompanied by a penal notice.  
+93 My understanding is that the LCL Undertakings Ruling’s effect was to confirm the binding 
+nature of the undertakings contained within the LCL Discontinuance Order. As such, I 
+respectfully suggest that Dr Cochrane’s obligations under the LCL Settlement Agree ment 
+remain valid and binding  and that the Court has already finally determined this question . 
+94 I also note that the LCL Undertakings Ruling contained the following finding at paragraph 
+12: 
+34 
+ “Dr Cochrane has no standing to act in any form of trustee capacity on behalf of the Orb Claimants, still 
+less to take decisions intended to give Dr Smith (who is not an Orb Claimant) the use of any assets .” 
+95 I consider it likely  that Dr Cochrane’s Jersey Recall Applications are being conducted with 
+the assistance, and likely at the direction of Dr Smith, who seeks to regain control of the 
+property which is within Dr Cochrane and Orb’s désastres . 
+96 On the basis of the foregoing, I respectfully ask the Court to grant the relief sought by 
+Harbour in reliance upon the LCL Settlement Agreement, as set out at paragraph 5.1 
+above.  
+97 A second issue arising from an agreement affects both Dr Cochrane and Mr Thomas, to 
+the extent that they might otherwise be able to attack the Harbour IA on the basis of the 
+PACCAR Decision. The 2014 Harbour Deed was signed from October 2014 onwards, 
+and postdated the receipt of the assets under the IOM Settlement. Each of Dr Cochrane 
+and Mr Thomas (amongst others) agreed that the recoveries under the IOM Settlement 
+were to be treated as “Proceeds received as a result of Success in the Proceedings” for the 
+purposes of Cl 9.1 of the Harbour IA and were to be applied in accordance with the terms 
+of that clause.  Accordingly, each of Dr Cochrane and Mr Thomas are estopped by deed 
+from contesting that position. In addition, the 2014 Harbour Deed is  on any view not a 
+DBA – it no longer relates to a future contingency, but regulates the effect of an event that 
+had by that stage already happened.  
+H. The abusive nature of the Smith Parties’ attempt  to seek to invalidate the Harbour 
+IA 
+98 Harbour's position is that the Orb Claimants could have argued that the Harbour IA was 
+a DBA and sought to undermine Harbour’s entitlement under the agreement at any time 
+after it was agreed  (although possibly  not immediately) . The DBA Regulations entered into 
+force on 1 April 2013, and the Harbour IA was executed on 10 July 2013.  As set out above, 
+it is accepted that at that point, not even the Government believed that the DBA 
+Regulations were going to apply  to litigation funding agreements.  
+99 The litigation which gave rise to the PACCAR Decision (the “ Trucks Dispute ”) arose in 
+the Competition Appeals Tribunal (the “ CAT ”). It is not necessary for me to explain the 
+background to those proceedings, save that the hearing in front of the CAT at which the 
+issue of whether litigation funding agreements were Damages Based Agreements took 
+35 
+ place from  4 to 6 June 2019  (the “ Trucks Judgment (Funding)17”). The Trucks 
+Judgment (Funding) was handed down on 28 October 2019 , and subsequently the same 
+arguments regarding the status of litigation funding agreements were ventilated before the 
+Court of Appeal in relation to an application by the defendants in the Trucks Dispute  for 
+permission to appeal or alternatively for permission to bring proceedings for judicial 
+review, a decision which was handed down on 5 March 2021 ( Paccar Inc. v RHA and UKTC  
+[2021] EWCA Civ 299  (the “ PACCAR  Court of Appeal Decision ”)).18 
+100 Both of these decisions made it clear  that arguments  about the status of litigation funding 
+agreements at DBAs were ‘live’ and  had been  published in high profile judgments since 
+late 2019. Both  the Trucks Judgment (Funding)  and the PACCAR Court of Appeal 
+Decision also refer to an article published in the Cambridge Law Journal in 2014, by 
+Professor Rachel Mulheron , title d “England's unique approach to the self -regulation of third party 
+funding: a critical analysis of recent developments ” (the “ Mulheron  Analysis”)19 (pages  520-553). 
+The Mulheron Analysis,  in my view , contains a thorough  breakdown of the primary 
+arguments which would, several years later, be advanced by the defendant parties  in the 
+lead up to the Trucks Judgment (Funding) , and later by those same parties  in their 
+application to the Supreme Court . 
+101 In particular, Prof. Mulheron  expends several pages on a detailed analysis of question of 
+whether  litigation funders, according t o the rules of statutory interpretation, provide “ claims 
+management services ”, as defined in section 58AA of the CLSA 1990.  While she concedes that 
+the drafting of the relevant provisions may give rise to a degree of uncertainty, she 
+concludes that “the author considers that any application which sought to render a LFA unenforceable 
+because it did not meet the requirements of the DBA Regulations 2013 would be bound to fail. ” 
+Professor Mulheron also noted that the possibility that funding agreements were caug ht 
+by the DBA Regulations 2013 had been “ ventured in some quarters since the implementation of the 
+ 
+17 https://www.bailii.org/uk/cases/CAT/2019/26.html  
+18 https://www.bailii.org/ew/cases/EWCA/2021/299.html , at paragraph 80(2)  “The Tribunal next pointed out that the 
+argument now advanced by DAF "is not altogether novel": see [37]. In particular, the issue was raised by Professor Rachel Mul heron, 
+who is "one of the leading academics in the field of civil procedure", in an influent ial article in the Cambridge Law Journal in 2014: see 
+England's unique approach to the self regulation of third party funding: a critical analysis of recent developments [2014] CL J 570 at 
+592-595. Although Professor Mulheron considered the argument to be i ncorrect, she suggested that for the sake of clarity the legislation 
+should be amended .” 
+19 [2014] C.L.J. 570, 590 -96. 
+36 
+ DBA Regulations 2013 ”.20 The author also notes that the debate “ has been the subject of comment 
+at several conferences since the Jackson reforms took effect .”21 
+102 While I understand that Professor Mulheron reached the conclusion that litigation funding 
+agreements were very unlikely to qualify as damages based agreement s, this very clearly 
+shows that the arguments raised by the parties to the PACCAR Decision were not novel, 
+and could  have been run on behalf of  the Orb Claimants , Dr Cochrane , or any other party 
+to these proceedings .  
+103 I also note that in an open  letter to the Lord Chancellor of 16 April 2024  (pages 554-555), 
+to which Mr Thomas and Dr Smith appended their signatures  and which sought to 
+persuade the Government not to introduce  the retrospective aspects of the Litigation 
+Funding (Enforceability) Bill , the authors concede that “ The law has always been that litigation 
+funders provide claims management services and therefore their LFAs are DBAs (provided Section 
+58AA(3) of the CLSA 1990 is engaged) and are subject to regulatio n. The Supreme Court in 
+PACCAR simply confirmed this position. That the point had not been judicially considered before is 
+irrelevant: Professor Rachel Mulheron (whose views the litigation funders will be well aware) first raised 
+the point almost a decade ago.” 
+104 Despite Professor Mulheron’s conclusions, she and those working with her clearly 
+remained concerned that greater clarity was required in this area, and undertook to engage 
+with the Civil Justice Council on a consultation called the Damages Based Agreements  
+Reform Project, the conclusions of which were published in August 2015 (the “ CJC DBA 
+Report ”).22 The aim of this consultation was to make recommendations to the government 
+regarding revisions to the DBA Regulations 2013, with a view to the enactment of the 
+DBA Regulations 2015.  
+105 In the event, the DBA Regulations 2015 were never adopted. However, noting that while 
+“it was extremely unlikely that Third Party Funders were inadvertently covered by the 2013 DBA 
+Regulations … the intent of the Ministry of Justice to set any remote residual uncertainty about the point 
+at nought was noted ”. The authors recommended specifically excluding litigation funders in 
+the revised report.  
+ 
+20 Mulheron Analysis, page 3, paragraph 1  
+21 Ibid, footnote 140  
+22 https://www.judiciary.uk/wp -content/uploads/2015/09/dba -reform -project -cjc-aug-2015.pdf  
+37 
+ 106 I note that until mid-2016 , the Orb Claimants were represented by Stewarts Law, a firm 
+with a very detailed understanding of litigation funding, and who were no doubt aware of 
+the principles I outline above. It is also evident to me, however, that the Orb Claimants 
+would have had n o commercial interest seeking to undermine the Harbour IA while they 
+were represented by Stewarts. Harbour complied with the Harbour IA fully and provided 
+the Orb claimants with around £5.2m of litigation funding.  
+107 However, despite the deterioration of the relationship between the Orb Claimants and 
+Harbour, which ultimately resulted in Harbour successfully establishing its rights under the 
+Harbour IA at the Directed Trial, neither the Orb Claimants nor any other party sought to 
+take up the argument that the Harbour IA was unenforceable on the basis that it was a 
+DBA that did not comply with the DBA Regulations 2013  at any point before or during 
+the Directed Trial. Their opportunities to do so were extremely extensive,  given the lengthy 
+nature of these proceedings. I set out at Annex  1 a timetable of the relevant procedural 
+steps in these proceedings. This clearly shows that the Orb Claimants have had numerous 
+opportunities to advance an argument as to the enforceability of the Harbour IA , from 
+mid-2017 (when the first “ assets and claims position papers” were produced by the parties, 
+including the Orb Claimants) until July 2021 when the opportunity to appeal the 
+Consequentials Order expired.  
+108 In particular, the Orb Claimants had multiple  opportunities during the lead up to the 
+Directed Trial to advance claims in respect of the validity of the Harbour IA , including : 
+108.1  Five C ase Management Conference ( CMC ) hearings. The purpose of three of those 
+CMCs was to establish the scope of assets and issues to be determined at the 
+Directed Trial.  
+108.2  Pursuant to court order s, at least three requirements for parties to file statements 
+outlining their position, including by way of a statement of case or position paper, 
+and consequential amendments to the same. Applications to amend parties’ 
+pleadings were being made as late as 31 December 2020  following the PTR , at 
+which  time LCL (one of the Smith Parties)  applied to amend its statement of case.  
+108.3  Witness statements of fact, both trial witness statements and those in respect of 
+interlocutory applications such as,  for example , the guillotine hearing that 
+culminated in the assets being identified as the subject matter of the Directed Trial.  
+38 
+ 108.4  The Directed Trial itself, which spanned 7 weeks, represented a significant 
+opportunity for the Orb Claimants to advance their position. It should be noted 
+that during the trial period, extensive submissions on a wide range of issues were 
+put forward by numerous parties to the litigation , in some instances for the first 
+time. No stone was left unturned, and all matters raised were exhaustively 
+deliberated.  
+109 I note also that Harbour’s Statement of Case in these proceedings  of 29 November 2017  
+stated at paragraph 7 that “ Harbour intends to rely upon the Harbour Funding Agreement in these 
+proceedings for its full terms and true effect ”. It went on at paragraph 15 to state that “ Harbour 
+entered into the Harbour Funding Agreement in good faith, in the ordinary course of business and on 
+ordinary terms (including terms as to its remuneration and success fee )…”. 
+110 In response, Messrs Thomas and Taylor in their Responsive Statement of Case of 28 July 
+2019 , at paragraph 24, stated that “ These Respondents accept a s accurate in all material respects  the 
+summary of the Harbour Funding Agreement  given in paragraphs 5 to 16  of Harbour’s Statement of 
+Case dated 29 November 2017… ” 
+111 It is notable that t he SFO’s  responsive statement of case  of 12 June 2018  stated at 
+paragraph 13 that “ Harbour is required to prove  paragraphs 15 and 16  [of its Statement of Case] . 
+No admissions are made as to the validity and enforceability of the Harbour Investment Agreement ”. 
+112 Harbour’s Amended Responsive Statement of Case  of 10 April 2019, stated at paragraph s 
+7 and 8:  
+“7. Harbour relies on the Harbour Funding Agreement as the foundation for its claim under the Harbour 
+Trust: see paras 5 -27 of its SOC. The Viscount supports Harbour’s case in relation to the Harbour 
+Funding Agreement at paras 55 -65 of her SOC …. 
+8. As for the contentions advanced by certain other Interested  Parties in relation to the Harbour Funding 
+Agreement : 
+a. It is noted t hat no Interested Party challenges the validity of the Harbour Funding Agreement …” 
+113 It is clear that the validity and enforceability of the Harbour IA was relied upon  by Harbour  
+from  the outset of these proceedings, and that no party  chose to actively challenge 
+Harbour’s position. It is entirely unsurprising, therefore, that the Directed Trial did not  
+need expressly to confirm that status . 
+39 
+ 114 Accordingly, the Smith Parties have had ample opportunities to argue that the Harbour IA  
+was subject to the DBA regulations and failed to do so. I would respectfully suggest that 
+these matters are res judicata, or give rise to cause of action or issue estoppel, or that it 
+would be abusive , for reasons that will be expanded upon in submissions, for them to be 
+allowed to do so now.  
+I. The Severability of the Harbour IA  
+115 Given  the PACCAR Decision , if the above points do not determine the matter in 
+Harbour’s favour, there appears to be a risk that the Harbour IA  would be found by a 
+court to be a non -compliant DBA.  I note, however, that t he Harbour IA also includes a 
+clause headed “Severability”, which provides that:  
+“If any term or provision in this Agreement shall in whole or in part be held to any extent to be illegal or 
+unenforceable under any enactment or rule of law, that term or provision or part shall to that extent be 
+deemed not to form part of this Agreement a nd the enforceability of the remainder of this Agreement shall 
+not be affected ”. 
+116 It is my understanding that the percentage -based recovery provisions in Schedule 2  are 
+capable of being severed , such that the agreement remains enforceable . I do not seek to 
+make submissions in this witness statement  as to the legal position in respect of 
+sever ability . However I will , for the Court’s convenience,  set out below my understanding 
+of how this would operate in practice.  
+117 Harbour’s entitlement in respect of any proceeds up to £40 million is  calculated on a n 
+alternative basis , depending on when such proceeds are received. In respect of this 
+agreement, the initial period in respect of proceeds received either 6 or 12 months after  
+the agreement was signed, expired in 10 July 201 3, over 10 years ago.  
+118 The final two rows are intended to determine Harbour’s recoveries if the proceeds exceed 
+£40 million, and are calculated on a percentage basis only. It is also worth noting, although 
+not a necessary factor in this exercise, that Harbour does not expect the proceeds to exceed 
+£40 million , indeed they  are likely to be significantly less , not least because the costs of the 
+relevant office holders charged with realising the assets have been significantly inflated by 
+the actions of the Smith Parties since the Di rected Trial .  
+40 
+ 119 As long ago as 2 July 2021, not long after the Directed Trial Judgment, my firm wrote to 
+Messrs Thomas and Taylor setting out the likely proceeds, including estimated values of 
+the relevant assets (which are now signifi cantly out of date, and which are likely to be 
+significantly reduced as at today’s date)  (pages 556-563). We also made it clear that 
+Harbour expected its minimum return to be calculated on the basis of the multiples 
+included in Schedule 2. It should be  noted that the Orb Claimants  (Messrs Tho mas and 
+Taylor in particular) have on several occasions asserted that they expect the proceeds to 
+be considerably more than £40 million. In any event , I respectfully suggest that  such 
+dispute is not material at this stage.  
+120 It is Harbour’s belief that  the sections of Schedule 2  which contain a percentage based 
+recovery can be severed from the Harbour IA, to the extent that they are “illegal or 
+unenforceable” , in accordance with the severability provisions of the agreement . This is a 
+straightforward exercise in contractual in terpretation which does not require reference to 
+the general common law principles concerning severance , or to satisfy th e general common 
+law test . In particular , in the contractual interpretation context  the court is not limited to 
+deletions, it does not matter whether there is surplus language left over  and there is no 
+need to consider  whether  the overall balance of the contract  remains the sa me.  
+121 However, Harbour also intends to argue in the alternative that the general common law 
+test can be satisfied in any event . I set out below  another version of Schedule 2  which 
+demonstrates where such  modifications are necessary (the “ Modified Schedule 2 ”). I 
+note also that in pre -action correspondence, having received the draft of this Application, 
+Marriot Harrison has indicated that Mr Thomas disagrees with Harbour application of the 
+principles of severability in  respect of the proposed Modified Schedule 2.  These objections 
+would only appear to have application to the common law approach not the exercise in 
+contractual interpretation referred to above.  Harbour reserves its position in this regard, 
+including  as to the further modification of Schedule 2  and any arguments about how the 
+surviving wording may be interpreted , pending receipt of Mr Thomas’s responsive 
+evidence.  
+41 
+  
+122 It is my understanding  that, for severance to be possible  at common law , three 
+requirements must be satisfied:  
+122.1  First, it must be possible to remove the offending language without adding to or 
+modifying other language (known as the “ Blue Pencil Test”)23; 
+122.2  Second, the resulting contract must be supported by adequate consideration; and  
+ 
+23 Harbour reserves its position, should the matter go on appeal to the Supreme Court, as to whether the 
+requirements of the Blue Pencil Test itself remain appropriate.  
+
+42 
+ 122.3  Third, the resulting contract must not be of a different nature to the original 
+agreement, such that it is not the sort of contract that the parties entered into at 
+all. 
+123 As to the Blue Pencil Test, I would respectfully suggest to the Court  that the Modified 
+Schedule 2  provisions are workable, and do not require any re -writing or amendment in 
+order to be understood.  In fact, they  read as plain English, as if the severed provisions had 
+never been included.  The nature of the agreement has not changed . 
+124 The only other passage in the Harbour IA which refers to Harbour’s entitlement to a 
+percentage of proceeds is contained within Clause 10 .2(e): 
+“10.2 Where, pursuant to clause 4.2(i), the Claimants receive a recommendation from the Legal 
+Representatives to accept an offer of Settlement made on behalf of one or more Defendants (the 
+"Recommended Offer") but the Claimants elect to reject the Recommended Offer, if the Proceeds eventually 
+recovered from such Defend ant or Defendants are less than the amount of the Recommended Offer, the 
+Claimants shall hold such Proceeds on bare Trust absolutely for the benefit of HF2 and the Claimants 
+and to the extent of their interests as Trust Beneficiaries The Claimants shall ad ditionally keep such 
+Proceeds separate from the Claimants' own funds and shall apply the Proceeds received as a result of Success 
+in the Proceedings in the following order upon receipt of such Proceeds:  
+(a) deduct all stamp duties, bank charges and currency exchange costs payable by the  
+Claimants relating to or arising out of any such Success in the Proceedings;  
+ (b) pay to HF2 the HF2 Investment;  
+  (c) pay any other sums due in respect of Claimants' Legal Costs;  
+(d) pay to the Legal Representatives, Barristers or other third parties with whom the 
+Claimants have concluded a Legal Costs Agreement any success fee or costs uplift payable 
+under any such Legal Costs Agreement;  
+(e) pay to HF2 any amount due to it in its capacity as Trust Beneficiary pursuant to  
+Schedule 2 save that the percentage of Proceeds payable to HF2 shall be calculated by  
+reference to the amount of the Recommended Offer and not by reference to the amount o f 
+the Proceeds; and  
+43 
+ (f) pay to the Claimants any remaining amount which the Claimants shall receive in 
+their capacity as Trust Beneficiaries .” 
+125 All that is required in this section of the agreement is the deletion of the second half of 
+Clause 10.2(e), from the words “ save that ” to the end of the clause and in any event Clause 
+10.2(e) has no relevance to the current situation . Again , the balance of the clause remains 
+entirely coherent , without any further amendments necessary.  
+126 I note that the Thomas Letter Before Action also refers to the provisions of Clause 14 of 
+the Harbour IA . I understand the implication of the letter to be that , according to Mr 
+Thomas,  Clause 14.4(a)(ii)  of the Harbour IA also contains provisions that cause Harbour’s 
+return to be “determined by reference to the amount of the financial benefit obtained by the recipient ”, in 
+accordance with the third of the DBA requirements of the CLSA 1990. However, I do not 
+believe this to be the case  (and again it has no relevance to the current situation) . 
+127 Clause 14 .4 reads as follows:  
+“14.4 In the event that the Claimants continue with the Proceedings after the Termination Date and the 
+Claimants subsequently Succeed in such Proceedings, the Claimants agree on a joint and several basis that:  
+(a) they will hold all Proceeds on bare Trust absolutely for the Claimants and HF2 and 
+to the extent of their interests as Trust Beneficiaries, such Proceeds will be kept separate 
+from the Claimants' own funds and the Claimants shall as trustee of the Trus t forthwith 
+pay to HF2 an amount from the Proceeds corresponding to:  
+ (i) the HF2 Investment up to the Termination Date; and   
+ (ii) a sum calculated by applying 10% per annum on the amounts referred 
+to in subclause 14.4(a)(i), calculated from the date of each payment out (or 
+assumption of liability for Adverse Costs) by HF2 to the date of refund 
+to HF2 by the Claimants.  
+(b) The provisions of clauses 8 and 9 and payment to HF2 under the Trust, will 
+apply as if this Agreement had continued in force, SAVE THAT the amount of 
+Proceeds payable to HF2 under Schedule 2 shall be fixed by reference to the 
+Termination Date and not t he date of receipt of monies by HF2 following Success 
+in the Proceedings; and  
+44 
+ (c) the Claimants shall not be obliged to make payments to HF2 under the terms 
+of this Trust that are more than the Proceeds it recovers.  
+For the avoidance of doubt, this clause 14.4 shall survive any termination of this Agreement .” 
+128 Although the Thomas Letter Before Action does not clearly set out the basis of Mr 
+Thomas’s assertion in relation to this provision, I assume that  Mr Thomas’s case is that a 
+reference in 14.4(a)(ii) to a sum of 10% per annum due to Harbour  renders this clause a 
+DBA provision in that by its nature a percentage  is determined by to a separate figure. 
+However, the figure which determines the  amount of the  percentage due in this instance 
+is Harbour’s investment, rather than the amount of any proceeds.  This is eff ectively a 
+provision for Harbour to recover interest on its investment in the instance that the 
+Harbour IA is terminated before proceeds are received by the Orb Claimants. Therefore 
+by definition , if this clause were to be invoked, the Orb Claimants would have not yet 
+received any financial benefit for Harbour’s return to be calculated by reference to. I do 
+not understand the third criterion of the  CLSA 1990  to be intended to refer to this scenario, 
+therefore there is no need to consider the severance of this provision.  
+129 Finall y, I also understand Mr Thom as to intend to argue that  the provisions of part of 
+Clause 9 of the Harbour IA  would render the agreement a DBA, specifically  Clause 9.3.  
+Mr Thomas’s position has not been made completely clear in correspondence , and as such  
+Harbour reserves its position and  will respond more fully in due course if necessary .  
+130 As to the second requirement  of the severability test , which is that the resulting contract 
+should still be supported by adequate consideration, I would respectfully suggest that this 
+would be satisfied. Harbour  would still be providing consideration by way of its promise 
+to provide funding to the Orb Claimants  (and the provision of funding) , and the Orb 
+Claimants would be providing consideration by way of their promise to hold on trust the 
+Proceeds on Success, and to pay to Harbour, out of those proceeds, (1) the amount of the 
+investment and (2) a return, calculated now as a multiple of Harbour’s investment . 
+131 As to the third requirement (that the nature of the agreement should not be altered such 
+that it becomes quite different to that originally agreed), as I outline above, the Harbour 
+IA only requires  amend ment  in very limited respects . The essence of the agreement 
+remains unchanged , namely that Harbour agree d to fund the Orb Claimants in exchange 
+45 
+ for a return should Proceeds be recovered. The potential change in Harbour’s entitlement  
+is a matter of degree, and not a change in the inherent commercial nature of the agreement .  
+132 In the alternative, Harbour’s case will be that at a bare minimum, its contractual right to 
+repayment of the investment (plus interest at 10% per annum as stipulated in  clause  17.1 
+of the Harbour IA )24 remains unimpaired. This is specified in Cl 9.1(b) , and is unaffected 
+by any finding that the return elements of the Harbour IA are unenforceable.  
+133 I note that the severance approach is not the only available analysis  of how to deal with 
+statutory unenforceability. It will be a matter of submission as to whether it is the correct 
+framework within which to assess the issue, as opposed, by way of example only, to an 
+interpretation of the Harbour IA which locates the DBA within  a confined portion of the 
+larger whole and which does not have effects outside of that portion.  
+134 Finally, Mr Thomas has suggested that  even if Harbour’s case on severa nce succeeds, the 
+resulting agreement must somehow conform to the requirements of the CLSA 1990.  Mr 
+Thomas has not explained this principle and as such it would be premature for Harbour’s 
+position to be fully developed  here.  That said , Harbour  would consider the starting point 
+to be  that if the Harbour IA is no t a DBA  following one of the approaches  as set out 
+above , it is not required to meet any criteria set out in S.58AA of the CLSA 1990.  
+J. Harbour’s detrimental reliance on the Harbour IA  
+135 Harbour  has detrimentally relied  upon  its understanding that the Harbour IA was an 
+enforceable agreement which conferred upon it particular proprietary rights . In these 
+proceedings, as I note above, H arbour  funded the Orb Claimants  in the amount of 
+approximately £5.2 million, and has since spent several times that amount enforcing its 
+rights under the Harbour IA.   
+136 In total, Harbour has expended approximately £ 16.7 million  (including amounts advanced 
+by Harbour to the Viscount) as of the date of this evidence , and expects to expend 
+considerably more on dealing with further actions which have been initiated by the Smith 
+Parties.  Additionally, the continuing efforts of the Smith Parties  and other related 
+individuals  to resist the work of court -appo inted office holders w ill further inflate  the costs 
+ 
+24 Harbour's position is that contractual  interest also accrues pursuant to clause 17.1 in respect of its entire entitlement , 
+including returns on its investment provided for in Schedule 2 of the Harbour IA, should the court find in its favour 
+on this application.  
+46 
+ associated with managing and realising  the assets which were the subject of the Directed 
+Trial and depress ultimate recoveries . 
+137 The other Settlement Parties submitted their relevant  costs to the Court at the time of the 
+costs consequentials hearing following the Directed Trial. These represent only a partial 
+picture of the total costs that those parties have expended , as they reflected only their legal 
+costs incurred during the Directed Trial , i.e. to 2021 . These totals have undoubtedly 
+increased significantly in the subsequent years (including a total of around £1.16 million 
+expended by the Settlement Parties in the context of the Part 8 Claim).  
+137.1  Stewarts Law: £2.3 million  
+137.2  The Viscount: £2.5 million  
+137.3  The SFO: £1.8 million  
+137.4  The Joint Liquidators: £3.4 million  
+137.5  The Enforcement Receivers: £3.8 million  
+K. Limitation  
+138 Harbour will also submit that, as determined in the Directed Trial, Harbour’s right to 
+recovery under the Harbour IA was engaged (at the latest) on 29 April 2016, at the time of 
+execution of a settlement between Dr Smith, Dr Cochrane and Mr Andrew Ruhan (t he 
+“Geneva Settlement ”) (the Confidential Deed, which is one of the Geneva Settlement 
+documents is at pages 564-568), which brought to an end the Orb Litigation (which was 
+itself dismissed by way of consent order on 5 May 2016).  
+139 As such, the time period for the Orb Claimants to contend that the Harbour IA was 
+unenforceable began at the date of the Geneva Settlement, and ended in April 2022, well 
+after the conclusion of the Directed Trial, and during the period in which the Orb 
+Claimants’ c hallenges to the Directed Trial Judgment were well underway.  
+140 Harbour’s limitation submissions will be developed in due course, but I also note here that, 
+as I set out above, the potential arguments regarding the applicability of the DBA 
+Regulations 2013 to the Harbour IA were publicly available since around the time  of the 
+Mulheron Analysis in 2014. As such, the Orb Claimants could have discovered the basis 
+47 
+ for their potential cause of action at any time from that point in 2014 onwards, and 
+certainly by April 2016.  
+141 For the purposes of this evidence, I have sought to apply a convention al 6-year limitation 
+period. Harbour’s position in this regard is reserved pending the full articulation by Mr 
+Thomas of the relief he seeks , which depends on how he frames his case as to the basis 
+for any right of recovery  – obviously different limitation periods may apply depending on 
+how this is put . This reservation also extends to Harbour’s right to argue that Mr Thomas 
+is barred  by laches  from  obtaining the relief he seeks , in the circumstances of this case, 
+whether or not a limitation period applies to the relief he seeks . 
+142 Finally,  in pre -action correspondence, Marriott Harrison has indicated that Mr Thomas 
+intends to argue that should his action be time barred, the same should apply to this 
+application by Harbour. Harbour’s position will be developed in submission in due course, 
+but I note that this appears to be a misconceived interpretation of the relief sought by 
+Harbour in this application. Primarily, Harbour seeks declaration s that Mr Thomas, Dr 
+Cochrane or any other party’s actions to  undermine the Harbour IA are abusi ve or 
+incorrect, and only if Harbour does not succeed on those grounds, that those parties’ 
+applications are time -barred  in terms of advancing the substantive arguments . 
+L. Dr Cochrane’s standing  and the Debarring/Stay Directions  
+143 As she was declared en désastre  in November 2016 , Dr Cochrane’s personal interests in 
+these proceedings have been represented by the Viscount . I note, however, that Dr 
+Cochrane executed the LCL Settlement Deed in her personal capacity.  
+144 In the circumstances, without prejudice to its rights more generally,  Harbour is prepared 
+to take a pragmatic position and would not object to Dr Cochrane being permitted to 
+address the Court on the matters dealt with in this application .  
+145 Given th e Thomas Letter Before Action, it seems that Mr Thomas is likely to seek to  
+oppose  Harbour’s application  and seek relief that is relevant to  the other  Orb Claimants 
+as well as himself . In this regard,  Harbour ’s position  is that Mr Thomas remains bound by 
+and must comply , in full,  with the terms  of the Debarring/Stay  Directions  before  any 
+application or request for relief he makes can proceed.  
+M. Conclusions  
+48 
+ 146 I respectfully submit that Harbour’s present application should be granted on one or more 
+of the bases I set out above.  
+147 Subject to the Court’s approach in relation to, and determination of,  the above matters, 
+further issues may need to be addressed or raised, or directions given, in respect of which 
+Harbour’s position is fully reserved. These include, for example : (a) whether the Guarantee 
+entered into between Harbour and Dr Cochrane renders Dr Cochrane liable for any 
+unenforceable obligations under the Harbour IA in any event , and whether Harbour can 
+hold Dr Cochrane, Mr Thomas and Mr Taylor liable for breach of the represe ntations and 
+warranties at Cl 3.1(g) of the Harbour IA under which they promised that the obligations 
+assumed were “legal, valid, binding and enforceable obligations” in the amount of any 
+reduction to Harbour’s entitlement ; (b) whether Harbour can nevertheless uphold its rights 
+on alternative bases, such as proprietary estoppel, constructive or resulting trusts, unjust 
+enrichment or equitable allowance , or the survival of the Harbour Trust even in the event 
+that the Harbour IA is found to be unenforceable i n whole or in part ; and (c) the impact 
+of any of these determinations on the position of other parties to the proceedings.  I 
+mention these only for completeness, to make it clear that the points I have mentioned 
+above (and which Harbour considers should be sufficient to dispose of the various 
+complaints and attacks which have been intimated) may not be the only arguments 
+available to Harbour to protect its position, although I hope that it will not prove necessary 
+for the parties to take up further court ti me in relation to this matter . 
+ 
+STATEMENT OF TRUTH  
+I believe that the facts stated in this witness statement are true. I understand that proceedings for 
+contempt of court may be brought against anyone who makes, or causes to be made, a false 
+statement in a document verified by a statement of truth without an honest belief in its truth.  
+Signed……  …………………………………  
+Name: Adam Karim Zoubir  
+Date …… 31 October 2024 ……………………………….   
+
+49 
+ ANNEX 1  
+Opportunities for parties to  have raised arguments based upon the DBA Regulations 2013  during these 
+proceedings  
+ 
+No Date  Event/ Relevant Order  
+1.  6 March 2017  
+ 
+ 
+24 April 2017  CMC hearing before Popplewell J  
+ 
+Assets and Claims Position Papers: Pursuant to Popplewell J’s order 
+dated 6 March 2017, the parties were required to lodge position papers 
+setting out their case.  
+ 
+2.  26 June 2017  CMC hearing  
+ 
+The SFO and Enforcement Receivers apply for a determination of the 
+extent to which the Shares and the Jersey Properties (as defined therein) are 
+realisable property of Dr Smith.  
+  
+3.  28 June 2017  Order by Popplewell J  
+ 
+Pursuant to paragraph 8, parties were  required to serve a statement of case 
+which, amongst other things, “provides particulars of the claim(s) or issue(s) which it 
+contends can conveniently be disposed of together with or within the SFO Application” . 
+ 
+4.  6 and 7 
+December 
+2017 Directions Hearing  
+ 
+5.  7 December 
+2017 Popplewell J Order  
+ 
+Each party was required to file a brief document identifying any other 
+Interested Party’s claim that was accepted, and to the extent not, the reasons 
+why not (if this was not already set out in that party’s assets and claims 
+position paper).  
+ 
+This presented another opportunity to advance this position.  
+ 
+6.  24 April 2018  Popplewell J Order  
+ 
+Pursuant to paragraph 9(c) of the Order, any Participating Party (including 
+Dr Cochrane ) was given the opportunity to file a responsive statement to 
+any other Participating Party’s case.  
+ 
+7.  25, 26 and 27 
+February 
+2019 CMC Hearing  
+8.  29 March 
+2019 Moulder J order  
+ 
+The parties were required to give disclosure relevant to the issues in the case  
+9.  24 February 
+2020 CMC hearing before Foxton J  
+ 
+This CMC took place following the Settlement Agreement being entered 
+into by the Settlement Parties.  
+Again, this represented another opportunity for the Orb Claimants  to put 
+forward their position, either in the hearing or in correspondence.  
+50 
+  
+10.  18 May 2020  Guillotine hearing before Foxton J determining the scope of underlying 
+assets.  
+ 
+11.  27 and 28 
+July 2020  CMC hearing before Foxton J  
+12.  11 December 
+2020 Pre-trial review before Foxton J  
+13.  8 January 
+2021 The parties to the Directed Trial submitted skeleton arguments  
+14.  19 January 
+2021 to 9 
+March 2021  The Directed Trial before Foxton J  
+ 
+ 
+15.  10-11 June 
+2021 Consequentials Hearing  
+16.  Appeal 
+period  The Consequentials Order of Foxton J dated 11 June 2021  
+ 
+Paragraph 34 of this order permitted applications for permission to appeal 
+to be made to the Court of Appeal by 2 July 2021. No applications were 
+made by the Orb Claimants.  
+ 
+ 
+51 
+ Appendix 1  
+Chronology of e vents relating to the activities of Dr Smith -associated parties following the Directed Trial Judgment  
+ 
+Date  Event  Relevant 
+Smith 
+Party  Description  
+Ongoing 
+(from 
+October 
+2021)  Non-Cooperation by Dr Cochrane in 
+respect of Shares in Casa Coloniches 
+B.V. (“ Casa Coloniches ”) 
+ Dr 
+Cochrane  Dr Cochrane has been consistently non -cooperative regarding the transfer of the share of Casa 
+Coloniches , a Non Arena Company over whose shares the the Enforcement Receivers are 
+appointed. Her actions include initially refusing to sign transfer documents for the shares, 
+initially refusing  to appoint the Enforcement Receivers  as directors and sign other documents 
+and indicating an intention to oppose the Attorney General of Jersey's representation to vary 
+the saisie judiciaire made by the Royal Court of Jersey on 24 November 2016 to permit the 
+transfer of shares in Casa Coloniches  to the Enforcement Receivers  which has caused, and 
+continues to cause,  significant  delay and cost.25 
+ 
+Ongoing 
+(from 
+February 
+2021)  Obstruction by associates of Smith in 
+bringing claims against companies 
+controlled by the Enforcement 
+Receivers and opposing the 
+recognition of the Enforcement 
+Receivers and Directed Trial 
+Judgment in proceedings in the 
+Republic of the Marshall Islands  Smith 
+parties and 
+Thomas  In February 2021, Simon Cooper and Simon McNally commenced claims against SMA and 
+GACH (both Non -Arena Companies) in the Republic of the Marshall Islands which the 
+Enforcement Receivers on behalf of SMA and GACH opposed. In April 2021, the 
+Enforcement Rece ivers applied for recognition of their appointment. In June 2021, LCL sought 
+to consent to a claim brought by Cooper and McNally that includer a transfer of the shares of 
+the Non Arena Companies (determined in the Directed Trial to be held for Dr Smith and  
+payable to Confiscation Order) to SMA and GACH, which the Smith parties (including Mr 
+Thomas) claimed were not controlled by the Enforcement Receivers but by Thomas or entities 
+connected with them. In November 2021, Minardi Investments Limited (then actin g by Smith 
+associates) brought a further claim against SMA (acting by the Enforcement Receivers). The 
+opposition to recognition of the Enforcement Receivers and the outcome of the Directed Trial 
+continues , resulting in significant delay and costs26. 
+ 
+25 Paragraph 5.7.2 of MR26  (pages 569-623, page  599) 
+26 Paragraphs 5.2.7 and 5.2.8 of MR26  (page 585-586). 
+52 
+ March 
+2022 
+ongoing  Obstruction of vacant possession of 
+Flats 11, 12, 19, 20 and 21 Hamilton 
+House27 Certain of 
+the LCL 
+Parties  
+ Dr Smith, Robert Morris, Imogen Smith and Iona Smith, all parties to the LCL Settlement 
+Agreement , were required to give vacant possession of these flats, pursuant to its terms. Despite 
+notice being given  to them by the Enforcement Receivers , vacant possession was actively 
+resisted, including by way of court applications, causing significant  cost and  delay.  
+As noted above, despite vacant possession having ultimately been obtained by the Enforcement 
+Receivers, Dr Smith has again claimed rights over these properties, as a result of the PACCAR 
+decision.  
+11 May 
+2022 Part 8 Claim commenced by Messrs 
+Thomas and Taylor by which they 
+sought to appoint Mr Ticehurst as 
+trustee of the Harbour Trust for an 
+improper purpose “the Part 8 
+Claim ”) 
+ Thomas  As part of their efforts to frustrate the Directed Trial, Messrs Thomas and Taylor (with the 
+support and funding of Smith and his associates) sought to enforce certain rights as trustees of 
+the trust arising out of the Harbour Investment Agreement  by way of a Part 8 claim . Despite  a 
+previous  indication from Foxton J that Messrs Thomas and Taylor were not suitable trustees, 
+given their prior unlawful receipt of trust funds, they acted in direct contravention of the Judge’s 
+indications by both seeking to act as trustees, and by improperly appointing a further trustee 
+(Mr Ticehurst) .  
+After a further trial which took place in late 2022, again in front of Foxton  J, Messrs Thomas 
+and Taylor were found to have been acting in concert with Smith and against the interests of 
+the principal beneficiaries of the Harbour Trust, and were removed as trustees. All of Messrs 
+Thomas and Taylors’ arguments failed, the Settlement Parties were forced to incur significant 
+additional costs of over £1m, and the additional litigation caused a significant delay in the 
+ongoing enforcement efforts of the Office Holders.  
+ 
+20 June 
+2022 Contempt Application against Mr 
+Thomas   The Enforcement Receivers filed a contempt application against Mr Thomas28 on the following 
+grounds:  
+ 
+• Inciting LCL to purport to transfer its shares in SMA and GACH to the “joint trustees 
+of the Orb Claimants Trust ”; 
+• Purporting to accept board appointments for SMA and GACH; and  
+• Purporting to act as a director of SMA and GACH by agreeing to stay the RMI 
+proceedings . 
+ 
+27 Please see footnote 7 of 4.3.1.2 of the 6th Receivership Order R eport dated 12 July 2024 ( pages 624-663, page 63 5) 
+28 Paragraph 4.2.12 of MR25  (pages 664 – 716, page 67 9) 
+53 
+  
+Ultimately, Mr Thomas  carried out the actions required by the Enforcement Receivers, and the 
+contempt application was compromised with costs ordered in favour of the Enforcement 
+Receivers.  
+29 July 
+2022 29 July 2022 Dr Smith contempt of 
+court conviction  Dr Smith  Dr Smith was convicted of contempt of court in July 2022 in respect of breaches of a restraint 
+order obtained by the SFO, which restricted his access to certain bank accounts. Dr Smith was 
+found guilty of three counts of contempt and given an eight -month prison sentence, suspended 
+for 18 months.29  
+2022 SMA Application  Smith 
+parties  Attempts made by the Smith Parties, via companies called Minardi  and BKV, to prevent the 
+transfer of the shares of SMA to newly appointed trustees of the Harbour Trust ;. Foxton J 
+rejected those efforts in a Judgment dated 28 February 2023 ([2023] EWHC 428 (Comm)) (the 
+“SMA Judgment ”) which found amongst other things that:  
+“19. I have no doubt that the approach taken by those behind Minardi and those behind BKV (to extent that 
+they are different), was co -ordinated, and represented a calculated attempt to delay the hearing and the orders 
+which the Harcus Parker Parties seek. Those  individuals should be in no doubt as to the importance which the 
+court attaches to ensuring that its processes are not misused and its orders are complied with, and the full range 
+of the court's powers to serve these ends … 
+103. As will be apparent from the foregoing, there is a real risk in this case that individuals who are bound by, 
+but unhappy with, the outcome of the Directed Trial have been and are continuing to instigate proceedings and 
+applications in these proceeding s and elsewhere to challenge the outcome of the Directed Trial or by way of a 
+collateral attack on its conclusions. The scale of these activities and the legal costs and court time they are 
+consuming, mean that considerable vigilance will be required on th e court's part to ensure that its judgments are 
+respected and its processes are not abused.  
+104. If activities of this kind continue, there will need to be careful consideration of a number of matters, including:  
+i) whether there are any individuals who may have breached court orders and undertakings and, if so, whether 
+the court's committal jurisdiction should be engaged;  
+ 
+29 Paragraph 3.4.3 of MR 26 (page 581). The court’s decision is summarised in this link: Convicted fraudster found to be in contempt of court - Serious Fraud Office (sfo.gov.uk)   
+54 
+ ii) whether officers of the court should be given control of any companies which have changed hands in questionable 
+circumstances, and which are being used in this process;  
+iii) whether further injunctions could or should be granted against individuals where there is a sufficiently arguable 
+case that they are engaged in activities intended to challenge a judgment which is binding upon them;  
+iv) the consequences of undischarged costs orders in the litigation to date; and  
+v) who has been funding these various applications and whether any orders against the funding parties or those 
+controlling them would be appropriate.  
+ 
+31 January 
+2023 Assignment Application resulting in 
+the Debarring/ Stay Order  Thomas  Despite Foxton J’s clear direction regarding further collusion and frustration, Messrs Thomas 
+and Taylor sought to bring a further application against Harbour and the other Settlement 
+Parties in early 2023. This application sought an order for the assignment of claims to certain 
+assets identified in the Consequentials Order, currently under the control of office holders.  
+ 
+Foxton J issued directions on 31 March 2023  to the effect that Thomas and Taylor were not 
+permitted to bring any further actions against the Settlement Parties without attending a 
+preliminary hearing related to whether their outstanding costs orders should first be satisfied, 
+and that they would be  obliged to disclose the involvement of and/or funding provided by 
+Smith and related parties , i.e. the Debarring/Stay Directions .  
+29 March 
+2023 Contempt Application made by Mr 
+Sozawiczny  against Mr Thomas (Isle 
+of Man Court)  Thomas  Mr Thomas has been found guilty of contempt of the Isle of Man High Court because, alongside 
+a fellow director and associate of Dr Smith (a Mr Miah)  of an Isle of Man company, he failed 
+to take steps (within his control which had been pointed out to him by the applicant) to remove 
+a director of a subsidiary company that was in egregious and flagrant breach of an Isle of Man 
+injunction protecting the a pplicant’s interest in property in Spain.  
+Pursuant to a judgment dated 29 November 2023, Mr Thomas was held to have committed a 
+contempt of court.  
+ 
+August 
+2023 - 
+ongoing  Obstruction by Dr Cochrane and 
+other Smith associates in respect of 
+C’an Agata and Son Montserrat (the 
+“Spanish Properties ”) Dr 
+Cochrane  
+Dr Smith  
+Thomas  
+Stickler  Two subsidiaries of Buena Vida Living 2 B.V ( “BVL2 ”), Conor and Agata, both hold registered 
+title to the Spanish Properties.  
+ 
+The Enforcement Receivers commenced eviction proceedings against Dr Cochrane and Mr 
+Jansen (Dr Smith’s associate who purportedly occupied the property pursuant to an agreement 
+55 
+ with Dr Cochrane). This application succeeded in the Spanish Court in June 2023 and Dr 
+Cochrane was ordered to pay 108,000 euros to Agata  (the "Spanish Judgment"), but her eviction 
+was automatically suspended whilst she appealed the Spanish Judgment. In the end, the Spanish 
+Court acceded to the Receivers (as directors of Agata) submission that Dr Cochrane's appeal 
+should be struck out which  it was earlier this year. According to the Enforcement Receivers, 
+Mr Thomas asserts that the shares of Agata and Conor  (or their proceeds) are (in some way) 
+the property of the “Orb Claimants” held for the Harbour Trust.  
+ 
+A summary of the extensive correspondence from Dr Cochrane who threatens litigation in 
+respect of the Spanish Properties30, is as follows:  
+ 
+On 11 August 2023, Dr Cochrane wrote to Bernardo Oliver, an architect who is engaged by 
+the Receivers (as directors of Conor) in connection with the sale of Son Monserrat, noting Mr 
+Oliver’s  conversation earlier that day with Dr Smith  and asserting:  
+ 
+a. that the property and Conor are “hers” following their lawful transfer to her pursuant to the 
+terms of the Isle of Man Settlement (with 62.5% owned by her and 37.5% owned by Messrs 
+Thomas and Taylor);  
+b. that Will Besga  of Mallorca Law SL (“Mallorca Law”) and the Enforcement Receivers had 
+conspired to forge a shareholder resolution to remove Gail Cochrane and Ms Stickler as joint 
+directors of Conor and Agata without their consent, with such forgery having been reported to 
+the Mallorcan authorities and Miguel Games of Pinto Rui z & Del Valle having been instructed 
+to bring proceedings against Mr Besga for fraud;  
+c. that Mr Besga and the  Enforcement  Receivers’ actions in this regard were part of the wider 
+“strategy of unlawful interference in the outcome of the Directed Trial that  Harbour Funding 
+Limited… is unlawfully engaged in to purloin for itself and others the IOMS proceeds”; and  
+d. that Mr Oliver should provide a written undertaking not to assist any party to purchase Son 
+Monserrat without Dr Cochrane’s express written consent.  
+ 
+On 15 August 2023, Dr Smith  wrote to the Receivers to assert that he had been “ asked to assist 
+the Orb Claimants to finish the redevelopment of Son Monserrat and to refurbish C’an Agata ”, to confirm 
+that he had moved into C’an Agata (without the Receivers’ consent as directors of Agata) and 
+to request that the Receivers “ cease orchestrating interference”  with Agata and Conor.  
+ 
+ 
+30 Paragraphs 4.6.10 to 4.6. 10.26 of MR24  (pages 717 – 768, pages 73 7 - 742). 
+56 
+ On 17 August 2023, Gail Cochrane wrote to the Viscount (copied to the Receivers) in response 
+to a letter to Ogier (the Viscount's Jersey lawyers) claiming that:  
+a. Conor, Agata and the Spanish Properties " are the property of the Orb Claimants ";  
+b. "the purported role that Mr Milsom and Standish [Standisch] hold was obtained by fraud because they were 
+purportedly appointed as directors of the Companies by Will Besga (a Mollorca attorney) on the basis of a 
+purported shareholder resolution he forged (se e attached letter of 11 April 2023). A criminal action in Spain 
+which is currently subject to litigation and censure before the courts of Palma " (sic);  
+c. Bernardo Oliver was " my appointed architect "; and  
+d. the Receivers have " no lawful role " and that " attempting to sell assets of the Orb Claimants, is 
+tantamount to theft ". 
+ 
+On 17 August 2023, Mr Thomas (in his  capacity as ‘a beneficiary’  of the Harbour Trust ) wrote 
+to David Standish:  
+a. querying whether the Spanish Properties are the subject of court orders and/or whether the 
+assets have ever been subject to the English proceedings; and  
+b. suggesting that 33% of the properties were "his" . 
+ 
+On 21 August 2023 (at 11.30am), Dr Smith  wrote to the Receivers and repeated many of the 
+unsubstantiated allegations made in Gail Cochrane’s letters of 11 and 17 August 2023 and 
+threatening to commence proceedings in Spain against the Receivers and Mr Besga if the 
+Receivers did not resign as dir ectors of Agata and Conor.  
+ 
+The Enforcement Receivers provided robust responses to these letters on 21 August 2023.  
+ 
+On 23 August 2023 (at 10.47am), Dr Cochrane wrote to the  Enforcement  Receivers alleging 
+that their appointments as directors of Agata and Conor had occurred as a result of  a forged 
+shareholder resolution, suggesting that the Receivers’ correspondence with her was “bullying, 
+threatening and demeaning” and asserting that the  PACCAR  decision confirmed that the shares 
+in Agata and Conor are the property of the Orb Claimants.  
+ 
+On 30 August 2023, Gail Cochrane lodged an appeal against the Possession of C'an Agata 
+Judgment.  
+ 
+On 12 September 2023, Dr Smith wrote to the Enforcement Receivers asserting that the 
+Directed Trial  has “ long since determined ” that the Orb Claimants own the shares of Agata and 
+Conor.  
+57 
+  
+On 19 September 2023, Ms Stickler emailed  the Enforcement Receivers’ lawyers  asserting that 
+she is the “ only lawful director of Agata and Conor ” and repeating various of the above -noted 
+assertions made by Dr Smith and Dr Cochrane regarding the Enforcement Receivers’ 
+appointments as directors of Agata and Conor. She ignored the request to transfer the share in 
+BVL2.  
+ 
+On 28 September 2023, Mr Thomas wrote to the Receivers noting his intent to seek leave to 
+appeal and set aside elements of the Consequentials Order, asserting that the Spanish Properties 
+belong to the Orb Claimants and seeking the Receivers’ confirmation t hat no sale of Son 
+Monserrat will proceed until Mr Thomas’ appeal has been determined and the Receivers “ have 
+clarified with the court by application in the usual way, whether… they are… empowered to sell Son 
+Monserrat …” 
+ 
+In addition, Dr Cochrane and Dr Smith are claimed to have threatened the Receivers' agents in 
+person, accused the Receivers' lawyer of forging a document, reported that lawyer and the 
+Receivers to the criminal authorities in Mallorca, instructed the Receivers' lawyers,  agents and 
+architect to cease acting and threatened legal proceedings against them in an attempt to prevent 
+a sale. In the face of this behaviour, which was obstructive and in clear breach of court order, 
+the Receivers ultimately concluded a sale of the property last year.  
+ 
+As outlined above, after Dr Cochrane had refused to withdraw her appeal of the Spanish 
+Judgment and written submissions were exchanged with the Court , on 18 April 2024, Foxton J 
+issued a ruling that Dr Cochrane was bound by undertaking s she provided in the LCL 
+Discontinuance Order, which prevented her from resisting the Enforcement Receivers’ efforts 
+to realise the Spanish Properties.  
+ 
+2 
+December 
+2023 Mr Sodzawiczny  and the Anti -
+Arbitration Injunction  Dr 
+Cochrane  
+Dr Smith  Application made by Mr So dzawiczny  for an anti -arbitration injunction to prevent Dr Smith 
+and Dr Cochrane from pursuing an LCIA Arbitration they purported to commence on 6 
+December 2023.  
+In his judgment dated 7 February 202431, Foxton J held the following:  
+ 
+31 Sodzawiczny v Smith (Re Arbitration Claim) [2024] EWHC 231 (Comm) (07 February 2024) (bailii.org)  
+58 
+ “there is a real risk in this case that individuals who are bound by, but unhappy with, the outcome of the Directed 
+Trial have been and are continuing to instigate proceedings and applications in these proceedings and elsewhere to 
+challenge the outcome of the Di rected Trial or by way of a collateral attack on its conclusions…  
+…I am satisfied that Dr Cochrane is acting wholly at Dr Smith’s direction and for his purposes in lending her 
+name to the Smith RFA”.  
+10 January 
+2024 Slip Rule Application  Dr 
+Cochrane  As described in further detail in the body of this witness statement, Dr Cochrane in filing this 
+application sought to have two companies added to the list of 27 non -arena companies, and 
+sought to have LCL and Orb removed from the list.  
+8 July 
+2024 Smith 
+Restraint/ Receivership /Confiscation 
+Order application  Dr Smith  Dr Smith served an application in these proceedings, challenging the SFO’s Restraint , 
+Receivership  and Confiscation Order s.32 
+11 July 
+2024 Thomas Letter Before Action  Thomas  The letter before action, received on 11 July 2024, issued on behalf of Mr Thomas, intimates a 
+challenge the validity of the Harbour IA based upon the PACCAR Decision.  
+19 July 
+2024 Dr Smith’s fraud conviction  Dr Smith  As recently as July 2024, Dr Smith was convicted of fraudulently obtaining a COVID -19 bounce 
+back loan to the value of £50,000 for his personal use, by means of a fraudulent application. A 
+portion of the funds he fraudulently obtained were used to pay costs orders owed to the SFO 
+pursuant to an order made by Foxton J on 29 June 2020 .33  
+ 
+20 
+September 
+2024 Dr Smith ’s fraud sentencing  Dr Smith  Dr Smith sentenced to 18 months’ imprisonment for Covid loan fraud  
+Pending  Further contempt application against 
+Dr Smith  Dr Smith  The SFO has filed a further application for GS’ committal to prison for contempt of court for 
+further breaches of the Restraint Order and failing to comply with undertakings he gave in 
+respect of Flats 11, 12 and 21 Hamilton House which were recorded in the LCL Discontinuance 
+Order  of February 2021.  This application is supported by a 40 page witness statement from Mr 
+Standish, as receiver appointed under the 2022 Receivership Order.  It is understood that Dr 
+Smith’s solicitors, Berkeley Square Solicitors, re fused to accept service of the  application and 
+on 27 March 2024, the SFO subsequently applied for such service to be deemed good service. 
+I understand a final hearing has been listed for 29 and 30  October 2024.   
+ 
+32 (pages 399 -435) 
+33 https://www.cps.gov.uk/cps/news/businessman -found -guilty -government -backed -covid -19-bounce -back-loan-
+fraud#:%7E:text=Businessman%20found%20guilty%20of%20Government%20backed%20COVID%2019%20bounce%20back%20loan%20fraud, -
+19%20July%202024&text=An%20entrepreneu r%20was%20convicted%20today,be%20sentenced%20on%2020%20September  and ( pages 769-770). 
+59 
+ Appendix 2  
+Background to Dr Cochrane’s Jersey Recall Applications  
+ 
+The Jersey Recall Applications  
+I. Administration application  
+1 In the context of the Orb Claimants’ failure to honour the terms of the Harbour IA, as 
+addressed in the Directed Trial Judgment,  Harbour issued formal demands in Jersey against 
+Orb by letters dated 17 and 26 August 2016  (pages 771-779), and  pursuant to these 
+demands,  Orb was informed that failing settlement, an application would be made for the 
+appointment of an administrator.  
+2 Following the formal demand upon Orb referred to above, Harbour applied to the Royal 
+Court of Jersey (the “ Royal Court ”) for a letter of request to the English High Court 
+seeking an administration order in respect of Orb.  The Royal Court's judgment on that 
+application was dated 28 September 2016, Representation of Harbour v Orb [2016] JRC 
+171 (“ the Administration Judgment ”) (pages 780-795). 
+3 In paragraph 40 of the Administration J udgment, the Royal Court noted as follows: - 
+“In her written responses to the formal demands made by Harbour, Dr Cochrane denies any debt being 
+due by ORB to Harbour, although that denial is not repeated in her affidavit of 7th September, 2016, 
+filed in response to Harbour’s application.  Indeed, and  perhaps significantly, she says nothing in that 
+affidavit about Harbour’s claim or whether or not it is accepted by ORB.  Furthermore, in his skeleton 
+argument, Advocate Nicholls, representing ORB, makes no reference at all to Harbour’s claim and whether 
+or not it is accepted by ORB.  His submissions are limited entirely to the lack of any evidence of ORB 
+having assets within England and Wales, a requisite, he says, for any letter of request to be issued.  
+Advocate Nicholls did not appear at the hearing on  the 14th September, 2016, and therefore the Court 
+was unable to press him on the point, but if ORB had a genuine defence to Harbour’s claim, it would be 
+surprising in the extreme for that defence not to be mentioned, and indeed, given some prominence.”  
+4 The Royal Court concluded that Harbour was a creditor of Orb with a liquidated claim 
+and that Orb was cash flow insolvent. It nevertheless decided in its discretion not to issue 
+a letter of request on the ground that, given Orb’s incorporation in Jersey an d other 
+matters, a désastre  would be the preferable way of proceeding,  
+II. Désastre application  
+60 
+ 5 Following the Administration Judgment, Harbour made a formal demand on Dr Cochrane 
+under the terms of her personal guarantee of the obligations of Orb that I describe above.   
+6 It then applied for declarations of désastre  in respect of both Orb and Dr Cochrane.  The 
+matter was heard inter partes on 24 November 2016.  The Royal Court granted the 
+applications on 24 November 2016 for the reasons set out in a judgment dated 12 January 
+2017, Harbour v Orb [2017] JRC 007 (“ the Désastre  Judgment ”) (pages 796-809). 
+7 The Royal Court reminded itself (at para graph  13 of the Désastre  Judgment) that, in order 
+for the Court to declare a désastre , a creditor must show that it has a liquidated claim (i.e. a 
+certain debt which is not the subject of a genuine dispute or an arguable defence) which 
+exceeds the minimum threshold of £3,000 and the creditor must also show that the debtor 
+is insolvent (def ined as meaning ‘an inability to pay its debts as they fall due’ i.e. on a cash 
+flow basis) but has realisable assets.  The Court said that its judgment should be read as a 
+continuation of the Admi nistration judgment.  
+8 As to whether Harbour was a creditor with a liquidated claim against Orb, at paragraphs 
+19 - 21 of the Désastre  Judgment , the Royal Court held: 
+“19.    Advocate Drummond, for Harbour, took the Court through a careful analysis, set out in his 
+skeleton argument, of how Harbour’s liquidated claim arose under the Funding Agreement, the Isle of 
+Man Agreement, and the 2014 Agreement, the latter presenti ng an insurmountable hurdle for ORB and 
+Dr Cochrane in that by that Agreement, to which they were a party, they had agreed that the assets 
+recovered by Dr Cochrane under the Isle of Man Agreement (at least £10m) would be treated as proceeds 
+of the English proceedings Harbour had been funding, giving rise to an immediate liability on the part of 
+ORB to repay the sums advanced, namely £5,189,010.48, just short of the aggregate amount Harbour 
+was committed to fund under the funding agreement.”   
+9 The Court held that Harbour was indisputably owed this sum by Orb and there was no 
+reasonably arguable defence to that claim.  It further held that Dr Cochrane had no 
+reasonably arguable defence to the claim against her in this sum pursuant to her guarantee.  
+10 Having found that Orb had realisable assets, the Royal Court considered the position of 
+Dr Cochrane at paragraph 32 of its judgment in the following terms:  
+“In or around April 2016, Dr Cochrane signed a loan note in favour of Phoenix Group Foundation 
+(“Phoenix”) in the sum of £73.75m in which she represents that she is the ultimate owner of a number of 
+61 
+ assets set out in Schedule 1 thereto.  She also said in her affidavit of 7th September 2016, “I am also 
+privileged to be a very wealthy woman, with holdings in dozens of companies worldwide, including [ORB].”  
+11 The Royal Court was satisfied that Dr Cochrane and Orb had realisable assets despite the 
+appearance of a strategy to divert assets away from Orb.  
+12 The Court then considered a submission that Orb had a counterclaim against Harbour in 
+relation to the Harbour IA which it was entitled to set off against any debt owed to 
+Harbour.  In this connection the Royal Court said as follows:  
+“44. If this was a genuine claim for £73M, then it was inconceivable to us that no reference had been 
+made to it in the previous proceedings before this Court, in which Dr Cochrane did file an affidavit (which 
+made no reference to it) or at any time at all  in the dealings between Orb and Dr Cochrane on the one part 
+and Harbour on the other.  It was inconceivable to us that, if the claim was genuine, Orb and Dr Cochrane 
+were unable to give particulars of it sufficient to enable us to assess whether it was re asonably arguable.  
+Furthermore, there was no explanation as to how such a substantial claim came to be filed before the High 
+Court without legal advice a mere two days before the hearing.  
+45. These arguments had been put forward by Orb and Dr Cochrane at the last moment without any 
+evidence being filed in support on their behalf.  In our view, given the background of this matter, we would 
+have expected at least an affidavit from Dr Cochrane  to assist us in the exercise of our discretion, an 
+affidavit upon which she would, of course, have been susceptible to cross -examination.  She gave us no such 
+assistance.”  
+13 The Court concluded that to refuse or adjourn the applications for declarations of désastre  
+would be unjust to Harbour and the other creditors.  
+14 Having regard for various other considerations , the Court held that the requirements for 
+granting a declaration of désastre  were met in respect of both Orb and Dr Cochrane and 
+accordingly, on 24 November 2016, the Royal Court declared Orb and Dr Cochrane en 
+désastre  (pages 810-817).   
+a. Events following the declaration en désastre 
+15 On 30 December 2016, Harbour filed a proof of debt in each of Orb and Dr Cochrane's 
+respective désastres  (pages  818-847). Those proofs of debt have not yet been adjudicated 
+by the Viscount.  
+62 
+ 16 The Viscount applied to the Royal Court to issue two letters of request to the English 
+Court.  Despite what Dr Cochrane had said in her affidavit for the bankruptcy hearing  
+(pages 848-853), the Royal Court noted in its judgment of 16 February 2017  (pages 854- 
+858) (giving reasons for issuing those letters of request) that (paragraph 9):  
+"… Dr Cochrane has now asserted to the Viscount that she has very few assets.  According to her recently 
+completed personal questionnaire and statement of income and expenditure required under Article 18 of 
+the Law, Dr Cochrane has advised that her only as sets consist of six pieces of jewellery, two shares in a 
+company known as Bodega Limited (“Bodega”) and an unknown value in a partnership, which the 
+Viscount believes is a share in the medical practice from which she works.  Other items of value currently 
+in her possession, which include a substantial art and wine collection, a rib, several high -value motor vehicles 
+and other chattels are said to be owned by Bodega, of which the 99.9% shareholder is said to be Litigation 
+Capital Funding, a New York based en tity believed to be owned by Mr Anthony Smith, the brother of 
+Dr Gerald Smith.  Dr Smith is the former husband of Dr Cochrane and has twice been convicted of 
+offences of fraud and served a prison sentence.  Dr Smith has advised the Viscount that Orb does n ot have 
+nor has it ever had any assets."  
+17 The judgment further noted that (paragraph 13):  
+"Following the declarations en désastre, creditors had submitted claims, together with supporting documents, 
+against Dr Cochrane in the sum of £765,532,125 and against Orb in the sum of £562,889,913.  The 
+Viscount believes there is potentially some degree of duplication in the claims as some creditors have claimed 
+against Dr Cochrane as guarantor of the obligations of Orb. Nevertheless, given the background described 
+in the September judgment and the judgment of Popplewell J and the other matters referred t o above, the 
+Viscount regards it as inconceivable that both Dr Cochrane and Orb have been able to acquire such colossal 
+levels of debt without owning any of the assets listed by Harbour in its application for désastre.  The 
+Viscount also notes that Dr Coch rane and Orb are subject to ongoing and vigorously fought legal 
+proceedings in England.  Five such sets of proceedings are listed in her affidavit."  
+b. Application for a retrospective extension of time to appeal  
+18 On 31 December 2019, Dr Cochrane applied for an extension of time in which to appeal 
+against the declaration of désastre  in her case  (pages 859-863).  This application first came 
+before Birt JA as a single judge on 14 January 2020, who directed that the matter be 
+brought to the full court  (page 86 4).  Dr Cochrane’s application was subsequently listed 
+for hearing during the week commencing 27 July 2020.   
+63 
+ 19 On 16 July 2020, Dr Cochrane applied for an adjournment, substantially on the basis that 
+she had a short while earlier dismissed Advocate Blakeley and was planning to instruct a 
+new firm of advocates  (pages 865-867).  That application for an adjournment was refused 
+by the Court of Appeal in a short judgment dated 20 July 2020 (Cochrane v Harbour Fund 
+II LLP and the Viscount [2020] JCA 140A)  (pages 868-872). The new firm was not in fact 
+instructed and accordingly Dr Cochrane appeared as a litigant in person at the hearing.  
+20 On Friday 24 July 2020 – the matter being listed for hearing on Tuesday 28 July  2020  – Dr 
+Cochrane sent to the Court an affidavit dated 23 July  2020  (pages  873-880) together with 
+various exhibits. By  a letter dated 27 July 2020  (pages 881-883), she purported to file two 
+further documents.  Her application to adduce those documents was rejected  (pages 884-
+920). 
+21 The Court of Appeal also noted that (paragraph 100):  
+"As to creditors, the Viscount states that the current value of claims in Dr Cochrane’s désastre is 
+approximately £304,293,400, albeit that she has not yet adjudicated upon the claims because she considers 
+it unfair to put potential creditors to the cost o f proving their claims in circumstances where the current 
+English litigation is likely to result in the effective adjudication of many of these claims and where, pending 
+the outcome of those proceedings, the present assets are insufficient to lead to any d istribution."  
+22 The application for an extension of time was dismissed, the Jersey Court of Appeal finding:  
+"104. … Given the extremely lengthy delay (nearly three years), and our conclusion that the reasons given 
+for that delay do not provide justification, we would only consider extending the time for appealing if the 
+merits of the proposed appeal were overwhe lming (to use Beloff JA’s expression).  That is certainly not the 
+case.  As we have described earlier, we conclude that there are minimal prospects of Dr Cochrane being 
+successful in showing that Harbour does not have a liquidated contractual claim in debt , or that she did 
+not have realisable assets at the time of the désastre application.  Even in relation to whether Harbour has 
+a proprietary claim to the assets which are the subject of the current English litigation, any case mounted 
+on appeal would be at  best arguable; it is certainly not overwhelming.  
+105.    The above factors are sufficient to lead to a rejection of this application. But when one adds in the 
+factor that prejudice would be caused to Harbour and other parties if the application were to be allowed, 
+the case for refusing to extend the time  for appealing is unanswerable."  
+64 
+ 23 In a separate costs judgment, the Jersey  Court of Appeal awarded costs against Dr 
+Cochrane on the indemnity basis  (pages 921-924). In respect of her application for an 
+extension of time, it stated:  
+"7. In our judgment, the Applicant’s conduct in pursuing the Application was unreasonable and takes the 
+case out of the norm.  We so conclude for the following reasons:  
+(i)        The delay was extreme (nearly 3 years when the time for appealing is 28 days) in circumstances 
+where this Court found that there was no justification for this period of delay.  As the Court said at 
+paragraph 104 of its judgment, this alone was s ufficient to lead to dismissal of the Application unless the 
+merits of any appeal were overwhelming.  
+(ii)       The period of delay and the inaction by the Applicant has also to be judged against the fact that, 
+to the Applicant’s knowledge, administration of the désastre was continuing throughout this period.  
+(iii)      Not only was there extreme delay without justification but this Court found that the prospects of 
+success of any appeal were minimal and that its pursuit would cause prejudice not only to Harbour but also 
+to other parties to the current English litigation, who had all proceeded and incurred time and expense on 
+the basis that the Applicant was en désastre and that the Viscount was accordingly entitled to act on her 
+behalf.  
+24 Putting these matters together, we consider that pursuit of the Application was unreasonable and that it 
+would not be a fair result for Harbour only to be able to recover the costs which it has incurred on the 
+standard basis."  
+25 As to the other applications, the Court of Appeal said (at paragraph 11) "In our judgment, the conduct 
+of the Applicant both in relation to the adjournment application and the last minute applications for fresh 
+evidence was unreasonable and justifies an aw ard of indemnity costs."  
+c. Extension of Dr Cochrane's bankruptcy  
+26 On 14 January 2021, the Royal Court granted an application by the Viscount to extend Dr 
+Cochrane's bankruptcy for three years (to 24 November 2023), for the reasons set out in 
+a judgment dated 29 January 2021  (pages 925-930). The Royal Court noted that:  
+"3. The Viscount has taken control or possession of certain realisable assets of Dr Cochrane valued at 
+approximately £75,000 and believes that Dr Cochrane also owns further realisable assets, including an 
+interest in certain Jersey properties and movable p roperty located therein, and shares in various other 
+65 
+ companies.  However, the ownership of such further assets of Dr Cochrane is currently the subject of 
+proceedings in the High Court of England and Wales (CL -2017-000323) (“the English Proceedings”).  
+The English proceedings are highly complex, involving 47 parties and numerous personal and proprietary 
+claims.  They are summarised in the judgment of the Court in Viscount v Smith [2020] JRC 043. …  
+7. The claims filed by potential creditors in Dr Cochrane’s désastre total £305,261,798.37.  Due to the 
+ongoing English Proceedings, the Viscount has not yet conducted an inspection of the creditors’ claims, nor 
+has she formally adjudicated or admitted any  of them.  The Viscount considers that there is no utility in 
+adjudicating any of the creditors’ claims until the present uncertainty is resolved as to whether, and to what 
+extent, there may be any assets available for distribution in the désastre.  In her  view, it is also unfair to 
+put the creditors to the cost of proving their claims in circumstances where the English Proceedings are likely 
+to result in the effective adjudication of many of their claims, and there are presently no assets available for 
+distribution."  
+d. Further application for a (retrospective) application for an 
+extension of time to appeal  
+27 On 16 August 2023, Dr Cochrane sent an application to the Jersey Court of Appeal seeking 
+an extension of time to appeal against the declarations en désastre  of both Dr Cochrane and 
+Orb on the basis that the PACCAR Decision rendered the Harbour IA unlawful and 
+unenforceable  (pages 931-933). On 18 August 2023, Harbour confirmed that it intended 
+to oppose this very late, retrospective application for an extension of time  (page  934).  
+28 As far as we are aware, no directions have been given by the Court of Appeal for the 
+resolution of this application, if indeed it is still being pursued by Dr Cochrane.  
+e. Further application for an extension of the bankruptcy  
+29 On 3 October 2023, the Viscount issued an application for the further extension of Dr 
+Cochrane's bankruptcy for a further three years (to 24 November 2027)  (pages 935-964), 
+resulting in an order of the Jersey Court dated 6 October 2023, convening a substantive 
+hearing ( pages 96 5-969).  
+30 However, on 27 October 2023, the Viscount and Dr Cochrane agreed to the terms of a 
+consent order that the hearing of that extension application be adjourned until after the 
+determination of any recall application issued by Dr Cochrane  (pages  970-971).  
+66 
+ 31 I understand from Harbour’s Jersey lawyer, Advocate Edward Drummond, that 
+irrespective of the outcome of the Viscount's application to extend the bankruptcy of Dr 
+Cochrane, Orb will remain in bankruptcy; the provisions of Articles 39 to 42 of the 
+Bankruptcy ( Désastre ) (Jersey) Law 1990 only apply to individuals and do not apply to 
+companies.  
+f. Recall Application  
+32 On 21 November 2023, Dr Cochrane issued a representation seeking the recall of the 
+declarations en désastre  made in respect of her estate and the estate of Orb pursuant to 
+Article 7 of the Désastre  (Bankruptcy) (Jersey) Law 1990 on the basis that they are both 
+currently balance sheet solvent, with very small (or zero) claims against them, but with 
+assets valued in the tens of millions of pounds.  I understand from Harbour’s Jersey lawyers, 
+Bedell Cristin, that a recall petition such as this is adjudicated on  the basis of the petitioner’s 
+balance sheet solvency as at the date of the application. Harbour’s position is that Dr 
+Cochrane has misrepresented both the nature of the assets which the Court should take 
+into account (most of which belong to Orb, or were subject to the LCL Settlement I refer 
+to above) as well the value of those assets, which she has grossly inflated.  Additionally, 
+Harbour contends that Dr Cochrane has also misrepre sented the liability position insofar 
+as the claims of Harbour and other creditors are concerned.  
+33 On 1 December 2023, the representation was adjourned to a convening hearing on 6 
+February 202 4. On that date, for the reasons given in a judgment of the Royal Court dated 
+23 February 2024  (pages  972-976), the Viscount was convened to the application. Dr 
+Cochrane was given leave to file an Amended Representation (which she did, dated 7 
+February 2024  (pages 977-991) and she also filed a further affidavit in support (her Third 
+Affidavit sworn on 11 March 2024), which was served on creditors  (pages 34 8 – 364). 
+34 On 18 June 2024, Harbour applied for a stay of the Amended Representation until 28 days 
+after final resolution of Harbour's intended application to the English High Court for a 
+declaration as to the status of the Direct Trial Judgment including as to the i mpact if any 
+of the PACCAR Decision and related ancillary matters (“ Harbour’s Recall Stay 
+Application ”). On 18 June 2024, I swore an affidavit in support of  Harbour’s Recall Stay 
+Application  (pages 992-1008). 
+35 A directions hearing in respect of Harbour’s Recall Stay Application took place on 25 June 
+2024  (pages 1009-1010). The Court set out a timetable for the filling of further evidence 
+67 
+ and submissions from Harbour, Dr Cochrane and the Viscount.  Accordingly, on 2 August  
+2024  Harbour filed its further evidence  (pages 1011-1018), and the Viscount subsequently 
+filed evidence in respect of Dr Cochrane’s assertions regarding her asset and debt position 
+on 8 and 2 3 August 2024  (pages 1019-1055). Dr Cochrane f iled responsive evidence on 10 
+September 202 4 (pages 105 6-1062).

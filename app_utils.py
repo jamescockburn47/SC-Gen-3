@@ -85,11 +85,14 @@ except ImportError:
     logger.info("boto3 library or botocore.exceptions not found. AWS-dependent features will be limited in app_utils.")
 
 try:
-    from aws_textract_utils import perform_textract_ocr as aws_perform_textract_ocr 
-    from aws_textract_utils import TEXTRACT_AVAILABLE as AWS_TEXTRACT_MODULE_AVAILABLE
-    logger.info("Successfully imported from aws_textract_utils for app_utils.")
+    # Commenting out AWS imports to remove dependencies and log messages
+    # from aws_textract_utils import perform_textract_ocr as aws_perform_textract_ocr 
+    # from aws_textract_utils import TEXTRACT_AVAILABLE as AWS_TEXTRACT_MODULE_AVAILABLE
+    aws_perform_textract_ocr = None # type: ignore
+    AWS_TEXTRACT_MODULE_AVAILABLE = False  # AWS functionality disabled
+    # logger.info("Successfully imported from aws_textract_utils for app_utils.")
 except ImportError:
-    logger.warning("Could not import from aws_textract_utils in app_utils. Textract fallback for user uploads will be disabled.")
+    # logger.warning("Could not import from aws_textract_utils in app_utils. Textract fallback for user uploads will be disabled.")
     aws_perform_textract_ocr = None # type: ignore
     AWS_TEXTRACT_MODULE_AVAILABLE = False
 

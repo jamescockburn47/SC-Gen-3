@@ -202,7 +202,7 @@ class PseudoAnonymiser:
                 async with session.post("http://localhost:11434/api/generate", json=payload) as response:
                     if response.status == 200:
                         result = await response.json()
-                        pseudonym = result.get('response', f"ANON_{category}_{len(self.name_mappings)}").strip()
+                        pseudonym = result.get('response', f"ANON_{category}_{len(self.forward_mappings)}").strip()
                         
                         # Clean up response (phi3 sometimes adds extra text)
                         pseudonym = pseudonym.split('\n')[0].strip()
@@ -210,15 +210,16 @@ class PseudoAnonymiser:
                             pseudonym = pseudonym[1:-1]
                         
                         # Cache for consistency
-                        self.name_mappings[cache_key] = pseudonym
+                        self.forward_mappings[cache_key] = pseudonym
+                        self.reverse_mappings[pseudonym] = original
                         return pseudonym
                     else:
                         # Fallback to generic anonymisation
-                        return f"ANON_{category}_{len(self.name_mappings)}"
+                        return f"ANON_{category}_{len(self.forward_mappings)}"
                         
         except Exception as e:
             # Fallback to generic anonymisation
-            return f"ANON_{category}_{len(self.name_mappings)}"
+            return f"ANON_{category}_{len(self.forward_mappings)}"
     
     def _apply_anonymisation(self, text: str, anonymisation_map: Dict[str, str]) -> str:
         """Apply the anonymisation mappings to the text"""
@@ -257,11 +258,11 @@ class PseudoAnonymiser:
         """Get summary of all anonymisations performed"""
         
         return {
-            'total_mappings': len(self.name_mappings),
-            'person_names': len([k for k in self.name_mappings.keys() if k.startswith('person_names_')]),
-            'companies': len([k for k in self.name_mappings.keys() if k.startswith('companies_')]),
-            'case_numbers': len([k for k in self.name_mappings.keys() if k.startswith('case_numbers_')]),
-            'other_entities': len([k for k in self.name_mappings.keys() if not any(k.startswith(prefix) for prefix in ['person_names_', 'companies_', 'case_numbers_'])]),
+            'total_mappings': len(self.forward_mappings),
+            'person_names': len([k for k in self.forward_mappings.keys() if k.startswith('person_names_')]),
+            'companies': len([k for k in self.forward_mappings.keys() if k.startswith('companies_')]),
+            'case_numbers': len([k for k in self.forward_mappings.keys() if k.startswith('case_numbers_')]),
+            'other_entities': len([k for k in self.forward_mappings.keys() if not any(k.startswith(prefix) for prefix in ['person_names_', 'companies_', 'case_numbers_'])]),
             'last_updated': datetime.now().isoformat()
         }
 

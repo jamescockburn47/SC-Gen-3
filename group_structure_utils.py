@@ -56,9 +56,12 @@ except ImportError as e_ch_api:
     def _fetch_document_content_from_ch(*args: Any, **kwargs: Any) -> Tuple[Dict[str, Any], List[str], Optional[str]]:
         return {}, [], "CH API utils (_fetch_document_content_from_ch) not available."
 
-# --- AWS Textract Utilities Import ---
+# --- AWS Textract Utilities Import - DISABLED for simplified setup ---
 try:
-    from aws_textract_utils import perform_textract_ocr
+    # Commenting out AWS imports to remove dependencies
+    # from aws_textract_utils import perform_textract_ocr
+    def perform_textract_ocr(*args: Any, **kwargs: Any) -> Tuple[str, int, Optional[str]]: # type: ignore
+        logger.error("group_structure_utils: AWS Textract disabled - OCR not available"); return "OCR N/A",0,"OCR N/A"
 except ImportError:
     def perform_textract_ocr(*args: Any, **kwargs: Any) -> Tuple[str, int, Optional[str]]: # type: ignore
         logger.error("group_structure_utils: perform_textract_ocr (stub) called."); return "OCR N/A",0,"OCR N/A"

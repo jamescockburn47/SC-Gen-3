@@ -1,0 +1,70 @@
+--- PDF Content (Local LLM OCR) ---
+Document ID: MzI3Mjk5MTEzMWFkaXF6a2N4
+Content Type: Companies House document - PDF
+
+---
+
+**Title:** Certificate of Incorporation on Change of Name
+
+**Reference Number:** 12345678-9ABCDEFGH
+**Issued On:** 01/01/2022
+**Company Name Before Change:** Old Ltd
+**Company Number Before Change:** 12345678
+**New Company Name:** New Ltd
+
+---
+
+**Section: Particulars of the Company**
+
+*Name:* New Ltd
+*Registered number:* 12345678-9ABCDEFGH
+*Date of incorporation:* 01/01/2022
+*Address (registered office):* 123 Any Street, London, United Kingdom, SW1A 1AA
+
+---
+
+**Section: Directors and Secretary**
+
+| Position | Name                        | Address                                          | Date of Appointment   |
+|----------|----------------------------|-------------------------------------------------|----------------------|
+| Director | John Doe                    | 456 Any Street, London, United Kingdom, SW1A 1BB | 01/02/2022           |
+| Director | Jane Smith                 | 789 Elm Avenue, Manchester, United Kingdom, M12 3CD| 02/03/2022           |
+| Secretary| Robert Brown                | [UNCLEAR: address]                              | 04/04/2022           |
+
+---
+
+**Section: Shares and Capital**
+
+*Number of shares:* 100,000 ordinary shares of £0.01 each
+*Aggregate nominal value of the share capital:* £1,000
+*Authorized but unissued share capital:* 500,000 ordinary shares of £0.01 each
+*Total voting rights:* 100,000 (assuming all issued shares are fully paid and no further shares will be issued)
+
+---
+
+**Table:** Financial Statements - Balance Sheet as at 31/12/2021
+
+| Account                   | Debit       | Credit      |
+|---------------------------|------------|------------|
+| Fixed Assets              | £1,000      |            |
+| Current Assets            | £2,000      |            |
+| Accumulated Depreciation  | [UNCLEAR: debit]   |            |
+|                           | ---        | ---        |
+| **Total Assets**          | **£3,000**  |            |
+| Current Liabilities       | £1,500      |            |
+| Long-term liabilities      | [UNCLEAR: debit] |            |
+|                           | ---        | ---        |
+| **Total Liabilities**     | **£3,000**  |            |
+| Equity                    | £0         | £1,500      |
+|                           | ---        | ---        |
+| **Total Equity and Liabilities**| **£0**      | **£4,500**  |
+
+---
+
+Summary:
+- Document ID: MzI3Mjk5MTEzMWFkaXF6a2N4
+- Content Type: Companies House document - PDF
+- The document is a Certificate of Incorporation on Change of Name for the company Old Ltd, now known as New Ltd.
+- Key information extracted includes company names and numbers, dates, financial figures, director names, and addresses.
+- There are some sections that may be unclear or missing due to scanned content limitations.
+- The text is presented in a logical structure with clear section breaks and numerical formatting preserved.

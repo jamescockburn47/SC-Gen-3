@@ -106,17 +106,21 @@ except ImportError:
 # AI Summarization
 from ai_utils import gpt_summarise_ch_docs, gemini_summarise_ch_docs
 
-# Optional AWS Textract Import
+# Optional AWS Textract Import - DISABLED for simplified setup
 try:
-    from aws_textract_utils import perform_textract_ocr, get_textract_cost_estimation, _initialize_aws_clients as initialize_textract_aws_clients
-    TEXTRACT_AVAILABLE = True # This refers to the module being importable
-    logger.info("aws_textract_utils.py found and imported successfully.")
+    # Commenting out AWS imports to remove dependencies and log messages
+    # from aws_textract_utils import perform_textract_ocr, get_textract_cost_estimation, _initialize_aws_clients as initialize_textract_aws_clients
+    perform_textract_ocr = None # type: ignore
+    get_textract_cost_estimation = None # type: ignore  
+    initialize_textract_aws_clients = None # type: ignore
+    TEXTRACT_AVAILABLE = False # AWS functionality disabled
+    # logger.info("aws_textract_utils.py found and imported successfully.")
 except ImportError:
     perform_textract_ocr = None # type: ignore
     get_textract_cost_estimation = None # type: ignore
     initialize_textract_aws_clients = None # type: ignore
     TEXTRACT_AVAILABLE = False
-    logger.warning("aws_textract_utils.py not found. Textract-related functions will be disabled.")
+    # logger.warning("aws_textract_utils.py not found. Textract-related functions will be disabled.")
 
 # ---------------------------------------------------------------------------- #
 # Global Configurations and Constants (now mostly from config.py)

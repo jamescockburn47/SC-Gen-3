@@ -316,7 +316,7 @@ def init_session_state():
         "ch_last_batch_metrics": {},
         "consult_digest_model": config.OPENAI_MODEL_DEFAULT if 'config' in globals() and hasattr(config, 'OPENAI_MODEL_DEFAULT') else "gpt-4.1",
         "ch_analysis_summaries_for_injection": [],
-        "ocr_method": "aws",
+        "ocr_method": "local",
         "ocr_method_radio": 0,
         "user_instruction_main_text_area_value": "",
         "original_user_instruction_main": "",
@@ -343,20 +343,20 @@ def init_session_state():
             st.session_state[key] = value
 
     # Ensure OCR method and radio index are in sync
-    ocr_method_map = {"aws": 0, "google": 1, "none": 2}
-    current_method = st.session_state.get("ocr_method", "aws")
+    ocr_method_map = {"local": 0, "none": 1}
+    current_method = st.session_state.get("ocr_method", "local")
     
     # Validate and correct OCR method if needed
     if current_method not in ocr_method_map:
-        current_method = "aws"
+        current_method = "local"
         st.session_state.ocr_method = current_method
     
     # Ensure radio index matches the method and is valid
     expected_radio_index = ocr_method_map[current_method]
     current_radio_index = st.session_state.get("ocr_method_radio", expected_radio_index)
     
-    # Validate radio index is within bounds (0-2 for 3 options)
-    if not isinstance(current_radio_index, int) or current_radio_index < 0 or current_radio_index > 2:
+    # Validate radio index is within bounds (0-1 for 2 options)
+    if not isinstance(current_radio_index, int) or current_radio_index < 0 or current_radio_index > 1:
         current_radio_index = expected_radio_index
     
     st.session_state.ocr_method_radio = current_radio_index
@@ -528,14 +528,14 @@ def main():
             st.session_state.summary_detail_level = summary_level_option
 
         # Update the OCR method selection - use selectbox instead of radio for better stability
-        ocr_options = ["AWS Textract", "Google Drive", "None"]
-        ocr_method_map = {"aws": 0, "google": 1, "none": 2}
-        reverse_ocr_map = {0: "aws", 1: "google", 2: "none"}
+        ocr_options = ["Local OCR", "None"]
+        ocr_method_map = {"local": 0, "none": 1}
+        reverse_ocr_map = {0: "local", 1: "none"}
 
         # Get current OCR method from session state with extensive validation
-        current_ocr_method = st.session_state.get("ocr_method", "aws")
+        current_ocr_method = st.session_state.get("ocr_method", "local")
         if current_ocr_method not in ocr_method_map:
-            current_ocr_method = "aws"
+            current_ocr_method = "local"
             st.session_state.ocr_method = current_ocr_method
 
         # Get the index for the current method and ensure it's valid
@@ -544,7 +544,7 @@ def main():
         # Validate that the index is within bounds
         if ocr_index < 0 or ocr_index >= len(ocr_options):
             ocr_index = 0  # Default to first option if invalid
-            st.session_state.ocr_method = "aws"
+            st.session_state.ocr_method = "local"
             st.session_state.ocr_method_radio = 0
 
         # Clean up any corrupted state before creating widgets
@@ -572,19 +572,19 @@ def main():
                 st.session_state.ocr_method_radio = selected_index
             else:
                 # Fallback if something goes wrong
-                st.session_state.ocr_method = "aws"
+                st.session_state.ocr_method = "local"
                 st.session_state.ocr_method_radio = 0
                 
         except Exception as e:
             # Ultimate fallback if widget creation fails
             logger.error(f"Error creating OCR method widget: {e}")
-            st.error("Error with OCR method selector. Using default: AWS Textract")
-            st.session_state.ocr_method = "aws"
+            st.error("Error with OCR method selector. Using default: Local OCR")
+            st.session_state.ocr_method = "local"
             st.session_state.ocr_method_radio = 0
 
     # Create the main tab structure for the application
-    tab_ai_consultation, tab_companies_house, tab_group_structure, tab_document_management, tab_rag, tab_help = st.tabs([
-        "🤖 AI Consultation", "🏢 Companies House Analysis", "📊 Group Structure", 
+    tab_ai_consultation, tab_companies_house, tab_ch_rag, tab_group_structure, tab_document_management, tab_rag, tab_help = st.tabs([
+        "🤖 AI Consultation", "🏢 Companies House Analysis", "🏢📊 CH RAG Analysis", "📊 Group Structure", 
         "📚 Document Management", "🔍 Document RAG", "❓ Help & About"
     ])
 
@@ -1166,8 +1166,8 @@ Respond with a JSON object containing:
                                 filter_keywords_str=ch_keywords_for_filter,
                                 base_scratch_dir=APP_BASE_PATH / "temp_ch_runs",
                                 keep_days=7,
-                                use_textract_ocr=(config.CH_PIPELINE_TEXTRACT_FLAG if hasattr(config, 'CH_PIPELINE_TEXTRACT_FLAG') else False),
-                                textract_workers=config.MAX_TEXTRACT_WORKERS,
+                                use_textract_ocr=False,
+                                textract_workers=1,
                             )
                             
                             st.session_state.ch_last_digest_path = batch_metrics.get("output_docx_path")
@@ -1276,15 +1276,11 @@ Respond with a JSON object containing:
                             
                             cost_str_display = ""
                             total_ai_cost_gbp = batch_metrics.get("total_ai_summarization_cost_gbp")
-                            if isinstance(total_ai_cost_gbp, (float, int)): cost_str_display = f"£{total_ai_cost_gbp:.4f} (AI Summaries)"
+                            if isinstance(total_ai_cost_gbp, (float, int)): 
+                                cost_str_display = f"£{total_ai_cost_gbp:.4f} (AI Processing)"
                             
-                            total_textract_cost_gbp = batch_metrics.get("aws_textract_costs", {})
-                            if isinstance(total_textract_cost_gbp, dict): 
-                                total_textract_cost_gbp_metric_final = total_textract_cost_gbp.get("total_estimated_aws_cost_gbp_for_ocr")
-                                if isinstance(total_textract_cost_gbp_metric_final, (float, int)):
-                                    cost_str_display += f"{' + ' if cost_str_display else ''}£{total_textract_cost_gbp_metric_final:.4f} (Textract OCR)"
-                            
-                            if cost_str_display: narrative_parts.append(f"Estimated processing cost: {cost_str_display}.")
+                            if cost_str_display: 
+                                narrative_parts.append(f"Estimated processing cost: {cost_str_display}.")
                             
                             st.session_state.ch_last_narrative = " ".join(narrative_parts)
                             st.session_state.ch_consolidated_summary = consolidated_summary_from_csv if consolidated_summary_from_csv else None
@@ -1357,41 +1353,47 @@ Respond with a JSON object containing:
             if "total_ai_summarization_cost_gbp" in metrics_data_display_final:
                 cost_display_final_metric = f"£{metrics_data_display_final.get('total_ai_summarization_cost_gbp', 0.0):.4f} (AI)"
             
-            aws_costs_data_final = metrics_data_display_final.get("aws_textract_costs", {})
-            if isinstance(aws_costs_data_final, dict): 
-                total_textract_cost_gbp_metric_final = aws_costs_data_final.get("total_estimated_aws_cost_gbp_for_ocr")
-                if isinstance(total_textract_cost_gbp_metric_final, (float, int)):
-                    cost_display_final_metric += f"{' + ' if cost_display_final_metric != 'N/A' else ''}£{total_textract_cost_gbp_metric_final:.4f} (OCR)"
-            
             m_col3_disp_final.metric("Est. Cost", cost_display_final_metric if cost_display_final_metric != "N/A" else "£0.0000")
 
+    with tab_ch_rag:
+        # Companies House RAG Analysis Tab
+        try:
+            from companies_house_rag_interface import render_companies_house_rag_interface
+            render_companies_house_rag_interface()
+        except ImportError as e:
+            st.error(f"❌ Companies House RAG interface not available: {e}")
+            st.info("💡 Please ensure companies_house_rag_interface.py is available")
+            st.markdown("""
+            ### 🔧 Setup Instructions
+            
+            To enable Companies House RAG Analysis:
+            
+            1. **Install Dependencies:**
+            ```bash
+            pip install aiohttp faiss-cpu sentence-transformers PyPDF2
+            ```
+            
+            2. **Configure API Key:**
+            Set `CH_API_KEY` in your config.py file
+            
+            3. **Restart Application:**
+            The interface will be available after restart
+            
+            ### 🌟 Features Coming Soon:
+            - **Local LLM OCR** for scanned PDFs
+            - **RAG-powered semantic search** across CH documents  
+            - **Comprehensive company analysis** with document grounding
+            - **Alternative to cloud processing** for enhanced privacy
+            """)
+        except Exception as e:
+            st.error(f"❌ Error in Companies House RAG: {e}")
+            logger.error(f"Error in CH RAG tab: {e}", exc_info=True)
 
     with tab_group_structure:
         if 'GROUP_STRUCTURE_AVAILABLE' in globals() and GROUP_STRUCTURE_AVAILABLE:
+            # Simplified OCR - no AWS Textract options
             ocr_handler_for_group_tab = None  
-            can_use_textract_generally = ch_pipeline.TEXTRACT_AVAILABLE and \
-                                         hasattr(ch_pipeline, 'perform_textract_ocr') and \
-                                         hasattr(ch_pipeline, 'initialize_textract_aws_clients')
-
-            if can_use_textract_generally:
-                if "group_structure_use_textract_checkbox" not in st.session_state:
-                    st.session_state.group_structure_use_textract_checkbox = False
-
-                use_textract_gs = st.checkbox(
-                    "🔬 Use AWS Textract for PDF OCR in Group Structure Analysis",
-                    value=st.session_state.group_structure_use_textract_checkbox,
-                    key="group_structure_use_textract_checkbox_widget",
-                    on_change=lambda: st.session_state.update(group_structure_use_textract_checkbox=st.session_state.group_structure_use_textract_checkbox),
-                    help="If checked, Textract will be used for OCR on PDF documents. This may incur AWS costs."
-                )
-
-                if use_textract_gs:
-                    if callable(getattr(ch_pipeline, 'initialize_textract_aws_clients', None)) and ch_pipeline.initialize_textract_aws_clients():
-                        ocr_handler_for_group_tab = ch_pipeline.perform_textract_ocr
-                    else:
-                        st.warning("AWS Textract selected, but failed to initialize AWS clients. OCR will not be used.")
-            else:
-                st.caption("AWS Textract for PDF OCR is not available or not fully configured (ch_pipeline).")
+            st.caption("📄 Local OCR available for PDF processing in Group Structure Analysis")
             
             st.markdown("---")
 
@@ -1422,53 +1424,34 @@ Respond with a JSON object containing:
     # --- END: REVISED TAB FOR GROUP STRUCTURE VISUALIZATION ---
 
     with tab_document_management:
-        # Import and render document management interface
+        # Import and render simplified document workflow interface
         try:
-            from document_management_interface import render_document_management
-            render_document_management()
+            from simple_document_workflow import render_simple_document_management as render_document_management
+            
+            # Get the current RAG pipeline for the matter
+            from local_rag_pipeline import rag_session_manager
+            current_matter = st.session_state.current_topic
+            pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
+            
+            # Render the simplified workflow with the pipeline
+            render_document_management(pipeline)
+            
         except ImportError as e:
             st.error(f"❌ Document Management interface not available: {e}")
-            st.info("💡 Please ensure document_management_interface.py is available")
+            st.info("💡 Please ensure simple_document_workflow.py is available")
         except Exception as e:
             st.error(f"❌ Error in Document Management: {e}")
             logger.error(f"Error in Document Management tab: {e}", exc_info=True)
 
     with tab_rag:
         try:
-            from enhanced_rag_interface import render_enhanced_rag_interface
-            render_enhanced_rag_interface()
+            from simple_rag_interface import render_simple_rag_interface
+            render_simple_rag_interface()
         except ImportError as e:
-            st.error(f"Enhanced RAG interface not available: {e}")
-            st.info("🔄 Using basic fallback mode")
-            
-            # Basic fallback interface
-            st.markdown("### 📚 Document RAG System (Basic Mode)")
-            st.markdown("**Enhanced RAG interface not available**")
-            
-            try:
-                from local_rag_pipeline import rag_session_manager
-                current_matter = st.session_state.current_topic
-                pipeline = rag_session_manager.get_or_create_pipeline(current_matter)
-                doc_status = pipeline.get_document_status()
-                
-                # Show basic status
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.metric("Documents", doc_status['total_documents'])
-                with col2:
-                    st.metric("Chunks", doc_status['total_chunks'])
-                
-                if doc_status['total_documents'] == 0:
-                    st.info("📄 Please upload documents to use the RAG system")
-                else:
-                    st.success(f"✅ RAG system ready with {doc_status['total_documents']} documents")
-                    st.info("💡 Enhanced features available - restart to reload interface")
-                    
-            except Exception as fallback_error:
-                st.error(f"RAG system not available: {fallback_error}")
-                st.info("Please check that the RAG dependencies are installed")
+            st.error(f"❌ Simple RAG interface not available: {e}")
+            st.info("💡 Please check that simple_rag_interface.py is available")
         except Exception as e:
-            st.error(f"Critical error in RAG tab: {e}")
+            st.error(f"❌ Error in RAG interface: {e}")
             st.info("Please check the system logs for details")
 
     with tab_help:

@@ -1,0 +1,477 @@
+1 Respondent/Cross -Applicant  
+Nicholas Thomas  
+ Fifth Witness Statement  
+Exhibit NT4 
+28.11.2024  
+Claim No . CL-2017 -000323  
+IN THE HIGH COURT OF JUSTICE    
+BUSINESS AND PROPERTY COURTS  OF ENGLAND & WALES  
+COMMERCIAL COURT (KBD)  
+ 
+IN THE MATTER OF GERALD MARTIN SMITH  
+AND IN THE MATTER OF THE CRIMINAL JUSTICE ACT 1988  
+B E T W E E N  
+(1) THE SERIOUS FRAUD OFFICE  
+(2) MR JOHN MILSOM AND MR DAVID STANDISH  
+(as joint Enforcement Receivers in respect of the realisable property of Gerald Martin Smith)  
+Applicants in the Proceedings  
+-and- 
+(1) LITIGATION CAPITAL LIMITED  
+(a company incorporated in the Marshall Islands)  
+and 45 others  
+Respondents in the Proceedings  
+-and- 
+HARBOUR FUND II LP  
+Applicant in the Harbour Application  
+Respondent in the Thomas Cross -Application  
+-and- 
+MR NICHOLAS THOMAS  
+Respondent in the Harbour Application  
+Applicant in the Thomas Cross -Application  
+ 
+___________________________________________________________  
+FIFTH  WITNESS STATEMENT  OF NICHOLAS THOMAS  
+_____________________________________________________________  
+ 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/84
+2 I, Nicholas Thomas, of  6 Cranbrook Road, London, W4 2LH , WILL STATE as follows:  
+A. INTRODUCTION  
+1. I am a party to these proceedings . I am one of the  Respondent s to an application by 
+Harbour Fund II LP (“Harbour ”) (the “Harbour Application ”) and I make a cross -
+application in respect of the same matters (the “Thomas Cross -Application ”) (together, 
+the “Enforceability Applications ”). 
+2. The facts and matters set out in this statement are within my own knowledge, unless the 
+contrary is expressly stated.  Where they are within my own knowledge they are true to 
+the best of my knowledge and belief.  Where the facts and matters are not within my own 
+knowledge, I give the source of my information and believe them to be true.  
+3. I refer to a paginated bundle of documents marked “Exhibit NT 4”.  It contains copies of 
+the documents to which I refer in this statement.  Unless the context makes otherwis e 
+clear, references to page numbers in this statement are to “Exhibit NT 4”.  
+4. In outline, the Enforceability Applications  concern the enforceability (or otherwise) of the 
+DBA element  of the Harbour Investment Agreement  dated 10 July 2013 (the “Harbour 
+IA”) entered into by (among other people) Harbour  and me . My solicitor, Ms Tamar 
+Halevy, has provided a witness statement  dated 28 November 2024  that addresses legal  
+issues raised by the Enforceability Applications . This statement addresses some factual 
+issues raised in  the 20th witness statement  dated 31 October 2024  of Mr Adam Zoubir , 
+Harbour ’s solicitor,  served  in support of the Harbour Application  (“Zoubir 20 ”), as 
+follows:  
+(1) First,  I address the circumstances in which the Harbour IA was entered into and 
+my no n-awareness in relation to the legal issues or arguments in the ‘PACCAR ’ 
+litigation  up until judgment was handed down by the Supreme Court (R (on the 
+application of P ACCAR Inc & Ors) v Competition Appeal Tribunal & Ors [2023] 
+UKSC 28 (“PACCAR ”)) (Section B below) .  
+(2) Second,  I address Harbour ’s attempt s to elide the conduct and positions of Dr 
+Smith and Dr Cochrane with my conduct and my positions in these proceedings , 
+including the  repeated  (and inaccurate)  use by Mr Zoubir in Zoubir 20  of the 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/85
+3 defined term, “the Smith Parties ”, when describing the conduct of one or more 
+of Drs Smith and Cochrane, and me  (Section C below ).  
+(3) Third , I respond  to other  discrete aspects of Zoubir 20 insofar as I am best placed 
+to address them  (Section D below ).  
+5. I understand that n one of these matters are strictly relevant  to the key points  under 
+consideration in the Enforceability Applications , but I address them here since Harbour 
+has attempted to make them relevant in Zoubir 20. I leave the relevance  issue s to my legal 
+team to make submissions on  as required . 
+6. In the interests of brevity, I respectfully ask that the Court rea ds Halevy 1 for an 
+explanation of the background to the Enforceability Applications before considering this 
+statement.  For that reason, where I use capitalised terms in this short statement which are 
+not defined in this document, I adopt the definitions provided  in Halevy 1.  
+B. THE ‘PACCAR  POINT ’ 
+7. I first wish to address certain aspects of Mr Zoubir ’s comments to the effect that I knew 
+or should have known about the potential P ACCAR  argument  (which I in fact discovered 
+after the Supreme Court handed down its judgement in PACCAR) many years before  I 
+raised it.  
+8. I signed the Harbour IA in my individual capacity. I did so as a consumer and a lay person. 
+Harbour proposed the terms set out in the Harbour IA on essentially a ‘take it or leave it ’ 
+basis  in relation to the non -financial terms  and we accepted those terms. At no point was 
+I provided legal advice on the specific terms of the Harbour IA before or at the time of 
+entering into it , and I did not question , nor did I have any reason to question,  that Harbour 
+had presented an enforceable contract for me to sign.   
+9. Against that background, Mr Zoubir says:  
+(1) At §35 of Zoubir 20:  
+“The argument that the Harbour IA is a DBA has been available to the Orb 
+Claimants since the agreement was first entered into  and the possibility that the 
+funding arrangements such as the Harbour IA were in fact subject to the DBA 
+Regulations has been publicly debated in legal, academic and political circles 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/86
+4 since at least 2014... ”  (my emphasis) ; and  
+10. At §98 of Zoubir 20:  
+“Harbou r's position is that the Orb Claimants could have argued that the 
+Harbour IA was  a DBA and sought to undermine Harbour ’s entitlement under 
+the agreement at any time  after it was agreed  (although possibly not 
+immediately) . The DBA Regulations entered into force on 1 April 2013, and the 
+Harbour IA was executed on 10 July 2013. As set out above, it is accepted that at 
+that point, not even the Government believed that the DBA Regulations were 
+going to apply to litigation fund ing agreements .” (my emphasis) .  
+11. I note that Mr Zoubir  does not allege that I , in fact , knew of the P ACCAR  point, nor that I 
+should  have known about it, at the outset of the Harbour IA. He alleges, in essence, that 
+the potential P ACCAR  argument was “availa ble” to me in 2013 when the Harbour IA was 
+signed (Zoubir 20, §35); that it had been “debated in legal, academic and political circles ” 
+since 2014 (Zoubir 20, §35, §§101 -105); that until mid -2016 I was advised by Stewarts 
+(Zoubir 20, §106); and that I part icipated in the Directed Trial without raising the potential 
+P ACCAR  point (Zoubir 20, §§107 -114).  
+12. I do not address in this statement any of the legal submissions that will be made on my 
+behalf in due course. However, for the avoidance of doubt:  
+(1) I had no knowledge whatsoever when I signed the Harbour IA that the DBA 
+element  of it may not be enforceable in law, nor did I have any reason to 
+suspect so. It was Harbour , a professional litigation funder that had  obviously 
+received extensive legal advice on its standards term agreement  that it 
+presented to  me, who was best placed to know whether that agreement  or its 
+terms were (or may be) unenforceable. I relied on Harbour ’s standard terms  
+being  compliant with relevant  legislation . My acceptance of Harbour ’s 
+summary of the Harbour IA in its Statement of Case for the Directed Trial 
+referred to in Zoubir 20  at §110 was based on this understanding .  
+(2) I had no involvement in , or knowledge  whatsoever  of, the kind of debates in 
+“legal, academic and political circles ” Mr Zoubir alleges were occurring from 
+around 2014. I am (and was at all times after I signed the Harbour IA) a lay 
+businessperson, not a legal academic or practitioner.  
+(3) I certainly had never read the article relied on by Mr Zoubir from Professor 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/87
+5 Rachel Mulheron at that time (Mr Zoubir gives the title,  “England's unique 
+approach to the self -regulation of third party funding: a critical analysis of 
+recent developments ”). In this respect, Harbour refers to  me having signed  a 
+letter to the Lord Chancellor in April 2024 (Zoubir 20, §103) which sought to 
+oppose the litigation funding industry ’s attempts to lobby the then -
+Government to impose legislation to retrospectively  reverse the effect of 
+P ACCAR . That letter referred to Professor Mulheron ’s article from 2014. All 
+that this letter shows is that, by April 2024 , I was aware of the P ACCAR  
+decision and that Professor Mulheron had published a relevant article 10 years 
+earlier. So far as I recall, I first discovered Professor Mulheron ’s article as a 
+result of attending  a litigation funding conference  on 14 March 2024 (which I 
+attended after  I became aware of  the Supreme Court ’s P ACCAR  decision  and 
+began to appreciate its  potential significance for the Ha rbour IA , as to which 
+see below ), at which Professor Mulheron sat on a panel. I thereafter did some 
+limited research on her and read a synopsis of a paper  written by her  (which I 
+assume to be the article  referred to in Zoubir 20 , although I do not recall 
+precisely ). I did not read the article  itself. This has no bearing whatsoever on 
+Mr Zoubir ’s contention that I should have been aware many years prior to 
+2024 of Professor Mulheron ’s article (although I note he fails to explain why 
+he says I should have bee n aware, and his suggestion that I should is, I believe, 
+unreasonable ).   
+(4) I had no awareness of the P ACCAR  litigation while it was (as I now 
+understand) underway in the Competition Appeal Tribunal and then the Court 
+of Appeal, or indeed at any time before the Supreme Court handed down its 
+judgment. As above, I only became aware of this case, and  some of  the 
+possible implications for the Harbour IA , the day after the Supreme Court 
+handed down its judgment in P ACCAR  in July 2023 .Without any waiver of 
+privilege,  in July 2023  I was engaged in other litigation involving a litigation 
+funder and was informed by that f under of the P ACCAR  decision. It came as 
+a surprise to me  (and, I understand, to much of the litigation funding and legal 
+industries) . Once I became aware  of this decision  I began to appreciate the 
+potential implications for the Harbour IA.  
+(5) Mr Zoubir also points out that, until mid -2016, I was represented by Stewarts. 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/88
+6 This is correct; Stewarts acted for me  in relation to the Original Proceedings 
+against Mr Andrew Ruhan (explained in Halevy 1) , but n ot in relation to 
+whether or not the Harbour IA or the DBA  element of it was enforceable . 
+Again, without waiving privilege, I did not seek or receive any advice from 
+Stewarts  about the enforceability of all or part of  the Harbour IA because I 
+was completely unaware of its potential unenforceability  in the period that I 
+was represented by the firm , for the reasons explained  above . Further,  and also 
+without  waiv ing privilege , I note a letter written by Stewarts (acting for me) 
+and sent to MHS Sprecher Grier (acting for Harbour) in February 2017  about 
+the Harbour IA  (page s 2-21). That letter was very critical of Harbour  but did 
+not at any point raise the issue of the Harbour IA ’s enforceab ility. Mr Zoubir ’s 
+suggestion in §106 of Zoubir 20, that Stewarts “were no doubt aware ” of the 
+potential P ACCAR  point, therefore appears to be baseless. That assertion is 
+also inconsistent with the settled view at the time that such agreements were 
+not DBAs that had to meet the requirements of the DBA Regs 2013.   
+(6) In the context summarised above, I respectfully suggest i t is obvious that 
+neither I nor my legal team was aware of the P ACCAR  point until July 2023, 
+at which point I took prompt steps to : take advice (privilege over which is not 
+waived) ; raise the issue with Harbour, engage in the Pre -Action 
+Correspondence set out in Halevy 1 ; and bring forward the Thomas Cross -
+Application.  
+13. For completeness, I note the  apparent insinuation in the second and third sentences of 
+§106 of Zoubir 20 that the O rb Claimants (as defined, including me) knew or suspected 
+that the Harbour IA was not enforceable before 2016 but said nothing at that time so that 
+Harbour would advance litigation funding on a false basis:  
+“I note that until mid -2016, the Orb Claimants we re represented by Stewarts Law , a firm with 
+a very detailed understanding of litigation funding, and who were no doubt aware of the 
+principles I outline above . It is also evident to me, however, that the Orb Claimants would 
+have had no commercial interest seeking to undermine the Harbour IA while they were 
+represented by Stewarts ...” (emphasis added).  
+14. This is (if Mr Zoubir intends to make and stand by it) not a credible suggestion in the 
+circumstances  I have described above , particularly where Harbour was the party who 
+proposed the terms and was a specialist and knowledgeable litigation funder, whereas I 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/89
+7 was a lay person.  
+15. Indeed, I note that neither  Mr Zoubir or an y person from Harbour has given evidence on 
+whether (and if, so when) Harbour  itself became aw are of the potential PACCAR point, 
+whether as at the outset of the Harbour IA or from 2014 onwards. However, it seems to 
+me that either:  
+(1) Harbour was aware of the potential P ACCAR  point either (i) at the outset of 
+the Harbour IA, in which case it presented me with a contract which it had 
+reasonable grounds to believe was not enforceable by it, or (ii) at some date 
+between 2014 and the Directed Trial Judgment being handed down in 2021, 
+and thus permitted the Court in the Directed Trial Proceedings to make 
+unsustainable findings as to its entitlements under the Harbour IA on a (at least 
+potentially) false premise; or  
+(2) Harbour was not  aware of the P ACCAR  point at any of these points  and did 
+not become aware of it u ntil the Supreme Court decision , in which case 
+Harbour is now arguing that I, a lay person and consumer, should have been 
+aware of a highly technical legal argument about the enforceability of 
+litigation funding agreements (whether when we signed the Harbour IA or 
+from 2014) before  Harbour, a specialist  and market -leading litigation funder 
+at the time, became  aware  of it. 
+16. There is at least some evidence to suggest that the first of these scenarios was the case  in 
+the peculiar language included by Harbour in Schedule 2 :  
+17. That language was:  
+“At the date of  this Agreement, the parties have agreed that the anticipated value of the 
+Causes of Action is at least £100,000,000. On that basis, it is currently anticipated that, after 
+any payments to HF2, the Claimants will receive at least 50% of the Proceeds includ ing where 
+the multiple set out in this Schedule 2 is the applicable basis for calculating HF2's share of 
+the Proceeds .”  
+18. This appears to be an oblique reference to the requirement  in Regulation 4(3) of the DBA 
+Regs 2013  (explained in  Halevy 1 ) which I unde rstand  requir es that a DBA no t provide 
+for payment above an amount which, including V AT, is equivalent to 50% of the sums 
+ultimately recovered by the funded party.   I can think of no other reason why the Harbour 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/90
+8 IA would contain language such as this. I th erefore believe  that Harbour  may have  
+included these comments in Schedule 2 because it (unlike me) was aware of at least the 
+possibility that the  Harbour IA needed to comply with the DBA Regs 2013 . 
+C. MR ZOUBIR ’S PREJUDICIAL COMMENTS ON THE PURPOSE OF MY 
+APPL ICATION  
+19. In this section, I respond to Harbour ’s attempts in Zoubir 20 to provide the Court with 
+prejudicial and inaccurate  commentary about my involvement in these and other 
+proceedings, and in particular the insinuation  (for purely prejudicial purposes ) that my 
+role in relation to the Enforceability Applications  is, in effect, that of a puppet for Dr 
+Gerald Smith.  
+20. Mr Zoubir seeks to encapsulate those prejudicial comments with the descriptor “the Smith 
+Parties ”. He uses this defined term throughout Zoubir  20 to refer to me when he is in fact 
+addressing the (alleged) conduct of Drs Cochrane and/or Smith , who I understand are ex -
+spouses  (Zoubir  20, §6). I reject this mischaracterisation of my distinct role and interest 
+in these proceedings . I consider much o f Zoubir 20 to be an attempt to distract the Court 
+from the substantive merits  of my position (both in resisting the Harbour Application and 
+in making the Thomas Cross -Application) . 
+21. For example, Mr Zoubir makes  numerous  allegations concerning  the alleged c onduct of  
+“the Smith Parties ”, including  after the Directed Trial  (e.g. Zoubir  20, Section D). 
+However,  as explained in paragraph 25 below,  almost all  of these allegations concern the 
+behaviour of Dr Cochrane and/or Dr Smith alone  which, although Mr Zoubir  attempts to 
+elide their actions with mine via his self -supplied def inition of  “the Smith Parties ”, simply 
+do not concern me  and I had no role in  bringing about . He also attempts to wrap into 
+Harbour ’s conspiracy theory actions of mine which were undertaken simply  in an attempt  
+to vindicate my obvious commercial interests.  Harbour ’s attempt to say that these actions 
+were part of a wider conspiracy with Drs Cochrane and Smith, for an improper purpose, 
+is wrong and, indeed, simply illogical.  
+22. The high point of this conspiracy theory is at paragraph 51 of Zoubir 20:  
+“It is clear from this correspondence and my prior knowledge of these proceedings that the 
+actions of Dr Cochrane and Mr Thomas are being orchestrated by Dr Smith  in order to force 
+the Settlement Parties, including Harbour to expend further time and costs and to erode the 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/91
+9 value of the assets under the management of the various office holders, and, via threats of 
+interminable legal action by Dr Smith and/or his prox ies, to pressurise the Settlement Parties 
+into foregoing the fruits of their success at the Directed Trial .” (my emphasis) .  
+23. That is false. In making  and defending  the Enforceability Applications, I  am not acting on 
+behalf of  or somehow as a proxy for  Dr S mith or Dr Cochrane  and neither of them are 
+“orchestrating ” my actions . I am simply defending my own interests in the Proceeds.   
+24. In reality, Zoubir 20 presents a jumble of different  alleged  activities , undertaken by 
+different commercial parties with differ ing commercial interests, as a single unified 
+strategy by using the “Smith Parties ” label . The vagueness and convenience (for Harbour) 
+of this label is highlighted in Zoubir 20  at §6, which does not even limit the number of 
+people whose action s it intends to capture as part of the alleged conspiracy : 
+“This application has been necessitated by the actions and conduct of the now thrice - convicted 
+fraudster, Dr Gerald Smith (“Dr Smith ”), and parties and entities closely associated with him, 
+includi ng but not limited to his ex -wife, Dr Gail Cochrane (“Dr Cochrane ”) and Messrs 
+Nicholas Thomas and Roger Taylor (“Messrs Thomas and Taylor ”), (together “the Smith 
+Parties ”)” (my emphasis)  
+25. I am also concerned that Harbour ’s alleged conspiracy does not appea r to even be 
+supported by the actions cited by Mr Zoubir in his statement in support of the same  
+(notwithstanding his use of “the Smith Parties ” when describing them ): 
+(1) Most of the  alleged  conduct  relied on by Mr Zoubir  plainly has nothing to do 
+with me . For example : 
+a. Dr Cochrane ’s alleged resistance of “steps ” taken by the Enforcement 
+Receivers  (§50.1);  
+b. The alleged failure of Dr Smith “and others ” (but not including me) to 
+give vacant possession of some properties in breach of a court order 
+(§50.2)  and Dr Smith ’s arguments about his apparent “rights over ” these 
+properties (§50.19);  
+c. Dr Smith being convicted of contempt of court in July 2022 (§50.6)  and 
+facing further contempt of court accusations by the SFO  in October 2024 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/92
+10 (§50.16) ;1 
+d. Dr Smith being c onvicted of fraud in July 2024 in connection with 
+COVID -19 Bounce Back Loan s (§50.1 5); 
+e. Drs Smith and Cochrane (i.e. not including me)  commencing an 
+arbitration and having an anti -arbitration injunction made against them 
+(§50.12);  
+f. Dr Cochrane ’s so-called Sl ip Rule Application (§50.13) . Zoubir 20 
+explains in §§64 -71 the basis and outcome of the Slip Rule Application 
+by Dr Cochrane.  Mr Zoubir explains that this  was an application  by 
+which Dr Cochrane sought to amend the Consequentials Order to have 
+Orb removed  from the list of Non -Arena Companies . These paragraphs 
+of Zoubir 20 recognise that I had nothing to do with that application and 
+had no interest in its outcome . Indeed, the excerpt in §68 of Zoubir 20 
+shows  adverse findings  as to apparent cooperation between Dr Smith 
+and Dr Cochrane in relation to Dr Cochrane ’s Slip Rule Application , but 
+makes no reference to me at all  in this respect ; 
+g. Arguments run by Dr Cochrane with respect to the LCL Settlement 
+Agreement  (as defined in Zoubir 20)  (§50.17) , which (a s I explain 
+below) I was not a party to and had no involvement in agreeing , 
+notwithstanding Mr Zoubir ’s attempts throughout his statement to refer 
+to “the Smith Parties ” in relation to the LCL Settlement ; and 
+h. An application by Dr Smith to discharge the SFO ’s Restraint and 
+Confiscation Orders made against him in 2005 and 2007 respectively 
+(which, again, has nothing to do with me)  (§50.18) .  
+(2) I note that , in his attempts  to use the prejudicial “Smith Parties ” descriptor in 
+Zoubir 20  so as to include me , Mr Zoubir  routinely clarif ies at certain points  
+that, although he is using that descriptor, I was not in fact involved in the 
+                                                           
+1 I note that Zoubir 20 states that these further contempt of court proceedings “ are due to be heard in October 
+2024 ” where Zoubir 20 was itself served on the final day of October 2024.  
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/93
+11 activities alleged . For example : 
+a. Zoubir 20  at §40: “Shortly thereafter and just before Dr Smith was due 
+to give evidence, on 27 J anuary 2021, the Smith Parties (including Dr 
+Smith and Dr Cochrane, but not including Messrs Thomas and 
+Taylor)  entered into a settlement agreement )” (my emphasis) ;  
+b. Zoubir 20 at §50, to which I object f or the reasons set out in paragraph 
+23 above; and 
+c. Zoubir 20  at §86: “It has become apparent to Harbour, and to me, that 
+the Smith Parties , in particular Dr Smith and Dr Cochrane , have never 
+intended to honour the terms of the LCL Settlement Agreement) ” and 
+“While no party has formally sought to challenge the validity of the LCL 
+Settlement Agreement, several of the Smith Parties have acted in clear 
+breach of its terms ” (my emphases) . Mr Zoubir obviousl y cannot 
+(legitimately) criticise me  for not complying with a settlement 
+agreement to which I am not and have never been a party, and his use of 
+the words “in particular Dr Smith and Dr Cochrane ” and “several of 
+the Smith Parties ” obscure my  non-role in the LCL Settlement 
+Agreement  to preserve Harbour ’s prejudicial “the Smith Parties ” 
+descriptor .  
+(3) There are certain other alleged events raised by Mr Zoubir that do relate to 
+me. Whilst those events are more factually complicated than Mr Zoubir 
+suggests (as to which I reserve my rights to respond if necessary), none of 
+them support Mr Zoubir ’s conspiracy theory that my actions are 
+“orchestrated ” by Dr Smith and/or I am merely one of his “proxies ”. I have 
+my own real and legitimate interests in re lation to the Harbour Trust and the 
+Harbour IA which are (as Harbour readily accepts) in conflict with Harbour ’s 
+interests.  
+26. It is simply inaccurate  to describe me as one of “the Smith Parties ” in this case . I have an 
+obvious and direct commercial interest  in these Enforceability Applications (and other 
+applications) myself as one of the original Claimants in the Original Proceedings and /or 
+as one of the beneficiaries  of the Harbour Trust/Proceeds . I simply do not understand how 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/94
+12 it can be said  that I am pur suing the Thomas Cross -Application or resisting the Harbour 
+Application for improper reasons or (secretly) at the behest of Dr Smith or Dr Cochrane 
+(or both of them) when I  have  such obvious and  significant  interest s of my own  in relation 
+to the Enforceability A pplications .  
+27. All I seek in the  Enforceability Applications is to prevent Harbour from enforcing the 
+DBA element of the Harbour IA and thereby taking a substantial portion of the Proceeds 
+to which I would otherwise be entitled, because Harb our’s standard form litigation funding 
+agreement now appears not to comply with regulatory requirements and, as a result, to be 
+partly unenforceable, as explained in Halevy 1. That is, I believe , a completely proper 
+course of action for me to have taken, a nd in no way an  improper  purpose .  
+28. It seems to me that Harbour ’s strategy in  large portions of  Zoubir 20 is simply to raise as 
+many prejudicial (and untrue) points as possible to distract the Court from  the relevant 
+substantive issues  between Harbour and m e. Those issues are covered in full in Halevy 1 
+and concern , only : (i) the compliance of the DBA element of the Harbour IA with the 
+relevant legislation; (ii) the consequences of that non -compliance; (iii) Harbour ’s legal 
+argument that it is possible to se ver the illegal or unenforceable  parts ; and (iv) even if the 
+DBA  is unenforceable , whether  I should be prevented from making the argument that it is 
+unenforceable and the Court should simply rubber stamp the DBA as though it was 
+enforceable , on technical grounds such as limitation, abuse and estoppel .  
+29. I wish to add  by way of final comment that, although I have attempted to address in outline 
+terms the attempts by Mr Zoubir to implicate me in the  wrongful  actions of others  and to 
+thereby cast  doubt on the reasons for my involvement in the Enforceability Applications , 
+I have not provided a line -by-line response to the relevant parts of Zoubir 20. I do not 
+consider it is proportionate or appropriate to do so given  their irrelevance  to the 
+Enforc eability Applications (which  I understand, at their core, concern  technical legal 
+issues  dealing with the consequences of the P ACCAR decision ) and the sheer volume of 
+prejudicial commentary in Zoubir 20. To be clear, where I have not specifically addressed  
+above a point in Zoubir 20, that should not be taken as an acceptance of the truth of the 
+allegation or of its relevance to the Enforceability Applications.  
+D. OTHER DISCRETE ISSUES  
+30. In this short section , I address some discrete factual issues raised in Zoub ir 20 on which I 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/95
+13 am best placed to comment.  
+31.  First, I note paragraph 70 of Zoubir 20, which says:  
+“Perhaps in response to the concerns raised by the Jersey Court over her characterisation of 
+the ownership of Orb, Dr Cochrane ’s position in Jersey has more recently developed, such that 
+she now concedes that “it is correct that paragraph 16 of the Order of  Foxton J dated 11 June 
+2021… states that Dr Smith holds 100% of the equitable interest of the shares in the Non -Arena 
+Companies (listed in Schedule 2 of that Order) ”. However, in order to maintain her position in 
+respect of Orb ’s recall application, Dr Co chrane now argues that “the Directed Trial did not 
+determine the ownership of the assets owned by the Non -Arena Companies ”, which, for the 
+first time, she now asserts “are held on resulting trust of [sic] the benefit of the Orb Claimants ”. 
+(page 1061)  Dr C ochrane has not yet elucidated how her arguments regarding Orb are to her 
+own benefit, given that she holds no interest in Orb, and it is not a fully accurate statement in 
+any event, given that the IUAs (which the Directed Trial did determine ownership of)  were 
+owned by various Non -Arena Companies .” (my emphasis)  
+32. I understand that this issue is  not material  to the Enforceability Applications . However, in 
+the interests of factual accuracy, I note that , although Harbou r is correct that the ownership 
+of the sh ares in the Non -Arena Companies was determined by Mr Justice Foxton in the 
+Directed Trial Judgment, ownership of the assets said to be held by those Non -Arena 
+Companies  (i.e. the Non -Arena Assets)  was not so determined .  
+33. This was confirmed  by Mr Justice Fo xton in an email from his clerk timed at 15:32 on 22 
+June 2021  (pages 22-30): 
+“The Judge has now reviewed the submissions from the parties on the terms of the order and 
+has approved the order in the terms of the attached draft. His brief reasons for the decision 
+appear below...  
+[...] 
+The declaration concerns only the shares in the N on Arena Companies and says nothing about 
+anybody ’s claim to underlying assets of those companies. No language addressing proprietary 
+claims to underlying assets is required .” 
+34. Although that resolves the issue, I note  that it was further recognised  by a let ter dated 24 
+July 2024  sent to me by Stephenson Harwood  LLP on behalf of the Enforcement Receivers  
+(pages 39-40), which noted  at §4.2:  
+“As recorded at paragraph 16 of the order made on 11 June 2021, the Directed Trial did 
+determine ownership of the share i n CCBV (finding that it was held by Dr Cochrane as nominee 
+for Dr Smith, such that 100% of the equitable interest is Dr Smith's realisable property) but did 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/96
+14 not determine ownership of any assets held by CCBV (as you have noted). ”2 
+35. The reference to ‘CCBV ’ was to Casa Coloniches B.V .,  one of the Non -Area Companies.   
+36. Finally, I note Mr Zoubir makes a series of comments on the extent to which Harbour 
+relied on the Harbour IA (which, as above, I believe to be its standard form contract from 
+that time , and was drafted by Harbour ) to its detriment, with a view to persuading the 
+Court that, whatever the merits of the Enforceability Applic ations, it would be unfair for 
+Harbour to be deprived of the sums it claims under the  DBA element of the  Harbour IA.  
+37. Although this is , again,  irrelevant to the substance of the Enforceability Applications, I 
+would briefly make the following additional observations:  
+(1) Whilst it may be a matter for legal submissions in due course, I understand 
+that the purpose of the legislation set out in Halevy 1 is to protect lay people 
+and/or consumers like me when accessing the kinds of services it regulates 
+(including the services Harbour provides).  I find it difficult to  see how 
+Harbour can fairly complain  about the lega l effect of its  own failure: it s 
+standard term agreement failing to comply with regulatory requirements .  
+(2) Second,  I note that, whilst the Original Proceedings were settled many years 
+ago, I to date have still received nothing from the Proceeds of those Ori ginal 
+Proceedings. I have therefore been kept out of my share of those Proceeds for 
+a very long time myself .  
+(3) Third , the Court is asked to note  precisely what Harbour says it is entitled to 
+under the DBA element of the Harbour IA (and considers it unfair t hat it now 
+does not have). I respectfully refer the Court to a letter dated 2 July 2021 from 
+Harcus Parker (on behalf of Harbour) to my former solicitors  (pages 31 -38). 
+In that letter:  
+a. Harbour asserted that the total estimated realisable value of the asset s 
+held within the Harbour Trust pursuant to the Harbour IA at that time 
+                                                           
+2 I make no further comment on the other aspects of this letter given t heir apparent irrelevance to the 
+Enforceability Applications.  
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FAA1.7/97
+15 was £23,865,935.70;  
+b. Harbour went on in that letter to state that, on the assumption its 
+valuation was correct (which  is disputed), the minimum to which 
+Harbour would be entitled under  the Harbour IA  was £25,945,052.40; 
+and 
+c. On this basis, Harbour considered it was entitled to take  the entirety  of 
+the Proceeds (as defined) and I, together with the other funded parties to 
+the Harbour IA, should receive nothing  from the Proceeds of the 
+Original Proceedings in which we were the Claimants.  
+38. Accordingly, to the extent it is relevant, I do not accept  Mr Zoubir ’s suggestion that  
+Harbour is the (or a) victim  of its own  failure to ensure that  the Harbour IA complied  with 
+regulatory requirements  aimed at preventing precisely the kind of behaviour  – riding 
+roughshod over the interests of lay consumers  – illustrated in paragraph 37(3) above . 
+STATEMENT OF TRUTH  
+I believe that the facts stated in this witness statement are true. I understand that proceedings 
+for contempt of court may be brought against anyone who makes, or c auses to be made, a false 
+statement in a document verified by a statement of truth without an honest belief in its truth.  
+ 
+SIGNED : ………………………………….  
+Nicholas Thomas  
+ 
+DATE :  28 November 2024  
+ 
+ 
+Docusign Envelope ID: 328376DD-7C21-4C4F-BBD4-471C12A063FA
+A1.7/98

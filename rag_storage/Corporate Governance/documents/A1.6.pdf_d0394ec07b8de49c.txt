@@ -1,0 +1,1716 @@
+1 Respondent/Cross -Applicant  
+Tamar Halevy  
+First Witness Statement  
+Exhibit TH1  
+28.11.2024  
+ 
+Claim No CL -2017 -000323  
+IN THE HIGH COURT OF JUSTICE    
+BUSINESS AND PROPERTY COURTS  
+OF ENGLAND & WALES  
+COMMERCIAL COURT (KBD)  
+   
+IN THE MATTER OF GERALD MARTIN SMITH  
+AND IN THE MATTER OF THE CRIMINAL JUSTICE ACT 1988  
+ 
+B E T W E E N  
+ 
+(1) THE SERIOUS FRAUD OFFICE  
+(2) MR JOHN MILSOM AND MR DAVID STANDISH  
+(as joint Enforcement Receivers in respect of the realisable property of Gerald 
+Martin Smith)  
+Applicants in the Proceedings  
+-and- 
+ 
+(1) LITIGATION CAPITAL LIMITED  
+(a company incorporated in the Marshall Islands)   
+and 45 others  
+Respondents in the Proceedings  
+ 
+-and- 
+ 
+HARBOUR FUND II LP  
+Applicant in the Harbour Application  
+Respondent  in the Thomas Cross -Application  
+ 
+-and- 
+ 
+MR NICHOLAS THOMAS  
+Respondent  in the Harbour Application  
+Applicant  in the Thomas  Cross -Application  
+___________________________________________________________  
+FIRST WITNESS STATEMENT OF TAMAR HALEVY  
+_____________________________________________________________  A1.6/99
+ 
+ 
+ 
+ 2  
+I, Tamar Halevy,  of 80 Cheapside, London EC2V 6EE , WILL STATE as follows:  
+A. INTRODUCTION  
+1. I am a Partner in the law firm Marriott Harrison LLP (“MH”) of the above address . MH 
+acts for  Mr Nicholas Thomas  in relation to the applications referred to in paragraph 2 
+below . 
+2. I make this witness statement : 
+2.1. In response to an application dated 31 October 2024 by Harbour Fund II, LP 
+(“Harbour ”) (the “ Harbour Application ”) and the 20th witness statement of 
+Mr Adam Zoubir dated 31 October 2024 (“ Zoubir 20 ”) filed and served in 
+support of it; and  
+2.2. In support of Mr Thomas’  cross -application  (the “ Thomas Cross-
+Application ”). The Harbour Application and the Thomas Cross -Application  
+each seek mirror image  declaratory and consequential  relief relating to  the 
+enforceability of key parts of the Harbour Investment Agreement dated 10 July 
+2013 (the “ Harbour IA ”) in the wake of  the decision of the Supreme Court in 
+R (on the application of PACCAR Inc & Ors) v Competition Appeal Tribunal & 
+Ors [2023] UKSC 28 (“ PACCAR ”) (together,  the “Enforceability 
+Applications ”). 
+3. Specifically : 
+3.1. By the Harbour Application, Harbour seeks “directions, declarations and other  
+relief ” in the terms of a draft order filed and served by Harbour with the Harbour 
+Application , the principal e ffect of which (if granted) would be that Harbour 
+could  rely on and enforce  all of  the rights  and interests  purportedly granted to it  
+under the Harbour IA  and Mr Thomas would be prevented from challenging the 
+same . A1.6/100
+ 
+ 
+ 
+ 3 3.2. The Thomas Cross -Application  seeks , essentially , the reverse relief, most 
+notably a declaration  or declarations to the effect that  key parts of  the Harbour 
+IA is /are not enforceable by Harbour  against the funded parties thereunder, 
+including Mr Thomas, together with  any consequential relief  as may be  
+appropriate , principally in the terms of  the draft order provided  with the 
+accompanying a pplication notice .  The Thomas Cross -Application is made 
+pursuant to paragraph 27 of the Order of Mr Justice Foxton dated 11 June 2021 
+(the “ Consequentials Order ”) (page 12 ). 
+4. I am duly authorised by Mr Thomas  to make this witness statement  in opposition to the 
+Harbour Application  and in support of  the Thomas Cross -Application . In both respects, 
+and as necessary, this witness statement respond to matters set out in Zoubir 20 . 
+However, for  the avoidance of doubt, this statement does not engage in a line -by-line 
+response to Zoubir 20.  Where I do not expressly deal with a point raised in Zoubir 20, 
+Mr Thomas should not thereby be taken to have admitted  that point . 
+5. Both Mr Thomas  and Harbour are existing parties to these proceedings.  My firm does 
+not presently  act for any other party.  
+6. The facts and matters set out in this statement are within my own knowledge, unless the 
+contrary is expressly stated.  Where they are within my own knowledge they are true to 
+the best of my knowledge and belief.  Where the facts and matters are not within my own 
+knowledge, I give the source of my information and believe them to be true.  
+7. I refer to a paginated bundle of documents marked “Exhibit TH1”.  It contains copies of 
+the documents to which I refer in this statement.  Unless the context makes otherwise 
+clear, references to page numbers in this statement are to “Exhibit T H1”.  
+8. I deal with the following topics  in this witness statement : 
+8.1. First, I summarise Mr Thomas’ position on the Enforceability Applica tions, 
+together with some high-level observations in relation to the contents of this 
+witne ss statement  and Zoubir 20  (Section B); A1.6/101
+ 
+ 
+ 
+ 4 8.2. Second, I set out t he essential background to the Enforceability Application s 
+(Section  C); 
+8.3. Third, I set out t he key terms of the Harbour IA  insofar as they are relevant to 
+the Enforceability Application s (in particular, the Thomas Cross -Application) 
+(Section D); 
+8.4. Fourth, I explain t he correspondence between MH (on Mr Thomas’ behalf) and 
+Harcus Parker LLP (“Harcus Parker ”) (on behalf of Harbour ) about the 
+enforceability of the Harbour IA , the culmination of which is a dispute  about the 
+enforceability of key aspects of  the Harbour IA which now takes expression in 
+the form of the issued Enforceability Applications (Section  E); 
+8.5. Fifth, I address t he grounds on which Mr Thomas contends  that key parts of the 
+Harbour IA is/are unenforceable by Harbour  (Section F), and why  Harbour’s  
+severance  argument s addressed (to some extent) in Zoubir 20 and its pre -action 
+correspondence with my firm  are wrong  (Section G); 
+8.6. Sixth, I set out Mr Thomas’ position in relation to Harbour’s additional 
+arguments , disconnected from the merits of Mr Thomas’ application, that: (i)  
+the Thomas Cross -Application and Mr Thomas’ resistance to the Harbour 
+Application should  each be dismissed in toto  as an abuse of the Court’s process  
+and/or by the application of a form of  “estoppel ”, and/or (ii) the Thomas Cross -
+Application (but, by contrast , and somehow,  not the reverse  application which 
+Harbour has made ) is time -barred pursuant to the Limitation Act 1980  (Sectio n 
+H); and 
+8.7. Lastly, I summarise t he form of declaration(s)/order(s) the parties invite  the 
+Court to make on the  Enforceability Applications  (Section I). 
+9. In doing so, I do not rehearse in full or seek to limit the detailed legal submissions which 
+Mr Thomas will make in due course about these  or other  matters  arising for determination 
+by the Court  in relation to the Enforceability Applications .  A1.6/102
+ 
+ 
+ 
+ 5 B. EXECUTIVE SUMMARY  AND SCOPE OF THIS STATEMENT  
+(1) Mr Thomas’ position in summary  
+10. Notwithstanding various attempts by Harbour in Zoubir 20 to complicate the m by 
+reference to  tangential or purely prejudicial  issues,  the Enforceability Applications relate , 
+at their core,  to narrow  and technical  questions of law  relating to the enforceability of the 
+Harbour IA . Mr Thomas ’ position on those issues, and the other issues raised in Zoubir 
+20, is set out in summary form in this section . 
+11. It is clear  (and agreed by Harbour)  that at least part of the Harbour IA  is a damages -based 
+agreement (“ DBA ”) for the purposes of the Courts and Legal Services Act 1990 (the 
+“CLSA 1990 ”) and, therefore,  the DBA  has to comply with certain provisions of the 
+CLSA 1990 and the Damages Based Regulations (SI 2013/609)  (the “DBA Regs  2013 ”). 
+In particular, Harbour admits that the Harbour IA  (or the relevant part of it) meets the 
+first two criteria for a DBA under the CLSA 1990 (Zoubir 20, §§75 -76).  Although 
+Harbour  does not expressly  accept that the Harbour IA  meets the third criterion , §80 of 
+Zoubir 20 confirms that Harbour does not contend that the Harbour I A (or the relevant 
+part of it)  meets the regulatory requirements for DBAs . 
+12. Zoubir 20 does not address the other breaches identified  by Mr Thomas in pre -action 
+correspondence. However, it is clear that the DBA  in this case  is roundly non -compliant 
+with the requirements of the CLSA 1990 and/or the DBA Regs 2013 for the reasons 
+explained below . 
+13. It is common ground that, to the extent the Harbour IA is a DBA and is non -compliant 
+with the relevant legislation,  that DBA  is not enforceable by Harbour  unless Harbour can 
+sever the  offending  provisions.  For the reasons set out below, Mr Thomas’ position  is 
+that Harbour’s severance arguments are wrong  and, as a result, the DBA part of the 
+Harbour IA  is unenforceable by Harbour against “ the Claimants ”. 
+14. If the Thomas Cross -Application succeeds, Mr Thomas seeks the relief set out in  the draft 
+order provided in support of it, notably:  A1.6/103
+ 
+ 
+ 
+ 6 14.1. Declaratory relief as to the  non-enforceability of key parts  of the Harbour IA . 
+14.2. Consequential declaratory relief concerning  Harbour’s (non -)interest in any part 
+of the Proceeds (as defined in the Harbour IA)  and/or any payment under or in 
+relation to the Harbour IA . 
+14.3. Any v ariations to  the Consequentials Order  to give effect to the foregoing 
+matters  as may be  appropriate ; and  
+14.4. Any other relief the Court thinks fit.  
+(2) Harbour’s other arguments , satellite issues, and purported reservations of 
+rights  
+15. Harbour  raise s a plethora of points  in Zoubir 20  which  have nothing to do with the legal 
+issues highlighted above  and are an attempt by Harbour either t o prevent the Court from  
+determining the enforceability question put before it  – including by Harbour on its own 
+application – or to delay Mr Thomas’ access to the Court in having  the Enforceability 
+Applications  determined  and vindicating his substantive rights.  
+16. These other points  fall broadly into three  categories . First, Harbour relies on various  legal  
+arguments  as to why  Mr Thomas  is allegedly  not entitled to challenge the enforceability  
+of the  Harbour IA on the grounds of  (i) accusations of  abuse of process ; (ii) “estoppel  or 
+similar principles ”, including estoppel by deed ; and (iii) vague  limitatio n arguments .  
+17. Second, Harbour relies on  or raises  a series of procedural  reasons for  debarring or 
+delaying  Mr Thomas  from defending the Harbour Application and  proceeding with the 
+Thomas Cross -Application . These include : 
+17.1. Reliance on  the so -called ‘Debarring/Directions Order’  of Mr Justice Foxton 
+referred to in  Zoubir  20 at §15-21, which Mr Zoubir suggests  may even be 
+relevant to “ the relief sought by Mr Thomas ” (and , in Zoubir  20 at §31, purports 
+to reserve Harbour’s  rights) .  He does not explain what relevance this is alleged 
+to have  to the relief Mr Thomas seeks  or why it is appropriate merely for A1.6/104
+ 
+ 
+ 
+ 7 Harbour to reserve any rights  it has in this regard .  
+17.2. A procedural point concerning out of time appeal s (Zoubir 20, §24).  I note that  
+Mr Zoubir  stops short of positively  contending that  this Court is not capable of 
+determining the issues on the Enforceability Applications . This appears to be a 
+further attempt to preserve an argument for later in the event that Harbour’s 
+arguments of principle fail.  
+17.3. Harbour’s proposed approach to case management (not previously made known 
+to Mr Thomas) , including a n unnecessary  two-staged approach to the issues, 
+without providing an y good  reason why dividing the issues between the parties 
+would be proportionate or efficient in this case (Zoubir 20, §§22 -23).   
+18. Third , Mr Zoubir purports to reserve Harbour’s right to raise  further arguments  at some 
+unspecified point in the future .  Mr Zoubir gives some “ examples ” at §147 of Zoubir 20:  
+“These include, for example:  (a) [...] whether Harbour can hold  Dr Cochrane , Mr 
+Thomas  and Mr Taylor liable for breach of the representations and warranties at Cl 
+3.1(g) of the Harbour IA under which they promised that the obligations assumed were 
+“legal, valid, binding and enforceable obligations” in the amount of any reduction to 
+Harbour’s entitlement; (b) whether Harbour can nevertheless uphold its rights on 
+alternative bases, such as proprietary estoppel, constructive or resulting trusts, unjust 
+enrichment or equitable allowance, or the survival of the Harbour Trust even in the 
+event that the Harbour I A is found to be unenforceable  in whole or in part; and (c) the 
+impact of any of these determinations on the position of other parties to the proceedings .” 
+(emphasis added)  
+19. No explanation is given  by Mr Zoubir  for why this approach would be  appropriate, 
+proportionate, and consistent with  the overriding objective  and the principle of finality .     
+20. Mr Thomas ’ position is that  it is not appropriate for  Harbour, via Zoubir 20  or at all , to 
+raise grounds on which it wishes  to pursue the Harbour Application  and/or defend the 
+Thomas Cross -Application  that are not properly  explain ed (now).  For example:  
+20.1. Harbour ’s argument that Mr Thomas is “barred by doctrines of estoppel or 
+similar principles ” from vindicating his rights , appears to be an attempt  to open 
+up an issue or issues but  (i) not to explain  which forms of estoppel are relied A1.6/105
+ 
+ 
+ 
+ 8 upon  (beyond estoppel by deed ) and the legal and factual bases for applying 
+them to the Enforceability Applications , and (ii) to widen Harbour’s potential 
+argument even further by reference to principles “ similar ” to estoppel (whatever 
+that is intended to mean). I  also note that MH sought clarification  about this pre-
+action correspondence but Harbour has failed to provide this : for example, see 
+MH’s letter of  23 August 2024 (§§5 -8) (pages 809 -811); Harcus Parker’s 
+response dated 9 September 2024 (§3)  (page 817 ); MH’s further letter dated  25 
+September 2024 (§§ 5-7) (page 822 ); and Harcus Parker’s response  dated 9 
+October 2024 (§§2 -3) (page 829 ).   
+20.2. Harbour now raises two possible limitation argument s (a six -year period or 
+alternatively laches)  but has failed  to articulate how they are said to apply in this 
+case.  
+20.3. Harbour confirms that it accepts  (as indeed it must) the Supreme Court’s 
+decision in PACCAR .  It also concedes, as above, the application of the  first limb 
+of the test in  s.58AA(3) of the  CLSA 1990  (Zoubir 20, §75) .  However, it also 
+purports to reserve its right to challenge “any other point  [which]  ultimately had 
+to be determined by the Supreme Court ” (Zoubir 20, §75)  (by which Mr Zoubir 
+presumably means in relation to the first limb of the CLSA 1990 test).1  Mr 
+Zoubir  does not explain what is meant by this  and I respectfully suggest it is not 
+open to Harbour to decline to take (or indeed explain) points that it intends to 
+rely on in relation to the PACCAR  decision . 
+21.  I am concerned that the  above  points may be developed as late as the provision of a 
+skeleton argument shortly before  the substantive hearing of the Enforceability 
+Applications , when Mr Thomas will not have a fair opportunity to respond to them .  
+Again, I believe, respectfully,  that, unless and to the extent the above arguments are 
+explained properly  in its respons ive evidence , Harbour  should not be allowed  to rely on 
+them at the hearing of the Enforceability Applications .  
+ 
+1 Harbour takes a similar approach to the Blue Pencil Test (as defined in Zoubir 20 at §122.1) : see fn.23  of Zoubir 
+20.  A1.6/106
+ 
+ 
+ 
+ 9 (3) Other m atters not covered in this statement  
+22. For completeness,  I also wish to highlight that large parts of Zoubir 20 are not relevant 
+to the  substance of the  Enforceability A pplications . Where that is the case, and without 
+admission, I do not respond to the m in the interests of brevity and relevance.  
+23. These  issues include (but are not necessarily limited to):  
+23.1. Mr Zoubir’s account of events after  the Directed Trial  for example, but without 
+limitation, Section D  (§§49-51 of Zoubir 20 );  
+23.2. Alleged events  and arguments  concerni ng parties other than Mr Thomas : e.g., 
+Section s E and L , and Section G  (insofar as it is concerned with the so -called 
+‘LCL Settlement’ ) of Zoubir 20 ;  
+23.3. Purely case management issues  (e.g. Zoubir 20 at §§ 22-23);  
+23.4. Matters concerning the so -called ‘Debarring/Directions Order’  (e.g. Zoubir 20 
+at §15 and §§17 -21); and  
+23.5. Other seemingly irrelevant issues, such as Harbour’s alleged “ reliance ” on the 
+Harbour IA ( e.g. Zoubir 20, Section J) .  
+24. I also note that  attempts have been made in Zoubir 20  to elide the actions of Dr Smith 
+and/or Cochrane with that of Mr Thomas  (for example in the entirety of Section D of 
+Zoubir 20 ), by use of  the defined term , “the Smith Parties ” throughout .  This is an 
+unhelpful, tendentious , and potentially misleading  use of definitional language . Mr 
+Thomas’ position is  explained in  some  more detail in his  witness statement  filed in 
+connection with the Enforceability Applications .  
+25. Finally, I note §§24-31 of Zoubir 20 concerning the possibility of an appeal from the 
+Directed Trial Judgment. Mr Thomas’ position is that this Court can give the necessary 
+relief sought in the Thomas Cross -Application, and indeed (although it is resisted) on the 
+Harbour Application  under the liberty to apply provision  at §27 of the Consequentials A1.6/107
+ 
+ 
+ 
+ 10 Order  as explained below  (page 12 ).  Harbour appears at least to agree with the latter 
+proposition  (that the Court can give relief on the Harbour Application) , and I respectfully 
+suggest it applies to both Enforceability Applications.  
+C. ESSENTIAL BACKGROUND  
+26. The underlying background to th e Original Proceedings  (defined below)  in relation to 
+which the Harbour IA was entered into  is so substantial  and peripheral to the 
+enforceability issue  that I do not consider it  practicable  or proportionate  to rehearse  all 
+of it here . Zoubir 20 adopts the same approach.   Therefore,  I have set out below  only the 
+key factual and procedural background  to the Enforceability Applications . 
+(1) The Original Proceedings and Harbour IA2 
+The underlying dispute  
+27. The original  litigation against  a Mr Andrew  Ruhan  (“Mr Ruhan ”) (claim number CL -
+2012 -00625) concerned claims to recover funds from Mr Ruhan in connection with an 
+alleged property -related profit -sharing agreement (the “ Original Proceedings ”). 
+28. The genesis of the dispute in the Original Proceedings was the dealings between two 
+businessmen, Dr Gerald Smith (“ Dr Smith ”) and Mr Ruhan.  Dr Smith had previously 
+been convicted of theft from a company pension fund and served two years’ 
+imprisonment, and was later convicted of theft of a further (approximately) £35 million 
+from Izodia PLC (“ Izodia ”) (the “ Izodia Theft ”) for which he served a further  eight 
+years in prison.3  
+29. Orb A.R.L (“ Orb”) was the First Claimant in the Original Proceedings . Mr Roger Taylor 
+and Mr Thomas were  the other Claimant s (together, the “ Orb Claimants ”). At the time 
+of the Original Proceedings, the shares in Orb were held by a company as trustee of a 
+ 
+2 Save where specified below, I take the information underpinning this summary from the Judgment of Mr Justice 
+Popplewell (as he then was) in the Original Proceedings under neutral citation [2016] EWHC 850 (Comm) (the 
+“2016 Judgment ”) (pages 22 -59) or the  Directed Trial  Judgment of Mr Justice Foxton  (as defined below) in these 
+proceedings (pages 60 -279). 
+3 DTJ (defined below) , §2 (page 69 ). A1.6/108
+ 
+ 
+ 
+ 11 Jersey settlement, of which Dr Gail Cochrane (“ Dr Cochrane ”), the former wife of Dr 
+Smith, and their two daughters, were  the sole beneficiaries . 
+30. Dr Smith committed the Izodia Theft between August and November 2002  while he was 
+Orb’s CEO. Of the c.£35m stolen, around £2.8m was returned , leaving c.£32.2m due to 
+Izodia.4 In the end, the Serious Fraud Office (“ SFO ”) obtained a Confiscation Order  
+against Dr Smith in the sum of approximately £41m .  
+31. During the early part of 2003, negotiations took place between Dr Smith on the one hand, 
+and Mr Ruhan and a Mr Campbell on the other hand, resulting in an agreement for the 
+sale of various of Orb’s assets to Mr Ruhan and companies associated with and/or 
+controlled by him  (the “ Orb Assets ”). The nature of the Orb Assets is set out in para graph 
+9 of the 2016 Judgment (page 24 ). 
+32. Mr Thomas and others alleged in the Original Proceedings that there was a further, oral 
+agreement reached at a meeting between Dr Smith, Mr Taylor, Mr Ruhan and Mr 
+Campbell on 6 May 2003, pursuant to which the Orb Parties  (being the Claimants in the 
+2012 Proceedings plus Dr Cochrane and SMA Investment Holdings Limited (“ SMA ”)) 
+alleged that it was agreed ( inter alia ) that Mr Ruhan would redevelop, restructure, 
+manage and/or dispose of various of the Orb Assets , and  he would pay Orb, Mr Taylor 
+and Mr Thoma s, in agreed proportions , certain percentages of the profits of various of 
+the Orb Assets.  Mr Ruhan denie d any such oral agreement.  
+33. Thereafter, the Orb Assets were transferred by Mr Ruhan into a complex structure 
+involving various companies ultimately owned by the trustee of an Isle of Man settlement 
+(the “ Arena Settlement ”). There were over 100 companies within the Are na Settlement .  
+34. Mr Justice Popplewell explained the structure of the Arena Settlement in the following 
+terms at [20] -[25] of his 2016 Judgment:  
+34.1. The trustee held the assets through its 100% shareholding in each of six holding 
+companies. It was the shares in these six holding companies which were 
+ 
+4 2016 Judgment, §8  (page 23 ). A1.6/109
+ 
+ 
+ 
+ 12 transferred to SMA under the IOM Settlement (explained below) . Four of those 
+holding companies were Glen Moar Properties Ltd (“ Glen Moar ”), Sulby 
+Investment Holdings Ltd (“ Sulby ”), Ballaugh Holdings Ltd (“ Ballaugh ”) and 
+Unicorn Worldwide Holdings Ltd (“ Unicorn ”); 
+34.2. Those holding companies in turn were parent companies of groups of other 
+companies (see [22] -[24] of the 2016 Judgment);  and 
+34.3. Glen Moar, Sulby, Ballaugh, and Unicorn were incorporated in the British 
+Virgin Islands and in March 2015 were each put into liquidation. The appointed 
+liquidators were partners of Quantuma LLP  (“Quantuma ”). 
+35. Mr Ruhan  (eventually)  admitted5 that he was at all material times the ultimate beneficiary 
+of the Arena Settlement  by virtue of his former solicitors and advis ers, Mr Simon Cooper 
+and Mr Simon McNally, who held the interest  as nominee for him. Mr Ruhan  also 
+contended  that he was in ultimate control of all of the companies within the Arena 
+Settlement.  
+36. On 27 October 2012, shortly after Dr Smith’s release from prison in connection with the 
+Izodia The ft, the Original Proceedings were commenced by the Orb Claimants . In 
+essence, they alleged that , in breach of the oral agreement reached in May 2003 and Mr 
+Ruhan’s fiduciary duties, Mr Ruhan had (i) sought to conceal the Orb Assets in the 
+complex structure of the Arena Settlement, (ii) sold them for his own benefit, and (iii) 
+failed to account for the share of the profits due under the oral agreement .  
+The funding position  
+37. The Harbour IA was entered into on 10 July 2013 between Harbour  and the Orb 
+Claimants. A copy of the Harbour IA is at pages  280-374. 
+38. The purpose of the Harbour IA was for Harbour to provide litigation funding to the Orb 
+Claimants to fund  the Original Proceedings against Mr Ruhan, involving t he causes of 
+ 
+5 Formally in the Original Proceedings.  A1.6/110
+ 
+ 
+ 
+ 13 action referred to in Schedule 1 of the Harbour IA (page 305 ), defined as:  
+“Each and every claim that the Claimants may seek to assert against the Defendant or any 
+other person, arising out of or related to an agreement concluded on 6 May 2003 between 
+the Claimants and the Defendant, whereby the Defendant agreed to pay or procure to be 
+paid to the Claimants an agreed percentage of any profits accruing to the Defendant 
+directly or indirectly from the future sale of certain real property whic h the First Claimant 
+had transferred to the Defendant on or about the same date and includes any and all 
+statutory, legal or equitable cause or causes of action, whether to be made in [England 
+and Wales] or in any other jurisdiction that are or may be vest ed in the Claimants or its 
+Affiliates against the Defendant or any other person, arising out of or related to the said 
+agreement .”  
+39. Harbour agreed under the Harbour IA to provide the Orb Claimants funding of c. £5.28 
+million to meet their legal costs in the Original Proceedings: see the Directed Trial 
+Judgment (defined below) at §71 (page 88 ). I note Mr Zoubir gives a figure of 
+£5,189,010.48 at para. 10 of his Affidavit dated 18 June 2024 (page 377 ) in respect of 
+sums actually advanced.  
+40. As set out in more detail below, the Harbour IA provided for Harbour to receive ( inter 
+alia) a percentage of the value of the Proceeds (as defined in the Harbour IA and below) 
+of the Original Proceedings, including from any settlement of those proceedings, and (as  
+also explained in more detail below) created (under Clause 8) the Harbour Trust (defined 
+below and in the Harbour IA) under which the Orb Claimants were to hold all Proceeds.  
+The IOM Settlement  
+41. During the Original Proceedings , in March 2014, Dr Cochrane and SMA  (a company 
+incorporated in the Marshall Islands which she owned  and controlled ) entered into the 
+so-termed ‘Isle of Man Settlement’ with Mr Cooper and Mr McNally  (the “ IOM 
+Settlement ”), including the signing of the IOM Confidential Deed on 24 March 2014 .  
+42. As Popplewell J (as he then was) found,6 the effect of the IOM Settlement  was for Mr 
+Cooper and Mr McNally to procure the transfer by the trustee of the Arena Settlement 
+(AS Managers Ltd ) to Dr Smith, Dr Cochrane, SMA and/or their nominees, ownership 
+and control of all of the businesses and property which they held under the terms of the 
+ 
+6 At [16]  (page 25 ). See also the Directed Trial Judgment at [81]  (page 91 ). A1.6/111
+ 
+ 
+ 
+ 14 Arena Settlement (the “Arena Assets ”), together with other shareholdings in companies 
+which were outside the Arena Settlement (the “Non-Arena Assets ”). 
+43. In response  to the IOM Settlement , Mr Ruhan  alleged (and counterclaimed in the Original 
+Proceedings for)  the misappropriation of both the Arena and Non -Arena Assets , arguing  
+that those assets were in reality his  and tha t Mr Cooper and Mr McNally were always his 
+nominees.  Mr Ruhan advanced a proprietary claim to the assets and their traceable 
+proceeds which were acquired by the Orb Parties from Messrs McNally and Cooper, both 
+those from the Arena Settlement and the Non -Arena Assets, together with personal 
+claims in constructive trust and conspiracy to defraud .7 
+44. Mr Justice Foxton found, in relation to  the IOM Settlement, in his judgment dated 18 
+May 2021 in these proceedings (neutral citation [2021] EWHC 1272 (Comm)) (the 
+“Directed Trial ” and “ Directed Trial Judgment ” or “ DTJ ”) at [190] -[192]  as follows : 
+“190. On its face, the IOM Settlement involved the transfer: i) by ASML of the Arena Companies; 
+ii) by Messrs Cooper and McNally of the Cooper and McNally Companies; and iii) of cash held 
+by the Arena Companies and Messrs Cooper and McNally; to Dr Cochrane and SMA.  
+191. On the transferee side, I am satisfied that Dr Cochrane and SMA were acting on behalf of 
+the Orb Claimants, and that any assets which they received were received as nominees, on bare 
+trust for the Orb Claimants...  
+[...] 
+192. On the transferor side, I have already set out my reasons for concluding that any interest 
+that Messrs Cooper and McNally had in the Transferred Assets was held as nominee for Mr 
+Ruhan. ” (pages 121 -122). 
+45. In October 2014, Harbour, the Orb Claimants, Dr Cochrane, Messrs Cooper and McNally 
+and Stewarts Law LLP (“ Stewarts ”) entered into a deed (the “ 2014 Harbour Deed ”) 
+(pages 392 -395).  The 2014 Harbour Deed provided that, for the purpose of Clause 9.1 
+of the Harbour IA (the ‘Waterfall ’ referred to  and defined  below), the Settlement 
+Consideration paid to or for the benefit of Dr Cochrane under the IOM MSA would be 
+treated as “ proceeds received as a result of Success in the Proceedings ”, and, therefore, 
+ 
+7 2016 Judgment at [17] -[18] (page 25 ). A1.6/112
+ 
+ 
+ 
+ 15 as part of the Proceeds (page 393 ) (DTJ, §87 ( page 93 )). 
+46. Of the assets placed within the control of the Orb Claimants by the IOM Settlement, Mr 
+Justice Foxton found that a number were liquidated and their proceeds used to acquire 
+various other assets (only some of which were at issue in the Directed Trial, as will be 
+seen below: see §88 of the DTJ) (page 93 ). 
+47. Further events (not sufficiently germane to the Enforceability Applications  to be set out 
+in detail herein) in the Original Proceedings are set out in [89] -[103] of the DTJ (pages 
+94-97). 
+The Geneva Settlement  
+48. In or around April 2016, various settlement agreements were executed in Geneva 
+(collectively, the  “Geneva Settlement ”) (DTJ, [105] (page 98 )). This settled the claims 
+of all parties to the Original Proceedings (including Mr Ruhan’s to recover assets 
+transferred under the IOM Settlement ( DTJ, [232]) and led to the dismissal of the 
+Original Proceedings by consent on 6 May 2016 ( DTJ, [105]) (pages 137 and 98 ). 
+49. Mr Justice Foxton noted various features of the constituent elements of the Geneva 
+Settlement in the DTJ at [107] (page 98 -99), as follows : 
+“The various agreements comprising the Geneva Settlement share the complexity which is 
+characteristic of the dealings of those who were parties to them. However, in broad terms:  
+i) A document which I will refer to as the “Confidential Settlement Deed” contained general 
+releases by 11 parties of all claims relating to the 2012 Proceedings and associated litigation.  
+ii) The seven principal individuals who were parties to the 2012 Proceedings entered into another 
+document, “the Confidential Deed”, which included covenants not to sue those parties and their 
+affiliates (an expression defined in notably wide terms).  
+iii) There were two agreements relating to Minardi: “the Minardi SpA” and “the Minardi Deed 
+of Release”. The former transferred shares held in Minardi to Phoenix, a company said to be 
+owned by Mr Stevens. The latter involved a release by SMA of a £2,500,00 0 loan which it had 
+made to Minardi.   
+iv) A loan note issued by Dr Cochrane (“the Loan Note”) under which Dr Cochrane agreed to 
+pay £73,750,000 to Phoenix by 31 December 2017 (under a structure which incentivised early A1.6/113
+ 
+ 
+ 
+ 16 interim payments, to avoid an interest rate of 15%, the first instalment falling due on 31 May 
+2016 in the sum of £3m). In support of that obligation Dr Cochrane provided a negative pledge 
+over certain assets said to be worth £80.2m.  
+v) A document entitled the “Liquidation Inter -Creditor Settlement Agreement” (the “LICSA”) 
+which was entered into between SMA, Phoenix, Minardi and Dr Cochrane, the terms of which 
+are considered in detail at Section K below .” 
+50. Subsequent events  (again not sufficiently germane to the Enforceability Applications  to 
+be set out in full here)  – including interventions from the National Crime Agency with 
+respect to a payment attempted by Dr Cochrane under the Loan Note (forming part of the 
+Geneva Settlement, as above ) and freezing orders obtained by multiple  parties – are 
+explained in [108] -[116] of the DTJ (pages 99 -100). 
+(2) These SFO Proceedings  
+51. Following the IOM Settlement, a dispute arose between the SFO and  other parties 
+allegedly interested in the assets or reali sable property of Dr Smith  that led to the se 
+proceedings  (the “SFO Proceedings ”) in which the Enforceability Application s are now 
+brought  (Claim No.  CL-2017 -000323 ).  
+52. My understanding of the background to the SFO Proceedings is (briefly)  as follows:  
+52.1. They were initially commenced to enable the SFO  to attempt to satisfy a 
+confiscation order made against Dr Smith on 13  November 2007  (the 
+“Confiscation Order ”) by way of a claim to Dr Smith’s alleged reali sable 
+property within the meaning of the Criminal Justice Act 1988 : see §8(i) , §64,  
+§§108 -116, and §§597 -599 of the DTJ (pages 71, 87, 99 -100 and 255 ); 
+52.2. The assets in relation to which the SFO was seeking to enforce the Confiscation  
+Order  were those assets allegedly constituting  Dr Smith’s reali sable property 
+but alleged to have been held by the following persons as nominees for Dr Smith 
+(with the effect of obscuring that those assets were his reali sable property )8: 
+ 
+8 This is a summary. See DTJ, §593 onwards for a fuller explanation (page 254 ).   A1.6/114
+ 
+ 
+ 
+ 17 52.2.1.  SMA, in respect of the Transferred Companies;  
+52.2.2.  Dr Cochrane, in respect of the Non -Arena Companies, the Jersey 
+Properties , and any interest in the so-termed “Identified Underlying 
+Assets” (the “ IUAs ”) traceable to funds emanating from Dr 
+Cochrane;  
+52.2.3.  Litigation Capital Limited (“ LCL ”), in respect of the Non -Arena 
+Companies to the extent transferred to them by the LCL Transfers  
+(as defined in the DTJ) , the Jersey Properties and Flat 1 Hamilton 
+House;  
+52.2.4.  Conduit Asset Management Limited (“ Conduit ”), as the legal 
+owner of the shares in LCL ; and 
+52.2.5.  A Dr Imogen Smith in respect of Flat 1 Hamilton House .  
+52.3. At a hearing on 6 March 2017, Popplewell J directed any party claiming an 
+interest in the  relevant  assets to file a position paper setting out which assets it 
+asserted a claim to, and the basis of that claim : see §§102 -116 of the DTJ (pages 
+97-100); 
+52.4. 23 parties filed position papers  and, following a further hearing, Popplewell J 
+directed the SFO and the Enforcement Receivers ( appointed on the application 
+of the SFO: see DTJ, §8(i)  (page 71 )), if so advised , to issue an application 
+seeking a determination of the extent to which (what became) the Transferred 
+and Non -Arena Companies and the Jersey Properties (each of which are defined 
+in paragraph 53 below)  (together, the “ Relevant Property ”) constituted the 
+realisable property of Dr Smith for the purpose of  enforcement  of the 
+Confiscation Order  (DTJ, §117 ) (page 101 ); 
+52.5. On or around 24 or 25 April 2018, Popplewell J  (amongst other things and per 
+§121 of the DTJ) (page 102 ) joined various parties as respondents to the SFO 
+Proceedings;  and directed the Directed Trial would take place to determine the A1.6/115
+ 
+ 
+ 
+ 18 ownership of the Relevant Property ; and 
+52.6. The Court noted that, of the various parties asserting claims, Harbour, Stewarts, 
+and Messrs Thomas and Taylor asserted their alleged entitlements arising from 
+their involvement in the Original Proceedings on the side (at that time) of Dr 
+Smith  (DTJ, §156(iii)) (page 112 ), whilst the SFO asserted its entitlements in 
+respect of any reali sable property  of Dr Smith to the extent that it had not been 
+found to be  subject to the proprietary rights of other parties  (DTJ, §593) (page 
+254). 
+53. In the event, the Directed Trial considered and determined the various claims to the 
+Relevant Property , which fell  into five categories:  
+53.1. The “Transferred Assets ”, comprising (i) the “ IOM Settleme nt Cash ”9 and 
+(ii) “Transferred Companies ”10;  
+53.2. Shares in the “ Non-Arena Companies ”, being shares in 27 Marshall Islands, 
+Manx, Canadian, Dutch, Jersey and English companies which Mr Justice Foxton 
+recorded were “ created by entities alleged to be associated with Dr Smith ” 
+(DTJ, §1); 
+53.3. Four properties in Jersey  (the “ Jersey Properties ”) (DTJ, §1; Section P3) 
+(pages 69; 227 -240); 
+53.4. The IUAs comprising various properties, the proceeds of properties, the benefit 
+of a loan and jewellery which  Mr Justice Foxton noted were  identified in 
+Schedule 2 to his Order of 20  May 202 0 (DTJ, §1; Section U) (pages 69; 271 -
+279); and  
+53.5. The sum of £2 million paid into the accounts of Stewarts on 14 September 2016  
+ 
+9 Defined as being the cash paid pursuant to the IOM Settlement – the initial £10m, a further £583,321.80 , and a 
+payment made at Messrs Cooper and McNally’s direction of £2.5m : DTJ, §422(iv) (pages 197 ). 
+10 Defined as the shares in 18 BVI and Manx companies transferred into the ownership of SMA Investment 
+Holdings Ltd (“SMA”) shortly after  the IOM Settlement wa s reached : DTJ, §1 (pages 69 ). A1.6/116
+ 
+ 
+ 
+ 19 (DTJ, §1; Section O) (pages 69; 220 -223). 
+54. On 28 May 2021, Mr Justice Foxton handed down the DTJ on the ownership of the 
+Relevant Property.  The DTJ is wide -ranging and considers a vast number of issues which 
+I do not attempt to s et these out in full here.  Relevantly, however, the Court will note 
+that Section H of the DTJ dealt  with ‘ISSUES ARISING IN RELATION TO THE 
+HARBOUR IA’ (pages 114 -121) and made findings  about the assets that fell within the  
+Harbour Trust, including whether they included assets transferred to Dr Cochrane or 
+SMA under the IOM and/or Geneva Settlements ( DTJ, §§167 -181).  
+55. Whilst Mr Justice Foxton construed  some of the terms of the Harbour IA for the above 
+purposes  and conclude d that the IOM and Geneva Settlements each constituted ‘Success 
+in the Proceedings’ for the purposes of the Harbour IA  (DTJ, §§165 -166) (pages 114 -
+115), his Judgment did n ot (because he was not required or requested to)  engage with the 
+matters raised in these Enforceability Applications ; principally , whether certain parts of 
+the Harbour IA were  unenforceable  in light of the CLSA 1990/DBA Regs 2013 .  
+56. I am also instructed that the beneficial ownership of the Non -Arena Assets has not yet 
+been determined .  I note that Mr Zoubir claims that this is “ not... fully accurate ” (in 
+relation to a position apparently a dvanced by Dr Cochrane in the Jersey Proceedings) in 
+that “the IUAs (which the Directed Trial did determine ownership of) were owned by 
+various Non -Arena Companies ” (Zoubir 20, §70). This is addressed in Mr Thomas’ 
+statement in relation to the Enforceability Applications.  
+(3) The Consequentials  Order and Proceed s 
+The Consequentials Order  
+57. On 11 June 2021 Mr Justice Foxton made the Consequentials Order giving effect to his 
+findings in the DTJ (pages 2 -21). Paragraph s 4 and 5 of th e Consequentials  Order 
+identified assets from the Relevant Property that fell within the Harbour Trust and how 
+the interests of the Orb Claimants in them were to be apportioned inter se  as follows:   
+“Harbour  A1.6/117
+ 
+ 
+ 
+ 20 4. The interests in the following assets are held by their legal owners on the terms of the Harbour 
+Trust and are to be applied and apportioned between the beneficiaries, namely Harbour, Orb 
+arl, and Messrs Thomas and Taylor, in accordance with those terms (save as set out below):  
+a. The shares in the Arena Companies (as set out in Schedule 2 to this order);  
+b. Such future distributions as may be paid or payable to the shareholders of the Arena 
+Companies;  
+c. The traceable proceeds of the IOM Settlement Cash, but in particular:  
+i. An equitable interest of 100% in Flat 24 Hamilton House;  
+ii. An equitable interest in 50% of the shares in Bodega;  
+iii. An equitable interest of 100% in Flat 2 Hamilton House;  
+iv. An equitable interest of 15% in Flat 22 Hamilton House;  
+v. An equitable interest of 20.26% in the headlease / leasehold of Hamilton House 
+and Flats 1, 10, and 14 Hamilton House (for Flats 10 and 14 Hamilton House, 
+taking effect by way of a first ranking charge arising by way of subrogation to 
+discharged security);  
+vi. An equitable interest of 16.62% in Flats 11, 21 and 23 Hamilton House;  
+vii. An equitable interest of 10% in Flat 17 Hamilton House  
+d. The traceable proceeds of the £23,921,641.59 paid to Candey LLP which derived from 
+the $43.5m Qatar Settlement Payment, but in particular:  
+i. An equitable interest of 90% in Flat 12 Hamilton House (reflecting the balance 
+of the purchase price);  
+ii. An equitable interest of 88.05% in Montagu Square (reflecting the balance of the 
+purchase price);  
+subject to such claims as remain available to Mr Pelz following the findings in the Trial 
+Judgment as set out below at paragraph [23] (for the avoidance of doubt, this qualification 
+applies only to the assets listed at items 2.d.i and ii above).  
+5. Any share of the proceeds under the Harbour Trust which is attributable to Orb and Messrs 
+Thomas and Taylor shall be adjusted as follows:  
+a. The entitlement of Orb and Messrs Thomas and Taylor (after payment out of the prior 
+items in the waterfall under the Harbour Trust) shall first be determined without any A1.6/118
+ 
+ 
+ 
+ 21 adjustments, based on the following percentages: 62.5% to Orb, 18.75% to Mr Thomas and 
+18.75% to Mr Taylor; [...] ” (pages 6 -7). 
+58. With respect to the Non -Arena Companies, paragraph 16 provide d in relation to the SFO 
+that, “ With the exception of the shares in Bodega, Dr Gerald Martin Smith holds 100% 
+of the equitable interest in the shares of each of the Non Arena Companies (as set out in 
+Schedule 2 to this order) ” (pages 17 -19). 
+59. Schedule 2 to the Consequentials Order in turn listed the Arena Companies and the Non -
+Arena Companies  (page 12 ). 
+60. Paragraph 27  of the Consequentials Order  grant ed “liberty to apply ” to those  persons  
+subject to  it.  This includes  Mr Thomas  (page 12 ).  I return to any possible impact on the 
+Consequentials Order of the relief sought in the Thomas Cross -Application in  Section I 
+below.   
+The Trust , Receivership, and Share Transfer  Orders  
+61. On or around 14 December 2022, Mr Justice Foxton made a further Order (the “ Trust 
+Order ”) (pages 396 -400), this time within proceedings CL -2022 -000330  (the 
+“Ticehurst Proceedings ”) which ordered ( inter alia ) that:  
+61.1. The shares in Glen Moar, Unicorn, Sulby, and two further companies known as 
+Legion NA Investments Limited ( formerly Bridge Towers Holdings No I Ltd) 
+and Land Consultants Limited , were  declared to be  held by SMA as bare trustee 
+for Orb, Mr Thomas and Mr Taylor who in turn hold their respective interests 
+jointly as trustees of the Harbour Trust  (§1) (page 398 ); 
+61.2. Messrs Thomas and Taylor and Orb were removed as trustees of the Harbour 
+Trust with immediate effec t (§5) (page 398 ); 
+61.3. New trustees  (Emma Jordan and Tony Graham)  (the so -termed “ New 
+Trustees ”) were appointed as trustees of the trusts declared by paragraph 4 of 
+the Consequentials Order “insofar as those trusts affect the interests of Orb, Mr 
+Thomas and Mr Taylor in the shares in the Relevant Companies  [i.e. those listed A1.6/119
+ 
+ 
+ 
+ 22 in paragraph 61.1 above]  which SMA holds as nominee for them as trustees of 
+the Harbour Trust ...” (§7)  (page 398 ) together with ancillary orders dealing with 
+practical issues arising with respect to their dealings with the relevant assets 
+(§§9-19) (pages 399 -400). 
+62. Likewise , on 14 December 2022, Mr Justice Foxton made an order in connection with 
+multiple receivership applications  (the “ Receivership Order ”) (pages 401 -411) in these 
+SFO Proceedings .  
+63. Pursuant to paragraph 1  of the Receivership Order , David Standish and David Pike of 
+Interpath (the “ Joint Receivers ”) were appointed as joint rec eivers of the shares, 
+securities  and membership rights , and leasehold properties set out in Schedule 1 to the 
+Receivership Order  (pages 410 -411) (together, t he “Receivership Property ”), with the 
+rights and powers (etc.) set out in §§ 5-7 of the same (pages 405 -408). 
+64. Schedule 1 to the Receivership Order  sets out the assets to which it relates (and is not 
+reproduced here) (pages 410 -411).  I have cross -referenced Schedule 1 of the 
+Receivership Or der with paragraph 4 of the Consequentials Order (set out above) and 
+note that : 
+64.1. All of the properties listed in paragraph 4 of the Consequentials Order appear in 
+Schedule 1  of the Receivership Order ; 
+64.2. Schedule 1 of the Receivership Order contains other properties not listed in 
+paragraph 4  of the Consequentials Order , namel y Flats 3, 18, 19, and 20 of  
+Hamilton House, 81 Southampton Row, London, WC1B 4HA  but these 
+properties are all listed in Schedule 4 of the Consequentials Order (pages 19 -
+21) as being (pursuant to § 20 of the same  (page 10 )) the IUAs11 in which the 
+companies under the Joint Liquidators’ control (at that time) had equitable 
+interests.  
+ 
+11 This is a reference in turn to paragraph 12 of the Order of Mr Justice Foxton dated 20 May 2020  (pages 423 -
+499): see the tenth recital to  the Consequentials Order (page 4 ). A1.6/120
+ 
+ 
+ 
+ 23 65. On 10 February 2023,  in both these SFO Proceedings and the Ticehurst Proceedings, Mr 
+Justice Foxton ordered that SMA must transfer the shares in the Relevant Companies (i.e. 
+those set out in paragraph 61.1 above)  to the New Trustees  (§1) (pages 412 -422) (the 
+“Share Transfer Order ”).   
+‘The Proceeds’  
+66. I therefore understand that, as a result of the IOM and Geneva Settlements, very 
+substantial assets were recovered and form the ‘Proceeds’ for the purposes of the Harbour 
+IA.   
+67. Accordingly, and in summary, the Proceeds on which the Harbour IA could bite  include  
+(subject to the full terms of the Consequential s Order) : 
+67.1. All those assets listed in paragraph 4 of the Consequentials Order, being  (in 
+summary ): 
+67.1.1.  The shares in the Arena Companies set out in Schedule 2  of that 
+Order . 
+67.1.2.  The future distributions to be paid to shareholders of the Arena 
+Companies . 
+67.1.3.  The traceable proceeds of the IOM Settlement Cash (as defined) , but 
+in particular the equitable interests in particular properties listed in 
+§4(c) . 
+67.1.4.  The traceable proceeds of the c.£23.9m paid to Candey LLP which 
+in turn derived from a $43.5m Qatar Settlement Paym ent (as 
+defined) , and in particular the equitable interests in the specific  
+properties listed in §4(d) .    
+67.2. Shares in the  Non-Arena Companies  which were not transferred under the IOM 
+Settlement  (DTJ, §1(ii))  and are  held by the Joint Receivers pursuant to the A1.6/121
+ 
+ 
+ 
+ 24 Receivership Order (as above) , and in turn the assets of the Non -Arena 
+Companies.  
+68. It is my understanding that, to date, no assets or funds falling within the Harbour Trust 
+have been released to or realised by any of the Orb Claimants or Harbour.  
+69. Moreover, I note that there has been and remains a significant dispute about the value of 
+the Proceeds.  For example, Harbour asserted in a letter (via its solicitors, Harcus Parker) 
+dated 2 July 2021 that the total estimated realisable value of the assets held within the 
+Harbour Trust pursuant to the Harbour IA at that time was £23,865,935.70. This is 
+disput ed by Mr Thomas . However, it is not necessary for the Court to determine those 
+valuation issues as part of the Enforceability Application s. 
+(4) The Jersey Proceedings  
+70. Harbour is also presently engaged in proceedings (Court reference 2023/35) before the 
+Royal Court of  Jersey against Dr Cochrane  (respectively, the “ Jersey Proceedings ” and 
+the “Jersey Court ”). Dr Cochrane is, as I understand, the  sole legal owner of the shares 
+in Orb .  
+Bankruptcy orders  
+71. As I understand it (although I do not act for any party to the Jersey Proceedings)  the 
+position is  as follows.  
+72. On 10 November 2016, Harbour applied for the property of Orb and Dr Cochrane to be 
+declared en désastre  and o n 24 November 2016, Harbour obtained bankruptcy  (en 
+désastre ) orders against Orb and Dr Cochrane from the Jersey Court, the effect of which 
+was to vest the property of Orb and Dr Cochrane in the Viscount  of Jersey  as 
+administrator of their estates  (subject to an exception which is not material for present 
+purposes) .  
+73. It appears from §12 of Mr Adam Zoubir’s Affidavit in the Jersey Proceedings dated 18 
+June 2024  (the “Zoubir Jersey Affidavit ”) that the basis for this decision was the Jersey A1.6/122
+ 
+ 
+ 
+ 25 Court’s finding that Harbour was “ indisputably owed the liquidated sum of 
+£5,189,010.48p by Orb and that there was no reasonably arguable defence to that 
+claim ”, i.e. it was on the basis of Harbour’s  assumed  entitlements under the Harbour IA . 
+Mr Zoubir confirms Harbour’s  relevant assumed  entitlement  as follows  at §13 : 
+“The principal figure is based on a  total of Harbour’s investment of nearly £5.2 million, plus a 
+calculation of the returns owed under the Funding Agreement, which are triggered by the Orb 
+Claimants’ success in the funded proceedings .” (pages 377 -378). 
+The Recall and Stay Applications  
+74. After the PACCAR  decision was handed down, Dr Cochrane sought to have her ‘désastre’  
+set aside or annulled , together with  that of Orb (i.e. the liquidation order made against it)  
+(the “ Cochrane Recall  Application ”) (pages 450 -464). 
+75. At least part of t he basis of th is application is, as I understand  it, Dr Cochrane’s assertion  
+that the Harbour IA is unenforceable as a result of the clarification of the law  on DBAs  
+in the PACCAR decision ; and therefore, Orb and Dr Cochrane are not (and never have 
+been) indebted to Harbour .   
+76. Upon the making of the Cochrane Recall Application, I understand that Harbour applied 
+to stay that application (the “ Harbour Stay Application ”).  In the Zoubir Jer sey 
+Affidavit  (pages 375 -391), Mr Zoubir told  the Jersey Court , on behalf of Harbour, that: 
+76.1. Harbour sought a stay of the Cochrane Set Aside Application on the basis that 
+(per §39.1):  
+“Harbour now intends to seek a determination from the English Court  as to the status 
+of the Directed Trial Judgment including as to the impact if any of the decision in 
+PACCAR as well as ancillary matters. If the Jersey court were to deal with these issues, 
+which relate to an extraordinarily complex English law dispute with a lengthy history, 
+various English Court judgments and the Funding Agreement (which is governed by 
+English  law), it would need to hear expert evidence of English law. I would respectfully 
+suggest that it would be preferable for any such English law issues to be determined 
+by the English court if possible , particularly one that is very familiar with the entire 
+background to the matter .” (my emphasis)  (pages 387 ); 
+76.2. Harbour further considered that the English Court “ is already seized of this 
+matter ” and is familiar with the same (§39.4)  (pages 388 ); and A1.6/123
+ 
+ 
+ 
+ 26 76.3. “Harbour intends to seek declarations from the English Court in respect of the 
+status of the Directed Trial Judgment and related and ancillary matters ” (§39.5) 
+(pages 388 -389).   
+77. That was told to the Jersey Court in June 2024. In response, Harbour was ordered by the 
+Jersey Court to “ file further evidence about the proceedings it intends to bring, including 
+a copy of the intended proceedings and any opinion on the merits, the latter for the court 
+only, by 5pm on 2 August 2024 ” (pages 465 -466).  In a follow -up affidavit sworn on 2 
+August 2024 (pages 467-474), Mr Zoubir provided to the Jersey Court , on behalf of 
+Harbour , a draft Application Notice (pages 475 -482) together with a draft witness 
+statement of Mr Zoubir (the “ Draft Zoubir Statement ”) (pages 483 -540) and an 
+indication that Mr Zoubir “ envisage[d] that Harbour will issue its application [in the 
+English Court]  in the early Autumn ” (§23(3)).    
+78. As set out above, Harbour  finally  issued its application at the end of October 2024 , 
+shortly before the Harbour Stay Application was due to be heard.  
+79. I am instructed that the Harbour Stay Application has now been granted . 
+80. Save as set out above , I do not explain the Jersey Proceedings in greater detail where this 
+is already addressed at some length in Appendix 2 to Zoubir 20 and is not relevant to  the 
+substance of  the Enforceability Application s (at least insofar as they concern Mr 
+Thomas) .  For the avoidance of doubt, Mr Thomas should not thereby be taken to accept 
+the accuracy or relevance of any matters stated in Appendix 2  of Zoubir 20  and will 
+respond further if  that becomes  necessary.   
+D. THE HARBOUR IA – KEY TERMS  
+81. As I have explained above the Orb Claimants  and Harbour entered into the Harbour IA 
+on or around 10 July 2013 . A copy of the Harbour IA is at  pages 280 -374. I set out below 
+the main terms of the Harbour IA, as relevant to the Enforceability Applications . Unless 
+stated to the contrary, I adopt below the capitalised definitions set out in  the Harbour IA.  A1.6/124
+ 
+ 
+ 
+ 27 (1) Definitions  
+82. In the Harbour IA, t he following definitions  in Clause 1.1  are material:  
+82.1. ‘Claimants’  means  Orb, Mr Taylor, and Mr Thomas  (page 284 ); 
+82.2. ‘HF2’  means  Harbour and t he ‘HF2 Investment’  is defined in the following 
+terms:   
+“the aggregate amount of the Claimants’ Legal Costs and Adverse Costs Orders that 
+HF2 has paid, incurred or, in the case of Adverse Costs, provisioned a liability in 
+respect thereof under this Agreement, PROVIDED that for purposes of calculating the 
+2-4 times multiple in Schedule 2, t he HF2 Investment shall be equal to the aggregate 
+gross amount of the Claimants’ Legal Costs and Adverse Costs so paid, incurred or 
+provisioned by HF2 without giving effect to any subsequent payments received by HF2 
+(including following an interim recovery  under clause 11) or prior discharge of any 
+such amounts or liabilities by the Claimants or any other person .” (page 285 ) 
+82.3. ‘Proceeds’  is defined in the following terms:  
+““Proceeds” means any amount of money or the value of any goods, services or 
+benefits, recovered or received by the Claimants or its Affiliates as a result of 
+Success in the Proceedings and/or Settlement (including the present value of any 
+goods, services or benefits to be paid in the future and the present value of any new 
+commerc ial arrangements entered into with, or at the direction of, the Claimants or 
+their Affiliates or otherwise), and shall include interest and any sums recovered in 
+the Proceedings by way of legal costs and ex gratia payments in respect thereof. 
+Proceeds shal l be the gross amount prior to any set -off or counterclaim exercised 
+by the Defendant or prior to any deduction for taxes payable to any governmental 
+authority ”. (page 286 ) 
+82.4. ‘Settlement’  mean s: 
+“… an agreement between the Claimants and any Defendant, or their respective 
+Affiliates, in settlement of the claim made in respect of any of the Causes of Action, 
+whether in the Proceedings or otherwise. This shall include any waiver or 
+compromise of the Pro ceedings against a Defendant and shall include a decision by 
+the Claimants to abandon, withdraw or discontinue the Proceedings .” (page 286 ) 
+82.5. ‘Success in the Proceedings’  is defined as : 
+“any judgment, award, Settlement, or third party agreement between the Claimants 
+or its Affiliates and any other person arising out of or related including any direct 
+or indirect consequential outcome resulting in a monetary financial benefit to the 
+Claimants and/or any of its Affiliates .” (page 286 ) 
+82.6. ‘Trust’  means “ the trust created under clause 8 and any other applicable A1.6/125
+ 
+ 
+ 
+ 28 provision of [the Harbour IA] ” and ‘Trust Beneficiaries’ means “ the parties 
+named in clauses 9.1, 10.2, 11.1, 14.4, 15.5 and Schedule 2 as beneficiaries of 
+the Trust, namely HF2 and the Claimants .” (page 287 ) 
+(2) Return on investment  
+83. Harbour agreed , subject to certain conditions : 
+“… (d) to invest in respect of the Claimants’ Legal Costs the specific amounts set out in 
+the Agreed Budget and Timeline for each stage of the Proceedings, up to an aggregate 
+amount of £ 5,280,000 (the “Aggregate HF2 Commitment’); and […]” (Clause 2.1 ). (page 
+287) 
+84. Clause 8.1  (within the section headed ‘Declaration of Trust’) states that (page 296 )): 
+84.1. The Proceeds were to  be held on bare trust by the Claimants (including Mr 
+Thomas ) for the benefit of the Claimants and Harbour; and  
+84.2. The Claimants as trustees of the Trust were to  hold the Proceeds on trust for the 
+Trust Beneficiaries “ to the extent of the interests of the Trust Beneficiaries ” (the 
+“Harbour Trust ”).  
+85. Clause 9  (‘Success in Proceedings’ ) further stipulates the following waterfall  (the 
+“Waterfall ”) for the distribution of the Proceeds received as a result of Success in the 
+Proceedings:  
+“9.1 Subject to clause 9.3, the Claimants shall apply  or instruct the Legal Representatives 
+to apply any Proceeds  received as a result of Success in the Proceedings, and which it 
+holds on trust, in the following order  immediately upon receipt of such Proceeds:  
+“(a) deduct all stamp duties, bank charges and currency exchange costs payable by the 
+Claimants relating to or arising out of any such Success in the Proceedings;  
+(b) pay to HF2 the HF2 Investment after taking into account any prior payments 
+received by HF2  (including following an interim recovery under clause 11) or prior 
+discharge of any such amounts or liabilities by the Claimants or any other person;  
+(c) pay any other sums due in respect of Claimants’ Legal Costs;  
+(d) pay to the Legal Representatives, Barristers or other parties with whom the A1.6/126
+ 
+ 
+ 
+ 29 Claimants has concluded a Legal Costs Agreement any success fee or costs uplift 
+payable under any such Legal Costs Agreement;  
+(e) pay to HF2 any amount due to it in its Capacity as Trust Beneficiary pursuant to 
+Schedule 2 ; and  
+(f) pay to the Claimants any remaining amounts , which the Claimants shall receive in 
+their capacity as Trust Beneficiaries.  
+[…] 
+9.3 In the event the Proceeds are insufficient to pay in full the amounts owed under sub -
+clauses 9.1(d) and 9.1(e), the Proceeds payable under these sub -clauses shall be 
+apportioned pro rata in relation to the amounts owed amongst the parties entitled 
+thereunder. The Claimants’ right to resort to Trust property to discharge the payment 
+obligation in clause 9.1(d) shall be adjusted accordingly.  
+9.4 The obligations of the Claimants under this clause 9 are joint and several. ” 
+86. Schedule 2  provides, inter alia , for Harbour’s  recovery under Clause 9.1(e)  as follows:  
+Time from date of this Agreement to 
+date of receipt by HF2 of the Proceeds 
+(subject to the provisions of clause 14)  Proceeds on Trust payable to HF2  
+Up to 6 months   20% of the Proceeds up to and including 
+£40,000,000 (but in any case, after repayment of the 
+HF2 Investment, an amount no less than 2 times the 
+HF2 Investment)  
+6-12 months  30% of the Proceeds up to and including 
+£40,000,000 (but in any case, after repayment of the 
+HF2 Investment, an amount no less than 3 times the 
+HF2 Investment)  
+Over 12 months  35% of the Proceeds up to and including 
+£40,000,000 (but in any case, after repayment of the 
+HF2 Investment, an amount no less than 4 times the 
+HF2 Investment)  
+Any Time Period  10% of the Proceeds in excess of £40,000,000 up to 
+and including £80,000,000  
+Any Time Period  5% of the Proceeds in excess of £80,000,000  
+ A1.6/127
+ 
+ 
+ 
+ 30 87. The percentages set out  in this table  in relation to ‘Any Time Period’ (i.e. the fourth and 
+fifth rows in the above table) appear to me to apply to any recoveries, irrespective of 
+when they are made, in addition to the time -limited percentage entitlements set out in the 
+first to third rows, wherever recoveries exceed £40  million.  
+(3) Other relevant  provisions – Clauses 10.2, 12.1, and 14.4  
+88. I also wish to draw the Court’s attention to the following provisions  which are relevant 
+to the Enforceability Applications .   
+89. Clause 10.2  of the Harbour IA provides:  
+“Where, pursuant to clause 4.2(i), the Claimants receive a recommendation from the Legal 
+Representatives to accept an offer of Settlement made on behalf of one or more Defendants 
+(the "Recommended Offer”) but the Claimants elect to reject the Recommended Of fer, if 
+the Proceeds eventually recovered from such Defendant or Defendants are less than the 
+amount of the Recommended Offer , the Claimants shall hold such Proceeds on bare Trust 
+absolutely for the benefit of HF2 and the Claimants and to the extent of the ir interests as 
+Trust Beneficiaries The Claimants shall additionally keep such Proceeds separate from 
+the Claimants' own funds and shall apply the Proceeds received as a result of Success in 
+the Proceedings in the following order  upon receipt of such Proceeds:  
+(a) deduct all stamp duties, bank charges and currency exchange costs payable by the 
+Claimants relating to or arising out of any such Success in the Proceedings;  
+(b) pay to HF2 the HF2 Investment;  
+(c) pay any other sums due in respect of Claimants’ Legal Costs;  
+(d) pay to the Legal Representatives, Barristers or other third parties with whom the 
+Claimants have concluded a Legal Costs Agreement any success fee or costs uplift 
+payable under any such Legal Costs Agreement;  
+(e) pay to HF2 any amount due to it in its capacity as Trust Beneficiary pursuant to 
+Schedule 2  save that  the percentage of Proceeds payable to HF2 shall be calculated 
+by reference to the amount of the Recommended Offer and not by reference to the 
+amount of the Proceeds ; and  
+(f) pay to the Claimants any remaining amount which the Claimants shall receive in 
+their capacity as Trust Beneficiaries .” (emphasis added)  
+90. Clause 12.1  provides:  
+“In the event that any of the Claimants receives any sum from any third party in respect of 
+any matter relating to the Causes of Action, including sums received as rebates on VAT A1.6/128
+ 
+ 
+ 
+ 31 paid by the Claimants in respect on the Claimants' Legal Costs, the Claimants shall treat 
+the said sum as part of the sums recovered and/or part of the Proceeds and it shall be part 
+of the Trust created under clause  8.” 
+91. I also bring to the Court’s attention  Clause 14.4  which provide s for both the payment of 
+interest and the payment of a sum as a DBA in specified circumstances : 
+“14.4 In the event that the Claimants continue with the Proceedings after the Termination Date 
+and the Claimants subsequently Succeed in such Proceedings, the Claimants agree on a joint 
+and several basis that:  
+(a) they will hold all Proceeds on bare Trust absolutely for the Claimants and HF2 and to 
+the extent of their interests as Trust Beneficiaries, such Proceeds will be kept separate 
+from the Claimants' own funds and the Claimants shall as trustee of the Trus t forthwith 
+pay to HF2 an amount from the Proceeds corresponding to:  
+(i) the HF2 Investment up to the Termination Date ; and  
+(ii) a sum calculated by applying 10% per annum on the amounts referred to in 
+subclause 14.4(a)(i) , calculated from the date of each payment out (or assumption of 
+liability for Adverse Costs) by HF2 to the date of refund to HF2 by the Claimants.  
+(b) The provisions of clauses 8 and 9 and payment to HF2 under the Trust, will apply as if 
+this Agreement had continued in force, SAVE THAT the amount of Proceeds payable to 
+HF2 under Schedule 2 shall be fixed by reference to the Termination Date and not the date 
+of receipt of monies by HF2 following Success in the Proceedings; and  
+(c) the Claimants shall not be obliged to make payments to HF2 under the terms of this 
+Trust that are more than the Proceeds it recovers.  
+For the avoidance of doubt, this clause 14.4 shall survive any termination of this 
+Agreement .” (emphasis added)  
+92. Legal submissions  will be made  in due course , to the extent necessary, about the proper 
+interpretation and effect of these provisions, together with their implications for the 
+Enforceability Applications . I do not set out those here.  
+E. THE SCOPE OF THE ENFORCEABILITY APPLICATIONS  
+(1) Pre-Action Correspondence  
+93. Mr Thomas and Harbour engaged in extensive pre -action correspondence about the 
+various issues arising from the PACCAR decision and their implications for the Harbour A1.6/129
+ 
+ 
+ 
+ 32 IA. In particular, I draw to the Court’s attention  the following substantive correspondence 
+which sets out the parties’ respective positions  and the dispute which now remains : 
+93.1. MH’s  detailed  Letter Before Action  (the “LBA ”) dated 11 July 2024  (pages 
+781-800); 
+93.2. Harcus Parker ’s letter of 26 July 2024  to MH stating that it would be filing  with 
+the Jersey Court on 2 August 2024  draft  evidence  in support of its proposed 
+application to this Court ; that it was prepared to share that evidence  
+simultaneously  with MH; and that it would set out Harbour’s position in detail 
+on the points raised in the LBA  (pages 801 -803);    
+93.3. That draft  evidence ( in the form of the Draft Zoubir Statement ), which  was sent 
+to MH on 2 August 2024 (pages 482 -540); and 
+93.4. Subsequent  correspondence between Harcus Parker  and MH dated  7 August 
+2024 (pages 804 -808); 23 August 2024  (pages 809 -816); 9 September 2024 
+(pages 817 -821); and 25 September 2024 (pages 822 -828). 
+(the “ Pre-Action Correspondence ”).  
+94. As I have explained  above, Harbour  told the Jersey Court that it intended to  bring an 
+application for declarations concerning the enforceability or otherwise of the Harbour IA  
+by the early autumn (of 2024)  (page 471 ), and told Mr Thomas that it first wished to 
+engage in the Pre -Action Correspondence to narrow the issues as far as reasonably 
+possible . This Pre -Action Correspondence failed to resolve the dispute.  
+95. When it became clear that the Pre -Action Correspondence had achieved all that it 
+realistically could , MH’s  letter  dated  25 September  2024  (pages 822 -828) concluded as 
+follows:  
+“To conclude:  
+(i)  It is obvious from your letter that the pre -action period is now at an end.  
+(ii)  We now invite your client to confirm by return that it will issue its promised application A1.6/130
+ 
+ 
+ 
+ 33 within 14 days of today.  [i.e. by 9 October 2024 ]  
+(iii)  If your client is not prepared to issue its application in this time, please inform us forthwith.  
+(iv)  Please also respond clearly, directly and promptly to the three questions set out in 
+paragraph 13 of our letter of 30 July 2024 and repeated in paragraphs 17 -18 above 
+regarding the Debarring Directions Order. ” (page s 827-828). 
+96. Harcus Parker  wrote to MH on 9 October 2024 agree ing that the Pre -Action 
+Correspondence had reached its end (§2) and confirming that it anticipated filing its 
+application “before the end of the week commencing 21 October 2024, if not sooner ” (§8) 
+(page 830 ). As it was,  the Harbour A pplication  was only filed on  31 October 2024.  
+97. Mr Thomas now responds to th e Harbour A pplication and makes the Thomas Cross -
+Application . The Court is therefore asked  to resolve the remaining  issues in dispute  along 
+(it would appear) with some additional arguments raised by Harbour for the first time in 
+Zoubir 20 .12 
+(2) The remaining issues  
+98. Zoubir 20  accepts , at least , that part of the Harbour IA is a  DBA  and that  the DBA  is not 
+compliant with  the relevant legislation  (§81).  
+99. Following the Pre -Action Correspondence , and having regard to Zoubir 20,  the 
+remaining dispute  appears to concern  the following issues (the “ Issues ”): 
+99.1. The full extent  of the non -compliance of the  key parts of the  Harbour IA 
+identified in the LBA  (the “ Remaining DBA Issues ”). In sum, it is Mr Thomas’ 
+case that the Harbour IA is partly unenforceable by Harbour because that or 
+those parts is/are a DBA  for the purposes of s.58AA of the  CLSA 1990  and 
+fail(s) to comply with the provisions of the CLSA 1990 and/or the DBA Regs 
+2013.  Mr Thomas contends that: (i) key parts of the Harbour IA  which fall to be 
+considered a DBA  is/are non-compliant with the relevant legislation in a number 
+of material respects  explained below ; and (ii)  accordingly, those parts are 
+ 
+12 A comparison between the Draft Zoubir Statement and Zoubir 20 demonstrates that a series of new points are 
+now being advanced  by Harbour , including an aspect of its argument on severance and its wholly new case on 
+estoppel by deed.  A1.6/131
+ 
+ 
+ 
+ 34 unenforceable  by Harbour.  This is addressed in Section F below . 
+99.2. Whether  Harbour is entitled  to amend the Harbour IA (specifically, parts of 
+Schedule 2)  by severing non-compliant  provisions  so as to leave in place an 
+otherwise compliant and effective agreement (the “ Severance Issue ”). Mr 
+Thoma s contend s that Harbour’s proposed form of severance  is not permissible  
+as a matter of law  and, even if it was,  the relevant parts of the  Harbour IA would 
+still fail to comply with the relevant legislation . This is addressed in Section G 
+below . 
+99.3. Whether Mr Thomas is time -barred from bringing the Thomas Cross -
+Application or , it appears  from the position taken by Harbour , even from 
+defending the Harbour Application (the “ Limitation Issue ”). This is addressed 
+in Section H below . 
+99.4. Whether it is otherwise an abuse of the Court’s process for Mr Thomas to seek 
+the relief set out in the Thomas Cross -Application  and (it would also seem from 
+the position taken by Harbour) even  to defend the Harbour Application  (the 
+“Abuse Issue ”). This is addressed in Section H below.  
+100. The remainder of this statement  explains Mr Thomas’ position on each of the Issues 
+together with the relief he seeks in the Thomas Cross -Application , subject to the detailed 
+legal submissions he will make in due course.  
+101. For completeness, I note that some potential legal  issues  have been mentioned by 
+Harbour only by name and are not explained further (see, for example, Zoubir 20 at 
+§114). I address these below to the extent possible in light of Harbour’s failure to 
+articulate them.  Mr Thomas will address these them further once Harbour has properly 
+explained its case in these aspects.  A1.6/132
+ 
+ 
+ 
+ 35 F. THE REMAINING DBA ISSUES  
+(1) The DBA and non-compliance  
+102. As mentioned above, i n the Pre -Action C orrespondence (and now in Zoubir 20) Harbour 
+has accepted  that at least parts of  the Harbour IA are required to, but do not, comply with 
+at least some requirements of the DBA Regs 2013 . 
+103. In summary, Mr Thomas’  position is as follows : 
+103.1.  Pursuant to the  Harbour  IA, Harbour provided financial services and/or 
+assistance to ( inter alia ) Mr Thomas in relation to the making of a claim (the 
+Original Proceedings  referred to above ). 
+103.2.  Per the key terms of the Harbour IA set out above, the Harbour IA provides that, 
+in the event of Success in the Proceedings  (as defined) , a series of payment s are 
+to be made to Harbour in accordance with Clause 9.1(a) -(e), including  (per 
+Clause 9.1(e) ) a payment or payments calculated by reference to the amount of 
+the financial benefit obtained ( set out in Schedule 2 ). 
+103.3.  In the circumstances, Mr Thomas ’ case is  that significant portions of the 
+Harbour IA is/are a DBA . Specifically : 
+103.3.1.  Clause s 9.1(a) -(e) (or each of them) , together with Schedule 2 , 
+constitute (s) the (or a)  DBA .  
+103.3.2.  Alternatively, Clause 9 .1(e), together with Schedule 2 , constitute (s) 
+the (or a)  DBA . 
+103.3.3.  In the further alternative , Schedule 2  alone constitutes the (or a) 
+DBA . 
+103.3.4.  On all of the above cases, Clauses 10.2, 12.1 , and /or 14.4 are also 
+part of the (or a) DBA , or are themselves DBA elements  within the 
+Harbour IA . A1.6/133
+ 
+ 
+ 
+ 36 103.4.  The above portions of the  Harbour IA fail to comply with various provisions of 
+s.58AA(4) CLSA 1990  and the DBA Regs 2013  relating to DBAs . 
+103.5.  Consequently,  the key parts of the Harbour IA constituting the (or a) DBA are 
+unenforceable by Harbour against  Mr Thomas  (and the other  Orb Claimants ). 
+104. Relevantly, I note the following admissions made by Harbour in Zoubir 20 (and in the 
+Pre-Action Correspondence) about the effect of the CLSA 1990  and DBA Regs 2013  
+and their impact on the Harbour IA : 
+104.1.  First, Harbour concedes that the Harbour IA contains two elements of a DBA 
+identified in  s.58AA(3) of the CLSA 1990  in that: (i) it involves the provision 
+of “claims management services ”; and (ii) that service is provided in return for 
+a payment that is: (a) contingent on the success of the Causes of Action; and ( b) 
+calculated as a proportion of the financial benefit obtained by the Orb Claimants 
+from that success13 (Zoubir 20 , §§75, 76 and 7 9-80); 
+104.2.  Second , Harbour concedes that the Harbour IA does not comply with the 
+requirement , imposed by Regulation  3(c) of the DBA Regs 201 3, that the 
+Harbour IA specify  the reason for setting the amount of its return at  the levels 
+mentioned in Schedule 2  (Zoubir 20 , §81) (page 510 ). Specifically  (Breach 1) , 
+the DBA  within the Harbour IA  fails to set out : (i) the reason for any of the 
+percentage entitlements at the levels provided for in Schedule 2  (and therefore  
+also by Clause 9.1(e) , which incorporates  Schedule 2 ); (ii) the reason for the ir 
+escalations  (encompassing both the reason for there being escalations at all and 
+the particular escalations included ); or (iii) the reason for there being a further, 
+general uplift to be applied in specified circumstances  (e.g. the ‘Any Time 
+Period’ allowances) . 
+105. I also note that Zoubir 20  at §79 seeks to give precisely the kind of reasons which needed 
+ 
+13 This last point was implicitly conceded by the comment  in §§70-71 of the Draft Zoubir Statement  (page 505 -
+506). My firm noted Harbour’s  apparent concession  on the proportion point  in my firm’s letter of 23 August 2024 
+(¶15(iii)) (page 813 ). Harcus Parker  did not address  this in Harbour’s response dated 9 September 2024 (pages 
+817-821). I believe its silence  is to be regard ed as a tacit acknowledgment that my interpretation of this part of the 
+Draft Zoubir Statement was correct.  Those passages of the Draft Zoubir Statement are  substantially  retained in 
+Zoubir 20 (served following the above -referenced inter partes  correspondence ): see Zoubir 20, §§ 79-80, with 
+some deleted references to Dr Cochrane .  A1.6/134
+ 
+ 
+ 
+ 37 to be  (but were not)  included within the DBA element of the Harbour IA  to comply with 
+Regulation 3(c) . 
+106. These are important admissions , as noted in  MH’s letter  dated  23 August 2024  (pages 
+809-816). 
+(2) Other material non-compliance  
+107. Whilst, as above, Harbour concedes non -compliance  in the respect referred to above , Mr 
+Thomas contends that  the DBA element(s) of the Harbour IA is /are, in fact , also non-
+compliant with the CLSA 1990 and/or the DBA Regs 2013 in several other important 
+respects  explained below .  
+108. There are, I believe,  at least  four further  breaches of the DBA Regs 2013  in relation to 
+Regulation 4(3) : 
+108.1.  Breach 2. Clause s 9.1(a) -(e) and Schedule 2  of the Harbour  IA provide for  a 
+potential  payment to  Harbour of an amount (substantially)  above 50% of the 
+sums ultimately recovered by the Orb Claimants . This is prohibited under 
+Regulation 4(3). Illustrative examples of this non -compliance were  set out by 
+Mr Thomas  in his LBA  (§§42-51) (pages 796 -797). 
+108.2.  By way of illustration : 
+108.2.1.  Harbour asserted in a letter dated 2 July 2021  (pages 773 -780) that 
+the total estimated realisable value of the assets held within the 
+Harbour Trust pursuant to the Harbour IA at that time was 
+£23,865,935.70;   
+108.2.2.  Harbour went on in that letter t o state that, on the assumption its 
+valuation was correct (which, as I state above, is disputed  by Mr 
+Thomas ), the minimum to which Harbour would be entitled under 
+the Harbour IA was £25,945,052.40 comprising payment of the HF2 
+Investment (as defined) and the return calculated under Schedule 2  A1.6/135
+ 
+ 
+ 
+ 38 to the same ; and  
+108.2.3.  On this basis, Harbour envisaged that it would take 100%  of the 
+Proceeds (as defined ) and the funded parties would receive nothing 
+under the Harbour IA , under the terms of  Clauses 9.1(b) and 9.1(e) 
+and Schedule 2 .  
+108.3.  Breach 3. Clause 10.2  of the Harbour IA provides in essence  an alternative 
+waterfall by which , if the  Orb Claimants, including Mr Thomas, refuse to accept  
+an offer they are recommended to accept, and then recover less than that offer, 
+the payment  due to Harbour  would (pursuant to Clause 10.2(e) ) be based on the 
+amount of the rejected offer  rather than the Proceeds (as defined) in fact 
+recovered. Hence the Harbour IA again asserts a right for Harbour  (potentially ) 
+to be paid  an amount above 50% of the sums ultimately recovered by the Orb 
+Claimants , and is a  second  breach of Regulation 4(3).   
+108.4.  Breach 4. Clause 12.1  of the Harbour IA  again provides , in certain  
+circumstances, for a payment to  Harbour in excess of 50%  of recoveries by 
+artificially inflating or broadening the scope of the Proceeds /recoveries  against 
+which Harbour’s purported entitlements are assessed  (i.e. beyond actual 
+recoveries to include ‘any sum from any third party in respect of any matter 
+relating to the Causes of Action, including sums received as rebates on VAT 
+paid by the Claimants in respect o f the Claimants ’ Legal Costs ).  
+108.5.  Breach 5. Clause 14.4 (ii) of the Harbour IA provides for a payment  to Harbour  
+from the Proceeds  of an amount  corresponding to the HF 2 Investment and 
+interest thereon of 10% per annum,  which was always capable  of amounting to 
+more than 50% of the Proceeds. This  means that (combined) there  was always 
+the possibility that the Orb Claimants would be required by its terms to pay 
+Harbour  an amount above 50% of the sums ultimately recovered by the Orb 
+Claimants .  
+109. Finally  (Breach 6), I believe that the relevant part(s) of the Harbour IA  breach (es) A1.6/136
+ 
+ 
+ 
+ 39 Regulation 4(1)  of the DBA Rega 2013 in that it fails to ‘net off’ recovered costs from 
+the sums claimable in  or by reference to  Schedule 2 .   
+110. As was noted in Mr Thomas’  LBA  (pages 781 -800): 
+110.1.  Whilst the (purported) payment liabilities of the  Orb Claimants are contained in 
+the Waterfall, and each element is deducted before moving to the next item, 
+Clause 9.1(e)  simply provides for payment to the Trust Beneficiaries (including 
+Harbour ) out of amounts calculated by reference to the formula  set out  in 
+Schedule 2 . 
+110.2.  Schedule 2  provides for percentage and multiplier calculations in respect of the 
+“Proceeds ” where, a s explained in paragraph  82.3 above, ‘Proceeds’ is a defined 
+term to include gross sums which are not net of , for example, inter partes  costs 
+recoveries . 
+110.3.  Clause  9.1(e)  and/or Schedule 2  provide for the percentage  payments to be 
+made to Harbour without  ‘netting off’ the costs from those payments . 
+111. This, I believe,  is a clear breach of Regulation  4(1). 
+112. Taking those matters in the round, Mr Thomas contends that there is material  (and 
+substantial)  non-compliance by the DBA element (s) of the Harbour IA with the DBA 
+Regs 2013 . 
+(3) Enforceability  
+113. The effect of the DBA elements of t he Harbour IA’s non -compliance  with the DBA Regs 
+2013  is principally a matter for legal submissions in due course and is/are not explained 
+in detail here.  
+114. By way of summary, however, Mr Thomas ’ position is  that: 
+114.1.  The DBA  elements of the Harbour IA  (summarised in paragraph 103.3  above)  
+are unenforceable  by Harbour  as against Mr Thomas and the other funded 
+parties under the Harbour IA  under s.58AA(2) of the CLSA, which provides A1.6/137
+ 
+ 
+ 
+ 40 that “ [a DBA] which does not satisfy [the requirements of the DBA Regs 2013] 
+is unenforceable ”. 
+114.2.  Harbour is thus not entitled to any  payment  under  Clauses 9.1 (a)-(e), on Mr 
+Thomas’ primary case , or alternatively is not entitled to any payment calculated 
+by reference to Clause 9.1(e)  and/or Schedule 2 .  
+G. HARBOUR’S SEVERANCE ARGUMENT  
+(1) The proposed  form of severance  
+115. Harbour asserted in the Pre -Action C orrespondence that it intends to rely on Clause 25.1  
+of the Harbour IA in an attempt to save at least some of the key provisions impugned by 
+Mr Thomas,  in circumstances where (at least) aspects of it are plainly non -compliant with 
+the CLSA 1990  and/or DBA Regs 2013 , as set out above  (see paragraphs 101 -115 of the 
+draft 20th Zoubir witness statement provided pre -action to MH on 2 August 2024 ( pages 
+515-520)) 
+116. Clause 25.1  states:  
+“If any term or provision in this Agreement shall in whole or in part be held to any extent to be 
+illegal or unenforceable under any enactment or rule of law, that term or provision or part shall 
+to that extent be deemed not to form part of this Agreement and the enforceability of the 
+remainder of this Agreement shall not be affected ” (page 304 ). 
+117. For the first time, Zoubir 20 identifies a further facet to Harbour’s severance argument, 
+which is that (Harbour says) there is a difference in the approach to be taken where the 
+Court is concerned with a contractual severance clause  rather than severance at common 
+law (Zoubir 20, §120 ). Specifically, Harbour contends that this circumvents the elements 
+of the common law test which cause its proposed form of severance so much difficulty:  
+“This is a straightforward exercise in contractual interpretation which does not require reference 
+to the general common law principles concerning severance, or to satisfy the general common 
+law test. In particular, in the contractual interpretation context  the court is not limited to 
+deletions, it does not matter whether there is surplus language left over and there is no need to 
+consider whether the overall balance of the contract remains the same .” (Zoubir 20, §120)  
+(emphasis added).  
+118. These are  legal submission s (the bas es for which are not articulated in Zoubir 20)  which A1.6/138
+ 
+ 
+ 
+ 41 Mr Thomas will address in due course.  For now, Harbour appears to stand by the so -
+called ‘Modified Schedule 2’ in Zoubir 20 (“Modified Schedule 2 ”) and contends  that 
+the words struck through in Modified Schedule 2  could be severed from Schedule 2  so 
+as to leave an otherwise compliant and enforceable agreement.  
+119. Harbour’s proposed form of severance (which, for the avoidance of doubt, Mr Thomas 
+disputes) is as follows , with Harbour’s proposed deletions from Schedule 2  struck 
+through with red lines : 
+ 
+120. I note that Harbour proposes no severance to Clause s 9, 12.1, and/or 14.4 and does not 
+address the breaches arising in relation to those Clauses referred to above .  
+A1.6/139
+ 
+ 
+ 
+ 42 (2) Defects in Harbour’s proposed form of severance  regarding Schedule 2  
+121. I make the following observations about Harbour’s proposed form of severance  in 
+relation to Schedule 2  to the Harbour IA , bearing in mind that Mr Thomas’ full position 
+will be articulated in legal submissions in due course . 
+122. First, even assuming the Modified Schedule 2 meets the test for severance (which, as 
+below, Mr Thomas does not accept) , the text which is proposed to be severed is not the 
+only wording in the relevant portions of the Harbour IA which pr ovides for a “percentage  
+based recovery ” (to use , without admission,  the description  in Zoubir 20 ).  
+123. Second , Mr Thomas will contend in any event  that the words proposed to be severed  
+cannot, in fact, be severed  under Clause 25.1  or at common law  because  (without 
+limitation  and without rehearsing the detailed legal submissions which will be made in 
+due course) : 
+123.1.  There is no  justifiable  basis for deletin g “(but in any case, ” from  Schedule 2  
+because,  as explained in the Pre -Action Correspondence (see paragraph 18 of 
+MH’s  letter dated 23 August 2024 (pages 813 -814), it is only a term or provision 
+that is illegal or unenforceable that may be severed. The text and words quoted 
+above  (“(but in any case, ”) are neither illegal nor unenforceable , and Harbour 
+does not seem to contend otherwise . Mr Thomas’ position is that Harbour is not 
+entitled to  sever them merely because it finds them inconvenient . 
+123.2.  Moreover , Zoubir 20  is, I believe,  wrong to say ( at §123 ) that, “ the Modified 
+Schedule 2 provisions are workable, and do not require any re -writing or 
+amendment in order to be understood ”. All that the Modified Schedule 2  would  
+provide  (if so modified) is that, after repayment of the HF2 Investment, Harbour 
+is entitled to “ an amount no less than  [x] times the HF2 Investment ” (emphasis 
+added) . That is not a statement of the sum to which Harbour would  be entitled; 
+it is just a statement of one criterion  applicable to the calculation of that sum 
+without there being any other basis in the agreement for calculating the sum. For 
+the Modified Schedule  2 to provide the necessary certainty  as to Harbour’s 
+payment entitlement  it would need to  add words to enable that sum to be A1.6/140
+ 
+ 
+ 
+ 43 calculated (which  Mr Thomas contends  is not permissible) . 
+123.3.  Further , Modified Schedule 2  would effect a major change in the nature of the 
+Harbour IA  (which Mr Thomas  also contends is not permissible) , for example  
+(and without limitation)  by significantly alter ing the basis on which Harbour’s  
+payment entitlements  would be calculated (e.g. the deletion of percentage 
+entitlements  and retention (only) of multiplie r entitlements ) and/or the amount 
+likely to be paid to Harbour in various circumstances (e.g. the deletion of the 
+‘Any Time Period’ entitlements).  
+124. These points were  put to Harbour in the Pre -Action Correspondence , including by 
+reference to the applicable legal principles (not rehearsed herein) . I draw the Court’s 
+attention in particular to  paragraphs 18 -22 of MH’s letter dated 23 August 2024 (pages 
+813-814) which were  substantially unaddressed  by Harbour in its responsive letter dated 
+9 September 2024 (pages 817 -821). Indeed, Harbour stated at paragraphs 13 -14 of that 
+letter merely that:  
+“13. As to paragraphs 18 and 19 of Your Letter, Harbour maintains its position as to the  
+application of the principles of severability and/or characterisation as an agreement other  than 
+a DBA.  
+14. With regard to paragraphs 20 to 23 of Your Letter, Mr Zoubir’s draft statement addresses 
+these matters in some detail. Harbour maintains the position set out therein, and nothing in Your 
+Letter alters its views in this regard .” (page 820 ). 
+125. Regrettably, Harbour’s failure to  engag e with the issues in its case on severance is 
+repeated  in Zoubir 20 , such that Mr Thomas still does not know Harbour’s response to 
+those points (if indeed it has  one):  
+“I note also that in pre -action correspondence, having received the draft of this Application, 
+Marriot Harrison has indicated that Mr Thomas disagrees with Harbour application of the 
+principles of severability in respect of the proposed Modified Schedule 2. These objections would 
+only appear to have application to the common law approach not the exercise in contractual 
+interpretation referred to above. Harbour reserves its position in this regard, including as to the 
+further modification of Schedule 2 and any arguments about how the surviving wording may be 
+interpreted, pending receipt of Mr Thomas’s responsive evidence .” (Zoubir 20, § 121).  
+126. I respectfully submit  that Harbour should  articulate its case on severance  now, including 
+its answer to Mr Thomas’ responsive arguments , of which it has been aware for some A1.6/141
+ 
+ 
+ 
+ 44 time, so that Mr Thomas has a fair opportunity to consider and respond to them . 
+H. HARBOUR’S ALTERNATIVE ABUSE OF PROCESS AND LIMITATION 
+ARGUMENT S 
+127. As an alternative way of escaping the consequences of the  CLSA 1990 and the  DBA 
+Regs 2013 , Harbour alternatively  contends  that Mr Thomas is time -barred from 
+ventilating those arguments  and/or that it would be  abusive for him to do so (in both 
+respects, even, it seems, in response (and opposition ) to the Harbour A pplication  to which 
+Harbour recognises Mr Thomas should be made a Respondent because his interests are 
+very obviously affected by it ).  
+(1) Limitation  
+128. First, Harbour contends  that Mr Thomas’ arguments above are time -barred. This is a 
+matter for legal submissions in due course although I refer the Court to the parties’ Pre-
+Action C orrespondence on this point: specifically, my firm’s letter of 23 August 2024 
+(paras. 9 -13) (pages 811 -812) and Harbour’s response dated 9 September 2024 (para. 
+11) (page 820 ). 
+129. Harbour’s limitation argument is difficult to follow but appears to be as follows : 
+129.1.  Paragraph 11 of Harcus Parker’s letter of 9 September 2024  (page 820 ) 
+identified section 5 of the 1980 Act  as the basis of Harbour ’s limitation 
+argument , stating as follows:  
+“On the face of things, a claim for repayment of money following a finding that the 
+Harbour IA is unenforceable would fall within section 5 of the LA 1980, and the 
+PACCAR Decision declares what the statutory framework has always meant ...” 
+129.2.  Quite apart from the generality , and lack of explanation,  of this position (and 
+without prejudice to the more detailed submissions  Mr Thomas will make in due 
+course ), I note that the relief sought by Mr Thomas in the Thomas Cross -
+Application involves no claim for repayment of monies by Harbour (or any other 
+entity).  My firm pointed this out in Mr Thomas’ response (pages 822 -828). A1.6/142
+ 
+ 
+ 
+ 45 129.3.  For the avoidance of doubt, Mr Thomas has been upfront about the relief he 
+intends to seek : see MH’s  letter of 25 September  2024  (§13)  (pages 823 -824). 
+130. In any event, Harbour’s  time-bar argument  seems to me to be inconsistent with  its own 
+application for (among other things)  mirror -image declaratory relief  in relation to the 
+validity of  the Harbour IA, i.e. a declaration that it is enforceable by Harbour . This is set 
+out in  Harbour’s draft order in support the Harbour Application . Again, MH made this 
+point in the Pre -Action Correspondence14 (before the Harbour Application was issued) 
+without adequate reply . Zoubir 20  does not address this poi nt (either) – i.e. the basis on 
+which Harbour contends that a claim for declaratory relief by Mr Thomas as summarised 
+above can be said to be time -barred . Harbour will have an opportunity to  set out its 
+position on this clearly in its responsive evidence , and should do so that Mr Thomas can 
+understand the argument he is expected to meet in good time before the hearing of the 
+Enforceability Applications . If it fails to do so, I believe that Harbour should be 
+debarred /prevented  from pursuing a time -bar argument.  
+131. For completeness, I note that Zoubir 20 also raise s “laches ” as a possible basis for 
+denying Mr Thomas the relief he seeks  (Zoubir 20, § 141). This is the first time laches 
+has been raised. Mr Zoubir does not explain the basis for this  alternative  argument.  As a 
+result,  and again,  Mr Thomas does not know the case he has to meet in this regard  and 
+Harbour is invited to set outs  its position clearly in its responsive evidence , failing which 
+I believe it should  be debarred /prevented  from pursuing this point.  
+(2) Abuse of process  
+132. Harbour alternatively argues that Mr Thomas could and should have litigated an 
+argument  that the  DBA element (s) of the  Harbour IA was /were  unenforceable by 
+Harbour “ at any time after it was agreed ” (Zoubir 20 , §98) and any attempt to make these 
+arguments now would be “ abusive ”. Mr Zoubir goes on:  
+“... the Smith Parties [defined by Mr Zoubir to include Mr Thomas] have had ample opportunities 
+to argue that the Harbour IA was subject to the DBA regulations and failed to do so.  I would 
+respectfully suggest that these matters are res judicata, or give rise to cause of action or issue 
+estoppel, or that it would be abusive, for reasons that will be expanded upon in submissions, for 
+ 
+14 MH letter dated 23 August 2024, §13 (page 812 ). A1.6/143
+ 
+ 
+ 
+ 46 them to be allowed to do so now .” (Zoubir 20, §114).  
+133. No proper attempt is made in Zoubir 20  to address the different  legal and factual  elements 
+of these (distinct) legal concepts  or to explain in what sense phrases like ‘res judicata’ 
+are used.  That, regrettably, is the continuation of Harbour’s  vague and evasive  approach  
+to these potential arguments in the Pre -Action Correspondence. As I say above, Mr 
+Thomas’ position is that Harbour should explain those arguments in its responsive 
+evidence  or be prevented from advancing them at the hearing of the Enforceabilit y 
+Applications.   
+134. So far as it has been  explained , Harbour’s argument, in essence, is  (as I understand)  that 
+Mr Thomas could and should have been aware of the arguments he advances in this 
+application as long ago as 2014  and, therefore, raised them at the Directed Trial , because 
+Harbour has been able to identify a single academic article  from Professor Rachel 
+Mulheron  on the subject dating from November 2014 titled, ‘ England's unique approach 
+to the self -regulation of third party funding: A critical analysis of recent developments ’ 
+(the “ Mulheron Article ”) (pages 541 -574) which raised (and then dismissed) the 
+possibility of litigation funding agreements having to comply with the DBA Regs 2013 .  
+135. At this stage, I make the following observations in response : 
+135.1.  Mr Thomas is a lay person . The idea that he ought to have been aware of 
+complex potential arguments  about the potential invalidity of the  (or part of the)  
+Harbour IA prior to the decision of the Supreme Court in PACCAR , when that 
+did not even reflect the understanding  of the litigation funding industry and 
+specialist litigators, is, I believe, unreasonable . 
+135.2.  Indeed,  it seems to me that  the logical result  of Harbour’s argument – that the 
+issue was so well -known that a lay person such as Mr Thomas would or should 
+have been aware of it – is that  Harbour itself must  or should also have been 
+aware that the Harbour IA might well have been  invalid; yet notwithstanding 
+that, it allowed the Court to give judgments, make orders , and grant Harbour  
+substantial monetary relief which it would  or should have been aware it may not 
+have been entitled to , without drawing the Court’s attention to this issue.  I A1.6/144
+ 
+ 
+ 
+ 47 respectfully suggest this underlines the lack of realism in  Harbour’s argument 
+that Mr Thomas  is acting abusively or unconscionably  in seeking a declaration 
+that a part or parts of the Harbour IA is /are invalid, given the clarification of the 
+law provided in the PACCAR  decision . 
+135.3.  To bolster its argument , Harbour  relies on the fact that Mr Thomas was ( at times  
+over the last decade or so ) represented by lawyers . However,  that argument 
+ignores the reality that none of those  legal teams  were a ware , either,  of the 
+potential argument which was eventually vindicated in PACCAR :  
+135.3.1.  As noted  above , there was a widespread understanding, common 
+both to the litigation funding industry (including Harbour) and 
+specialist litigators and academics in this area, that litigation funding 
+agreements such as the Harbour IA were not subject to the CLSA 
+1990 and/or the DBA Regs 2013   
+135.3.2.  The Mulheron Article  which identified a potential counter -argument  
+(on which Harbour’s abuse argument appears to rest)  reached the 
+strident conclusion  that the counter -argument  “would be bound to 
+fail”. 
+135.3.3.  So, Harbour’s position  appears to be  that Mr Thomas or one of his 
+legal teams should have discovered the Mulheron Article on the 
+point (being the only article which Harbour  relies on)  and 
+commenced a declaration claim  (presumably at the Directed Trial)  
+based on an argument in  the article  its (specialist) author had 
+concluded was “bound to fail ”, such as to make it unconscionable to 
+pursue that argument now (even in response and opposition to an 
+application by Harbour  for essentially mirror -image relief ). I believe 
+this to be an unreal argument .  
+136. Zoubir 20  contains  a series of vague assertions  that Mr Thomas  had “ extremely 
+extensive ”, “ numerous ”, “multiple ” and  
+“ample ” opportunities to contest the validity of the Harbour IA during the Directed Trial  A1.6/145
+ 
+ 
+ 
+ 48 (Zoubir 20, §§107 -108 and §104  (pages 517 -518 and 516 )). However, I note that  his 
+statement fails to engage  (even at a high level ) with the issues that were within the scope 
+of the Directed Trial .  Mr Zoubir does not identify the issues actually in dispute in the 
+Directed Trial ; nor does he explain why, in that context, it would have been reasonable 
+for and incumbent on Mr Thomas  to raise the issue of the enforceability of part (s) of the 
+Harbour IA  by Harbour  at that time or within the scope of the Directed Trial .  
+137. Nor has Harbour ever properly explain ed why it considers Mr Thomas to be abusive in 
+bringing points before the Court where (i) Harbour has already informed the Jersey Court 
+that, in its view, those points should be positively determined by the English Court, and 
+(ii) Harbour has brought  its own application and seek s its own relief in relation to the 
+same issues . 
+138. Mr Thomas await s a proper explanation of Harbour’s case . In the meantime,  I note tha t 
+the enforceability  of the relevant part(s) of the Harbour IA  by Harbour (including as 
+against the other beneficiaries of the Harbour Trust ) was not an issue that was in dispute 
+at the Directed Trial  (not least where  the Directed Trial preceded the PACCAR  decision  
+of the Supreme Court ). Nor was it relevant to the issues that were in dispute at the trial.  
+139. Indeed, Harbour’s assertion in its letter of 9 September 2024 (pages 817 -821) that the 
+outcome of the whole Directed Trial was based on the premise that the Harbour IA was 
+enforceable (in its entirety ) is clearly wrong. The central dispute in the Directed Trial 
+was the SFO’s alleged entitlement to particular assets held directly or indirectly by Dr 
+Smith and/or Dr Cochrane and/or other parties as against claims to them by third parties. 
+The enforceabilit y of the  entirety of the  Harbour IA was not determined  at the Directed 
+Trial  (pages 60 -279). 
+140. Moreover, the suggestion that Mr Thomas was required at the Directed Trial to argue that 
+the relevant part(s) of the Harbour IA are unenforceable on the grounds set out herein  
+(or, indeed, that it was even possible  for him to do so) , is fanciful. Whatever the position 
+with regard to knowledge of the PACCAR  point  (which is addressed above  and by Mr 
+Thomas in his witness statement ), it is important for the Court to understand the 
+chronology , which I understand (from reviewing the relevant judgments) to be as A1.6/146
+ 
+ 
+ 
+ 49 follows : 
+140.1.  The Competition Appeal  Tribunal’s (“CAT ”) judgment on the point at first 
+instance was handed down on 28 October 2019 (pages 575 -627). The CAT held 
+that litigation funding agreements such as the Harbour IA were not DBAs for 
+the purposes of the CLSA 1990  and other relevant legislation.   
+140.2.  The Court of Appeal’s decision was handed down on or around 5 March 2021  
+(pages 628 -674).  It agreed with the CAT  that litigation funding agreements 
+such as the Harbour IA were not DBAs and maintained the position set out 
+above . 
+140.3.  The Directed Trial Judgment was handed down on  18 May 2021 . As above, this 
+was at a time when both the CAT and (more importantly) the Court of Appeal 
+had positively determined  that litigation funding agreements were  not subject to 
+the CLSA 1990 and/or the DBA Regs 2013. (pages 60 -279). 
+140.4.  The Supreme Court  appears to have given permission to appeal in the PACCAR 
+litigation on 28 April 202215 and did not hear argument in PACCAR until 
+February 2023 . The Supreme Court  handed down  its judgment on 26 July 2023 . 
+(pages 675 -772). 
+141. Accordingly, at the time the Directed Trial Judgment was handed down by Mr Justice 
+Foxton, the Court of Appeal’s decision in the PACCAR litigation was the leading 
+authority and was directly binding on the High Court . The idea that Mr Thomas was 
+wrong not to  have argued  before Mr Justice Foxton for a position which , at the trial,  
+would have been  directly contrary to the CAT’s ruling and which (by the time the 
+decision was handed down)  was directly contrary to a decision of the Court of Appeal  is, 
+I believe,  simply untenable.  
+142. On the contrary, even if Mr Thomas had been aware of a PACCAR -style argument at the 
+time of the Directed Trial,  I respectfully suggest that  the Court would no doubt have 
+ 
+15 https://www.supremecourt.uk/pta/permission -to-appeal -april-may-2022.html     A1.6/147
+ 
+ 
+ 
+ 50 rejected the argument instantly  on the same grounds the CAT and Court of Appeal had 
+rejected it  (and, as above,  was, by the time of handing down the Directed Trial Judgment, 
+bound by higher authority in the form of the Court of Appeal’s decision ).  
+143. I believe that t he Court should  also reject the overarching point  made in Zoubir 20 at 
+§§109-113 for the same reasons.  
+(3) Estoppel  by deed  
+144. In Zoubir 20 , Harbour raises (for the first time ) yet another potential argument – that Mr 
+Thomas cannot challenge the enforceability of the Harbour IA because of the terms of 
+the 2014 Harbour Deed  he signed  (see paragraph 45 above).  This argument did not appear 
+in the Pre -Action Correspondence or in the Draft Zoubir Statement .  
+145. The basis  of the new estoppel by deed argument  is set out in  Zoubir 20 at §97  as follows : 
+“... Mr Thomas (amongst others) agreed that the recoveries under the IOM Settlement were to 
+be treated as “Proceeds received as a result of Success in the Proceedings” for the  purposes of 
+Cl 9.1 of the Harbour IA and were to be applied in accordance with the terms of that clause. 
+Accordingly, each of Dr Cochrane and Mr Thomas are estopped by deed from contesting that 
+position. ” 
+146. This is fundamentally a point of law which will be addressed by Mr Thomas at the 
+appropriate time. However, I note for now that Mr Zoubir fails altogether to explain  
+(without limitation):  
+146.1.  How those words could be  said to give rise to an estoppel , still less one which 
+could have the effect of supporting  rights (in favour of Harbo ur) that are 
+excluded by  primary and secondary legislation ;  
+146.2.  How such an estoppel could arise  where the position fundamentally changed 
+following the  Supreme Court  decision in PACCAR , which judgment  did not 
+exist  in 2014 when the 2014 Harbour Deed was entered into;  and/or 
+146.3.  How the highlighted words of the 2014 Harbour Deed are said to be inconsistent 
+with Mr Thomas now contending that Harbour is not entitled to enforce its 
+alleged rights under the relevant parts of the Harbour IA.  A1.6/148
+ 
+ 
+ 
+ 51 147. Lastly, I note that Harbour continues to fail to explain the alleged  basis (if any) for its (at 
+present, wholly unarticulated) arguments concerning issue estoppel and/or cause of 
+action estoppel. As I say above, it is unfair to Mr Thomas for Harbour to refuse to explain 
+the grounds on which it brings the Harbour Application (and, assuming it is defended, 
+resists the Thomas Cross -Application), and for Mr Thomas to  be left to  discover the 
+nature of those grounds on the eve of a hearing when Harbour serves a s keleton argument.  
+I. ORDER S / RELIEF  SOUGHT  
+148. In the Pre -Action Correspondence and again in Zoubir 20, Harbour makes the claim that 
+Mr Thomas has failed to set out the nature of the relief he intends to seek from the Court 
+in relation to the Enforceability Applications. That is incorrect. My firm set out this 
+position  clearly  in the Pre -Action Correspondence ( e.g. in paragraph 14 of MH’s letter 
+dated 25 September 2024 (page 824 )). Harbour’s response to that letter, provided on 9 
+October 2024, merely repeated its (unmerited) accusation that, “ as we have  already set 
+out, it is your client who has failed to articulate the relief he seeks or its consequences in 
+sufficient detail ” (§4) (pages 829 -830), a claim repeated in Zoubir 20 .  
+149. Harbour’s claim remains incor rect but, in any event, I summarise the specific relief 
+sought below, which is also provided for in the draft order supplied with the Thomas 
+Cross -Application.  
+150. I also note that the full relief sought in the draft order provided  by Harbour  with the 
+Harbour Application was not fully articulated in the Pre -Action Correspondence . 
+(1) Summary of declarations/primary relief sought  
+151. In summary, and w ithout prejudice to Mr Thomas’ right to seek additional  or other relief 
+in due course, Mr Thomas  presen tly seeks the  following  relief  in the Thomas Cross -
+Application : 
+151.1.  Declarations that: 
+151.1.1.  Clauses 9.1(a) -(e) (or each of them) and Schedule 2  of the Harbour 
+IA are unenforceable by Harbour against Mr Thomas (and/or all A1.6/149
+ 
+ 
+ 
+ 52 funded parties to that contract) . 
+151.1.2.  Alternatively, Clause 9.1(e)  and Schedule 2  are unenforceable by 
+Harbour against Mr Thomas (and/or all funded parties to that 
+contract) .  
+151.1.3.  Alternatively , Schedule 2 is unenforceable by Harbour against Mr 
+Thomas (and/or all funded parties to that contract) . Mr Thomas 
+contends that, in substance, this would produce essentially the same 
+result as the declaration in paragraph 151.1.2  above where Clause 
+9.1(e) merely incorporates Schedule 2 (if enforceable) into the 
+Waterfall.  
+151.1.4.  Further or alternatively, Clauses 10.2, 12.1,  and/or 14.4 are 
+unenforceable by Harbour against Mr Thomas (and/or all funded 
+parties to that contract) .  
+151.1.5.  Consequently :  
+151.1.5.1.  Harbour has no interest in (and is not entitled to) any 
+part of the Proceeds or any payment under or in relation 
+to the Harbour IA ; or 
+151.1.5.2.  To the extent Harbour is able to save some  but not all  of 
+the terms requiring payment to it, Harbour is not entitled  
+to any  other sums/payments  under the Harbour IA.  
+151.2.  If necessary, a n order  (pursuant to paragraph 27 thereof) varying the  
+Consequentials Order as set out below  (or in such other ways or in other respects 
+as the Court  sees fit  and/or is necessary to put the declarations listed above into 
+legal and practical effect ). This is explained further below.  
+152. For obvious reasons, Mr Thomas also resists all of the relief sought by Harbour on the 
+Harbour Application.  A1.6/150
+ 
+ 
+ 
+ 53 (2) Possible i mpact on the Consequentials Order  
+153. Mr Thomas has also considered the pote ntial impact of the relief sought in the 
+Enforceability Applications on the Consequentials Order.  
+154. As a starting point, I note that ( as I say above ): 
+154.1.  To the extent the Court considers it necessary to address  the issue, Mr Thomas’ 
+application is made pursuant to the ‘liberty to apply’ provision at paragraph 27 
+of the Consequentials Order (page 12 ) because  it pertains to the contractual 
+documentation underpinning the Harbour Trust and Harbour’s rights and/or 
+interests (which are adverse to Mr Thomas’ rights and/or interests) in respect of 
+the same which are, in part, the subject of the  Consequentials Order . 
+154.2.  It is my understanding that, to date, no assets or funds within the Harbour Trust 
+have yet been released to or realised by the Orb Claimants or Harbour pursuant 
+to the Harbour IA . 
+154.3.  I understand that the assets within the Harbour Trust are currently held  or 
+controlled  by t he New Trustees , Joint Liquidators  and/or Enforcement  
+Receivers.  
+155. Mr Zoubir identifies  in particular paragraphs 4 and 5 of the Consequentials Order  (pages 
+6-7) as relevant to the relief sought by Mr Thomas .  
+156. Mr Thomas’  primary position is that no amendments are required to the Consequentials 
+Order to reflect the declarations sought by Mr Thom as where  (if the d eclarations set out 
+above are made)  (i) Harbour can remain  identified  in paragraph 4 of the Consequentials 
+Order as a beneficiary of the Harbour Trust but (ii) by reason of the declarations sought, 
+is not entitled to any payments thereunder and/or does not have and/or is not entitled to 
+vindicate or enforce any rights to as sets within the Harbour Trust.  
+157. However, if the Court considers it would be necessary to vary the Consequentials Order 
+in the event  the Thomas Cross -Application succeeds in full or in part, I envisage very A1.6/151
+ 
+ 
+ 
+ 54 limited textual amendments could be made to give effect to the declarations sought.  
+158. Specifically, and without prejudice to Mr Thomas’ right to seek further or other 
+amendments to the Consequentials Order as appropriate, I currently envisage that the 
+following variations/amendments could  be made  to paragraphs 4 -5 ( the single suggested 
+deletion  being  shown below in red struck -through text):  
+“4. The interests in the following assets are held by their legal owners on the terms of 
+the Harbour Trust and are to be applied and apportioned between the beneficiaries, 
+namely Harbour,  Orb arl, and Messrs Thomas and Taylor, in accordance with  those 
+terms  (save as set out below) ...  
+[...] 
+5. Any share of the proceeds under the Harbour Trust which is attributable to Orb and 
+Messrs Thomas and Taylor shall be adjusted as follows:  
+a. The entitlement of Orb and Messrs Thomas and Taylor (after payment out of the 
+prior items in the waterfall under the Harbour Trust)16 shall first be determined 
+without any adjustments, based on the following percentages: 62.5% to Orb, 
+18.75% to Mr Thomas and 18.75% to Mr Taylor; [...] ”.  
+159. I do not consider it necessary for the Court to make any further amendments to the 
+Consequentials Order  (if indeed it is at all) .  
+160. The full relief sought by Mr Thomas is set out in the draft order accompanying the 
+Thomas Cross -Application.  
+161. For completeness, it is possible that other parties to these and/or related proceedings 
+whose interests are engaged by the Consequentials Order or other Orders made by the 
+Court concerning Harbour, will wish to make submissions as to any other impacts on o r 
+appropriate variations to the Consequentials Order or other Orders in light of the 
+ 
+16 These words in parentheses  could be deleted in the event  all of  Clauses 9.1(a) -(e) (plus Schedule 2)  are held 
+unenforceable  – such that the only distribution which falls to be made as part of Clause 9.1 is pursuant to Clause 
+9.1(f)  – and the Court considers it necessary or desirable to do so . A1.6/152
+ 
+ 
+ 
+ 55 declarations and findings which Mr Thomas asks the Court to make. I am not presently 
+aware that any party currently wishes to do so  and Mr Thomas’ rights are fully reserved 
+in relation to the same.  
+(3) Counter -relief sought by Harbour  
+162. Finally,  and for the record , I note that, upon issuing its application, Harbour has provided 
+Mr Thomas with a proposed draft order  setting out the full relief it seeks , together with 
+unusual and extreme  provisions  such as  (for example)  (i) the “ totally without merit ” 
+marker/declaration  (§2), and (ii)  the asymmetrical “ liberty to apply ” provision in favour 
+only of the Settlement Parties (as defined) and excluding Mr Thomas  (§7). Zoubir 20 
+does not even attempt to justify these ancillary provisions.  
+163. The relief sought by Harbour  in its draft order  is resisted  by Mr Thomas  in its totality.  
+Mr Thomas reserves the right to make observations and raise objections as to the  nature 
+and/or form of the  relief sought  therein  if and to the extent it becomes necessary in due 
+course.  
+STATEMENT OF TRUTH  
+ 
+I believe that the facts stated in this witness statement are true. I understand that proceedings 
+for contempt of court may be brought against anyone who makes, or causes to be made, a false 
+statement in a document verified by a statement of truth without an honest belief in its truth.  
+ 
+SIGNED : ………………………………….  
+Tamar Halevy  
+ 
+DATE : 28 November 2024  
+ 
+A1.6/153

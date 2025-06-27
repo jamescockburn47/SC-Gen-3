@@ -1,0 +1,403 @@
+--- XHTML Content ---
+--- Table 1 ---
+
+Company Information 1 Strategic Report 2 to 4 Directors' Report 5 Statement of Directors' Responsibilities 6 Independent Auditor's Report 7 to 9 Statement of Comprehensive Income 10 Balance Sheet 11 Statement of Changes in Equity 12 Notes to the Financial Statements 13 to 26
+
+--- Table 2 ---
+
+Directors M Ramzan N Ramzan W Badar A Ramzan
+
+--- Table 3 ---
+
+Company secretary K Javed
+
+--- Table 4 ---
+
+Registered office 246 Flemington Street Springburn Glasgow G21 4BY
+
+--- Table 5 ---
+
+Auditors Khokhar McAdam Ltd Chartered Accountants 1 Eagle Street Glasgow G4 9XA
+
+--- Table 6 ---
+
+Page 1
+
+--- Table 7 ---
+
+Page 2
+
+--- Table 8 ---
+
+Page 3
+
+--- Table 9 ---
+
+Page 4
+
+--- Table 10 ---
+
+Page 5
+
+--- Table 11 ---
+
+• select suitable accounting policies and apply them consistently;
+
+--- Table 12 ---
+
+• make judgements and accounting estimates that are reasonable and prudent;
+
+--- Table 13 ---
+
+• state whether applicable UK Accounting Standards have been followed, subject to any material departures disclosed and explained in the financial statements; and
+
+--- Table 14 ---
+
+• prepare the financial statements on the going concern basis unless it is inappropriate to presume that the company will continue in business.
+
+--- Table 15 ---
+
+Page 6
+
+--- Table 16 ---
+
+• give a true and fair view of the state of the company's affairs as at 31 December 2020 and of its profit for the year then ended; • have been properly prepared in accordance with United Kingdom Generally Accepted Accounting Practice; and • have been prepared in accordance with the requirements of the Companies Act 2006.
+
+--- Table 17 ---
+
+• the directors’ use of the going concern basis of accounting in the preparation of the financial statements is not appropriate; or • the directors have not disclosed in the financial statements any identified material uncertainties that may cast significant doubt about the company’s ability to continue to adopt the going concern basis of accounting for a period of at least twelve months from the date when the financial statements are authorised for issue.
+
+--- Table 18 ---
+
+Page 7
+
+--- Table 19 ---
+
+• Identify and assess the risks of material misstatement of the financial statements, whether due to fraud or error, design and perform audit procedures responsive to those risks, and obtain audit evidence that is sufficient and appropriate to provide a basis for our opinion. The risk of not detecting a material misstatement resulting from fraud is higher than for one resulting from error, as fraud may involve collusion, forgery, intentional omissions, misrepresentations, or the override of internal control.
+
+--- Table 20 ---
+
+• Obtain an understanding of internal control relevant to the audit in order to design audit procedures that are appropriate in the circumstances, but not for the purpose of expressing an opinion on the effectiveness of the company’s internal control.
+
+--- Table 21 ---
+
+• Evaluate the appropriateness of accounting policies used and the reasonableness of accounting estimates and related disclosures made by the directors.
+
+--- Table 22 ---
+
+• Conclude on the appropriateness of the directors' use of the going concern basis of accounting and, based on the audit evidence obtained, whether a material uncertainty exists related to events or conditions that may cast significant doubt on the company's ability to continue as a going concern. If we conclude that a material uncertainty exists, we are required to draw attention in our auditor’s report to the related disclosures in the financial statements or, if such disclosures are inadequate, to modify our opinion. Our conclusions are based on the audit evidence obtained up to the date of our auditor’s report. However, future events or conditions may cause the company to cease to continue as a going concern.
+
+--- Table 23 ---
+
+• Evaluate the overall presentation, structure and content of the financial statements, including the disclosures, and whether the financial statements represent the underlying transactions and events in a manner that achieves fair presentation.
+
+--- Table 24 ---
+
+• Obtain sufficient appropriate audit evidence regarding the financial information of the entities or business activities within the company to express an opinion on the financial statements. We are responsible for the direction, supervision and performance of the company audit. We remain solely responsible for our audit opinion.
+
+--- Table 25 ---
+
+Page 8
+
+--- Table 26 ---
+
+Page 9
+
+--- Table 27 ---
+
+Note 2020 £ 2019 £ Turnover 3 215,953,371 167,571,562 Cost of sales 197,666,689 157,073,970 Gross profit 18,286,682 10,497,592 Distribution costs ( 371,509 ) ( 340,300 ) Administrative expenses ( 7,371,622 ) ( 7,125,467 ) Other operating income 4 30,290 - Operating profit 5 10,573,841 3,031,825 Loss on financial assets at fair value through profit and loss account ( 584,805 ) - Income from other fixed asset investments 35,923 - Other interest receivable and similar income 6 68,979 118,322 Interest payable and similar expenses 7 ( 20,581 ) ( 7,503 ) (500,484) 110,819 Profit before tax 10,073,357 3,142,644 Taxation 11 ( 1,934,979 ) ( 601,009 ) Profit for the financial year 8,138,378 2,541,635
+
+--- Table 28 ---
+
+Total comprehensive income for the year 8,138,378 2,541,635
+
+--- Table 29 ---
+
+Page 10
+
+--- Table 30 ---
+
+Note 2020 £ 2019 £ Fixed assets Tangible assets 12 3,041,905 3,249,019 Investment property 13 565,000 1,149,805 Other financial assets 14 225 225 3,607,130 4,399,049 Current assets Stocks 15 17,022,812 14,230,753 Debtors 16 12,484,787 12,677,658 Cash at bank and in hand 16,935,177 6,516,522 46,442,776 33,424,933 Creditors : Amounts falling due within one year 17 ( 29,740,803 ) ( 24,579,865 ) Net current assets 16,701,973 8,845,068 Total assets less current liabilities 20,309,103 13,244,117 Creditors : Amounts falling due after more than one year 17 - ( 5,286 ) Provisions for liabilities 18 ( 727,044 ) ( 760,264 ) Net assets 19,582,059 12,478,567 Capital and reserves Called up share capital 20 5,500 5,500 Capital redemption reserve 4,500 4,500 Profit and loss account 19,572,059 12,468,567 Total equity 19,582,059 12,478,567
+
+--- Table 31 ---
+
+Page 11
+
+--- Table 32 ---
+
+Share capital £ Capital redemption reserve £ Profit and loss account £ Total £ At 1 January 2020 5,500 4,500 12,468,567 12,478,567 Profit for the year - - 8,138,378 8,138,378 Total comprehensive income - - 8,138,378 8,138,378 Dividends - - ( 1,034,886 ) ( 1,034,886 ) At 31 December 2020 5,500 4,500 19,572,059 19,582,059
+
+--- Table 33 ---
+
+Share capital £ Capital redemption reserve £ Profit and loss account £ Total £ At 1 January 2019 5,500 4,500 10,557,885 10,567,885 Profit for the year - - 2,541,635 2,541,635 Total comprehensive income - - 2,541,635 2,541,635 Dividends - - ( 630,953 ) ( 630,953 ) At 31 December 2019 5,500 4,500 12,468,567 12,478,567
+
+--- Table 34 ---
+
+Page 12
+
+--- Table 35 ---
+
+1 Statutory information
+
+--- Table 36 ---
+
+2 Accounting policies
+
+--- Table 37 ---
+
+Page 13
+
+--- Table 38 ---
+
+Asset class Depreciation method and rate Freehold buildings 50 years Plant, fixtures and fittings 5 to 7 years Motor Vehicles 5 years Freehold Land Freehold land is not depreciated.
+
+--- Table 39 ---
+
+Page 14
+
+--- Table 40 ---
+
+Page 15
+
+--- Table 41 ---
+
+Page 16
+
+--- Table 42 ---
+
+3 Revenue
+
+--- Table 43 ---
+
+2020 £ 2019 £ Sale of goods 215,847,481 167,438,677 Rental income from investment property 77,110 111,717 Other revenue 28,780 21,168 215,953,371 167,571,562
+
+--- Table 44 ---
+
+2020 £ 2019 £ UK 215,087,141 167,571,562 Europe 694,413 - Rest of world 171,817 - 215,953,371 167,571,562
+
+--- Table 45 ---
+
+Page 17
+
+--- Table 46 ---
+
+4 Other operating income
+
+--- Table 47 ---
+
+2020 £ 2019 £ Job retention scheme grant 30,290 -
+
+--- Table 48 ---
+
+5 Operating profit
+
+--- Table 49 ---
+
+2020 £ 2019 £ Depreciation expense 250,488 253,993 Operating lease expense - plant and machinery 138,055 132,823
+
+--- Table 50 ---
+
+6 Other interest receivable and similar income
+
+--- Table 51 ---
+
+2020 £ 2019 £ Interest income on bank deposits 20,107 27,281 Other finance income 48,872 91,041 68,979 118,322
+
+--- Table 52 ---
+
+7 Interest payable and similar expenses
+
+--- Table 53 ---
+
+2020 £ 2019 £ Hire purchase interest 1,620 1,620
+
+--- Table 54 ---
+
+Page 18
+
+--- Table 55 ---
+
+8 Staff costs
+
+--- Table 56 ---
+
+2020 £ 2019 £ Wages and salaries 3,929,847 3,740,953 Social security costs 321,564 295,563 Pension costs, defined contribution scheme 66,416 60,268 4,317,827 4,096,784
+
+--- Table 57 ---
+
+2020 No. 2019 No. Administration and support 62 52 Sales, marketing and distribution 143 138 205 190
+
+--- Table 58 ---
+
+9 Directors' remuneration
+
+--- Table 59 ---
+
+2020 £ 2019 £ Remuneration 87,750 88,250
+
+--- Table 60 ---
+
+10 Auditors' remuneration
+
+--- Table 61 ---
+
+2020 £ 2019 £ Audit of the financial statements 19,000 16,500 Other fees to auditors Taxation compliance services 4,000 2,500 All other assurance services 11,000 3,000 15,000 5,500
+
+--- Table 62 ---
+
+Page 19
+
+--- Table 63 ---
+
+11 Taxation
+
+--- Table 64 ---
+
+2020 £ 2019 £ Current taxation UK corporation tax 2,020,708 606,247 UK corporation tax adjustment to prior periods ( 52,509 ) ( 10,589 ) 1,968,199 595,658 Deferred taxation Arising from write-down or reversal of write-down of deferred tax asset ( 33,220 ) 5,351 Tax expense in the income statement 1,934,979 601,009
+
+--- Table 65 ---
+
+2020 £ 2019 £ Profit before tax 10,073,357 3,142,644 Corporation tax at standard rate 1,913,938 597,102 Effects of: Effect of expense not deductible in determining taxable profit (tax loss) 1,243 4,260 Decrease in UK and foreign current tax from adjustment for prior periods ( 52,509 ) ( 10,589 ) Tax increase from effect of capital allowances and depreciation 19,020 8,724 Tax (decrease)/increase from other short-term timing differences ( 33,220 ) 5,351 Tax decrease from effect of dividends from UK companies ( 6,825 ) - Tax decrease from effect of adjustment in research and development tax credit ( 17,779 ) ( 3,839 ) Other tax effects for reconciliation between accounting profit and tax expense (income) 111,111 - Total tax charge 1,934,979 601,009
+
+--- Table 66 ---
+
+Page 20
+
+--- Table 67 ---
+
+12 Tangible assets
+
+--- Table 68 ---
+
+Land and buildings £ Furniture, fittings and equipment £ Motor vehicles £ Total £ Cost or valuation At 1 January 2020 2,840,472 4,341,754 250,022 7,432,248 Additions - 46,503 - 46,503 Disposals - - ( 7,747 ) ( 7,747 ) At 31 December 2020 2,840,472 4,388,257 242,275 7,471,004 Depreciation At 1 January 2020 228,228 3,777,198 177,802 4,183,228 Charge for the year 38,038 188,039 24,411 250,488 Eliminated on disposal - - ( 4,617 ) ( 4,617 ) At 31 December 2020 266,266 3,965,237 197,596 4,429,099 Carrying amount At 31 December 2020 2,574,206 423,020 44,679 3,041,905 At 31 December 2019 2,612,244 564,555 72,220 3,249,019
+
+--- Table 69 ---
+
+2020 £ 2019 £ Vehicles 3,101 13,101
+
+--- Table 70 ---
+
+Page 21
+
+--- Table 71 ---
+
+13 Investment properties
+
+--- Table 72 ---
+
+2020 £ At 1 January 1,149,805 Additions - Fair value adjustments ( 584,805 ) At 31 December 565,000
+
+--- Table 73 ---
+
+14 Other financial assets (current and non-current)
+
+--- Table 74 ---
+
+Unlisted Investments £ Total £ Fixed Asset Investments Cost or valuation At 1 January 2020 225 225 At 31 December 2020 225 225 Carrying amount At 31 December 2020 225 225
+
+--- Table 75 ---
+
+15 Stocks
+
+--- Table 76 ---
+
+2020 £ 2019 £ Goods for resale 17,022,812 14,230,753
+
+--- Table 77 ---
+
+Page 22
+
+--- Table 78 ---
+
+16 Debtors
+
+--- Table 79 ---
+
+Note 2020 £ 2019 £ Trade debtors 4,679,905 6,676,281 Amounts owed to/by group undertakings 25 2,589,283 3,069,374 Other debtors 5,215,599 2,932,003 12,484,787 12,677,658
+
+--- Table 80 ---
+
+17 Creditors
+
+--- Table 81 ---
+
+Note 2020 £ 2019 £ Due within one year Finance lease liabilities 21 6,012 9,546 Trade creditors 26,272,251 22,661,298 Social security and other taxes 148,598 68,921 Other payables 4,330 417,209 Accruals 728,245 773,173 Corporation tax control 11 2,581,367 649,718 29,740,803 24,579,865 Due after one year Finance lease liabilities 21 - 5,286
+
+--- Table 82 ---
+
+18 Deferred tax and other provisions
+
+--- Table 83 ---
+
+Deferred tax £ Other provisions £ Total £ At 1 January 2020 46,272 713,992 760,264 Increase (decrease) in existing provisions ( 33,220 ) - ( 33,220 ) At 31 December 2020 13,052 713,992 727,044
+
+--- Table 84 ---
+
+Page 23
+
+--- Table 85 ---
+
+19 Pension and other schemes
+
+--- Table 86 ---
+
+20 Share capital
+
+--- Table 87 ---
+
+2020 2019 No. £ No. £ Ordinary shares of £1 each of £ 1 each 5,500 5,500 5,500 5,500
+
+--- Table 88 ---
+
+21 Loans and borrowings
+
+--- Table 89 ---
+
+2020 £ 2019 £ Non-current loans and borrowings Finance lease liabilities - 5,286
+
+--- Table 90 ---
+
+Page 24
+
+--- Table 91 ---
+
+2020 £ 2019 £ Current loans and borrowings Finance lease liabilities 6,012 9,546
+
+--- Table 92 ---
+
+22 Obligations under leases and hire purchase contracts
+
+--- Table 93 ---
+
+2020 £ 2019 £ Not later than one year 6,012 9,546 Later than one year and not later than five years - 5,285 6,012 14,831
+
+--- Table 94 ---
+
+2020 £ 2019 £ Not later than one year 118,613 89,829 Later than one year and not later than five years 199,793 149,049 Later than five years 9,464 4,468 327,870 243,346
+
+--- Table 95 ---
+
+23 Dividends
+
+--- Table 96 ---
+
+Page 25
+
+--- Table 97 ---
+
+24 Financial guarantee contracts
+
+--- Table 98 ---
+
+25 Related party transactions
+
+--- Table 99 ---
+
+26 Parent and ultimate parent undertaking
+
+--- Table 100 ---
+
+Page 26
+
+--- Full XHTML Text ---
+United Wholesale Grocers Limited - Period Ending 2020-12-31 page {margin:0;padding-top:1px;padding-bottom:1px;padding-left:5px;padding-right:5px} table {margin-left: auto; margin-right: auto;} tr {margin-left: auto; margin-right: auto; margin-top: 0px; margin-bottom: 0px; padding-top:0px; padding-bottom:0px;} td {margin-left: auto; margin-right: auto; margin-top: 0px; margin-bottom: 0px; padding-top:0px; padding-bottom:0px;} td p {margin: 0px;} @media print { body { height:98%; } hr { display:none; } .portraitpage { min-height: 100%; height: 100%; border: 1px solid white; } .printpage { min-height: 100%; height: 270mm; width: 100%; border: 1px solid white; } br {display:block; line-height: 0pt;} p {line-height: 1.2;} } @media screen { .firstpage { min-height: 100%; height: 296.926mm; width: 210.058mm; margin: 25.4mm 25.4mm 25.4mm 25.4mm; } .portraitpage { min-height: 100%; height: 296.926mm; width: 210.058mm; margin: 25.4mm 25.4mm 25.4mm 25.4mm; } .landscapepage { min-height: 100%; height: 210.058mm; width: 296.926mm; margin: 25.4mm 25.4mm 25.4mm 25.4mm; } } div.portraitpage { page-break-after:always; position:relative; } div.landscapepage { page-break-after:always; position:relative; } div.footer { left:0px; right:0px; bottom:0px; position:absolute; } .Normal_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; margin-bottom: 6px; } .Note_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: justify; margin-top: 24px; margin-bottom: 7px; } .Note_Number_Indent_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; } .Page_Footer_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: center; } .Page_Header_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 14px; text-align: center; margin-bottom: 18px; } .Percentage_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; } .Primary_Page_Header_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; } .Spaced_Paragraph_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; margin-top: 18px; } .Spaced_Paragraph_2_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; margin-top: 37px; } .Tables_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; } .Title_1_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; margin-bottom: 1px; } .Title_2_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: justify; margin-bottom: 18px; } .Title_3_Text { font-family: "Arial"; font-weight: bold; font-style: italic; color: #000000; font-size: 13px; text-align: justify; margin-top: 7px; margin-bottom: 7px; } .Title_4_Text { font-family: "Arial"; font-style: italic; color: #000000; font-size: 13px; text-align: justify; margin-top: 7px; margin-bottom: 7px; } .Unsigned_Value_Text { font-family: "Arial"; color: #000000; font-size: 13px; } .Warning_Text { font-family: "Arial"; color: #FF0000; font-size: 13px; text-align: justify; } .Columns_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; } .Comparative_Column_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-left: 15px; } .Comparative_Column_2dp_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-left: 15px; } .Continued_Text { font-family: "Arial"; font-weight: bold; font-style: italic; color: #000000; font-size: 13px; text-align: left; } .Decimal_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; } .Description_Column_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; } .Heading_1_Text { font-family: "Arial"; color: #000000; font-size: 26px; text-align: center; } .Inline_Currency_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; } .Inline_Pence_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; } .Link_To_Data_Text { font-family: "Arial"; color: #0000FF; font-size: 13px; text-decoration: underline; text-align: justify; } .List_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; vertical-align: top; } .Note_Column_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; } .Reconciliation_Title_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: justify; margin-top: 18px; margin-bottom: 6px; } .Shared_Column_Header_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; } .Table_Column_Headings_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Table_Rows_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; margin-top: 9px; margin-bottom: 1px; } .Table_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Title_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; } .Total_Rows_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; } .Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Value_Column_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-left: 15px; } .Value_Column_2dp_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-left: 15px; } .Value_Column_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .2_Column_Value_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: top; } .Calculation_Column_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; } .Calculation_Column_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Calculation_Rows_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; } .Comparative_Column_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Comparative_Manual_Table_Centre_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Comparative_Manual_Table_Left_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-right: 15px; } .Comparative_Manual_Table_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 11px; } .Comparative_Smart_Table_Centre_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Comparative_Smart_Table_Left_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-right: 11px; } .Comparative_Smart_Table_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 3px; } .Comparative_Smart_Table_Total_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 11px; } .Continuous_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Current_Manual_Table_Centre_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Current_Manual_Table_Left_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-right: 15px; } .Current_Manual_Table_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 11px; } .Current_Smart_Table_Centre_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Current_Smart_Table_Left_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; margin-right: 11px; } .Current_Smart_Table_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 3px; } .Current_Smart_Table_Total_Right_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 11px; } .Decimal_Table_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Description_Column_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; vertical-align: bottom; } .Final_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Grand_Total_And_Overline_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; margin-top: 1px; margin-bottom: 9px; } .Grand_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Non-Continuous_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Note_Column_Heading_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; vertical-align: bottom; } .Reconciliation_Rows_Text { font-family: "Arial"; color: #FF0000; font-size: 13px; text-align: left; margin-top: 7px; } .Section_Breakdown_Rows_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; margin-top: 1px; margin-bottom: 1px; } .Section_Heading_Rows_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; } .Section_Total_Rows_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; margin-top: 7px; } .Section_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Section_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Sensitivity_Shared_Column_Text { font-family: "Arial"; font-weight: bold; color: #000000; font-size: 13px; text-align: center; margin-top: 7px; } .Total_Overline_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Continuous_Section_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Continuous_Section_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Decimal_Value_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: left; } .Final_Section_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Final_Section_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Non-Continuous_Section_Total_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .Non-Continuous_Section_Values_Text { font-family: "Arial"; color: #000000; font-size: 13px; text-align: right; vertical-align: bottom; margin-right: 7px; margin-left: 7px; } .centeredImage {text-align:center;margin-top:0px;margin-bottom:0px;padding:0px;} .leftAlignedImage {text-align:left;margin-top:0px;margin-bottom:0px;padding:0px;} .rightAlignedImage {text-align:right;margin-top:0px;margin-bottom:0px;padding:0px;} United Wholesale Grocers Limited SC080027 false 2020-01-01 2020-12-31 2020-12-31 The principal activity of the company is the operation of wholesale cash and carry and distribution depots selling grocery, confectionery, cigarettes. alcohol and other related products. Digita Accounts Production Advanced 6.26.9041.0 Software true true true true SC080027 2020-01-01 2020-12-31 SC080027 2020-12-31 SC080027 bus:OrdinaryShareClass1 2020-12-31 SC080027 bus:Consolidated 2020-12-31 SC080027 core:CapitalRedemptionReserve 2020-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2020-12-31 SC080027 core:ShareCapital 2020-12-31 SC080027 core:FinancialAssetsCostLessImpairment core:Non-currentFinancialInstruments 2020-12-31 SC080027 core:CurrentFinancialInstruments 2020-12-31 SC080027 core:CurrentFinancialInstruments core:WithinOneYear 2020-12-31 SC080027 core:Non-currentFinancialInstruments 2020-12-31 SC080027 core:Non-currentFinancialInstruments core:AfterOneYear 2020-12-31 SC080027 core:BetweenOneFiveYears 2020-12-31 SC080027 core:BetweenTwoFiveYears 2020-12-31 SC080027 core:MoreThanFiveYears 2020-12-31 SC080027 core:WithinOneYear 2020-12-31 SC080027 core:FurnitureFittingsToolsEquipment 2020-12-31 SC080027 core:LandBuildings 2020-12-31 SC080027 core:MotorVehicles 2020-12-31 SC080027 core:DeferredTaxation 2020-12-31 SC080027 core:OtherProvisionsContingentLiabilities 2020-12-31 SC080027 bus:FRS102 2020-01-01 2020-12-31 SC080027 bus:Audited 2020-01-01 2020-12-31 SC080027 bus:FullAccounts 2020-01-01 2020-12-31 SC080027 bus:RegisteredOffice 2020-01-01 2020-12-31 SC080027 bus:CompanySecretary1 2020-01-01 2020-12-31 SC080027 bus:Director1 2020-01-01 2020-12-31 SC080027 bus:Director2 2020-01-01 2020-12-31 SC080027 bus:Director3 2020-01-01 2020-12-31 SC080027 bus:Director4 2020-01-01 2020-12-31 SC080027 bus:OrdinaryShareClass1 2020-01-01 2020-12-31 SC080027 bus:Consolidated 2020-01-01 2020-12-31 SC080027 bus:PrivateLimitedCompanyLtd 2020-01-01 2020-12-31 SC080027 core:CapitalRedemptionReserve 2020-01-01 2020-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2020-01-01 2020-12-31 SC080027 core:ShareCapital 2020-01-01 2020-12-31 SC080027 countries:Europe 2020-01-01 2020-12-31 SC080027 countries:OtherCountriesRegions 2020-01-01 2020-12-31 SC080027 countries:UnitedKingdom 2020-01-01 2020-12-31 SC080027 core:PlantEquipmentOtherAssetsUnderOperatingLeases 2020-01-01 2020-12-31 SC080027 core:Buildings 2020-01-01 2020-12-31 SC080027 core:FurnitureFittingsToolsEquipment 2020-01-01 2020-12-31 SC080027 core:Land 2020-01-01 2020-12-31 SC080027 core:LandBuildings 2020-01-01 2020-12-31 SC080027 core:MotorVehicles 2020-01-01 2020-12-31 SC080027 core:VehiclesPlantMachinery 2020-01-01 2020-12-31 SC080027 core:DeferredTaxation 2020-01-01 2020-12-31 SC080027 core:OtherProvisionsContingentLiabilities 2020-01-01 2020-12-31 SC080027 core:EntitiesWithJointControlOrSignificantInfluenceOverReportingEntity 2020-01-01 2020-12-31 SC080027 core:UKTax 2020-01-01 2020-12-31 SC080027 1 2020-01-01 2020-12-31 SC080027 countries:Scotland 2020-01-01 2020-12-31 SC080027 2019-12-31 SC080027 core:CapitalRedemptionReserve 2019-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2019-12-31 SC080027 core:ShareCapital 2019-12-31 SC080027 core:FurnitureFittingsToolsEquipment 2019-12-31 SC080027 core:LandBuildings 2019-12-31 SC080027 core:MotorVehicles 2019-12-31 SC080027 core:DeferredTaxation 2019-12-31 SC080027 core:OtherProvisionsContingentLiabilities 2019-12-31 SC080027 2019-01-01 2019-12-31 SC080027 2019-12-31 SC080027 bus:OrdinaryShareClass1 2019-12-31 SC080027 core:CapitalRedemptionReserve 2019-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2019-12-31 SC080027 core:ShareCapital 2019-12-31 SC080027 core:CurrentFinancialInstruments 2019-12-31 SC080027 core:CurrentFinancialInstruments core:WithinOneYear 2019-12-31 SC080027 core:Non-currentFinancialInstruments 2019-12-31 SC080027 core:Non-currentFinancialInstruments core:AfterOneYear 2019-12-31 SC080027 core:BetweenOneFiveYears 2019-12-31 SC080027 core:BetweenTwoFiveYears 2019-12-31 SC080027 core:MoreThanFiveYears 2019-12-31 SC080027 core:WithinOneYear 2019-12-31 SC080027 core:FurnitureFittingsToolsEquipment 2019-12-31 SC080027 core:LandBuildings 2019-12-31 SC080027 core:MotorVehicles 2019-12-31 SC080027 core:CapitalRedemptionReserve 2019-01-01 2019-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2019-01-01 2019-12-31 SC080027 core:ShareCapital 2019-01-01 2019-12-31 SC080027 countries:Europe 2019-01-01 2019-12-31 SC080027 countries:OtherCountriesRegions 2019-01-01 2019-12-31 SC080027 countries:UnitedKingdom 2019-01-01 2019-12-31 SC080027 core:PlantEquipmentOtherAssetsUnderOperatingLeases 2019-01-01 2019-12-31 SC080027 core:UKTax 2019-01-01 2019-12-31 SC080027 2018-12-31 SC080027 core:CapitalRedemptionReserve 2018-12-31 SC080027 core:RetainedEarningsAccumulatedLosses 2018-12-31 SC080027 core:ShareCapital 2018-12-31 iso4217:GBP xbrli:pure xbrli:shares Registration number: SC080027 United Wholesale Grocers Limited Annual Report and Financial Statements for the Year Ended 31 December 2020 United Wholesale Grocers Limited Contents Company Information 1 Strategic Report 2 to 4 Directors' Report 5 Statement of Directors' Responsibilities 6 Independent Auditor's Report 7 to 9 Statement of Comprehensive Income 10 Balance Sheet 11 Statement of Changes in Equity 12 Notes to the Financial Statements 13 to 26 United Wholesale Grocers Limited Company Information Directors M Ramzan N Ramzan W Badar A Ramzan Company secretary K Javed Registered office 246 Flemington Street Springburn Glasgow G21 4BY Auditors Khokhar McAdam Ltd Chartered Accountants 1 Eagle Street Glasgow G4 9XA Page 1 United Wholesale Grocers Limited Strategic Report for the Year Ended 31 December 2020 The directors present their strategic report for the year ended 31 December 2020. Principal activity The principal activity of the company is the operation of wholesale cash and carry and distribution depots selling grocery, confectionery, cigarettes. alcohol and other related products. Review of Business The company's turnover increased by 28.88% to £215.95 million from £167.57 million in 2019. Sales increased significantly during the last three quarters due to the impact of Covid-19. Increased demand in independent convenience retail due Covid-19 lockdown restrictions has resulted in increase in sales across multiple product categories. We have continued to improve and manage availability of products during this period which has resulted in the favourable impact on sales. The company's operating profit up by 248.8% to £10.57 million from £3.03 million in 2019. Profit before tax for the year ended 31 December 2020 was £10.07 million compared to £3.14 million for the previous year, which is an increase of 220.7%. The increase was due to Covid-19 driven sales increases, and improved buying negotiation and promotional strategy and cost control. The company cash reserves on 31 December 2020 were £16.94 million compared to £6.52 million in 2019. Net asset at 31 December 2020 was £19.6 million, improved significantly compared to net assets of £12.5 million for the previous year. Key Performance Indicators The Board uses many performance indicators, both financial and non-financial, to monitor the company's position. Among the financial information indicators, the key performance indicators ("KPI") are like for like sales, gross profit margins, sales per depot, departmental sales and margins, operating expenses, wages cost, stock availability, stock levels and cash generation. The financial KPI's such as Revenue, Operating Profit, profit before Tax, Cash reserves and Net Assets are referred to above, within the business review. The non-financial performance indicators include customer satisfaction, staff turnover, health and safety and stakeholders' relationship. The directors review the performance with constant feedback from customers and other key stakeholders. The Board is of the belief that the monitoring of the indicators is an effective aspect of business performance review. The company's key financial and other performance indicators during the year were as follows: Page 2 United Wholesale Grocers Limited Strategic Report for the Year Ended 31 December 2020 Principal risks and uncertainties The Board has implemented internal controls to facilitate the identification, assessment and management of risk, as a reasonable assurance against adverse implications. The principal risks determined by the Board, corresponding controls and mitigation actions are set out below and is not in particular order of priority.. This represents the company's current profile and is not intended to be an exhaustive list of risks and uncertainties that may arise. We operate in an environment governed by strict regulations to ensure the safety and protection of customers, employees, shareholders and other stakeholders. These regulations include health and safety, employment law, data protection and the rules of money laundering and taxation law. In all cases, the Board takes its responsibilities very seriously and recognises that failure to respond to changes in regulations or stay compliant could affect its profitability and reputations. Changes in Law and regulations are reviewed on an ongoing basis to consider applicable changes, amendments to the company's policies and procedures and training to relevant employees, to ensure compliance with applicable laws and regulations. The industry is extremely competitive with the market being served by numerous competitors, ranging from national multiple retailers to regional independent wholesalers. The company competes by closely monitoring the activities of competitors. We have appropriate competitive price,value and promotions that drives our business and provide quality customer experience. Among the financial performance indicators, the key performance indicators are gross profit margin, sales per department, wages per depot, stock availability and stock levels. Availability of suppliers credit is essential for the company's financial performance. Any reduction in the availability of supplier credit could adversely impact the company.The company closely manage credit terms to ensure that they are met. Our suppliers are core to our business. Failure to create supply capacity needed for future growth or extended disruption could significantly affect the availability of product in our depots resulting in loss of sales. Our trading teams maintain contact with our suppliers on a regular basis. Supplier performance is monitored on an ongoing basis and multiple sources of supply are secured wherever possible. The company manages credit risks through the performance of credit checks of new customers and credit control procedures. In addition to credit check, the company obtain security in the form of guarantee or deeds of undertakings which can be called upon if the counterparty is in default under the terms credit agreement. The company is exposed to the risk that the IT systems upon which it relies fail. The company has appropriate controls in place to mitigate the risk of system failure, including systems back up procedures and has appropriate virus protection and network security control. Failure to meet safety standards in relation to our workplace could result in death or injury to our customers, employees or third parties which could lead to to financial and reputational loss. Policies and procedures are in place for the controls required to manage health and safety and product safety risks across the business and comply with all applicable regulations. Page 3 United Wholesale Grocers Limited Strategic Report for the Year Ended 31 December 2020 Corporate Governance The directors are committed to promote the success of the company, and in doing so, complying with their duties under Section 172 of the Companies Act 2006. The risk management framework and principal risks and uncertainties are stated as set out above. The Board is committed to effective engagement with all of their stakeholders. Every month, the Board undertakes a review where they discuss the financial and strategic performace of the company. The aim is to identify factors which would lead to any positive or negative impact, financial and non-financial, on the status of the company's stakeholders including its employees, shareholders, suppliers, customers, communities, the environment, regulators and the government. The Board and its executive team regularly share reports on issues concerning employees, suppliers, customers, communities, the environment, regulators and the government, which takes into account in its discussion and in decision-making process under section 172. Also, the Board interests in views of the stakeholders and engage with them directly as appropriate. Environmental Report The company has where possible continued to implement technologies to reduce its carbon imprint. The packaging material was processed off through waste management companies. The company complied with waste management disposal regulations. Approved by the Board on 21 December 2021 on its behalf by: A Ramzan Director Page 4 United Wholesale Grocers Limited Directors' Report for the Year Ended 31 December 2020 The directors present their report and the financial statements for the year ended 31 December 2020. Incorporation The company was incorporated on 14 September 1982 . Dividends Particulars of dividends are detailed in the notes to the financial statements. Events since the end of the year There have been no significant events affecting the company since the balance sheet date. Directors of the company The directors who held office during the year were as follows: M Ramzan N Ramzan W Badar A Ramzan Financial Instruments Details of the company's financial risk management objectives and policies are included in notes to the accounts. Donations Charitable contributions made by the company during the year amounted to £100,572 (2019 - £20,274). Employee involvement It is the company policy to involve employees in the business and to ensure that matters of concern to them, including company's aims and objectives and its financial performance, are communicated in an open and regular way and, when appropriate,employees' view are taken into account. The promotion of equal opportunities for all employees, including disabled persons,is regarded as an important priority. Applications for employment and promotion of disabled persons are treated on the basis as those from other applicants having regard to aptitude, ability, requirements of the job. Disclosure of information to the auditors Each director has taken steps that they ought to have taken as a director in order to make themselves aware of any relevant audit information and to establish that the company's auditors are aware of that information. The directors confirm that there is no relevant information that they know of and of which they know the auditors are unaware. Approved by the Board on 21 December 2021 on its behalf by: A Ramzan Director Page 5 United Wholesale Grocers Limited Statement of Directors' Responsibilities The directors acknowledge their responsibilities for preparing the Annual Report and the financial statements in accordance with applicable law and regulations. Company law requires the directors to prepare financial statements for each financial year. Under that law the directors have elected to prepare the financial statements in accordance with United Kingdom Generally Accepted Accounting Practice (United Kingdom Accounting Standards and applicable law). Under company law the directors must not approve the financial statements unless they are satisfied that they give a true and fair view of the state of affairs of the company and of the profit or loss of the company for that period. In preparing these financial statements, the directors are required to: • select suitable accounting policies and apply them consistently; • make judgements and accounting estimates that are reasonable and prudent; • state whether applicable UK Accounting Standards have been followed, subject to any material departures disclosed and explained in the financial statements; and • prepare the financial statements on the going concern basis unless it is inappropriate to presume that the company will continue in business. The directors are responsible for keeping adequate accounting records that are sufficient to show and explain the company's transactions and disclose with reasonable accuracy at any time the financial position of the company and enable them to ensure that the financial statements comply with the Companies Act 2006. They are also responsible for safeguarding the assets of the company and hence for taking reasonable steps for the prevention and detection of fraud and other irregularities. Page 6 United Wholesale Grocers Limited Independent Auditor's Report to the Members of United Wholesale Grocers Limited Opinion We have audited the financial statements of United Wholesale Grocers Limited (the 'company') for the year ended 31 December 2020, which comprise the Statement of Comprehensive Income, Statement of Comprehensive Income, Balance Sheet, Statement of Changes in Equity, and Notes to the Financial Statements, including a summary of significant accounting policies. The financial reporting framework that has been applied in their preparation is applicable law and United Kingdom Accounting Standards, including Financial Reporting Standard 102 The Financial Reporting Standard applicable in the UK and Republic of Ireland (United Kingdom Generally Accepted Accounting Practice). In our opinion the financial statements: • give a true and fair view of the state of the company's affairs as at 31 December 2020 and of its profit for the year then ended; • have been properly prepared in accordance with United Kingdom Generally Accepted Accounting Practice; and • have been prepared in accordance with the requirements of the Companies Act 2006. Basis for opinion We conducted our audit in accordance with International Standards on Auditing (UK) (ISAs (UK)) and applicable law. Our responsibilities under those standards are further described in the Auditor’s responsibilities for the audit of the financial statements section of our report. We are independent of the company in accordance with the ethical requirements that are relevant to our audit of the financial statements in the UK, including the FRC’s Ethical Standard, and we have fulfilled our other ethical responsibilities in accordance with these requirements. We believe that the audit evidence we have obtained is sufficient and appropriate to provide a basis for our opinion. Conclusions relating to going concern We have nothing to report in respect of the following matters in relation to which the ISAs (UK) require us to report to you where: • the directors’ use of the going concern basis of accounting in the preparation of the financial statements is not appropriate; or • the directors have not disclosed in the financial statements any identified material uncertainties that may cast significant doubt about the company’s ability to continue to adopt the going concern basis of accounting for a period of at least twelve months from the date when the financial statements are authorised for issue. Other information The directors are responsible for the other information. The other information comprises the information included in the annual report, other than the financial statements and our auditor’s report thereon. Our opinion on the financial statements does not cover the other information and, except to the extent otherwise explicitly stated in our report, we do not express any form of assurance conclusion thereon. In connection with our audit of the financial statements, our responsibility is to read the other information and, in doing so, consider whether the other information is materially inconsistent with the financial statements or our knowledge obtained in the audit or otherwise appears to be materially misstated. If we identify such material inconsistencies or apparent material misstatements, we are required to determine whether there is a material misstatement in the financial statements or a material misstatement of the other information. If, based on the work we have performed, we conclude that there is a material misstatement of this other information, we are required to report that fact. Page 7 United Wholesale Grocers Limited Independent Auditor's Report to the Members of United Wholesale Grocers Limited We have nothing to report in this regard. Responsibilities of directors As explained more fully in the Statement of Directors' Responsibilities [set out on page 6 ], the directors are responsible for the preparation of the financial statements and for being satisfied that they give a true and fair view, and for such internal control as the directors determine is necessary to enable the preparation of financial statements that are free from material misstatement, whether due to fraud or error. In preparing the financial statements, the directors are responsible for assessing the company's ability to continue as a going concern, disclosing, as applicable, matters related to going concern and using the going concern basis of accounting unless the directors either intend to liquidate the company or to cease operations, or have no realistic alternative but to do so. Auditor’s responsibilities for the audit of the financial statements Our objectives are to obtain reasonable assurance about whether the financial statements as a whole are free from material misstatement, whether due to fraud or error, and to issue an auditor’s report that includes our opinion. Reasonable assurance is a high level of assurance, but is not a guarantee that an audit conducted in accordance with ISAs (UK) will always detect a material misstatement when it exists. Misstatements can arise from fraud or error and are considered material if, individually or in the aggregate, they could reasonably be expected to influence the economic decisions of users taken on the basis of these financial statements. As part of an audit in accordance with ISAs (UK), we exercise professional judgement and maintain professional scepticism throughout the audit. We also: • Identify and assess the risks of material misstatement of the financial statements, whether due to fraud or error, design and perform audit procedures responsive to those risks, and obtain audit evidence that is sufficient and appropriate to provide a basis for our opinion. The risk of not detecting a material misstatement resulting from fraud is higher than for one resulting from error, as fraud may involve collusion, forgery, intentional omissions, misrepresentations, or the override of internal control. • Obtain an understanding of internal control relevant to the audit in order to design audit procedures that are appropriate in the circumstances, but not for the purpose of expressing an opinion on the effectiveness of the company’s internal control. • Evaluate the appropriateness of accounting policies used and the reasonableness of accounting estimates and related disclosures made by the directors. • Conclude on the appropriateness of the directors' use of the going concern basis of accounting and, based on the audit evidence obtained, whether a material uncertainty exists related to events or conditions that may cast significant doubt on the company's ability to continue as a going concern. If we conclude that a material uncertainty exists, we are required to draw attention in our auditor’s report to the related disclosures in the financial statements or, if such disclosures are inadequate, to modify our opinion. Our conclusions are based on the audit evidence obtained up to the date of our auditor’s report. However, future events or conditions may cause the company to cease to continue as a going concern. • Evaluate the overall presentation, structure and content of the financial statements, including the disclosures, and whether the financial statements represent the underlying transactions and events in a manner that achieves fair presentation. • Obtain sufficient appropriate audit evidence regarding the financial information of the entities or business activities within the company to express an opinion on the financial statements. We are responsible for the direction, supervision and performance of the company audit. We remain solely responsible for our audit opinion. Page 8 United Wholesale Grocers Limited Independent Auditor's Report to the Members of United Wholesale Grocers Limited We communicate with those charged with governance regarding, among other matters, the planned scope and timing of the audit and significant audit findings, including any significant deficiencies in internal control that we identify during our audit. This report is made solely to the company’s members, as a body, in accordance with Chapter 3 of Part 16 of the Companies Act 2006. Our audit work has been undertaken so that we might state to the company’s members those matters we are required to state to them in an auditor’s report and for no other purpose. To the fullest extent permitted by law, we do not accept or assume responsibility to anyone other than the company and the company’s members as a body, for our audit work, for this report, or for the opinions we have formed. Khurshid Khokhar (Senior Statutory Auditor) For and on behalf of Khokhar McAdam Ltd , Statutory Auditor Chartered Accountants 1 Eagle Street Glasgow G4 9XA 21 December 2021 Page 9 United Wholesale Grocers Limited Statement of Comprehensive Income for the Year Ended 31 December 2020 Note 2020 £ 2019 £ Turnover 3 215,953,371 167,571,562 Cost of sales 197,666,689 157,073,970 Gross profit 18,286,682 10,497,592 Distribution costs ( 371,509 ) ( 340,300 ) Administrative expenses ( 7,371,622 ) ( 7,125,467 ) Other operating income 4 30,290 - Operating profit 5 10,573,841 3,031,825 Loss on financial assets at fair value through profit and loss account ( 584,805 ) - Income from other fixed asset investments 35,923 - Other interest receivable and similar income 6 68,979 118,322 Interest payable and similar expenses 7 ( 20,581 ) ( 7,503 ) (500,484) 110,819 Profit before tax 10,073,357 3,142,644 Taxation 11 ( 1,934,979 ) ( 601,009 ) Profit for the financial year 8,138,378 2,541,635 Total comprehensive income for the year 8,138,378 2,541,635 The above results were derived from continuing operations. The company has no recognised gains or losses for the year other than the results above. The notes on pages 13 to 26 form an integral part of these financial statements. Page 10 United Wholesale Grocers Limited (Registration number: SC080027) Balance Sheet as at 31 December 2020 Note 2020 £ 2019 £ Fixed assets Tangible assets 12 3,041,905 3,249,019 Investment property 13 565,000 1,149,805 Other financial assets 14 225 225 3,607,130 4,399,049 Current assets Stocks 15 17,022,812 14,230,753 Debtors 16 12,484,787 12,677,658 Cash at bank and in hand 16,935,177 6,516,522 46,442,776 33,424,933 Creditors : Amounts falling due within one year 17 ( 29,740,803 ) ( 24,579,865 ) Net current assets 16,701,973 8,845,068 Total assets less current liabilities 20,309,103 13,244,117 Creditors : Amounts falling due after more than one year 17 - ( 5,286 ) Provisions for liabilities 18 ( 727,044 ) ( 760,264 ) Net assets 19,582,059 12,478,567 Capital and reserves Called up share capital 20 5,500 5,500 Capital redemption reserve 4,500 4,500 Profit and loss account 19,572,059 12,468,567 Total equity 19,582,059 12,478,567 Approved and authorised by the Board on 21 December 2021 and signed on its behalf by: A Ramzan Director The notes on pages 13 to 26 form an integral part of these financial statements. Page 11 United Wholesale Grocers Limited Statement of Changes in Equity for the Year Ended 31 December 2020 Share capital £ Capital redemption reserve £ Profit and loss account £ Total £ At 1 January 2020 5,500 4,500 12,468,567 12,478,567 Profit for the year - - 8,138,378 8,138,378 Total comprehensive income - - 8,138,378 8,138,378 Dividends - - ( 1,034,886 ) ( 1,034,886 ) At 31 December 2020 5,500 4,500 19,572,059 19,582,059 Share capital £ Capital redemption reserve £ Profit and loss account £ Total £ At 1 January 2019 5,500 4,500 10,557,885 10,567,885 Profit for the year - - 2,541,635 2,541,635 Total comprehensive income - - 2,541,635 2,541,635 Dividends - - ( 630,953 ) ( 630,953 ) At 31 December 2019 5,500 4,500 12,468,567 12,478,567 The notes on pages 13 to 26 form an integral part of these financial statements. Page 12 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 1 Statutory information The company is a private company limited by share capital, incorporated in Scotland. The address of its registered office is: 246 Flemington Street Springburn Glasgow G21 4BY These financial statements were authorised for issue by the Board on 21 December 2021 . 2 Accounting policies Statement of compliance These financial statements were prepared in accordance with Financial Reporting Standard 102 'The Financial Reporting Standard applicable in the UK and Republic of Ireland'. Basis of preparation These financial statements have been prepared using the historical cost convention except that as disclosed in the accounting policies certain items are shown at fair value. Exemption has been taken from preparing a cash flow statement on the grounds that the parent company includes the subsidiary in its published financial statements. Going concern After making enquiries, the Directors have a reasonable expectation that the company has adequate resources to continue in operational existence for at least twelve months from the date of this report. Accordingly, they continue to adopt the going concern basis in preparing the Company financial statements. Revenue recognition Turnover comprises revenue recognised when goods are received by the customers and risks and rewards of ownership passed to them. Revenue represents amounts receivable for goods and services net of Value Added Tax and trade discounts. Foreign currencies Assets and liabilities in foreign currencies are translated into sterling at the rates of exchange ruling at the balance sheet date. Transactions in foreign currencies are translated into sterling at the rate of exchange ruling at the date of transaction. Exchange differences are taken into account in arriving at the operating result. Tax The tax expense for the period comprises current and deferred tax. Tax is recognised in profit or loss, except that a change attributable to an item of income or expense recognised as other comprehensive income is also recognised directly in other comprehensive income. The current income tax charge is calculated on the basis of tax rates and laws that have been enacted or substantively enacted by the reporting date in the countries where the company operates and generates taxable income. Page 13 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 Deferred tax is recognised in respect of all timing differences between taxable profits and profits reported in the financial statements. Unrelieved tax losses and other deferred tax assets are recognised when it is probable that they will be recovered against the reversal of deferred tax liabilities or other future taxable profits. Deferred tax is measured using the tax rates and laws that have been enacted or substantively enacted by the reporting date and that are expected to apply to the reversal of the timing difference. Tangible assets Tangible fixed assets under the cost model, other than investment properties, are stated in the statement of financial position at historical cost, except use of GAAP value of land and buildings on 1 January 2014 as deemed cost, less any subsequent accumulated depreciation and subsequent accumulated impairment losses. The cost of tangible assets includes directly attributable incremental costs incurred in their acquisition and installation. Depreciation Depreciation is charged so as to write off the cost of assets, other than land and properties under construction over their estimated useful lives, as follows: Asset class Depreciation method and rate Freehold buildings 50 years Plant, fixtures and fittings 5 to 7 years Motor Vehicles 5 years Freehold Land Freehold land is not depreciated. Investment property Investment property is carried at fair value, derived from the current market prices for comparable real estate determined annually by the directors. The fair value is determined by the directors based on the current estimated market rent value using observable market prices, adjusted if necessary for any difference in the nature, location or condition of the specific asset. Changes in fair value are recognised in profit or loss. Cash and cash equivalents Cash and cash equivalents comprise cash on hand and call deposits, and other short-term highly liquid investments that are readily convertible to a known amount of cash and are subject to an insignificant risk of change in value. Trade debtors Trade debtors are amounts due from customers for merchandise sold or services performed in the ordinary course of business. Trade debtors are recognised initially at the transaction price. They are subsequently measured at amortised cost using the effective interest method, less provision for impairment. A provision for the impairment of trade debtors is established when there is objective evidence that the company will not be able to collect all amounts due according to the original terms of the receivables. Page 14 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 Stocks Stocks are stated at the lower of cost and estimated selling price less costs to complete and sell. Cost is determined using the weighted average method. At each reporting date, stocks are assessed for impairment. If stocks are impaired, the carrying amount is reduced to its selling price less costs to complete and sell; the impairment loss is recognised immediately in profit or loss. Trade creditors Trade creditors are obligations to pay for goods or services that have been acquired in the ordinary course of business from suppliers. Accounts payable are classified as current liabilities if the company does not have an unconditional right, at the end of the reporting period, to defer settlement of the creditor for at least twelve months after the reporting date. If there is an unconditional right to defer settlement for at least twelve months after the reporting date, they are presented as non-current liabilities. Trade creditors are recognised initially at the transaction price and subsequently measured at amortised cost using the effective interest method. Provisions Provisions are recognised when the company has an obligation at the reporting date as a result of a past event, it is probable that the company will be required to settle that obligation and a reliable estimate can be made of the amount of the obligation. Leases Leases in which substantially all the risks and rewards of ownership are retained by the lessor are classified as operating leases. Payments made under operating leases are charged to profit or loss on a straight-line basis over the period of the lease. Leases are classified as finance leases whenever the terms of the lease transfer substantially all the risks and rewards of ownership to the lessee. Assets held under finance leases are recognised at the lower of their fair value at inception of the lease and the present value of the minimum lease payments. These assets are depreciated on a straight-line basis over the shorter of the useful life of the asset and the lease term. The corresponding liability to the lessor is included in the Balance Sheet as a finance lease obligation. Lease payments are apportioned between finance costs in the Statement of Comprehensive Income and reduction of the lease obligation so as to achieve a constant periodic rate of interest on the remaining balance of the liability. Share capital Ordinary shares are classified as equity. Equity instruments are measured at the fair value of the cash or other resources received or receivable, net of the direct costs of issuing the equity instruments. If payment is deferred and the time value of money is material, the initial measurement is on a present value basis. Dividends Dividend distribution to the company’s shareholders is recognised as a liability in the financial statements in the reporting period in which the dividends are declared. Defined contribution pension obligation The company operates a defined contribution pension scheme. Contributions payable to the company's pension scheme are charged to profit or loss in the period to which they relate. Page 15 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 Financial instruments Classification Financial instruments are classified and accounted for, according to the substance of the contractual arrangement, as either financial assets, financial liabilities or equity instruments. An equity instrument is any contract that evidences a residual interest in the assets of the company after deducting all of its liabilities. Recognition and measurement Debt instruments (other than those wholly repayable or receivable within one year), including loans and other accounts receivable and payable, are initially measured at present value of the future cash flows and subsequently at amortised cost using the effective interest method. Debt instruments that are payable or receivable within one year, typically trade payables or receivables, are measured, initially and subsequently, at the undiscounted amount of the cash or other consideration, expected to be paid or received. However if the arrangement of a short-term instrument constitute a financing transaction, like the payment of a trade debt deferred beyond normal business terms or financed at a rate of interest that is not a market rate or in case of an out-right short-term loan not at a market rate, the financial asset or liability is measured, initially at the present value of the future cash flow discounted at a market rate of interest for a similar debt instrument and subsequently at a amortised cost. Financial asset that are measured at cost and amortised cost are assessed at the end of each reporting period for objective evidence of impairment. If objective evidence of impairment is found, an impairment loss is recognised in the Statement of Income. For financial assets measured at amortised cost, the impairment loss is measured as the difference between asset's carrying amount and the present value of estimated cash flows discounted at the asset's original effective interest rate. If a financial asset has a variable interest rate, the discount rate for measuring any impairment loss is current effective interest rate determined under the contract. For financial assets measured at cost less impairment, the impairment loss is measured as the difference between an asset's carrying amount and best estimate, which is an approximation of the amount that the Company would receive for the asset if it were to be sold at the balance sheet date. Financial assets and liabilities are offset and the net amount reported in the Balance Sheet when there is an enforceable right to set off the recognised amounts and there is an intention to settle on a net basis or to realise the asset and settle the liability simultaneously Page 16 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 Significant judgements and estimates The preparation of accounts in accordance with generally accepted accounting principles requires the Directors to make judgements, estimates and assumptions that affect the application of policies and reported amounts of assets and liabilities, income and expenses. The estimates and associated assumptions are based on historical experience and other factors that are relevant. Actual results may differ from these estimates. The estimates and underlying assumptions are reviewed on an ongoing basis. Revisions to accounting estimates are recognised in the period in which the estimate is revised. In preparing these financial statements, the directors have made the following judgements: Tangible fixed assets, other than investment properties, are depreciated over their useful lives taking into account residual values, where appropriate. The actual lives of the assets and residual values are assessed annually and may vary depending on a number of factors. In re-assessing asset lives, factors such as technological innovation, product life cycles and maintenance programmes are taken into account. Residual value assessments consider issues such as future market conditions, the remaining life of the asset and projected disposal values. Investment properties are valued each year. The directors consider market conditions and the value of similar property in deciding a fair value. Bad debts are provided for where objective evidence of the need for a provision exists. Stocks are assessed for evidence of obsolescence and a provision is made against any inventory unlikely to be sold. Cost of Sales Cost of sales represents all costs incurred, net of supplier rebates (see below), up to the point of sale including the operating expenses of the trading outlets. 3 Revenue The analysis of the company's revenue for the year from continuing operations is as follows: 2020 £ 2019 £ Sale of goods 215,847,481 167,438,677 Rental income from investment property 77,110 111,717 Other revenue 28,780 21,168 215,953,371 167,571,562 The analysis of the company's turnover for the year by market is as follows: 2020 £ 2019 £ UK 215,087,141 167,571,562 Europe 694,413 - Rest of world 171,817 - 215,953,371 167,571,562 Page 17 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 4 Other operating income The analysis of the company's other operating income for the year is as follows: 2020 £ 2019 £ Job retention scheme grant 30,290 - 5 Operating profit Arrived at after charging/(crediting) 2020 £ 2019 £ Depreciation expense 250,488 253,993 Operating lease expense - plant and machinery 138,055 132,823 6 Other interest receivable and similar income 2020 £ 2019 £ Interest income on bank deposits 20,107 27,281 Other finance income 48,872 91,041 68,979 118,322 7 Interest payable and similar expenses 2020 £ 2019 £ Hire purchase interest 1,620 1,620 Page 18 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 8 Staff costs The aggregate payroll costs (including directors' remuneration) were as follows: 2020 £ 2019 £ Wages and salaries 3,929,847 3,740,953 Social security costs 321,564 295,563 Pension costs, defined contribution scheme 66,416 60,268 4,317,827 4,096,784 The average number of persons employed by the company (including directors) during the year, analysed by category was as follows: 2020 No. 2019 No. Administration and support 62 52 Sales, marketing and distribution 143 138 205 190 9 Directors' remuneration The directors' remuneration for the year was as follows: 2020 £ 2019 £ Remuneration 87,750 88,250 10 Auditors' remuneration 2020 £ 2019 £ Audit of the financial statements 19,000 16,500 Other fees to auditors Taxation compliance services 4,000 2,500 All other assurance services 11,000 3,000 15,000 5,500 Page 19 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 11 Taxation Tax charged/(credited) in the income statement 2020 £ 2019 £ Current taxation UK corporation tax 2,020,708 606,247 UK corporation tax adjustment to prior periods ( 52,509 ) ( 10,589 ) 1,968,199 595,658 Deferred taxation Arising from write-down or reversal of write-down of deferred tax asset ( 33,220 ) 5,351 Tax expense in the income statement 1,934,979 601,009 The tax on profit before tax for the year is the same as the standard rate of corporation tax in the UK (2019 - the same as the standard rate of corporation tax in the UK) of 19 % (2019 - 19 % ). The differences are reconciled below: 2020 £ 2019 £ Profit before tax 10,073,357 3,142,644 Corporation tax at standard rate 1,913,938 597,102 Effects of: Effect of expense not deductible in determining taxable profit (tax loss) 1,243 4,260 Decrease in UK and foreign current tax from adjustment for prior periods ( 52,509 ) ( 10,589 ) Tax increase from effect of capital allowances and depreciation 19,020 8,724 Tax (decrease)/increase from other short-term timing differences ( 33,220 ) 5,351 Tax decrease from effect of dividends from UK companies ( 6,825 ) - Tax decrease from effect of adjustment in research and development tax credit ( 17,779 ) ( 3,839 ) Other tax effects for reconciliation between accounting profit and tax expense (income) 111,111 - Total tax charge 1,934,979 601,009 Page 20 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 12 Tangible assets Land and buildings £ Furniture, fittings and equipment £ Motor vehicles £ Total £ Cost or valuation At 1 January 2020 2,840,472 4,341,754 250,022 7,432,248 Additions - 46,503 - 46,503 Disposals - - ( 7,747 ) ( 7,747 ) At 31 December 2020 2,840,472 4,388,257 242,275 7,471,004 Depreciation At 1 January 2020 228,228 3,777,198 177,802 4,183,228 Charge for the year 38,038 188,039 24,411 250,488 Eliminated on disposal - - ( 4,617 ) ( 4,617 ) At 31 December 2020 266,266 3,965,237 197,596 4,429,099 Carrying amount At 31 December 2020 2,574,206 423,020 44,679 3,041,905 At 31 December 2019 2,612,244 564,555 72,220 3,249,019 On the historical cost basis, freehold land and buildings would have been included at a cost of £1,279,557 (2019 - £1,279,557). Assets held under finance leases and hire purchase contracts The net carrying amount of tangible assets includes the following amounts in respect of assets held under finance leases and hire purchase contracts: 2020 £ 2019 £ Vehicles 3,101 13,101 Page 21 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 13 Investment properties 2020 £ At 1 January 1,149,805 Additions - Fair value adjustments ( 584,805 ) At 31 December 565,000 Historical cost of investment properties was £1,149,805 (2019 - £1,149,805). Investment property is stated at a valuation made by the directors in 2020, at a fair value in line with the accounting policy. 14 Other financial assets (current and non-current) Unlisted Investments £ Total £ Fixed Asset Investments Cost or valuation At 1 January 2020 225 225 At 31 December 2020 225 225 Carrying amount At 31 December 2020 225 225 Fixed assets investment represents nominal share in the buying group stated at cost. In the opinion of the directors market value of the shares is equivalent to the cost price. 15 Stocks 2020 £ 2019 £ Goods for resale 17,022,812 14,230,753 Page 22 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 16 Debtors Note 2020 £ 2019 £ Trade debtors 4,679,905 6,676,281 Amounts owed to/by group undertakings 25 2,589,283 3,069,374 Other debtors 5,215,599 2,932,003 12,484,787 12,677,658 17 Creditors Note 2020 £ 2019 £ Due within one year Finance lease liabilities 21 6,012 9,546 Trade creditors 26,272,251 22,661,298 Social security and other taxes 148,598 68,921 Other payables 4,330 417,209 Accruals 728,245 773,173 Corporation tax control 11 2,581,367 649,718 29,740,803 24,579,865 Due after one year Finance lease liabilities 21 - 5,286 18 Deferred tax and other provisions Deferred tax £ Other provisions £ Total £ At 1 January 2020 46,272 713,992 760,264 Increase (decrease) in existing provisions ( 33,220 ) - ( 33,220 ) At 31 December 2020 13,052 713,992 727,044 Page 23 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 Deferred tax on revaluation surplus is £nil after deduction of indexation allowance. Excise duty In 2013 the company purchased certain goods from a supplier at a market price inclusive of excise duty. HM Revenue and Customs allege that the UK duty on the goods was not paid by the defaulting/missing trader or supplier, therefore any person involved in the holding of the excise goods is jointly and severally liable to pay the duty. Hence HM Revenue & Customs has raised an assessment for unpaid duty amounting to £713,992. The company lodged an appeal against the assessment awaiting hearing. Based on legal advice management believes that the defence against the assessment will be successful. Although liability is not admitted but because of uncertainty, a full provision has been made. 19 Pension and other schemes Defined contribution pension scheme The company operates a defined contribution pension scheme. The pension cost charge for the year represents contributions payable by the company to the scheme and amounted to £ 66,416 (2019 - £ 60,268 ) . 20 Share capital Allotted, called up and fully paid shares 2020 2019 No. £ No. £ Ordinary shares of £1 each of £ 1 each 5,500 5,500 5,500 5,500 21 Loans and borrowings 2020 £ 2019 £ Non-current loans and borrowings Finance lease liabilities - 5,286 Page 24 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 2020 £ 2019 £ Current loans and borrowings Finance lease liabilities 6,012 9,546 The bank loan and overdraft of a fellow subsidiary are secured by a floating charge over the assets and undertakings of the company and cross guarantees between the company and the parent company and other subsidiaries and by standard security over land and buildings owned by the company and fellow subsidiaries. Hire purchase creditors are secured on the assets concerned. 22 Obligations under leases and hire purchase contracts Finance leases The total of future minimum lease payments is as follows: 2020 £ 2019 £ Not later than one year 6,012 9,546 Later than one year and not later than five years - 5,285 6,012 14,831 Operating leases The total of future minimum lease payments is as follows: 2020 £ 2019 £ Not later than one year 118,613 89,829 Later than one year and not later than five years 199,793 149,049 Later than five years 9,464 4,468 327,870 243,346 23 Dividends Interim dividends paid during the year amounted to £1,034,886 (2019 - £630,953). Page 25 United Wholesale Grocers Limited Notes to the Financial Statements for the Year Ended 31 December 2020 24 Financial guarantee contracts The company has given a bank guarantee in favour of HM Revenue and Customs in respect of excise duty deferment. The company is a party, together with the parent and sister companies, to a Guarantee Agreement with Clydesdale Bank PLC, whereby the liabilities to Clydesdale Bank PLC are cross guaranteed between the company, its sister companies and the parent company. The amount of the financial guarantee contract is £ 2,500,000 . 25 Related party transactions The company regarded United Holdings UK Ltd as its ultimate parent company and the only group in which the results of the company are consolidated. The address of the registered office of the parent company is that of the company. Summary of transactions with entities with joint control or significant interest United Properties (Scotland) Limited is a company in which close family members of a director of United Wholesale Grocers Limited are director and shareholder. Included in the debtors is the balance of £nil (2019 - £102) due from United Properties (Scotland) Limited. Debtors include a sum of £58,106 due from a company in which the directors have material interest as shareholders. During the year, a total of key management personnel compensation of £252,912 (2019 - £259,293) was paid. 26 Parent and ultimate parent undertaking The company regarded United Holdings UK Ltd, incorporated in Scotland, as its ultimate parent company and the only group in which the results of the company are consolidated. United Holdings UK Ltd is ultimately controlled by Mr and Mrs Ramzan and family. Page 26
