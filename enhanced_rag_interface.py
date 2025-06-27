@@ -639,19 +639,20 @@ def render_enhanced_rag_interface():
         
         with col1:
             # Model selection with performance warnings
-            available_models = ["mistral:latest", "deepseek-llm:7b", "phi3:latest", "mixtral:latest"]
+            available_models = ["mixtral:latest", "lawma-8b:latest", "mistral:latest", "deepseek-llm:7b", "phi3:latest"]
             model_descriptions = {
-                "mistral:latest": "🟢 **Recommended** - Best protocol compliance",
-                "deepseek-llm:7b": "🟡 Good performance, may need guidance", 
-                "phi3:latest": "🟡 Fast but inconsistent compliance",
-                "mixtral:latest": "🔴 Very slow (40+ seconds) - Use carefully"
+                "mixtral:latest": "🟢 **Recommended** - Most powerful legal analysis",
+                "lawma-8b:latest": "🏛️ **Legal Specialist** - Optimized for legal documents",
+                "mistral:latest": "🟡 Good balance - Fast and reliable", 
+                "deepseek-llm:7b": "🟡 Good performance, may need guidance",
+                "phi3:latest": "🟡 Fast but inconsistent compliance"
             }
             
             selected_model = st.selectbox(
                 "Select Model:",
                 available_models,
-                index=0,  # Default to mistral (best performer)
-                help="mistral=best compliance, deepseek=balanced, phi3=fast but inconsistent, mixtral=slow but capable"
+                index=0,  # Default to mixtral (most powerful)
+                help="mixtral=most powerful analysis, mistral=balanced, deepseek=good performance, phi3=fast queries"
             )
             
             # Show model-specific warning
@@ -674,6 +675,50 @@ def render_enhanced_rag_interface():
             )
             # Extract actual matter name (remove doc count)
             selected_matter = selected_matter_display.split(' (')[0]
+
+            # BGE Model Status (after matter selection)
+            st.markdown("#### 🚀 SOTA Embeddings")
+            try:
+                pipeline = rag_session_manager.get_or_create_pipeline(selected_matter)
+                bge_stats = pipeline.get_performance_stats()
+                
+                if bge_stats.get('using_bge_embeddings', False):
+                    st.success("✅ **BGE Active**")
+                    st.caption(f"Model: {bge_stats.get('embedding_model', 'BGE')}")
+                    
+                    if bge_stats.get('reranking_enabled', False):
+                        st.success("🎯 **Reranker ON**")
+                        st.caption("20-30 point MRR uplift")
+                        
+                        # Show performance stats if available
+                        if bge_stats.get('search_count', 0) > 0:
+                            avg_search = bge_stats.get('avg_search_time', 0)
+                            avg_rerank = bge_stats.get('avg_rerank_time', 0)
+                            improvement = bge_stats.get('avg_score_improvement', 0)
+                            
+                            if avg_search > 0:
+                                st.metric("Search", f"{avg_search:.3f}s")
+                            if avg_rerank > 0:
+                                st.metric("Rerank", f"{avg_rerank:.3f}s")
+                            if improvement > 0:
+                                st.metric("Boost", f"+{improvement:.3f}")
+                    else:
+                        st.info("🔍 **BGE Search**")
+                        st.caption("Reranking disabled")
+                else:
+                    st.warning("📦 **Standard**")
+                    st.caption("Using fallback embeddings")
+                    
+                    # Show upgrade suggestion
+                    with st.expander("🚀 Upgrade to BGE?", expanded=False):
+                        st.info("**BGE Benefits:**")
+                        st.write("• 15-30% better accuracy")  
+                        st.write("• Legal text optimized")
+                        st.write("• 20-30 point MRR uplift")
+                        
+            except Exception as e:
+                st.error("❌ BGE Status Error")
+                st.caption(f"Error: {str(e)}")
         
         with col3:
             # Context chunks with intelligent defaults
@@ -690,7 +735,7 @@ def render_enhanced_rag_interface():
                 pipeline = rag_session_manager.get_or_create_pipeline(selected_matter)
                 doc_status = pipeline.get_document_status()
                 total_chunks = doc_status['total_chunks']
-                coverage = (max_chunks / total_chunks) * 100
+                coverage = (max_chunks / total_chunks) * 100 if total_chunks > 0 else 0
                 
                 if coverage >= 50:
                     st.success(f"📊 **{coverage:.1f}% coverage** - Excellent for comprehensive analysis")
@@ -962,18 +1007,39 @@ def render_enhanced_rag_interface():
                     st.session_state.selected_preset_query = preset
                     st.rerun()
     
+    # Model Comparison Toggle
+    st.markdown("#### 🔬 Model Comparison")
+    comparison_mode = st.checkbox(
+        "⚖️ **Compare Mixtral vs LawMA-8B** (Side-by-side analysis)",
+        value=False,
+        help="Run the same query on both Mixtral (general powerhouse) and LawMA-8B (legal specialist) to compare their responses"
+    )
+    
+    if comparison_mode:
+        st.info("🔬 **Comparison Mode Active**: Your query will be analyzed by both Mixtral (most powerful) and LawMA-8B (legal specialist)")
+
     # Analysis controls
     col1, col2, col3 = st.columns([2, 1, 1])
     
     with col1:
-        # Analyze button with enhanced text
-        analyze_button_text = "🧠 Analyze with ColBERT" if (use_late_interaction and advanced_retrieval.late_interaction_available) else "🔍 Analyze Documents"
-        analyze_button = st.button(
-            analyze_button_text,
-            type="primary",
-            disabled=not user_query.strip(),
-            use_container_width=True
-        )
+        if comparison_mode:
+            analyze_button_text = "⚖️ Compare Models"
+            analyze_button = st.button(
+                analyze_button_text,
+                type="primary",
+                disabled=not user_query.strip(),
+                use_container_width=True,
+                help="Analyze with both Mixtral and LawMA-8B for comparison"
+            )
+        else:
+            # Analyze button with enhanced text
+            analyze_button_text = "🧠 Analyze with ColBERT" if (use_late_interaction and advanced_retrieval.late_interaction_available) else "🔍 Analyze Documents"
+            analyze_button = st.button(
+                analyze_button_text,
+                type="primary",
+                disabled=not user_query.strip(),
+                use_container_width=True
+            )
     
     with col2:
         # Clear button
@@ -982,6 +1048,8 @@ def render_enhanced_rag_interface():
             st.session_state.selected_preset_query = ''
             if 'analysis_result' in st.session_state:
                 del st.session_state.analysis_result
+            if 'comparison_results' in st.session_state:
+                del st.session_state.comparison_results
             st.rerun()
     
     with col3:
@@ -993,32 +1061,106 @@ def render_enhanced_rag_interface():
     
     # Process query
     if analyze_button and user_query.strip():
-        with st.spinner(f"🔍 {'Advanced semantic analysis' if use_late_interaction else 'Analyzing documents'}..."):
-            try:
-                # Use advanced retrieval if enabled
-                if use_late_interaction and advanced_retrieval.late_interaction_available:
-                    result = asyncio.run(get_protocol_compliant_answer_with_advanced_retrieval(
-                        user_query.strip(), 
-                        selected_matter, 
-                        selected_model, 
-                        max_chunks,
-                        use_late_interaction=True
-                    ))
-                else:
-                    # Use standard analysis
-                    result = asyncio.run(get_protocol_compliant_answer(
-                        user_query.strip(), 
-                        selected_matter, 
-                        selected_model, 
-                        max_chunks,
-                        anonymise=enable_anonymisation if ANONYMISATION_AVAILABLE else False
-                    ))
-                
-                st.session_state.analysis_result = result
-                
-            except Exception as e:
-                st.error(f"Analysis failed: {str(e)}")
-                st.session_state.analysis_result = None
+        if comparison_mode:
+            # Comparison mode: run both Mixtral and LawMA-8B
+            with st.spinner("⚖️ Running comparison analysis with both Mixtral and LawMA-8B..."):
+                try:
+                    # Run both models
+                    comparison_results = {}
+                    
+                    # Progress indicators
+                    progress_bar = st.progress(0)
+                    status_text = st.empty()
+                    
+                    # Mixtral analysis
+                    status_text.text("🧠 Analyzing with Mixtral (General Powerhouse)...")
+                    progress_bar.progress(0.25)
+                    
+                    if use_late_interaction and advanced_retrieval.late_interaction_available:
+                        mixtral_result = asyncio.run(get_protocol_compliant_answer_with_advanced_retrieval(
+                            user_query.strip(), 
+                            selected_matter, 
+                            "mixtral:latest", 
+                            max_chunks,
+                            use_late_interaction=True
+                        ))
+                    else:
+                        mixtral_result = asyncio.run(get_protocol_compliant_answer(
+                            user_query.strip(), 
+                            selected_matter, 
+                            "mixtral:latest", 
+                            max_chunks,
+                            anonymise=enable_anonymisation if ANONYMISATION_AVAILABLE else False
+                        ))
+                    
+                    comparison_results['mixtral'] = mixtral_result
+                    progress_bar.progress(0.75)
+                    
+                    # LawMA-8B analysis
+                    status_text.text("🏛️ Analyzing with LawMA-8B (Legal Specialist)...")
+                    
+                    if use_late_interaction and advanced_retrieval.late_interaction_available:
+                        lawma_result = asyncio.run(get_protocol_compliant_answer_with_advanced_retrieval(
+                            user_query.strip(), 
+                            selected_matter, 
+                            "lawma-8b:latest", 
+                            max_chunks,
+                            use_late_interaction=True
+                        ))
+                    else:
+                        lawma_result = asyncio.run(get_protocol_compliant_answer(
+                            user_query.strip(), 
+                            selected_matter, 
+                            "lawma-8b:latest", 
+                            max_chunks,
+                            anonymise=enable_anonymisation if ANONYMISATION_AVAILABLE else False
+                        ))
+                    
+                    comparison_results['lawma'] = lawma_result
+                    progress_bar.progress(1.0)
+                    status_text.text("✅ Comparison complete!")
+                    
+                    st.session_state.comparison_results = comparison_results
+                    
+                    # Clear single result if it exists
+                    if 'analysis_result' in st.session_state:
+                        del st.session_state.analysis_result
+                        
+                except Exception as e:
+                    st.error(f"Comparison analysis failed: {str(e)}")
+                    st.session_state.comparison_results = None
+        else:
+            # Single model analysis
+            with st.spinner(f"🔍 {'Advanced semantic analysis' if use_late_interaction else 'Analyzing documents'}..."):
+                try:
+                    # Use advanced retrieval if enabled
+                    if use_late_interaction and advanced_retrieval.late_interaction_available:
+                        result = asyncio.run(get_protocol_compliant_answer_with_advanced_retrieval(
+                            user_query.strip(), 
+                            selected_matter, 
+                            selected_model, 
+                            max_chunks,
+                            use_late_interaction=True
+                        ))
+                    else:
+                        # Use standard analysis
+                        result = asyncio.run(get_protocol_compliant_answer(
+                            user_query.strip(), 
+                            selected_matter, 
+                            selected_model, 
+                            max_chunks,
+                            anonymise=enable_anonymisation if ANONYMISATION_AVAILABLE else False
+                        ))
+                    
+                    st.session_state.analysis_result = result
+                    
+                    # Clear comparison results if they exist
+                    if 'comparison_results' in st.session_state:
+                        del st.session_state.comparison_results
+                    
+                except Exception as e:
+                    st.error(f"Analysis failed: {str(e)}")
+                    st.session_state.analysis_result = None
     
     # Display results
     if 'analysis_result' in st.session_state and st.session_state.analysis_result:
@@ -1126,6 +1268,225 @@ def render_enhanced_rag_interface():
                     st.text(f"Anonymisation Model: {result['anonymisation_model']}")
             elif result.get('anonymisation_error'):
                 st.error(f"❌ Anonymisation failed: {result['anonymisation_error']}")
+
+    # Display comparison results
+    if 'comparison_results' in st.session_state and st.session_state.comparison_results:
+        comparison_results = st.session_state.comparison_results
+        
+        st.markdown("---")
+        st.markdown("### ⚖️ Model Comparison Results")
+        
+        # Overview metrics
+        col_overview1, col_overview2, col_overview3 = st.columns(3)
+        
+        with col_overview1:
+            st.metric("Models Compared", "2", help="Mixtral vs LawMA-8B")
+        
+        with col_overview2:
+            mixtral_time = comparison_results.get('mixtral', {}).get('generation_time', 0)
+            lawma_time = comparison_results.get('lawma', {}).get('generation_time', 0)
+            faster_model = "Mixtral" if mixtral_time < lawma_time else "LawMA-8B"
+            st.metric("Faster Model", faster_model, help=f"Mixtral: {mixtral_time:.1f}s | LawMA: {lawma_time:.1f}s")
+        
+        with col_overview3:
+            # Compare answer lengths
+            mixtral_len = len(comparison_results.get('mixtral', {}).get('answer', ''))
+            lawma_len = len(comparison_results.get('lawma', {}).get('answer', ''))
+            more_detailed = "Mixtral" if mixtral_len > lawma_len else "LawMA-8B"
+            st.metric("More Detailed", more_detailed, help=f"Mixtral: {mixtral_len} chars | LawMA: {lawma_len} chars")
+        
+        # Side-by-side comparison
+        st.markdown("### 🔬 Side-by-Side Analysis")
+        
+        col_mixtral, col_lawma = st.columns(2)
+        
+        with col_mixtral:
+            st.markdown("#### 🧠 Mixtral (General Powerhouse)")
+            mixtral_result = comparison_results.get('mixtral', {})
+            
+            if mixtral_result:
+                # Show retrieval method
+                retrieval_method = mixtral_result.get('retrieval_method', 'standard')
+                if retrieval_method == 'late_interaction':
+                    st.success("🧠 Advanced Retrieval: ColBERT")
+                else:
+                    st.info("📊 Standard Vector Search")
+                
+                # Answer
+                st.markdown("**Answer:**")
+                mixtral_answer = mixtral_result.get('answer', 'No answer generated')
+                st.markdown(mixtral_answer)
+                
+                # Sources summary
+                mixtral_sources = mixtral_result.get('sources', [])
+                if mixtral_sources:
+                    with st.expander(f"📚 Mixtral Sources ({len(mixtral_sources)})", expanded=False):
+                        for i, source in enumerate(mixtral_sources):
+                            st.write(f"**Source {i+1}**: {source.get('document', 'Unknown')}")
+                            st.write(f"Similarity: {source.get('similarity_score', 0):.3f}")
+                            if 'late_interaction_score' in source:
+                                st.write(f"Late Interaction: {source.get('late_interaction_score', 0):.3f}")
+                            st.text(source.get('text_preview', 'No preview')[:200] + "...")
+                            st.markdown("---")
+                
+                # Performance metrics
+                with st.expander("📊 Mixtral Performance", expanded=False):
+                    st.metric("Generation Time", f"{mixtral_result.get('generation_time', 0):.2f}s")
+                    st.metric("Context Chunks", mixtral_result.get('context_chunks_used', 'Unknown'))
+                    st.metric("Model", mixtral_result.get('model_used', 'Unknown'))
+            else:
+                st.error("Mixtral analysis failed")
+        
+        with col_lawma:
+            st.markdown("#### 🏛️ LawMA-8B (Legal Specialist)")
+            lawma_result = comparison_results.get('lawma', {})
+            
+            if lawma_result:
+                # Show retrieval method
+                retrieval_method = lawma_result.get('retrieval_method', 'standard')
+                if retrieval_method == 'late_interaction':
+                    st.success("🧠 Advanced Retrieval: ColBERT")
+                else:
+                    st.info("📊 Standard Vector Search")
+                
+                # Answer
+                st.markdown("**Answer:**")
+                lawma_answer = lawma_result.get('answer', 'No answer generated')
+                st.markdown(lawma_answer)
+                
+                # Sources summary
+                lawma_sources = lawma_result.get('sources', [])
+                if lawma_sources:
+                    with st.expander(f"📚 LawMA Sources ({len(lawma_sources)})", expanded=False):
+                        for i, source in enumerate(lawma_sources):
+                            st.write(f"**Source {i+1}**: {source.get('document', 'Unknown')}")
+                            st.write(f"Similarity: {source.get('similarity_score', 0):.3f}")
+                            if 'late_interaction_score' in source:
+                                st.write(f"Late Interaction: {source.get('late_interaction_score', 0):.3f}")
+                            st.text(source.get('text_preview', 'No preview')[:200] + "...")
+                            st.markdown("---")
+                
+                # Performance metrics
+                with st.expander("📊 LawMA Performance", expanded=False):
+                    st.metric("Generation Time", f"{lawma_result.get('generation_time', 0):.2f}s")
+                    st.metric("Context Chunks", lawma_result.get('context_chunks_used', 'Unknown'))
+                    st.metric("Model", lawma_result.get('model_used', 'Unknown'))
+            else:
+                st.error("LawMA analysis failed")
+        
+        # Comparison insights
+        st.markdown("### 🔍 Comparison Insights")
+        
+        if mixtral_result and lawma_result:
+            insights_col1, insights_col2 = st.columns(2)
+            
+            with insights_col1:
+                st.markdown("**🧠 Mixtral Characteristics:**")
+                mixtral_answer = mixtral_result.get('answer', '')
+                if len(mixtral_answer) > len(lawma_result.get('answer', '')):
+                    st.write("• More detailed response")
+                else:
+                    st.write("• More concise response")
+                
+                if mixtral_result.get('generation_time', 0) > lawma_result.get('generation_time', 0):
+                    st.write("• Slower generation (more processing)")
+                else:
+                    st.write("• Faster generation")
+                
+                # Check for legal terminology density
+                legal_terms = ['court', 'judge', 'litigation', 'contract', 'law', 'legal', 'clause', 'agreement', 'damages', 'liability']
+                mixtral_legal_density = sum(1 for term in legal_terms if term.lower() in mixtral_answer.lower()) / max(len(mixtral_answer.split()), 1) * 100
+                st.write(f"• Legal terminology: {mixtral_legal_density:.1f}% density")
+            
+            with insights_col2:
+                st.markdown("**🏛️ LawMA-8B Characteristics:**")
+                lawma_answer = lawma_result.get('answer', '')
+                if len(lawma_answer) > len(mixtral_answer):
+                    st.write("• More detailed response")
+                else:
+                    st.write("• More concise response")
+                
+                if lawma_result.get('generation_time', 0) > mixtral_result.get('generation_time', 0):
+                    st.write("• Slower generation (more processing)")
+                else:
+                    st.write("• Faster generation")
+                
+                # Check for legal terminology density
+                lawma_legal_density = sum(1 for term in legal_terms if term.lower() in lawma_answer.lower()) / max(len(lawma_answer.split()), 1) * 100
+                st.write(f"• Legal terminology: {lawma_legal_density:.1f}% density")
+        
+        # Protocol compliance comparison
+        st.markdown("### 📋 Protocol Compliance Comparison")
+        
+        if mixtral_result.get('protocol_compliance') and lawma_result.get('protocol_compliance'):
+            compliance_col1, compliance_col2 = st.columns(2)
+            
+            with compliance_col1:
+                st.markdown("**🧠 Mixtral Compliance:**")
+                mixtral_compliance = mixtral_result['protocol_compliance']
+                mixtral_score = mixtral_compliance.get('overall_score', 0)
+                if mixtral_score >= 0.8:
+                    st.success(f"✅ Excellent: {mixtral_score:.1%}")
+                elif mixtral_score >= 0.6:
+                    st.warning(f"⚠️ Good: {mixtral_score:.1%}")
+                else:
+                    st.error(f"❌ Needs Improvement: {mixtral_score:.1%}")
+            
+            with compliance_col2:
+                st.markdown("**🏛️ LawMA Compliance:**")
+                lawma_compliance = lawma_result['protocol_compliance']
+                lawma_score = lawma_compliance.get('overall_score', 0)
+                if lawma_score >= 0.8:
+                    st.success(f"✅ Excellent: {lawma_score:.1%}")
+                elif lawma_score >= 0.6:
+                    st.warning(f"⚠️ Good: {lawma_score:.1%}")
+                else:
+                    st.error(f"❌ Needs Improvement: {lawma_score:.1%}")
+        
+        # Recommendation
+        st.markdown("### 💡 Recommendation")
+        
+        if mixtral_result and lawma_result:
+            # Simple scoring based on multiple factors
+            mixtral_factors = []
+            lawma_factors = []
+            
+            # Speed factor
+            if mixtral_result.get('generation_time', 0) < lawma_result.get('generation_time', 0):
+                mixtral_factors.append("Faster generation")
+            else:
+                lawma_factors.append("Faster generation")
+            
+            # Detail factor
+            if len(mixtral_result.get('answer', '')) > len(lawma_result.get('answer', '')):
+                mixtral_factors.append("More detailed analysis")
+            else:
+                lawma_factors.append("More detailed analysis")
+            
+            # Compliance factor
+            mixtral_compliance_score = mixtral_result.get('protocol_compliance', {}).get('overall_score', 0)
+            lawma_compliance_score = lawma_result.get('protocol_compliance', {}).get('overall_score', 0)
+            
+            if mixtral_compliance_score > lawma_compliance_score:
+                mixtral_factors.append("Better protocol compliance")
+            elif lawma_compliance_score > mixtral_compliance_score:
+                lawma_factors.append("Better protocol compliance")
+            
+            # Display recommendation
+            if len(mixtral_factors) > len(lawma_factors):
+                st.success("🧠 **Mixtral Recommended** for this query")
+                st.write("**Advantages:**")
+                for factor in mixtral_factors:
+                    st.write(f"• {factor}")
+            elif len(lawma_factors) > len(mixtral_factors):
+                st.success("🏛️ **LawMA-8B Recommended** for this query")
+                st.write("**Advantages:**")
+                for factor in lawma_factors:
+                    st.write(f"• {factor}")
+            else:
+                st.info("⚖️ **Both models performed similarly** - consider your specific needs")
+                st.write("**Mixtral advantages:** " + ", ".join(mixtral_factors))
+                st.write("**LawMA advantages:** " + ", ".join(lawma_factors))
 
     # Status information
     st.markdown("---")

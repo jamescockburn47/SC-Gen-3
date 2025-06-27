@@ -107,15 +107,15 @@ class RAGOptimizer:
             "complex_analysis": "deepseek-llm:7b",
             "contract_review": "mixtral:latest", 
             "legal_research": "mixtral:latest",
-            "document_summary": "deepseek-llm:7b",
+            "document_summary": "mixtral:latest",
             "quick_query": "phi3:latest",
-            "general_qa": "mistral:latest",
+            "general_qa": "mixtral:latest",
             "case_law_analysis": "deepseek-llm:7b",
-            "client_communication": "mistral:latest",
+            "client_communication": "mixtral:latest",
             "document_categorization": "deepseek-llm:7b",
             "compliance_check": "mixtral:latest"
         }
-        return recommendations.get(use_case, "mistral:latest")
+        return recommendations.get(use_case, "mixtral:latest")
     
     def get_optimal_settings(self, model_name: str) -> Dict:
         """Get optimal settings for a specific model"""
