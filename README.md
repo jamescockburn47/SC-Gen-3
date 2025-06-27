@@ -1,137 +1,302 @@
 # Strategic Counsel Gen 3
 
 ## Overview
-Strategic Counsel Gen 3 is an advanced legal and corporate analysis platform that leverages AI (OpenAI, Gemini), AWS Textract OCR, and Google Drive integration to automate the extraction, summarization, and verification of information from Companies House filings, court dockets, and other legal documents. The app is built with Python and Streamlit, providing an interactive, user-friendly interface for legal professionals.
+Strategic Counsel Gen 3 is an advanced AI-powered legal analysis platform featuring **multi-agent RAG (Retrieval Augmented Generation)** with automatic model orchestration. The system intelligently deploys multiple specialized AI models to provide comprehensive legal document analysis, with enhanced timeline processing, document archiving, and protocol compliance checking.
 
-## Features
-- **AI-Powered Summarization & Analysis**: Uses OpenAI and Gemini models for document analysis, summaries, and protocol compliance checks.
-- **Companies House Integration**: Retrieves and analyzes filings, including scanned PDFs with OCR fallback.
-- **AWS Textract OCR**: Automatically processes image-based PDFs for text extraction.
-- **Google Drive Integration**: Browse, select, and process files directly from your Google Drive.
-- **Case Timeline Visualization**: Upload and visualize court dockets and case events.
-- **Citation Verification**: Checks and verifies legal citations against uploaded documents and public sources.
-- **Protocol Compliance**: Automatically checks AI outputs against strategic protocols and flags non-compliance.
-- **Comprehensive Test Suite**: Includes unit and integration tests with coverage reporting.
+## 🚀 Key Features
 
-## Core Functions
+### **🤖 Multi-Agent RAG System**
+- **5 Specialized AI Models** working in parallel
+- **Automatic task assignment** based on query complexity
+- **Mixtral as default** (26GB, most powerful legal analysis)
+- **LawMA-8B integration** (4.9GB legal specialist model)
+- **Model comparison mode** for side-by-side analysis
 
-**AI Summarization & Protocol Compliance (`ai_utils.py`)**
-- Provides rigorous, objective AI-powered summaries of legal and financial documents using OpenAI or Gemini models.
-- Enforces a strict, factual prompt structure for extracting key financials, governance, risks, and events.
-- Supports chunking and aggregation for large documents.
-- Includes protocol compliance checks: every AI output is compared against a master protocol file to ensure professional standards and flag non-compliance.
+### **⚖️ Advanced Legal Intelligence**
+- **Enhanced timeline detection** with 50-chunk processing vs 25 standard
+- **ColBERT Late Interaction** enabled by default for superior retrieval
+- **Anti-hallucination protocols** with real-time compliance checking
+- **Document archiving** to `/archived_documents/` directory
+- **Citation verification** and legal reference validation
 
-**Document & Web Intake, Extraction, and Integration (`app_utils.py`)**
-- Handles file uploads (PDF, DOCX, TXT) and URL ingestion, extracting text using PyPDF2, pdfminer, python-docx, and BeautifulSoup4.
-- Summarizes uploaded or fetched content for quick review and context injection.
-- Integrates with Google Drive for direct file selection and processing.
-- Provides utility functions for extracting legal citations and verifying them against uploaded files or public sources.
+### **🏢 Corporate Analysis Integration**
+- **Companies House API** integration for UK corporate data
+- **Group structure mapping** and visualization
+- **AWS Textract OCR** for scanned document processing
+- **Google Drive integration** for seamless file access
 
-**Group Structure Analysis (`group_structure_utils.py`)**
-- Orchestrates the staged analysis of UK company group structures using Companies House data.
-- Fetches company profiles, identifies parent/subsidiary relationships, and processes filings across multiple years.
-- Prioritizes structured data (JSON, XHTML/XML) but falls back to PDF extraction and OCR when needed.
-- Extracts, deduplicates, and visualizes group hierarchies, timelines, and subsidiary evolution.
-- Integrates with AI summarization for objective, technical summaries of filings.
+### **🛡️ Professional Grade Features**
+- **Protocol compliance reporting** with scoring and recommendations
+- **Matter-based document organization** with persistent storage
+- **Professional DOCX export** capabilities
+- **GPU acceleration** for embedding models
+- **Comprehensive audit logging**
 
-**Companies House API Integration (`ch_api_utils.py`)**
-- Interfaces with the Companies House Public Data API to retrieve company profiles, filings metadata, and document content.
-- Handles pagination, category filtering, and robust error handling for large-scale data pulls.
-- Supports multi-format document retrieval (JSON, XHTML, PDF) and metadata extraction for downstream analysis.
+## 🎯 Available AI Models
 
-**OCR & AWS Textract Integration**
-- Enables advanced text extraction from scanned/image-based PDFs using AWS Textract.
-- Runs OCR in parallel for large batches, with fallback logic if standard extraction fails.
-- Integrates seamlessly with group structure and document analysis workflows.
+### **Recommended Usage Hierarchy:**
 
-**Session & Context Management**
-- Maintains topic-based workspaces, session digests, and persistent memories for each matter.
-- Caches document summaries and analysis results to improve performance and reduce costs.
-- Provides dynamic context injection for AI consultations, ensuring highly relevant and tailored outputs.
+1. **🧠 Mixtral (`mixtral:latest`)** - *Default* ⭐
+   - **Size:** 26GB | **Parameters:** 46.7B
+   - **Best for:** Complex legal reasoning, multi-document analysis, comprehensive cases
+   - **Speed:** Slower but highest quality
+   - **Use when:** Primary legal analysis requiring deep reasoning
 
-## Setup
+2. **🏛️ LawMA-8B (`lawma-8b:latest`)** - *Legal Specialist*
+   - **Size:** 4.9GB | **Parameters:** 8B (Legal-optimized)
+   - **Best for:** Specialized legal analysis, case law research, legal writing
+   - **Speed:** Fast with legal domain expertise
+   - **Use when:** Need deep legal specialization
 
-### 1. Clone the Repository
+3. **⚡ Mistral (`mistral:latest`)** - *Balanced*
+   - **Size:** 4.1GB | **Parameters:** 7B
+   - **Best for:** Quick legal queries, document summaries, general Q&A
+   - **Speed:** Fast and reliable
+   - **Use when:** Balanced speed/quality for straightforward questions
+
+4. **🔬 DeepSeek-LLM (`deepseek-llm:7b`)** - *Analysis*
+   - **Size:** 4.0GB | **Parameters:** 7B
+   - **Best for:** Detailed document analysis, structured extraction
+   - **Speed:** Fast with good analytical capabilities
+   - **Use when:** Detailed analysis and data extraction
+
+5. **🏃 Phi3 (`phi3:latest`)** - *Quick Response*
+   - **Size:** 2.2GB | **Parameters:** 3.8B
+   - **Best for:** Quick questions, testing, simple queries
+   - **Speed:** Fastest response time
+   - **Use when:** Rapid iteration and simple questions
+
+## 🛠️ Setup
+
+### 1. Clone and Install Dependencies
 ```bash
 git clone <your-repo-url>
-cd SC_Gen3
-```
-
-### 2. Install Dependencies
-#### Using pip
-```bash
+cd SC-Gen-3
 pip install -r requirements.txt
 ```
-#### Or use the setup script (Unix)
+
+### 2. Install and Configure Ollama
 ```bash
-./setup.sh
-```
-#### Windows Notes
-- You may need to install Microsoft Visual Studio Build Tools if pandas or other packages are built from source: https://visualstudio.microsoft.com/visual-cpp-build-tools/
-- You can use `init_SC_Gen3_generic.ps1` or `setup_and_launch_SC_Gen3.bat` for automated setup on Windows.
+# Install Ollama (visit ollama.com for platform-specific instructions)
 
-### 3. Environment Variables
-Create a `.env` file in the project root with the following keys (see `config.py` for all options):
+# Pull required models
+ollama pull mixtral      # Default model (26GB)
+ollama pull mistral      # Backup model (4.1GB)
+ollama pull deepseek-llm:7b
+ollama pull phi3
 
+# Optional: Add LawMA-8B legal specialist
+./setup_legal_models.sh  # Automated setup script
 ```
+
+### 3. Environment Configuration
+Create `.env` file in project root:
+
+```env
+# Core API Keys
 CH_API_KEY=your_companies_house_api_key
 OPENAI_API_KEY=your_openai_api_key
 GEMINI_API_KEY=your_gemini_api_key
+
+# Model Configuration (optimized defaults)
 GEMINI_MODEL_FOR_SUMMARIES=gemini-1.5-flash-latest
 OPENAI_MODEL=gpt-4o
-GEMINI_MODEL_FOR_PROTOCOL_CHECK=gemini-1.5-pro
 PROTOCOL_CHECK_MODEL_PROVIDER=gemini
+
+# AWS Textract (optional)
 AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 AWS_DEFAULT_REGION=eu-west-2
 S3_TEXTRACT_BUCKET=your_s3_bucket
 MAX_TEXTRACT_WORKERS=4
+
+# Google Drive (optional)
 ENABLE_GOOGLE_DRIVE_INTEGRATION=true
 GOOGLE_CLIENT_SECRET_FILE=client_secret.json
 GOOGLE_TOKEN_FILE=token.json
+
+# RAG System Optimization
+RAG_EMBEDDING_MODEL=all-mpnet-base-v2
+RAG_CHUNK_SIZE=600
+RAG_CHUNK_OVERLAP=75
+RAG_MAX_DOCS_PER_MATTER=200
+RAG_BATCH_SIZE=32
+RAG_ENABLE_GPU_ACCELERATION=true
 ```
 
-- See `config.py` for additional/optional variables (logging, retries, etc).
-- If using Google Drive, provide OAuth credentials and follow the first-time authorization prompt.
-
-### 4. Run the Application
+### 4. Launch Application
 ```bash
-streamlit run app.py
+streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 ```
 
-## Testing
+## 📚 Core Workflows
 
-### 1. Install Test Dependencies
-```bash
-pip install -r tests/requirements-test.txt
+### **Document Analysis Workflow**
+1. **Navigate to 📚 Document RAG tab**
+2. **Select/create matter** (e.g., "Client ABC Contract Review")
+3. **Upload documents** (PDF, DOCX, TXT, DOC, RTF)
+4. **System automatically**:
+   - Processes and chunks documents
+   - Creates vector embeddings with GPU acceleration
+   - Enables ColBERT Late Interaction for better retrieval
+5. **Ask questions** in natural language
+6. **Multi-agent system**:
+   - Analyzes query complexity
+   - Assigns appropriate specialist agents
+   - Provides comprehensive analysis with citations
+
+### **Companies House Analysis**
+1. **Navigate to 🏢 Companies House tab**
+2. **Enter UK company numbers**
+3. **Select document types** and date ranges
+4. **System retrieves and analyzes** filings with AI summaries
+5. **Export results** or save to matter
+
+### **Model Comparison Analysis**
+1. **Use Enhanced RAG interface**
+2. **Enable comparison mode**
+3. **System runs query on both**:
+   - Mixtral (general powerhouse)
+   - LawMA-8B (legal specialist)
+4. **Compare results** with performance metrics and recommendations
+
+## 🎯 Current System Status
+
+### **Performance Metrics:**
+- **Documents Loaded:** 13 active documents
+- **Vector Index:** 115 chunks indexed
+- **GPU Acceleration:** CUDA-enabled for embeddings
+- **Default Model:** Mixtral (26GB, most powerful)
+- **Specialized Model:** LawMA-8B available
+- **Document Archiving:** Enabled to `/archived_documents/`
+
+### **Advanced Features Active:**
+- ✅ **ColBERT Late Interaction** for superior document retrieval
+- ✅ **Enhanced Timeline Processing** (50 chunks vs 25 standard)
+- ✅ **Anti-hallucination protocols** with compliance scoring
+- ✅ **Multi-agent orchestration** with automatic task assignment
+- ✅ **Document archiving** system for long-term storage
+- ✅ **Protocol compliance checking** with detailed reporting
+
+## 🚦 Quick Start Guide
+
+### **For Legal Document Analysis:**
+```
+1. Go to 📚 Document RAG → Upload legal documents
+2. Ask: "What are the key risks and obligations in these contracts?"
+3. Watch multi-agent system automatically analyze and synthesize
+4. Review comprehensive results with source citations
 ```
 
-### 2. Run All Tests with Coverage
+### **For Company Research:**
+```
+1. Go to 🏢 Companies House → Enter company number
+2. Select document types (accounts, filings, etc.)
+3. Get AI-powered analysis of corporate structure and filings
+4. Export or save results to your matter
+```
+
+### **For Model Comparison:**
+```
+1. Use Enhanced RAG interface → Enable comparison mode
+2. Ask complex legal question
+3. Get side-by-side analysis from Mixtral vs LawMA-8B
+4. Review performance metrics and model recommendations
+```
+
+## 🔧 System Optimization
+
+### **Hardware Requirements:**
+- **Recommended:** 8GB+ VRAM, 64GB+ RAM for optimal performance
+- **Minimum:** 4GB VRAM, 16GB RAM (use smaller models)
+
+### **Model Selection Tips:**
+- **Complex legal analysis:** Mixtral (default)
+- **Legal specialization:** LawMA-8B (after setup)
+- **Quick queries:** Mistral or Phi3
+- **Balanced performance:** DeepSeek-LLM:7b
+
+### **Performance Optimization:**
+- **GPU acceleration** enabled for embeddings
+- **Model caching** to keep frequently used models loaded
+- **Batch processing** for multiple documents
+- **Intelligent chunking** with overlap for context preservation
+
+## 📊 Testing and Validation
+
+### **Run Test Suite:**
 ```bash
 cd tests
 python run_tests.py
 ```
-- Coverage reports are generated in the `coverage_html/` directory and as `coverage.xml`.
-- You can also run individual tests with `pytest`.
 
-## Usage Highlights
-- **OCR**: Enable AWS Textract in the Group Structure tab to process scanned PDFs. The app will fallback to OCR if embedded text is missing.
-- **Google Drive**: Set up integration and select files from the sidebar.
-- **Case Timeline**: Upload CSV, JSON, or PDF dockets to visualize events.
-- **Citation Verification**: Unverified citations are flagged and can be manually resolved.
-- **Protocol Compliance**: Toggle auto-checks in the sidebar; view detailed reports for each response.
+### **Test Model Connections:**
+```bash
+python test_llm_connection.py
+```
 
-## Troubleshooting
-- **Dependency Issues**: Ensure all dependencies are installed with the correct versions. Use the provided setup scripts for your OS.
-- **Model/API Errors**: Verify your API keys and model names. Use helper functions in `config.py` to check model availability.
-- **OCR Fails**: Check AWS credentials and S3 bucket configuration. Reduce `MAX_TEXTRACT_WORKERS` if you hit rate limits.
-- **Google Drive Auth**: Ensure your OAuth credentials are correct and follow the browser prompt on first use.
+### **Validate RAG System:**
+```bash
+python model_selection_guide.py
+```
 
-## Contributing
-Pull requests and issues are welcome! Please ensure all tests pass and follow the existing code style. For major changes, open an issue to discuss your proposal first.
+## 🛠️ Troubleshooting
 
-## Support
-For help, open an issue on GitHub or contact the maintainer.
+### **Common Issues:**
+
+**Models not appearing:**
+```bash
+# Check Ollama service
+ollama serve
+ollama list  # Verify models are installed
+```
+
+**Performance issues:**
+```bash
+# Use faster models for testing
+# Mixtral: Most powerful but slower
+# Mistral: Balanced performance
+# Phi3: Fastest for simple queries
+```
+
+**Memory issues:**
+```bash
+# Reduce concurrent models
+export OLLAMA_MAX_LOADED_MODELS=1
+# Use smaller models
+# Close other applications
+```
+
+**Document processing errors:**
+```bash
+# Check GPU acceleration
+nvidia-smi  # Verify GPU availability
+# Fallback to CPU embeddings if needed
+```
+
+## 📈 Advanced Configuration
+
+### **Multi-Agent Settings:**
+- Automatic agent selection based on query complexity
+- Concurrent model execution for comprehensive analysis
+- Result synthesis from multiple specialized agents
+
+### **RAG Optimization:**
+- ColBERT Late Interaction for 20-30% retrieval improvement
+- Enhanced timeline detection with 600-word chunks
+- GPU-accelerated embeddings with all-mpnet-base-v2
+
+### **Document Management:**
+- Automatic archiving to preserve storage
+- Matter-based organization with persistent metadata
+- Professional export capabilities
+
+## 🤝 Support
+
+- **GitHub Issues:** Report bugs and request features
+- **Documentation:** Comprehensive help system in-app
+- **Model Guide:** Run `python model_selection_guide.py` for selection help
 
 ---
-Refer to this README whenever configuring a new environment or troubleshooting setup. For advanced configuration, see `config.py` and the in-app instructions.
+
+**Strategic Counsel Gen 3** - Professional AI legal analysis with multi-agent intelligence, optimized for complex legal workflows with enterprise-grade features and performance.
